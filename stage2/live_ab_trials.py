@@ -61,6 +61,9 @@ def main() -> None:
     p.add_argument("--executor", choices=["dryrun", "live"], default="live")
     p.add_argument("--proposer", choices=["state", "target", "llm"], default="llm")
     p.add_argument("--model", default="deepseek-v4-pro")
+    p.add_argument("--provider", default="deepseek", choices=["deepseek", "qwen", "openai"],
+                   help="LLM backend (OpenAI-compatible). qwen=tsbys (BYAPI_KEY), openai=OPENAI_API_KEY. "
+                        "Multi-LLM A/B uses this to show the result is not deepseek-specific.")
     p.add_argument("--trials", type=int, default=6)
     p.add_argument("--budget", type=int, default=14)
     p.add_argument("--confirmed-isolated", action="store_true")
@@ -86,7 +89,7 @@ def main() -> None:
 
     def proposer():
         if args.proposer == "llm":
-            return LLMProposer(model=args.model, temperature=args.temperature)
+            return LLMProposer(model=args.model, temperature=args.temperature, provider=args.provider)
         if args.proposer == "target":
             return TargetAwareProposer(desc)
         return StateProposer()
@@ -185,6 +188,7 @@ def main() -> None:
                "target_name": desc["name"], "target_url": desc.get("target"),
                "descriptor": str(args.target.name if hasattr(args.target, "name") else args.target),
                "proposer": args.proposer, "model": args.model if args.proposer == "llm" else None,
+               "provider": args.provider if args.proposer == "llm" else None,
                "temperature": args.temperature if args.proposer == "llm" else None,
                "executor": args.executor, "budget": args.budget, "trials": args.trials,
                "arm_order_seed": args.seed, "arm_orders": arm_orders,

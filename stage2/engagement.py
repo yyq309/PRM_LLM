@@ -144,9 +144,11 @@ class LLMProposer:
     _VARIANTS = {"baseline": "SYS", "enhanced": "SYS_ENHANCED", "generic": "SYS_ENHANCED_GENERIC"}
 
     def __init__(self, model: str = "deepseek-v4-flash", temperature: float = 0.4,
-                 enhanced_prompt: bool = False, prompt_variant: str | None = None):
+                 enhanced_prompt: bool = False, prompt_variant: str | None = None,
+                 provider: str = "deepseek"):
         self.model = model
         self.temperature = temperature
+        self.provider = provider
         variant = prompt_variant or ("enhanced" if enhanced_prompt else "baseline")
         self.sys = getattr(self, self._VARIANTS[variant])
 
@@ -186,10 +188,16 @@ class LLMProposer:
         return context + ("\n" + " ".join(extra) if extra else "")
 
     def propose(self, context: str, obs_dict: dict) -> list[str]:
-        from deepseek_client import chat, extract_json_array
+        # import via the SAME module path the token-accounting uses (scripts.deepseek_client), else the
+        # `deepseek_client` vs `scripts.deepseek_client` dual-import gives two separate _USAGE accumulators
+        # and token cost reads back 0. Fall back to the bare name if scripts is on path but not as a package.
+        try:
+            from scripts.deepseek_client import chat, extract_json_array
+        except Exception:  # noqa: BLE001
+            from deepseek_client import chat, extract_json_array
         reply = chat([{"role": "system", "content": self.sys},
                       {"role": "user", "content": self._enrich(context, obs_dict)}],
-                     model=self.model, temperature=self.temperature)
+                     model=self.model, temperature=self.temperature, provider=self.provider)
         cands = [c for c in extract_json_array(reply) if isinstance(c, str) and c.strip()]
         return cands or ["Stop and report the current findings."]
 

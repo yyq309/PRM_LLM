@@ -23,16 +23,32 @@ except Exception as exc:  # pragma: no cover
 BASE_URL = "https://api.deepseek.com"
 DEFAULT_MODEL = "deepseek-v4-flash"
 
+# Multi-provider support (all OpenAI-compatible /chat/completions). Each key is read ONLY from its env
+# var, never written/printed. Used by the multi-LLM A/B to show the result is not deepseek-specific.
+PROVIDERS = {
+    "deepseek": {"base_url": "https://api.deepseek.com", "key_env": "DEEPSEEK_API_KEY", "default_model": "deepseek-chat"},
+    "qwen":     {"base_url": "https://api.tsbys.com/v1",  "key_env": "BYAPI_KEY",        "default_model": "qwen3.7-max"},
+    "openai":   {"base_url": "https://api.openai.com/v1", "key_env": "OPENAI_API_KEY",   "default_model": "gpt-4o-mini"},
+}
+
 
 class DeepSeekError(RuntimeError):
     pass
 
 
-def _api_key() -> str:
-    key = os.environ.get("DEEPSEEK_API_KEY")
+def _resolve(provider: str) -> tuple[str, str]:
+    """Return (base_url, api_key) for a provider; raises if the key env var is unset."""
+    p = PROVIDERS.get(provider)
+    if not p:
+        raise DeepSeekError(f"unknown provider {provider!r} (known: {sorted(PROVIDERS)})")
+    key = os.environ.get(p["key_env"])
     if not key:
-        raise DeepSeekError("DEEPSEEK_API_KEY environment variable is not set")
-    return key
+        raise DeepSeekError(f"{p['key_env']} environment variable is not set (provider={provider})")
+    return p["base_url"], key
+
+
+def _api_key() -> str:
+    return _resolve("deepseek")[1]
 
 
 # module-level token accumulator (cost metric). chat() adds each call's usage; runners reset/read per
@@ -57,9 +73,11 @@ def chat(
     temperature: float = 0.7,
     retries: int = 5,
     timeout: int = 120,
+    provider: str = "deepseek",
 ) -> str:
     """Return the assistant's final text content. Retries transient network errors."""
-    headers = {"Authorization": f"Bearer {_api_key()}", "Content-Type": "application/json"}
+    base_url, api_key = _resolve(provider)
+    headers = {"Authorization": f"Bearer {api_key}", "Content-Type": "application/json"}
     body = {
         "model": model,
         "messages": messages,
@@ -69,7 +87,7 @@ def chat(
     last_err: Exception | None = None
     for attempt in range(retries):
         try:
-            resp = requests.post(f"{BASE_URL}/chat/completions", headers=headers, json=body, timeout=timeout)
+            resp = requests.post(f"{base_url}/chat/completions", headers=headers, json=body, timeout=timeout)
             if resp.status_code == 429 or resp.status_code >= 500:
                 raise DeepSeekError(f"transient HTTP {resp.status_code}")
             resp.raise_for_status()
