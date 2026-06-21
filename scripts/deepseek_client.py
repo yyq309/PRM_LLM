@@ -100,7 +100,7 @@ def chat(
             content = data["choices"][0]["message"].get("content") or ""
             if not content.strip():
                 # All budget went to reasoning; retry once with a larger budget.
-                body["max_tokens"] = min(int(body["max_tokens"] * 2), 4000)
+                body["max_tokens"] = min(int(body["max_tokens"] * 2), 16000)
                 raise DeepSeekError("empty content (reasoning consumed budget)")
             return content
         except Exception as exc:  # noqa: BLE001 - broad to cover SSL/connection/json

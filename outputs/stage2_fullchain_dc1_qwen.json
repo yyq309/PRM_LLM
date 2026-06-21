@@ -1,0 +1,474 @@
+{
+  "stage": "stage2_live_ab_trials",
+  "target": "VulnHub-DC-1-fullchain",
+  "proposer": "llm",
+  "model": "qwen3.7-max",
+  "trials": 5,
+  "errored_trials": 7,
+  "run_metadata": {
+    "target_name": "VulnHub-DC-1-fullchain",
+    "target_url": "http://192.168.52.130",
+    "descriptor": "vulnhub-dc-1.json",
+    "proposer": "llm",
+    "model": "qwen3.7-max",
+    "provider": "qwen",
+    "temperature": 0.5,
+    "executor": "live",
+    "budget": 16,
+    "trials": 5,
+    "arm_order_seed": 0,
+    "arm_orders": [
+      [
+        "prm",
+        "llm_only"
+      ],
+      [
+        "prm",
+        "llm_only"
+      ],
+      [
+        "llm_only",
+        "prm"
+      ],
+      [
+        "prm",
+        "llm_only"
+      ],
+      [
+        "prm",
+        "llm_only"
+      ]
+    ],
+    "fixed_arm_order": false,
+    "paired_crn": true,
+    "mean_cache_hit_rate": 0.113,
+    "prm_model": "prm_strong.joblib",
+    "started": "2026-06-21T19:36:18",
+    "finished": "2026-06-21T19:55:39",
+    "psi_for_action_mapping": "enhanced",
+    "psi_for_prm_features": "stage1_training_time",
+    "goal_def": "command_execution AND a sensitive-file read (or root/flag file)",
+    "deepseek_key_source": "n/a"
+  },
+  "budget": 16,
+  "prm": {
+    "n": 1,
+    "goal_reached": 1,
+    "goal_rate": 1.0,
+    "goal_rate_ci95": [
+      0.207,
+      1.0
+    ],
+    "shell_rate": 1.0,
+    "command_exec_rate": 1.0,
+    "file_read_rate": 0.0,
+    "root_rate": 1.0,
+    "per_step_progress": {
+      "progress_steps": 2,
+      "total_steps": 5,
+      "rate": 0.4,
+      "ci95": [
+        0.118,
+        0.769
+      ]
+    },
+    "phase_split": {
+      "web": {
+        "progress": 1,
+        "total": 2,
+        "rate": 0.5
+      },
+      "local": {
+        "progress": 1,
+        "total": 3,
+        "rate": 0.333
+      }
+    },
+    "mean_top1_ranking_acc": 0.6,
+    "mean_fields_gained": 3.0,
+    "mean_distinct_productive_actions": 2.0,
+    "mean_wasted_rate": 0.6,
+    "mean_steps_when_goal": 5.0,
+    "mean_proposer_calls": 5.0,
+    "mean_eta_executions": 5.0,
+    "mean_llm_tokens": 4320.0,
+    "total_llm_tokens": 4320,
+    "mean_duration_s": 61.1,
+    "mean_live_out_of_abstraction_rate": 0.0,
+    "total_gate_refusals": 0
+  },
+  "llm_only": {
+    "n": 2,
+    "goal_reached": 2,
+    "goal_rate": 1.0,
+    "goal_rate_ci95": [
+      0.342,
+      1.0
+    ],
+    "shell_rate": 1.0,
+    "command_exec_rate": 1.0,
+    "file_read_rate": 0.0,
+    "root_rate": 1.0,
+    "per_step_progress": {
+      "progress_steps": 6,
+      "total_steps": 14,
+      "rate": 0.429,
+      "ci95": [
+        0.214,
+        0.674
+      ]
+    },
+    "phase_split": {
+      "web": {
+        "progress": 4,
+        "total": 7,
+        "rate": 0.571
+      },
+      "local": {
+        "progress": 2,
+        "total": 7,
+        "rate": 0.286
+      }
+    },
+    "mean_top1_ranking_acc": 0.438,
+    "mean_fields_gained": 7.0,
+    "mean_distinct_productive_actions": 3.0,
+    "mean_wasted_rate": 0.562,
+    "mean_steps_when_goal": 7.0,
+    "mean_proposer_calls": 7.0,
+    "mean_eta_executions": 7.0,
+    "mean_llm_tokens": 8130.5,
+    "total_llm_tokens": 16261,
+    "mean_duration_s": 110.05,
+    "mean_live_out_of_abstraction_rate": 0.0,
+    "total_gate_refusals": 0
+  },
+  "per_trial": {
+    "prm": [
+      {
+        "box": "VulnHub-DC-1-fullchain",
+        "mode": "prm",
+        "budget": 16,
+        "steps_taken": 5,
+        "stop_reason": "goal_reached",
+        "reached_shell": true,
+        "reached_command_exec": true,
+        "reached_root": true,
+        "read_any_file": false,
+        "exploit_proposed": true,
+        "goal_reached": true,
+        "progress_steps": 2,
+        "per_step_progress_rate": 0.4,
+        "top1_oracle_agreement_rate": 0.6,
+        "wasted_actions": 3,
+        "wasted_rate": 0.6,
+        "fields_gained_total": 3,
+        "distinct_productive_actions": 2,
+        "proposer_calls": 5,
+        "eta_executions": 5,
+        "llm_tokens_total": 4320,
+        "llm_tokens_prompt": 3528,
+        "llm_tokens_completion": 792,
+        "duration_s": 61.1,
+        "n_proposed": 20,
+        "live_out_of_abstraction_rate": 0.0,
+        "gate_refusals": 0,
+        "steps": [
+          {
+            "t": 0,
+            "chosen_action": "web_path_enumeration",
+            "eta_tool": "gobuster",
+            "executed": true,
+            "made_progress": false,
+            "n_candidates": 4,
+            "n_available": 4,
+            "fields_gained": 0,
+            "exhausted_after": false,
+            "milestone_before": 0
+          },
+          {
+            "t": 1,
+            "chosen_action": "exploit_attempt",
+            "eta_tool": "exploit",
+            "executed": true,
+            "made_progress": true,
+            "n_candidates": 4,
+            "n_available": 4,
+            "fields_gained": 2,
+            "exhausted_after": false,
+            "milestone_before": 0
+          },
+          {
+            "t": 2,
+            "chosen_action": "sensitive_file_read",
+            "eta_tool": "cat",
+            "executed": true,
+            "made_progress": false,
+            "n_candidates": 5,
+            "n_available": 5,
+            "fields_gained": 0,
+            "exhausted_after": false,
+            "milestone_before": 2
+          },
+          {
+            "t": 3,
+            "chosen_action": "sensitive_file_read",
+            "eta_tool": "cat",
+            "executed": true,
+            "made_progress": false,
+            "n_candidates": 3,
+            "n_available": 3,
+            "fields_gained": 0,
+            "exhausted_after": true,
+            "milestone_before": 2
+          },
+          {
+            "t": 4,
+            "chosen_action": "privilege_escalation",
+            "eta_tool": "privesc",
+            "executed": true,
+            "made_progress": true,
+            "n_candidates": 4,
+            "n_available": 4,
+            "fields_gained": 1,
+            "exhausted_after": false,
+            "milestone_before": 2
+          }
+        ]
+      }
+    ],
+    "llm_only": [
+      {
+        "box": "VulnHub-DC-1-fullchain",
+        "mode": "llm_only",
+        "budget": 16,
+        "steps_taken": 6,
+        "stop_reason": "goal_reached",
+        "reached_shell": true,
+        "reached_command_exec": true,
+        "reached_root": true,
+        "read_any_file": false,
+        "exploit_proposed": true,
+        "goal_reached": true,
+        "progress_steps": 3,
+        "per_step_progress_rate": 0.5,
+        "top1_oracle_agreement_rate": 0.5,
+        "wasted_actions": 3,
+        "wasted_rate": 0.5,
+        "fields_gained_total": 7,
+        "distinct_productive_actions": 3,
+        "proposer_calls": 6,
+        "eta_executions": 6,
+        "llm_tokens_total": 4332,
+        "llm_tokens_prompt": 3415,
+        "llm_tokens_completion": 917,
+        "duration_s": 65.7,
+        "n_proposed": 24,
+        "live_out_of_abstraction_rate": 0.0,
+        "gate_refusals": 0,
+        "steps": [
+          {
+            "t": 0,
+            "chosen_action": "http_fingerprint",
+            "eta_tool": "whatweb",
+            "executed": true,
+            "made_progress": true,
+            "n_candidates": 3,
+            "n_available": 3,
+            "fields_gained": 4,
+            "exhausted_after": false,
+            "milestone_before": 0
+          },
+          {
+            "t": 1,
+            "chosen_action": "vulnerability_check",
+            "eta_tool": "sqlmap",
+            "executed": true,
+            "made_progress": false,
+            "n_candidates": 4,
+            "n_available": 4,
+            "fields_gained": 0,
+            "exhausted_after": false,
+            "milestone_before": 0
+          },
+          {
+            "t": 2,
+            "chosen_action": "exploit_attempt",
+            "eta_tool": "exploit",
+            "executed": true,
+            "made_progress": true,
+            "n_candidates": 4,
+            "n_available": 4,
+            "fields_gained": 2,
+            "exhausted_after": false,
+            "milestone_before": 0
+          },
+          {
+            "t": 3,
+            "chosen_action": "command_execution",
+            "eta_tool": "shell",
+            "executed": true,
+            "made_progress": false,
+            "n_candidates": 5,
+            "n_available": 5,
+            "fields_gained": 0,
+            "exhausted_after": false,
+            "milestone_before": 2
+          },
+          {
+            "t": 4,
+            "chosen_action": "sensitive_file_read",
+            "eta_tool": "cat",
+            "executed": true,
+            "made_progress": false,
+            "n_candidates": 4,
+            "n_available": 4,
+            "fields_gained": 0,
+            "exhausted_after": false,
+            "milestone_before": 2
+          },
+          {
+            "t": 5,
+            "chosen_action": "privilege_escalation",
+            "eta_tool": "privesc",
+            "executed": true,
+            "made_progress": true,
+            "n_candidates": 4,
+            "n_available": 4,
+            "fields_gained": 1,
+            "exhausted_after": false,
+            "milestone_before": 2
+          }
+        ]
+      },
+      {
+        "box": "VulnHub-DC-1-fullchain",
+        "mode": "llm_only",
+        "budget": 16,
+        "steps_taken": 8,
+        "stop_reason": "goal_reached",
+        "reached_shell": true,
+        "reached_command_exec": true,
+        "reached_root": true,
+        "read_any_file": false,
+        "exploit_proposed": true,
+        "goal_reached": true,
+        "progress_steps": 3,
+        "per_step_progress_rate": 0.375,
+        "top1_oracle_agreement_rate": 0.375,
+        "wasted_actions": 5,
+        "wasted_rate": 0.625,
+        "fields_gained_total": 7,
+        "distinct_productive_actions": 3,
+        "proposer_calls": 8,
+        "eta_executions": 8,
+        "llm_tokens_total": 11929,
+        "llm_tokens_prompt": 9184,
+        "llm_tokens_completion": 2745,
+        "duration_s": 154.4,
+        "n_proposed": 29,
+        "live_out_of_abstraction_rate": 0.0,
+        "gate_refusals": 0,
+        "steps": [
+          {
+            "t": 0,
+            "chosen_action": "http_fingerprint",
+            "eta_tool": "whatweb",
+            "executed": true,
+            "made_progress": true,
+            "n_candidates": 4,
+            "n_available": 4,
+            "fields_gained": 4,
+            "exhausted_after": false,
+            "milestone_before": 0
+          },
+          {
+            "t": 1,
+            "chosen_action": "vulnerability_check",
+            "eta_tool": "sqlmap",
+            "executed": true,
+            "made_progress": false,
+            "n_candidates": 4,
+            "n_available": 4,
+            "fields_gained": 0,
+            "exhausted_after": false,
+            "milestone_before": 0
+          },
+          {
+            "t": 2,
+            "chosen_action": "web_path_enumeration",
+            "eta_tool": "gobuster",
+            "executed": true,
+            "made_progress": false,
+            "n_candidates": 5,
+            "n_available": 5,
+            "fields_gained": 0,
+            "exhausted_after": false,
+            "milestone_before": 0
+          },
+          {
+            "t": 3,
+            "chosen_action": "exploit_attempt",
+            "eta_tool": "exploit",
+            "executed": true,
+            "made_progress": true,
+            "n_candidates": 3,
+            "n_available": 3,
+            "fields_gained": 2,
+            "exhausted_after": false,
+            "milestone_before": 0
+          },
+          {
+            "t": 4,
+            "chosen_action": "sensitive_file_read",
+            "eta_tool": "cat",
+            "executed": true,
+            "made_progress": false,
+            "n_candidates": 3,
+            "n_available": 3,
+            "fields_gained": 0,
+            "exhausted_after": false,
+            "milestone_before": 2
+          },
+          {
+            "t": 5,
+            "chosen_action": "command_execution",
+            "eta_tool": "shell",
+            "executed": true,
+            "made_progress": false,
+            "n_candidates": 3,
+            "n_available": 3,
+            "fields_gained": 0,
+            "exhausted_after": false,
+            "milestone_before": 2
+          },
+          {
+            "t": 6,
+            "chosen_action": "file_upload_attempt",
+            "eta_tool": "upload",
+            "executed": true,
+            "made_progress": false,
+            "n_candidates": 4,
+            "n_available": 4,
+            "fields_gained": 0,
+            "exhausted_after": false,
+            "milestone_before": 2
+          },
+          {
+            "t": 7,
+            "chosen_action": "privilege_escalation",
+            "eta_tool": "privesc",
+            "executed": true,
+            "made_progress": true,
+            "n_candidates": 3,
+            "n_available": 3,
+            "fields_gained": 1,
+            "exhausted_after": false,
+            "milestone_before": 2
+          }
+        ]
+      }
+    ]
+  },
+  "note": "Live multi-trial A/B on ONE box. Goal = command execution + a sensitive-file read. Small N: read the CIs, not the point estimates. A full uplift study spans several boxes. The LLM proposer is stochastic (temp 0.5), which is the intended variation."
+}
