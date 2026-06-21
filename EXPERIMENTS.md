@@ -71,7 +71,7 @@ full chain the reranker recovers and beats llm_only (DC-1 100% vs 60%).**
 |---|---|---|---|---|---|
 | **G1** | **Full-chain VM A/B** (DC-1/Raven2/Toppo/Symfonos; root_flag_captured + phase-split; 5–8 trials/arm) | **C-B flagship** | **HIGH** | new-build | **✅ DONE 2026-06-21** (DC-1 autonomous prm root 100%/llm 60%; Toppo deterministic; Raven/Symfonos foothold deferred) |
 | **G2** | Mask-causality | **C-C** | HIGH | reanalysis+code | **✅ DONE 2026-06-21** (`scripts/analyze_recon_bias.py`: histogram + `reward.py` info-discovery reward identified as the cause; not masking) |
-| **G3** | **Paired A/B (CRN) formal run** (`paired_ab.py`, LLM proposer, report cache-hit + clustered p vs unpaired) | methodology | MEDIUM | rerun | 🟡 OPEN (cheap; §10 item 0) |
+| **G3** | Paired A/B (CRN) formal run | methodology | MEDIUM | rerun | **✅ DONE 2026-06-21** (cache-hit 30%; paired prm per-step 40.2% < llm_only/random/oracle, p=0.0 — **OVERTURNS the unpaired "prm beats random"** as a variance artifact; PRM is a web-phase liability, local-phase asset) |
 | **G4** | Transfer baseline (learned PRM vs cheap heuristic) | **C-A** | MEDIUM | rerun | **✅ DONE 2026-06-21** (extracted from ablations: prm>heuristic p=0.001 w/ LLM proposer; ≈ p=0.65 deterministic — proposer-conditional) |
 | **G5** | Per-episode higher-N (n≥20, 6 boxes) to confirm the goal-tie; phase-split metric | C-B honesty | MEDIUM | rerun | partial |
 | **G6** | Proposer-ceiling probe (deepseek-reasoner vs chat on `exploit_never_proposed` boxes) | diagnostic | LOW | rerun | ✅ §10 item 2 |

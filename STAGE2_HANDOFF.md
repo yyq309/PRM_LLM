@@ -623,6 +623,19 @@ drive the next phase:
   the framework + registry are ready but the foothold exploits don't reliably fire on this host. **C-B evidence
   stands on DC-1 (autonomous, root 100% vs 40% @ n=10) + Toppo (deterministic)** — 2/4 boxes, honestly scoped.
 
+- **★★ G3 — PAIRED CRN A/B (2026-06-21): overturns the unpaired "prm beats random", completes the synthesis.**
+  `stage2/paired_ab.py` on 6 web boxes × {llm_only,prm,random,oracle}, deepseek-chat, live, **mean cache
+  hit-rate 30%** (CRN sharing → ~30% LLM calls saved). PAIRED per-step: **prm 40.2% (49/122) — SIGNIFICANTLY
+  WORSE than llm_only 59.3%, random 59.0%, oracle 70.0%** (Δ−19.2/−18.8/−29.8pp, all clustered perm-p=0.0).
+  **This OVERTURNS the unpaired LLM ablation** (§5.5: prm 68.5% > random 50%, p=0.007) → that positive was an
+  **unpaired proposer-draw-variance artifact**; under proper variance control the PRM's recon bias makes it
+  per-step WORSE than random on web boxes. (per-episode goal: prm 90% ≈ random/oracle 97% > llm_only 80% —
+  reaches goal, inefficiently.) **UNIFIED HONEST SYNTHESIS:** the PRM is a per-step **LIABILITY in the WEB phase**
+  (G3: < random, recon bias) but a decisive **ASSET in the LOCAL/privesc phase** (I/DC-1: root 100% vs 40%,
+  phase-split local 37% vs llm_only 9%). On a full real kill chain the local benefit dominates (DC-1 wins big);
+  on web-only boxes only the web-phase harm shows (G3). `outputs/stage2_paired_ab.json`. Validates the audit's
+  worry that unpaired p-values were optimistic — and explains the whole arc with ONE phase-dependent mechanism.
+
 Ranked next steps (all leak-free):
 
 0. **Run the paired A/B** (`python -m stage2.paired_ab --proposer llm --model deepseek-chat --executor

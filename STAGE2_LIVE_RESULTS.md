@@ -68,6 +68,22 @@ From the reranker-isolation ablations (`outputs/stage2_ablation_rerank{,_llm}.js
 
 **Honest C-A:** the learned value's advantage over a cheap domain heuristic is itself **proposer-conditional**.
 
+## ★ G3 PAIRED CRN + the UNIFIED phase-dependent synthesis (2026-06-21)
+
+`stage2/paired_ab.py`, 6 web boxes × {llm_only,prm,random,oracle}, deepseek-chat, live, **mean cache-hit 30%**.
+**Paired (variance-controlled) per-step:** prm **40.2%** (49/122) — **significantly WORSE** than llm_only 59.3%,
+random 59.0%, oracle 70.0% (Δ−19/−19/−30pp, clustered perm-p=0.0). This **OVERTURNS the earlier *unpaired*
+ablation** (prm 68.5% > random 50%, p=0.007) — that positive was a proposer-draw-variance artifact; under proper
+pairing the recon bias makes the PRM per-step worse than random on web boxes. (per-episode goal prm 90% ≈
+random/oracle 97% > llm_only 80% — reaches goal, inefficiently.) `outputs/stage2_paired_ab.json`.
+
+**THE UNIFIED HONEST STORY (one mechanism explains the whole arc):** the PRM is a per-step **LIABILITY in the
+WEB/recon phase** (G3: < random; recon over-valuation) but a decisive **ASSET in the LOCAL/privilege-escalation
+phase** (DC-1 full chain: root **100% vs 40%** @ n=10, phase-split local **37% vs llm_only 9%**). On a full real
+kill chain the local-phase benefit dominates → PRM wins big; on web-only boxes only the web-phase harm shows →
+PRM loses. Everything (web-only inversion, the unpaired/paired flip, the full-chain win) follows from this single
+**phase-dependent** fact.
+
 ---
 
 ## ★ FINAL RESULT (2026-06-18) — honest, cluster-robust
