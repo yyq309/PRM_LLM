@@ -40,8 +40,11 @@ VulnHub experiment, see `STAGE2_FULLCHAIN_PLAN.md`), plus 15 Docker web boxes fo
 - *Evidence:* `root_flag_captured` (non-gameable terminal metric) on the VM boxes; per-step process
   value of the PRM-as-reranker on the web boxes (per-step pooled clustered p=0.02).
 - *Honest scope:* per-step process improver ✓; per-episode terminal goal benefit is limited / often
-  tied — reported honestly (see C-Limitation). XBEN autonomous = 0/18 (novel multi-step construction
-  is out of scope — a stated boundary, not hidden).
+  tied — reported honestly (see C-Limitation). **Scope (design assumption):** the exploit class is assumed
+  KNOWN and expressible within the 16-action schema + per-target η-recipe; **autonomous discovery of novel
+  multi-step exploits is out of scope** (the PRM is a value/ranking model, not an exploit generator). XBEN/XBOW
+  is NOT a paper result — it is provenance-only in the repo (`stage2_xben_autonomous.json`, 0/18 confirmed the
+  boundary); the paper states the scope as an assumption instead.
 
 ### ★ C-C (spine, mechanism + rigorous negative) — Structural train-inference gap & its limits
 The transferred value has a **characterizable structural limitation**: the **masked** abstract training
@@ -78,8 +81,9 @@ reported in full in the limitations section; the efficiency inversion is not bur
 
 1. The efficiency inversion (llm_only ≥ PRM under a good proposer) is **reported in full**, as a
    limitation — never hidden to protect the spine.
-2. "21 boxes" is **disaggregated**: 15 Docker web (recipe-guided) + ~4 VM full-chain + 6 XBEN
-   (autonomous, 0/18 = boundary). No inflated count.
+2. Box count = **15 Docker web (single-host single-service) + 4 VM full-chain (whole-machine multi-step)**.
+   No inflated count. **XBEN/XBOW dropped from the paper (provenance-only)**; its capability is out of scope,
+   replaced by the scope statement above.
 3. Per-step vs per-episode claims are **separated**: per-step process improver ✓; terminal goal
    benefit limited/tied — stated plainly.
 4. Leakage wall: PRM input = observable context only; no oracle q-values, no hidden task ground truth;

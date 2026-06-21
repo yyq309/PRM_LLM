@@ -13,7 +13,7 @@ verdict per contribution and the ranked list of experiments still to add. Framin
 |---|---|---|---|
 | ① | **Abstract single-host-web simulator** | **Stage-1 TRAINING** | synthetic MDP, 16 frozen actions, 12 task families; trains the DQN value oracle + Pentest-PRM; Q*/leakage/coverage live here |
 | ② | **Docker Vulhub web boxes (15)** | **Stage-2 inference** | real web containers on 127.0.0.1; the per-step reranking study |
-| ③ | **XBEN/XBOW (6)** | **Stage-2 boundary** | held-out canary CTF; autonomous novel-exploit ceiling test |
+| ③ | **XBEN/XBOW (6)** | **provenance-only — NOT a paper result** | autonomous novel-exploit benchmark; 0/18 confirms the scope boundary, **dropped from the paper** and replaced by a one-line scope statement (guardrail) — the project never claims autonomous novel-exploit construction |
 | ④ | **VulnHub full-machine VMs (4)** | **Stage-2 end-to-end** | DC-1/Raven2/Toppo:1/Symfonos:1 (VMware); complete kill chain — **planned** |
 
 ---
@@ -59,7 +59,7 @@ full chain the reranker recovers and beats llm_only (DC-1 100% vs 60%).**
 | E5 | High-N replication (10 trials × 5 boxes) | ✅ per-step **+12.1pp p=0.012**; per-episode **TIE 42%=42%** | C-B (process≠outcome) |
 | E6 | Efficiency-tier A/B (content-credit/rich_memory/CRN/vocab-hint/milestone-slack) | ✅ "good proposer obsoletes PRM": llm_only 66.7% vs PRM 39.6% **p<0.0001** | **limitation** |
 | E7 | Memory / proposer-prompt experiments | ✅ rich_memory 12%→44% p=0.004 (no leak); CVE-prompt leak busted by control | supporting |
-| E8 | **XBEN autonomous** (6 boxes, 18 eps) | ✅ **flag 0/18** (boundary; exploit_proposed 100%, milestone ~1.17/3) | C-B (scope boundary) |
+| E8 | XBEN autonomous (6 boxes, 18 eps) | ✅ flag 0/18 (exploit_proposed 100%, milestone ~1.17/3) — **PROVENANCE-ONLY, DROPPED from the paper** (kept in repo `outputs/stage2_xben_autonomous.json`) | scope statement, not a result |
 | E9 | **Full-chain VM A/B** (4 VMs) | ⏳ **PLANNED** (`STAGE2_FULLCHAIN_PLAN.md`) | **C-B flagship** (→ G1) |
 | E10 | Multi-vendor LLM | ⏳ planned, re-scoped, deferrable | C-A robustness (→ G7) |
 
@@ -89,8 +89,13 @@ footholds deferred (fragile multi-step exploits, same proposer-ceiling class —
 
 1. **Per-step ≠ per-episode.** PRM is a per-step *process* improver (Δ+12pp, p=0.02, replicated);
    per-episode goal is **tied at n=10** — state this in §1, not the appendix.
-2. **"15 boxes" disaggregated:** 15 Docker web (recipe-gated foothold) + 4 VM full-chain (planned) +
-   6 XBEN (0/18, boundary). No inflated count; separate stat claims per tier.
+2. **Box count = 15 Docker web** (single-host single-service, recipe-gated foothold) **+ 4 VM full-chain**
+   (whole-machine, multi-step Web→foothold→privesc→root). No inflated count; separate stat claims per tier.
+   **XBEN/XBOW is DROPPED from the paper (provenance-only)** — the two Vulhub tiers already cover C-A/C-B/C-C.
+7. **Scope statement (replaces the XBEN experiment):** this work assumes the exploit class is **KNOWN and
+   expressible within the frozen 16-action schema + per-target η-recipe**; **autonomous discovery/construction of
+   NOVEL multi-step exploits is out of scope** (the PRM is a value/ranking model, not an exploit generator). State
+   this as a design assumption — no XBEN data needed — to pre-empt "can it find 0-days?" without claiming it can.
 3. **Binding constraint is the proposer**, not the PRM: `exploit_never_proposed` 28=28 across arms;
    deterministic proposer solves the adapter path on the boxes it fails autonomously.
 4. **Efficiency inversion reported in full** (limitation), never hidden.

@@ -636,6 +636,15 @@ drive the next phase:
   on web-only boxes only the web-phase harm shows (G3). `outputs/stage2_paired_ab.json`. Validates the audit's
   worry that unpaired p-values were optimistic — and explains the whole arc with ONE phase-dependent mechanism.
 
+- **★ DECISION (2026-06-21): XBEN/XBOW DROPPED from the paper (provenance-only).** The two Vulhub tiers
+  (15 Docker single-host single-service + 4 VM whole-machine multi-step chains) already cover C-A/C-B/C-C, so
+  the XBEN 0/18 autonomous run is **NOT a paper result** — it stays in the repo (`outputs/stage2_xben_autonomous.json`,
+  `stage2/targets/xben/`) as provenance only. The box count is now **15 Docker + 4 VM** (no "21 boxes" / no
+  inflated count). Replaced in the paper by a one-line **SCOPE STATEMENT** (design assumption, no XBEN data
+  needed): *"the exploit class is assumed KNOWN and expressible within the 16-action schema + per-target
+  η-recipe; autonomous discovery of novel multi-step exploits is out of scope (the PRM is a value/ranking model,
+  not an exploit generator)."* Docs aligned: CONTRIBUTIONS.md, EXPERIMENTS.md (env ③ + E8 + guardrails #2/#7).
+
 Ranked next steps (all leak-free):
 
 0. **Run the paired A/B** (`python -m stage2.paired_ab --proposer llm --model deepseek-chat --executor
