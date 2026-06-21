@@ -1,0 +1,2143 @@
+{
+  "checkpoint": "WebAttackSim\\outputs\\web_dqn_pilot.pt",
+  "use_action_mask": true,
+  "tasks": [
+    "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\tasks\\lfi_config_leak.json",
+    "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\tasks\\rce_privesc_root.json",
+    "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\tasks\\sqli_upload_shell.json"
+  ],
+  "episodes": 3,
+  "eval_goal_rate": 1.0,
+  "eval_avg_reward": 52.5,
+  "eval_avg_steps": 10.0,
+  "expert_action_allowed_rate": 1.0,
+  "expert_action_top1_rate": 0.5925925925925926,
+  "expert_action_top3_rate": 1.0,
+  "expert_action_avg_value_gap": 1.0091814818205658,
+  "task_reports": [
+    {
+      "task_id": "web_006_lfi_config_leak",
+      "episode": 0,
+      "goal": true,
+      "steps": 9,
+      "total_reward": 43.6,
+      "final_observation": {
+        "target_known": true,
+        "service_known": true,
+        "open_services": [
+          "http:80"
+        ],
+        "base_url_known": true,
+        "discovered_paths": [
+          "/",
+          "/admin",
+          "/download",
+          "/login"
+        ],
+        "known_forms": [
+          "form:/login"
+        ],
+        "known_parameters": [
+          "/download?file"
+        ],
+        "tech_stack": [
+          "apache",
+          "mysql",
+          "php"
+        ],
+        "suspected_vulnerabilities": [
+          "lfi_download_file"
+        ],
+        "verified_vulnerabilities": [
+          "lfi_download_file"
+        ],
+        "credentials": [
+          "admin"
+        ],
+        "auth_state": "admin",
+        "shell_state": "none",
+        "privilege_level": "none",
+        "read_files": [
+          "admin_flag"
+        ],
+        "failed_actions": [],
+        "failed_branches": {},
+        "remaining_budget": 13
+      },
+      "trace": [
+        {
+          "step": 0,
+          "action_id": 2,
+          "action_type": "web_path_enumeration",
+          "allowed": true,
+          "q_selected": 43.76519775390625,
+          "v_web": 43.76519775390625,
+          "value_gap": 0.0,
+          "reward": 1.9,
+          "feedback": {
+            "success": true,
+            "progress_event": "path_found",
+            "new_observation": null,
+            "discovered_items": [
+              "/download"
+            ],
+            "evidence": "path discovered: /download",
+            "auth_change": null,
+            "foothold_change": null,
+            "privilege_change": null,
+            "file_change": null,
+            "error_type": null,
+            "cost": 1.0,
+            "terminal": false
+          },
+          "done": false,
+          "top_actions": [
+            {
+              "action_id": 2,
+              "action_type": "web_path_enumeration",
+              "q": 43.76519775390625
+            },
+            {
+              "action_id": 1,
+              "action_type": "http_fingerprint",
+              "q": 41.750396728515625
+            }
+          ]
+        },
+        {
+          "step": 1,
+          "action_id": 2,
+          "action_type": "web_path_enumeration",
+          "allowed": true,
+          "q_selected": 42.45612335205078,
+          "v_web": 42.45612335205078,
+          "value_gap": 0.0,
+          "reward": 1.9,
+          "feedback": {
+            "success": true,
+            "progress_event": "path_found",
+            "new_observation": null,
+            "discovered_items": [
+              "/login"
+            ],
+            "evidence": "path discovered: /login",
+            "auth_change": null,
+            "foothold_change": null,
+            "privilege_change": null,
+            "file_change": null,
+            "error_type": null,
+            "cost": 1.0,
+            "terminal": false
+          },
+          "done": false,
+          "top_actions": [
+            {
+              "action_id": 2,
+              "action_type": "web_path_enumeration",
+              "q": 42.45612335205078
+            },
+            {
+              "action_id": 4,
+              "action_type": "input_discovery",
+              "q": 38.53464126586914
+            },
+            {
+              "action_id": 1,
+              "action_type": "http_fingerprint",
+              "q": 37.4144287109375
+            }
+          ]
+        },
+        {
+          "step": 2,
+          "action_id": 4,
+          "action_type": "input_discovery",
+          "allowed": true,
+          "q_selected": 39.359336853027344,
+          "v_web": 39.359336853027344,
+          "value_gap": 0.0,
+          "reward": 1.9,
+          "feedback": {
+            "success": true,
+            "progress_event": "input_found",
+            "new_observation": null,
+            "discovered_items": [
+              "form:/login",
+              "parameter:/download?file"
+            ],
+            "evidence": "input discovery found forms or parameters",
+            "auth_change": null,
+            "foothold_change": null,
+            "privilege_change": null,
+            "file_change": null,
+            "error_type": null,
+            "cost": 1.0,
+            "terminal": false
+          },
+          "done": false,
+          "top_actions": [
+            {
+              "action_id": 4,
+              "action_type": "input_discovery",
+              "q": 39.359336853027344
+            },
+            {
+              "action_id": 2,
+              "action_type": "web_path_enumeration",
+              "q": 38.14534378051758
+            },
+            {
+              "action_id": 1,
+              "action_type": "http_fingerprint",
+              "q": 37.230430603027344
+            }
+          ]
+        },
+        {
+          "step": 3,
+          "action_id": 8,
+          "action_type": "vulnerability_check",
+          "allowed": true,
+          "q_selected": 37.76283264160156,
+          "v_web": 37.76283264160156,
+          "value_gap": 0.0,
+          "reward": 3.9,
+          "feedback": {
+            "success": true,
+            "progress_event": "vulnerability_verified",
+            "new_observation": null,
+            "discovered_items": [
+              "lfi_download_file"
+            ],
+            "evidence": "vulnerability verified: lfi_download_file",
+            "auth_change": null,
+            "foothold_change": null,
+            "privilege_change": null,
+            "file_change": null,
+            "error_type": null,
+            "cost": 1.0,
+            "terminal": false
+          },
+          "done": false,
+          "top_actions": [
+            {
+              "action_id": 8,
+              "action_type": "vulnerability_check",
+              "q": 37.76283264160156
+            },
+            {
+              "action_id": 2,
+              "action_type": "web_path_enumeration",
+              "q": 37.71723175048828
+            },
+            {
+              "action_id": 1,
+              "action_type": "http_fingerprint",
+              "q": 35.501808166503906
+            }
+          ]
+        },
+        {
+          "step": 4,
+          "action_id": 2,
+          "action_type": "web_path_enumeration",
+          "allowed": true,
+          "q_selected": 34.715248107910156,
+          "v_web": 34.715248107910156,
+          "value_gap": 0.0,
+          "reward": 1.9,
+          "feedback": {
+            "success": true,
+            "progress_event": "path_found",
+            "new_observation": null,
+            "discovered_items": [
+              "/admin"
+            ],
+            "evidence": "path discovered: /admin",
+            "auth_change": null,
+            "foothold_change": null,
+            "privilege_change": null,
+            "file_change": null,
+            "error_type": null,
+            "cost": 1.0,
+            "terminal": false
+          },
+          "done": false,
+          "top_actions": [
+            {
+              "action_id": 2,
+              "action_type": "web_path_enumeration",
+              "q": 34.715248107910156
+            },
+            {
+              "action_id": 9,
+              "action_type": "exploit_attempt",
+              "q": 34.14039611816406
+            },
+            {
+              "action_id": 1,
+              "action_type": "http_fingerprint",
+              "q": 32.642086029052734
+            }
+          ]
+        },
+        {
+          "step": 5,
+          "action_id": 9,
+          "action_type": "exploit_attempt",
+          "allowed": true,
+          "q_selected": 32.17885208129883,
+          "v_web": 32.17885208129883,
+          "value_gap": 0.0,
+          "reward": 5.9,
+          "feedback": {
+            "success": true,
+            "progress_event": "exploit_succeeded",
+            "new_observation": null,
+            "discovered_items": [
+              "credential:admin"
+            ],
+            "evidence": "exploit produced credential:admin",
+            "auth_change": null,
+            "foothold_change": null,
+            "privilege_change": null,
+            "file_change": null,
+            "error_type": null,
+            "cost": 1.0,
+            "terminal": false
+          },
+          "done": false,
+          "top_actions": [
+            {
+              "action_id": 9,
+              "action_type": "exploit_attempt",
+              "q": 32.17885208129883
+            },
+            {
+              "action_id": 1,
+              "action_type": "http_fingerprint",
+              "q": 30.117809295654297
+            }
+          ]
+        },
+        {
+          "step": 6,
+          "action_id": 7,
+          "action_type": "credential_use",
+          "allowed": true,
+          "q_selected": 26.71592140197754,
+          "v_web": 26.71592140197754,
+          "value_gap": 0.0,
+          "reward": 4.9,
+          "feedback": {
+            "success": true,
+            "progress_event": "session_obtained",
+            "new_observation": null,
+            "discovered_items": [],
+            "evidence": "known credential produced an authenticated session",
+            "auth_change": "anonymous->admin",
+            "foothold_change": null,
+            "privilege_change": null,
+            "file_change": null,
+            "error_type": null,
+            "cost": 1.0,
+            "terminal": false
+          },
+          "done": false,
+          "top_actions": [
+            {
+              "action_id": 7,
+              "action_type": "credential_use",
+              "q": 26.71592140197754
+            },
+            {
+              "action_id": 1,
+              "action_type": "http_fingerprint",
+              "q": 25.864334106445312
+            }
+          ]
+        },
+        {
+          "step": 7,
+          "action_id": 1,
+          "action_type": "http_fingerprint",
+          "allowed": true,
+          "q_selected": 21.5089168548584,
+          "v_web": 21.5089168548584,
+          "value_gap": 0.0,
+          "reward": 1.4,
+          "feedback": {
+            "success": true,
+            "progress_event": "fingerprint_found",
+            "new_observation": null,
+            "discovered_items": [
+              "apache",
+              "mysql",
+              "php"
+            ],
+            "evidence": "web fingerprinting exposed technology stack",
+            "auth_change": null,
+            "foothold_change": null,
+            "privilege_change": null,
+            "file_change": null,
+            "error_type": null,
+            "cost": 1.0,
+            "terminal": false
+          },
+          "done": false,
+          "top_actions": [
+            {
+              "action_id": 1,
+              "action_type": "http_fingerprint",
+              "q": 21.5089168548584
+            },
+            {
+              "action_id": 14,
+              "action_type": "post_exploitation",
+              "q": 20.289894104003906
+            },
+            {
+              "action_id": 12,
+              "action_type": "sensitive_file_read",
+              "q": 20.287378311157227
+            }
+          ]
+        },
+        {
+          "step": 8,
+          "action_id": 14,
+          "action_type": "post_exploitation",
+          "allowed": true,
+          "q_selected": 20.45608901977539,
+          "v_web": 20.45608901977539,
+          "value_gap": 0.0,
+          "reward": 19.9,
+          "feedback": {
+            "success": true,
+            "progress_event": "sensitive_file_read",
+            "new_observation": null,
+            "discovered_items": [
+              "admin_flag",
+              "goal_reached"
+            ],
+            "evidence": "sensitive file read: admin_flag",
+            "auth_change": null,
+            "foothold_change": null,
+            "privilege_change": null,
+            "file_change": null,
+            "error_type": null,
+            "cost": 1.0,
+            "terminal": true
+          },
+          "done": true,
+          "top_actions": [
+            {
+              "action_id": 14,
+              "action_type": "post_exploitation",
+              "q": 20.45608901977539
+            },
+            {
+              "action_id": 12,
+              "action_type": "sensitive_file_read",
+              "q": 20.33527183532715
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "task_id": "web_011_rce_privesc_root",
+      "episode": 0,
+      "goal": true,
+      "steps": 9,
+      "total_reward": 56.6,
+      "final_observation": {
+        "target_known": true,
+        "service_known": true,
+        "open_services": [
+          "http:80"
+        ],
+        "base_url_known": true,
+        "discovered_paths": [
+          "/",
+          "/debug"
+        ],
+        "known_forms": [],
+        "known_parameters": [
+          "/debug?cmd"
+        ],
+        "tech_stack": [
+          "java",
+          "spring"
+        ],
+        "suspected_vulnerabilities": [
+          "rce_debug_cmd"
+        ],
+        "verified_vulnerabilities": [
+          "rce_debug_cmd"
+        ],
+        "credentials": [],
+        "auth_state": "anonymous",
+        "shell_state": "command_execution",
+        "privilege_level": "root",
+        "read_files": [
+          "root_flag"
+        ],
+        "failed_actions": [],
+        "failed_branches": {},
+        "remaining_budget": 13
+      },
+      "trace": [
+        {
+          "step": 0,
+          "action_id": 2,
+          "action_type": "web_path_enumeration",
+          "allowed": true,
+          "q_selected": 43.76519775390625,
+          "v_web": 43.76519775390625,
+          "value_gap": 0.0,
+          "reward": 1.9,
+          "feedback": {
+            "success": true,
+            "progress_event": "path_found",
+            "new_observation": null,
+            "discovered_items": [
+              "/debug"
+            ],
+            "evidence": "path discovered: /debug",
+            "auth_change": null,
+            "foothold_change": null,
+            "privilege_change": null,
+            "file_change": null,
+            "error_type": null,
+            "cost": 1.0,
+            "terminal": false
+          },
+          "done": false,
+          "top_actions": [
+            {
+              "action_id": 2,
+              "action_type": "web_path_enumeration",
+              "q": 43.76519775390625
+            },
+            {
+              "action_id": 1,
+              "action_type": "http_fingerprint",
+              "q": 41.750396728515625
+            }
+          ]
+        },
+        {
+          "step": 1,
+          "action_id": 4,
+          "action_type": "input_discovery",
+          "allowed": true,
+          "q_selected": 38.53464126586914,
+          "v_web": 38.53464126586914,
+          "value_gap": 0.0,
+          "reward": 1.9,
+          "feedback": {
+            "success": true,
+            "progress_event": "input_found",
+            "new_observation": null,
+            "discovered_items": [
+              "parameter:/debug?cmd"
+            ],
+            "evidence": "input discovery found forms or parameters",
+            "auth_change": null,
+            "foothold_change": null,
+            "privilege_change": null,
+            "file_change": null,
+            "error_type": null,
+            "cost": 1.0,
+            "terminal": false
+          },
+          "done": false,
+          "top_actions": [
+            {
+              "action_id": 4,
+              "action_type": "input_discovery",
+              "q": 38.53464126586914
+            },
+            {
+              "action_id": 1,
+              "action_type": "http_fingerprint",
+              "q": 37.4144287109375
+            }
+          ]
+        },
+        {
+          "step": 2,
+          "action_id": 8,
+          "action_type": "vulnerability_check",
+          "allowed": true,
+          "q_selected": 36.96933364868164,
+          "v_web": 36.96933364868164,
+          "value_gap": 0.0,
+          "reward": 3.9,
+          "feedback": {
+            "success": true,
+            "progress_event": "vulnerability_verified",
+            "new_observation": null,
+            "discovered_items": [
+              "rce_debug_cmd"
+            ],
+            "evidence": "vulnerability verified: rce_debug_cmd",
+            "auth_change": null,
+            "foothold_change": null,
+            "privilege_change": null,
+            "file_change": null,
+            "error_type": null,
+            "cost": 1.0,
+            "terminal": false
+          },
+          "done": false,
+          "top_actions": [
+            {
+              "action_id": 8,
+              "action_type": "vulnerability_check",
+              "q": 36.96933364868164
+            },
+            {
+              "action_id": 1,
+              "action_type": "http_fingerprint",
+              "q": 34.633453369140625
+            }
+          ]
+        },
+        {
+          "step": 3,
+          "action_id": 9,
+          "action_type": "exploit_attempt",
+          "allowed": true,
+          "q_selected": 33.9613037109375,
+          "v_web": 33.9613037109375,
+          "value_gap": 0.0,
+          "reward": 7.9,
+          "feedback": {
+            "success": true,
+            "progress_event": "shell_obtained",
+            "new_observation": null,
+            "discovered_items": [
+              "webshell"
+            ],
+            "evidence": "exploit succeeded: rce_debug_cmd",
+            "auth_change": null,
+            "foothold_change": "none->webshell",
+            "privilege_change": null,
+            "file_change": null,
+            "error_type": null,
+            "cost": 1.0,
+            "terminal": false
+          },
+          "done": false,
+          "top_actions": [
+            {
+              "action_id": 9,
+              "action_type": "exploit_attempt",
+              "q": 33.9613037109375
+            },
+            {
+              "action_id": 1,
+              "action_type": "http_fingerprint",
+              "q": 32.29762268066406
+            }
+          ]
+        },
+        {
+          "step": 4,
+          "action_id": 13,
+          "action_type": "privilege_escalation",
+          "allowed": true,
+          "q_selected": 30.950456619262695,
+          "v_web": 30.950456619262695,
+          "value_gap": 0.0,
+          "reward": 7.9,
+          "feedback": {
+            "success": true,
+            "progress_event": "privilege_escalated",
+            "new_observation": null,
+            "discovered_items": [],
+            "evidence": "local privilege escalation succeeded",
+            "auth_change": null,
+            "foothold_change": null,
+            "privilege_change": "web_user->root",
+            "file_change": null,
+            "error_type": null,
+            "cost": 1.0,
+            "terminal": false
+          },
+          "done": false,
+          "top_actions": [
+            {
+              "action_id": 13,
+              "action_type": "privilege_escalation",
+              "q": 30.950456619262695
+            },
+            {
+              "action_id": 11,
+              "action_type": "command_execution",
+              "q": 25.896358489990234
+            },
+            {
+              "action_id": 1,
+              "action_type": "http_fingerprint",
+              "q": 25.465057373046875
+            }
+          ]
+        },
+        {
+          "step": 5,
+          "action_id": 11,
+          "action_type": "command_execution",
+          "allowed": true,
+          "q_selected": 26.80805015563965,
+          "v_web": 26.80805015563965,
+          "value_gap": 0.0,
+          "reward": 3.9,
+          "feedback": {
+            "success": true,
+            "progress_event": "command_execution_obtained",
+            "new_observation": null,
+            "discovered_items": [],
+            "evidence": "command execution confirmed",
+            "auth_change": null,
+            "foothold_change": "webshell->command_execution",
+            "privilege_change": null,
+            "file_change": null,
+            "error_type": null,
+            "cost": 1.0,
+            "terminal": false
+          },
+          "done": false,
+          "top_actions": [
+            {
+              "action_id": 11,
+              "action_type": "command_execution",
+              "q": 26.80805015563965
+            },
+            {
+              "action_id": 1,
+              "action_type": "http_fingerprint",
+              "q": 26.09494972229004
+            },
+            {
+              "action_id": 12,
+              "action_type": "sensitive_file_read",
+              "q": 21.746484756469727
+            },
+            {
+              "action_id": 14,
+              "action_type": "post_exploitation",
+              "q": 21.356014251708984
+            }
+          ]
+        },
+        {
+          "step": 6,
+          "action_id": 13,
+          "action_type": "privilege_escalation",
+          "allowed": true,
+          "q_selected": 24.17740821838379,
+          "v_web": 24.17740821838379,
+          "value_gap": 0.0,
+          "reward": 7.9,
+          "feedback": {
+            "success": true,
+            "progress_event": "privilege_escalated",
+            "new_observation": null,
+            "discovered_items": [],
+            "evidence": "local privilege escalation succeeded",
+            "auth_change": null,
+            "foothold_change": null,
+            "privilege_change": "web_user->root",
+            "file_change": null,
+            "error_type": null,
+            "cost": 1.0,
+            "terminal": false
+          },
+          "done": false,
+          "top_actions": [
+            {
+              "action_id": 13,
+              "action_type": "privilege_escalation",
+              "q": 24.17740821838379
+            },
+            {
+              "action_id": 1,
+              "action_type": "http_fingerprint",
+              "q": 20.88813018798828
+            }
+          ]
+        },
+        {
+          "step": 7,
+          "action_id": 1,
+          "action_type": "http_fingerprint",
+          "allowed": true,
+          "q_selected": 20.90544891357422,
+          "v_web": 20.90544891357422,
+          "value_gap": 0.0,
+          "reward": 1.4,
+          "feedback": {
+            "success": true,
+            "progress_event": "fingerprint_found",
+            "new_observation": null,
+            "discovered_items": [
+              "java",
+              "spring"
+            ],
+            "evidence": "web fingerprinting exposed technology stack",
+            "auth_change": null,
+            "foothold_change": null,
+            "privilege_change": null,
+            "file_change": null,
+            "error_type": null,
+            "cost": 1.0,
+            "terminal": false
+          },
+          "done": false,
+          "top_actions": [
+            {
+              "action_id": 1,
+              "action_type": "http_fingerprint",
+              "q": 20.90544891357422
+            },
+            {
+              "action_id": 12,
+              "action_type": "sensitive_file_read",
+              "q": 19.340757369995117
+            },
+            {
+              "action_id": 14,
+              "action_type": "post_exploitation",
+              "q": 19.304378509521484
+            }
+          ]
+        },
+        {
+          "step": 8,
+          "action_id": 14,
+          "action_type": "post_exploitation",
+          "allowed": true,
+          "q_selected": 18.61705207824707,
+          "v_web": 18.61705207824707,
+          "value_gap": 0.0,
+          "reward": 19.9,
+          "feedback": {
+            "success": true,
+            "progress_event": "sensitive_file_read",
+            "new_observation": null,
+            "discovered_items": [
+              "root_flag",
+              "goal_reached"
+            ],
+            "evidence": "sensitive file read: root_flag",
+            "auth_change": null,
+            "foothold_change": null,
+            "privilege_change": null,
+            "file_change": null,
+            "error_type": null,
+            "cost": 1.0,
+            "terminal": true
+          },
+          "done": true,
+          "top_actions": [
+            {
+              "action_id": 14,
+              "action_type": "post_exploitation",
+              "q": 18.61705207824707
+            },
+            {
+              "action_id": 12,
+              "action_type": "sensitive_file_read",
+              "q": 18.56130599975586
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "task_id": "web_010_sqli_upload_shell",
+      "episode": 0,
+      "goal": true,
+      "steps": 12,
+      "total_reward": 57.3,
+      "final_observation": {
+        "target_known": true,
+        "service_known": true,
+        "open_services": [
+          "http:80"
+        ],
+        "base_url_known": true,
+        "discovered_paths": [
+          "/",
+          "/login",
+          "/product",
+          "/upload"
+        ],
+        "known_forms": [
+          "form:/login",
+          "form:/upload"
+        ],
+        "known_parameters": [
+          "/product?sku"
+        ],
+        "tech_stack": [
+          "flask",
+          "postgres",
+          "python"
+        ],
+        "suspected_vulnerabilities": [
+          "sqli_product_sku"
+        ],
+        "verified_vulnerabilities": [
+          "sqli_product_sku"
+        ],
+        "credentials": [
+          "admin"
+        ],
+        "auth_state": "admin",
+        "shell_state": "command_execution",
+        "privilege_level": "web_user",
+        "read_files": [
+          "user_flag"
+        ],
+        "failed_actions": [],
+        "failed_branches": {},
+        "remaining_budget": 14
+      },
+      "trace": [
+        {
+          "step": 0,
+          "action_id": 2,
+          "action_type": "web_path_enumeration",
+          "allowed": true,
+          "q_selected": 43.76519775390625,
+          "v_web": 43.76519775390625,
+          "value_gap": 0.0,
+          "reward": 1.9,
+          "feedback": {
+            "success": true,
+            "progress_event": "path_found",
+            "new_observation": null,
+            "discovered_items": [
+              "/login"
+            ],
+            "evidence": "path discovered: /login",
+            "auth_change": null,
+            "foothold_change": null,
+            "privilege_change": null,
+            "file_change": null,
+            "error_type": null,
+            "cost": 1.0,
+            "terminal": false
+          },
+          "done": false,
+          "top_actions": [
+            {
+              "action_id": 2,
+              "action_type": "web_path_enumeration",
+              "q": 43.76519775390625
+            },
+            {
+              "action_id": 1,
+              "action_type": "http_fingerprint",
+              "q": 41.750396728515625
+            }
+          ]
+        },
+        {
+          "step": 1,
+          "action_id": 2,
+          "action_type": "web_path_enumeration",
+          "allowed": true,
+          "q_selected": 38.82247543334961,
+          "v_web": 38.82247543334961,
+          "value_gap": 0.0,
+          "reward": 1.9,
+          "feedback": {
+            "success": true,
+            "progress_event": "path_found",
+            "new_observation": null,
+            "discovered_items": [
+              "/product"
+            ],
+            "evidence": "path discovered: /product",
+            "auth_change": null,
+            "foothold_change": null,
+            "privilege_change": null,
+            "file_change": null,
+            "error_type": null,
+            "cost": 1.0,
+            "terminal": false
+          },
+          "done": false,
+          "top_actions": [
+            {
+              "action_id": 2,
+              "action_type": "web_path_enumeration",
+              "q": 38.82247543334961
+            },
+            {
+              "action_id": 4,
+              "action_type": "input_discovery",
+              "q": 38.68470764160156
+            },
+            {
+              "action_id": 1,
+              "action_type": "http_fingerprint",
+              "q": 37.942222595214844
+            }
+          ]
+        },
+        {
+          "step": 2,
+          "action_id": 4,
+          "action_type": "input_discovery",
+          "allowed": true,
+          "q_selected": 40.24360275268555,
+          "v_web": 40.24360275268555,
+          "value_gap": 0.0,
+          "reward": 1.9,
+          "feedback": {
+            "success": true,
+            "progress_event": "input_found",
+            "new_observation": null,
+            "discovered_items": [
+              "form:/login",
+              "parameter:/product?sku"
+            ],
+            "evidence": "input discovery found forms or parameters",
+            "auth_change": null,
+            "foothold_change": null,
+            "privilege_change": null,
+            "file_change": null,
+            "error_type": null,
+            "cost": 1.0,
+            "terminal": false
+          },
+          "done": false,
+          "top_actions": [
+            {
+              "action_id": 4,
+              "action_type": "input_discovery",
+              "q": 40.24360275268555
+            },
+            {
+              "action_id": 2,
+              "action_type": "web_path_enumeration",
+              "q": 39.3410758972168
+            },
+            {
+              "action_id": 1,
+              "action_type": "http_fingerprint",
+              "q": 38.049766540527344
+            }
+          ]
+        },
+        {
+          "step": 3,
+          "action_id": 2,
+          "action_type": "web_path_enumeration",
+          "allowed": true,
+          "q_selected": 39.411651611328125,
+          "v_web": 39.411651611328125,
+          "value_gap": 0.0,
+          "reward": 1.9,
+          "feedback": {
+            "success": true,
+            "progress_event": "path_found",
+            "new_observation": null,
+            "discovered_items": [
+              "/upload"
+            ],
+            "evidence": "path discovered: /upload",
+            "auth_change": null,
+            "foothold_change": null,
+            "privilege_change": null,
+            "file_change": null,
+            "error_type": null,
+            "cost": 1.0,
+            "terminal": false
+          },
+          "done": false,
+          "top_actions": [
+            {
+              "action_id": 2,
+              "action_type": "web_path_enumeration",
+              "q": 39.411651611328125
+            },
+            {
+              "action_id": 8,
+              "action_type": "vulnerability_check",
+              "q": 38.60224533081055
+            },
+            {
+              "action_id": 1,
+              "action_type": "http_fingerprint",
+              "q": 36.635684967041016
+            }
+          ]
+        },
+        {
+          "step": 4,
+          "action_id": 4,
+          "action_type": "input_discovery",
+          "allowed": true,
+          "q_selected": 43.98091506958008,
+          "v_web": 43.98091506958008,
+          "value_gap": 0.0,
+          "reward": 1.9,
+          "feedback": {
+            "success": true,
+            "progress_event": "input_found",
+            "new_observation": null,
+            "discovered_items": [
+              "form:/upload"
+            ],
+            "evidence": "input discovery found forms or parameters",
+            "auth_change": null,
+            "foothold_change": null,
+            "privilege_change": null,
+            "file_change": null,
+            "error_type": null,
+            "cost": 1.0,
+            "terminal": false
+          },
+          "done": false,
+          "top_actions": [
+            {
+              "action_id": 4,
+              "action_type": "input_discovery",
+              "q": 43.98091506958008
+            },
+            {
+              "action_id": 1,
+              "action_type": "http_fingerprint",
+              "q": 42.83750534057617
+            },
+            {
+              "action_id": 8,
+              "action_type": "vulnerability_check",
+              "q": 40.304569244384766
+            }
+          ]
+        },
+        {
+          "step": 5,
+          "action_id": 1,
+          "action_type": "http_fingerprint",
+          "allowed": true,
+          "q_selected": 41.04716491699219,
+          "v_web": 41.04716491699219,
+          "value_gap": 0.0,
+          "reward": 1.4,
+          "feedback": {
+            "success": true,
+            "progress_event": "fingerprint_found",
+            "new_observation": null,
+            "discovered_items": [
+              "flask",
+              "postgres",
+              "python"
+            ],
+            "evidence": "web fingerprinting exposed technology stack",
+            "auth_change": null,
+            "foothold_change": null,
+            "privilege_change": null,
+            "file_change": null,
+            "error_type": null,
+            "cost": 1.0,
+            "terminal": false
+          },
+          "done": false,
+          "top_actions": [
+            {
+              "action_id": 1,
+              "action_type": "http_fingerprint",
+              "q": 41.04716491699219
+            },
+            {
+              "action_id": 8,
+              "action_type": "vulnerability_check",
+              "q": 38.88142776489258
+            }
+          ]
+        },
+        {
+          "step": 6,
+          "action_id": 8,
+          "action_type": "vulnerability_check",
+          "allowed": true,
+          "q_selected": 37.70079040527344,
+          "v_web": 37.70079040527344,
+          "value_gap": 0.0,
+          "reward": 3.9,
+          "feedback": {
+            "success": true,
+            "progress_event": "vulnerability_verified",
+            "new_observation": null,
+            "discovered_items": [
+              "sqli_product_sku"
+            ],
+            "evidence": "vulnerability verified: sqli_product_sku",
+            "auth_change": null,
+            "foothold_change": null,
+            "privilege_change": null,
+            "file_change": null,
+            "error_type": null,
+            "cost": 1.0,
+            "terminal": false
+          },
+          "done": false,
+          "top_actions": [
+            {
+              "action_id": 8,
+              "action_type": "vulnerability_check",
+              "q": 37.70079040527344
+            }
+          ]
+        },
+        {
+          "step": 7,
+          "action_id": 9,
+          "action_type": "exploit_attempt",
+          "allowed": true,
+          "q_selected": 36.57324981689453,
+          "v_web": 36.57324981689453,
+          "value_gap": 0.0,
+          "reward": 5.9,
+          "feedback": {
+            "success": true,
+            "progress_event": "exploit_succeeded",
+            "new_observation": null,
+            "discovered_items": [
+              "credential:admin"
+            ],
+            "evidence": "exploit produced credential:admin",
+            "auth_change": null,
+            "foothold_change": null,
+            "privilege_change": null,
+            "file_change": null,
+            "error_type": null,
+            "cost": 1.0,
+            "terminal": false
+          },
+          "done": false,
+          "top_actions": [
+            {
+              "action_id": 9,
+              "action_type": "exploit_attempt",
+              "q": 36.57324981689453
+            }
+          ]
+        },
+        {
+          "step": 8,
+          "action_id": 7,
+          "action_type": "credential_use",
+          "allowed": true,
+          "q_selected": 29.14825439453125,
+          "v_web": 29.14825439453125,
+          "value_gap": 0.0,
+          "reward": 4.9,
+          "feedback": {
+            "success": true,
+            "progress_event": "session_obtained",
+            "new_observation": null,
+            "discovered_items": [],
+            "evidence": "known credential produced an authenticated session",
+            "auth_change": "anonymous->admin",
+            "foothold_change": null,
+            "privilege_change": null,
+            "file_change": null,
+            "error_type": null,
+            "cost": 1.0,
+            "terminal": false
+          },
+          "done": false,
+          "top_actions": [
+            {
+              "action_id": 7,
+              "action_type": "credential_use",
+              "q": 29.14825439453125
+            }
+          ]
+        },
+        {
+          "step": 9,
+          "action_id": 10,
+          "action_type": "file_upload_attempt",
+          "allowed": true,
+          "q_selected": 30.602821350097656,
+          "v_web": 30.602821350097656,
+          "value_gap": 0.0,
+          "reward": 7.9,
+          "feedback": {
+            "success": true,
+            "progress_event": "shell_obtained",
+            "new_observation": null,
+            "discovered_items": [
+              "webshell"
+            ],
+            "evidence": "uploaded webshell is reachable",
+            "auth_change": null,
+            "foothold_change": "none->webshell",
+            "privilege_change": null,
+            "file_change": null,
+            "error_type": null,
+            "cost": 1.0,
+            "terminal": false
+          },
+          "done": false,
+          "top_actions": [
+            {
+              "action_id": 10,
+              "action_type": "file_upload_attempt",
+              "q": 30.602821350097656
+            }
+          ]
+        },
+        {
+          "step": 10,
+          "action_id": 11,
+          "action_type": "command_execution",
+          "allowed": true,
+          "q_selected": 24.136455535888672,
+          "v_web": 24.136455535888672,
+          "value_gap": 0.0,
+          "reward": 3.9,
+          "feedback": {
+            "success": true,
+            "progress_event": "command_execution_obtained",
+            "new_observation": null,
+            "discovered_items": [],
+            "evidence": "command execution confirmed",
+            "auth_change": null,
+            "foothold_change": "webshell->command_execution",
+            "privilege_change": null,
+            "file_change": null,
+            "error_type": null,
+            "cost": 1.0,
+            "terminal": false
+          },
+          "done": false,
+          "top_actions": [
+            {
+              "action_id": 11,
+              "action_type": "command_execution",
+              "q": 24.136455535888672
+            },
+            {
+              "action_id": 14,
+              "action_type": "post_exploitation",
+              "q": 20.176240921020508
+            },
+            {
+              "action_id": 12,
+              "action_type": "sensitive_file_read",
+              "q": 19.892019271850586
+            }
+          ]
+        },
+        {
+          "step": 11,
+          "action_id": 14,
+          "action_type": "post_exploitation",
+          "allowed": true,
+          "q_selected": 21.29901695251465,
+          "v_web": 21.29901695251465,
+          "value_gap": 0.0,
+          "reward": 19.9,
+          "feedback": {
+            "success": true,
+            "progress_event": "sensitive_file_read",
+            "new_observation": null,
+            "discovered_items": [
+              "user_flag",
+              "goal_reached"
+            ],
+            "evidence": "sensitive file read: user_flag",
+            "auth_change": null,
+            "foothold_change": null,
+            "privilege_change": null,
+            "file_change": null,
+            "error_type": null,
+            "cost": 1.0,
+            "terminal": true
+          },
+          "done": true,
+          "top_actions": [
+            {
+              "action_id": 14,
+              "action_type": "post_exploitation",
+              "q": 21.29901695251465
+            },
+            {
+              "action_id": 12,
+              "action_type": "sensitive_file_read",
+              "q": 21.072734832763672
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "expert_plan_reports": [
+    {
+      "task_id": "web_006_lfi_config_leak",
+      "num_steps": 9,
+      "expert_goal": true,
+      "expert_allowed_rate": 1.0,
+      "expert_top1_rate": 0.5555555555555556,
+      "expert_top3_rate": 1.0,
+      "expert_avg_value_gap": 1.5379772186279297,
+      "steps": [
+        {
+          "step": 0,
+          "expert_action_type": "web_path_enumeration",
+          "expert_target": "/download",
+          "expert_allowed": true,
+          "expert_rank": 1,
+          "expert_q": 43.76519775390625,
+          "v_web": 43.76519775390625,
+          "expert_value_gap": 0.0,
+          "greedy_action_type": "web_path_enumeration",
+          "top_actions": [
+            {
+              "action_id": 2,
+              "action_type": "web_path_enumeration",
+              "q": 43.76519775390625
+            },
+            {
+              "action_id": 1,
+              "action_type": "http_fingerprint",
+              "q": 41.750396728515625
+            }
+          ]
+        },
+        {
+          "step": 1,
+          "expert_action_type": "input_discovery",
+          "expert_target": null,
+          "expert_allowed": true,
+          "expert_rank": 2,
+          "expert_q": 38.53464126586914,
+          "v_web": 42.45612335205078,
+          "expert_value_gap": 3.9214820861816406,
+          "greedy_action_type": "web_path_enumeration",
+          "top_actions": [
+            {
+              "action_id": 2,
+              "action_type": "web_path_enumeration",
+              "q": 42.45612335205078
+            },
+            {
+              "action_id": 4,
+              "action_type": "input_discovery",
+              "q": 38.53464126586914
+            },
+            {
+              "action_id": 1,
+              "action_type": "http_fingerprint",
+              "q": 37.4144287109375
+            }
+          ]
+        },
+        {
+          "step": 2,
+          "expert_action_type": "vulnerability_check",
+          "expert_target": "/download?file",
+          "expert_allowed": true,
+          "expert_rank": 2,
+          "expert_q": 36.96933364868164,
+          "v_web": 40.39708709716797,
+          "expert_value_gap": 3.427753448486328,
+          "greedy_action_type": "web_path_enumeration",
+          "top_actions": [
+            {
+              "action_id": 2,
+              "action_type": "web_path_enumeration",
+              "q": 40.39708709716797
+            },
+            {
+              "action_id": 8,
+              "action_type": "vulnerability_check",
+              "q": 36.96933364868164
+            },
+            {
+              "action_id": 1,
+              "action_type": "http_fingerprint",
+              "q": 34.633453369140625
+            }
+          ]
+        },
+        {
+          "step": 3,
+          "expert_action_type": "exploit_attempt",
+          "expert_target": null,
+          "expert_allowed": true,
+          "expert_rank": 2,
+          "expert_q": 33.9613037109375,
+          "v_web": 39.8131217956543,
+          "expert_value_gap": 5.851818084716797,
+          "greedy_action_type": "web_path_enumeration",
+          "top_actions": [
+            {
+              "action_id": 2,
+              "action_type": "web_path_enumeration",
+              "q": 39.8131217956543
+            },
+            {
+              "action_id": 9,
+              "action_type": "exploit_attempt",
+              "q": 33.9613037109375
+            },
+            {
+              "action_id": 1,
+              "action_type": "http_fingerprint",
+              "q": 32.29762268066406
+            }
+          ]
+        },
+        {
+          "step": 4,
+          "expert_action_type": "web_path_enumeration",
+          "expert_target": "/login",
+          "expert_allowed": true,
+          "expert_rank": 1,
+          "expert_q": 33.04035949707031,
+          "v_web": 33.04035949707031,
+          "expert_value_gap": 0.0,
+          "greedy_action_type": "web_path_enumeration",
+          "top_actions": [
+            {
+              "action_id": 2,
+              "action_type": "web_path_enumeration",
+              "q": 33.04035949707031
+            },
+            {
+              "action_id": 1,
+              "action_type": "http_fingerprint",
+              "q": 26.416229248046875
+            }
+          ]
+        },
+        {
+          "step": 5,
+          "expert_action_type": "input_discovery",
+          "expert_target": null,
+          "expert_allowed": true,
+          "expert_rank": 1,
+          "expert_q": 28.60508155822754,
+          "v_web": 28.60508155822754,
+          "expert_value_gap": 0.0,
+          "greedy_action_type": "input_discovery",
+          "top_actions": [
+            {
+              "action_id": 4,
+              "action_type": "input_discovery",
+              "q": 28.60508155822754
+            },
+            {
+              "action_id": 7,
+              "action_type": "credential_use",
+              "q": 27.967411041259766
+            },
+            {
+              "action_id": 2,
+              "action_type": "web_path_enumeration",
+              "q": 27.685361862182617
+            },
+            {
+              "action_id": 1,
+              "action_type": "http_fingerprint",
+              "q": 27.457277297973633
+            }
+          ]
+        },
+        {
+          "step": 6,
+          "expert_action_type": "credential_use",
+          "expert_target": null,
+          "expert_allowed": true,
+          "expert_rank": 1,
+          "expert_q": 27.00465202331543,
+          "v_web": 27.00465202331543,
+          "expert_value_gap": 0.0,
+          "greedy_action_type": "credential_use",
+          "top_actions": [
+            {
+              "action_id": 7,
+              "action_type": "credential_use",
+              "q": 27.00465202331543
+            },
+            {
+              "action_id": 2,
+              "action_type": "web_path_enumeration",
+              "q": 26.785457611083984
+            },
+            {
+              "action_id": 1,
+              "action_type": "http_fingerprint",
+              "q": 26.105449676513672
+            }
+          ]
+        },
+        {
+          "step": 7,
+          "expert_action_type": "web_path_enumeration",
+          "expert_target": "/admin",
+          "expert_allowed": true,
+          "expert_rank": 1,
+          "expert_q": 22.663423538208008,
+          "v_web": 22.663423538208008,
+          "expert_value_gap": 0.0,
+          "greedy_action_type": "web_path_enumeration",
+          "top_actions": [
+            {
+              "action_id": 2,
+              "action_type": "web_path_enumeration",
+              "q": 22.663423538208008
+            },
+            {
+              "action_id": 1,
+              "action_type": "http_fingerprint",
+              "q": 21.69025993347168
+            },
+            {
+              "action_id": 12,
+              "action_type": "sensitive_file_read",
+              "q": 20.471656799316406
+            },
+            {
+              "action_id": 14,
+              "action_type": "post_exploitation",
+              "q": 20.278902053833008
+            }
+          ]
+        },
+        {
+          "step": 8,
+          "expert_action_type": "sensitive_file_read",
+          "expert_target": null,
+          "expert_allowed": true,
+          "expert_rank": 2,
+          "expert_q": 19.882333755493164,
+          "v_web": 20.523075103759766,
+          "expert_value_gap": 0.6407413482666016,
+          "greedy_action_type": "http_fingerprint",
+          "top_actions": [
+            {
+              "action_id": 1,
+              "action_type": "http_fingerprint",
+              "q": 20.523075103759766
+            },
+            {
+              "action_id": 12,
+              "action_type": "sensitive_file_read",
+              "q": 19.882333755493164
+            },
+            {
+              "action_id": 14,
+              "action_type": "post_exploitation",
+              "q": 19.859155654907227
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "task_id": "web_011_rce_privesc_root",
+      "num_steps": 7,
+      "expert_goal": true,
+      "expert_allowed_rate": 1.0,
+      "expert_top1_rate": 0.7142857142857143,
+      "expert_top3_rate": 1.0,
+      "expert_avg_value_gap": 1.0542526245117188,
+      "steps": [
+        {
+          "step": 0,
+          "expert_action_type": "web_path_enumeration",
+          "expert_target": "/debug",
+          "expert_allowed": true,
+          "expert_rank": 1,
+          "expert_q": 43.76519775390625,
+          "v_web": 43.76519775390625,
+          "expert_value_gap": 0.0,
+          "greedy_action_type": "web_path_enumeration",
+          "top_actions": [
+            {
+              "action_id": 2,
+              "action_type": "web_path_enumeration",
+              "q": 43.76519775390625
+            },
+            {
+              "action_id": 1,
+              "action_type": "http_fingerprint",
+              "q": 41.750396728515625
+            }
+          ]
+        },
+        {
+          "step": 1,
+          "expert_action_type": "input_discovery",
+          "expert_target": null,
+          "expert_allowed": true,
+          "expert_rank": 1,
+          "expert_q": 38.53464126586914,
+          "v_web": 38.53464126586914,
+          "expert_value_gap": 0.0,
+          "greedy_action_type": "input_discovery",
+          "top_actions": [
+            {
+              "action_id": 4,
+              "action_type": "input_discovery",
+              "q": 38.53464126586914
+            },
+            {
+              "action_id": 1,
+              "action_type": "http_fingerprint",
+              "q": 37.4144287109375
+            }
+          ]
+        },
+        {
+          "step": 2,
+          "expert_action_type": "vulnerability_check",
+          "expert_target": "/debug?cmd",
+          "expert_allowed": true,
+          "expert_rank": 1,
+          "expert_q": 36.96933364868164,
+          "v_web": 36.96933364868164,
+          "expert_value_gap": 0.0,
+          "greedy_action_type": "vulnerability_check",
+          "top_actions": [
+            {
+              "action_id": 8,
+              "action_type": "vulnerability_check",
+              "q": 36.96933364868164
+            },
+            {
+              "action_id": 1,
+              "action_type": "http_fingerprint",
+              "q": 34.633453369140625
+            }
+          ]
+        },
+        {
+          "step": 3,
+          "expert_action_type": "exploit_attempt",
+          "expert_target": null,
+          "expert_allowed": true,
+          "expert_rank": 1,
+          "expert_q": 33.9613037109375,
+          "v_web": 33.9613037109375,
+          "expert_value_gap": 0.0,
+          "greedy_action_type": "exploit_attempt",
+          "top_actions": [
+            {
+              "action_id": 9,
+              "action_type": "exploit_attempt",
+              "q": 33.9613037109375
+            },
+            {
+              "action_id": 1,
+              "action_type": "http_fingerprint",
+              "q": 32.29762268066406
+            }
+          ]
+        },
+        {
+          "step": 4,
+          "expert_action_type": "command_execution",
+          "expert_target": null,
+          "expert_allowed": true,
+          "expert_rank": 2,
+          "expert_q": 25.896358489990234,
+          "v_web": 30.950456619262695,
+          "expert_value_gap": 5.054098129272461,
+          "greedy_action_type": "privilege_escalation",
+          "top_actions": [
+            {
+              "action_id": 13,
+              "action_type": "privilege_escalation",
+              "q": 30.950456619262695
+            },
+            {
+              "action_id": 11,
+              "action_type": "command_execution",
+              "q": 25.896358489990234
+            },
+            {
+              "action_id": 1,
+              "action_type": "http_fingerprint",
+              "q": 25.465057373046875
+            }
+          ]
+        },
+        {
+          "step": 5,
+          "expert_action_type": "privilege_escalation",
+          "expert_target": null,
+          "expert_allowed": true,
+          "expert_rank": 1,
+          "expert_q": 24.965877532958984,
+          "v_web": 24.965877532958984,
+          "expert_value_gap": 0.0,
+          "greedy_action_type": "privilege_escalation",
+          "top_actions": [
+            {
+              "action_id": 13,
+              "action_type": "privilege_escalation",
+              "q": 24.965877532958984
+            },
+            {
+              "action_id": 1,
+              "action_type": "http_fingerprint",
+              "q": 21.9486083984375
+            }
+          ]
+        },
+        {
+          "step": 6,
+          "expert_action_type": "sensitive_file_read",
+          "expert_target": null,
+          "expert_allowed": true,
+          "expert_rank": 2,
+          "expert_q": 19.671485900878906,
+          "v_web": 21.997156143188477,
+          "expert_value_gap": 2.3256702423095703,
+          "greedy_action_type": "http_fingerprint",
+          "top_actions": [
+            {
+              "action_id": 1,
+              "action_type": "http_fingerprint",
+              "q": 21.997156143188477
+            },
+            {
+              "action_id": 12,
+              "action_type": "sensitive_file_read",
+              "q": 19.671485900878906
+            },
+            {
+              "action_id": 14,
+              "action_type": "post_exploitation",
+              "q": 19.639209747314453
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "task_id": "web_010_sqli_upload_shell",
+      "num_steps": 11,
+      "expert_goal": true,
+      "expert_allowed_rate": 1.0,
+      "expert_top1_rate": 0.5454545454545454,
+      "expert_top3_rate": 1.0,
+      "expert_avg_value_gap": 0.5478487881747159,
+      "steps": [
+        {
+          "step": 0,
+          "expert_action_type": "web_path_enumeration",
+          "expert_target": "/login",
+          "expert_allowed": true,
+          "expert_rank": 1,
+          "expert_q": 43.76519775390625,
+          "v_web": 43.76519775390625,
+          "expert_value_gap": 0.0,
+          "greedy_action_type": "web_path_enumeration",
+          "top_actions": [
+            {
+              "action_id": 2,
+              "action_type": "web_path_enumeration",
+              "q": 43.76519775390625
+            },
+            {
+              "action_id": 1,
+              "action_type": "http_fingerprint",
+              "q": 41.750396728515625
+            }
+          ]
+        },
+        {
+          "step": 1,
+          "expert_action_type": "web_path_enumeration",
+          "expert_target": "/product",
+          "expert_allowed": true,
+          "expert_rank": 1,
+          "expert_q": 38.82247543334961,
+          "v_web": 38.82247543334961,
+          "expert_value_gap": 0.0,
+          "greedy_action_type": "web_path_enumeration",
+          "top_actions": [
+            {
+              "action_id": 2,
+              "action_type": "web_path_enumeration",
+              "q": 38.82247543334961
+            },
+            {
+              "action_id": 4,
+              "action_type": "input_discovery",
+              "q": 38.68470764160156
+            },
+            {
+              "action_id": 1,
+              "action_type": "http_fingerprint",
+              "q": 37.942222595214844
+            }
+          ]
+        },
+        {
+          "step": 2,
+          "expert_action_type": "input_discovery",
+          "expert_target": null,
+          "expert_allowed": true,
+          "expert_rank": 1,
+          "expert_q": 40.24360275268555,
+          "v_web": 40.24360275268555,
+          "expert_value_gap": 0.0,
+          "greedy_action_type": "input_discovery",
+          "top_actions": [
+            {
+              "action_id": 4,
+              "action_type": "input_discovery",
+              "q": 40.24360275268555
+            },
+            {
+              "action_id": 2,
+              "action_type": "web_path_enumeration",
+              "q": 39.3410758972168
+            },
+            {
+              "action_id": 1,
+              "action_type": "http_fingerprint",
+              "q": 38.049766540527344
+            }
+          ]
+        },
+        {
+          "step": 3,
+          "expert_action_type": "vulnerability_check",
+          "expert_target": "/product?sku",
+          "expert_allowed": true,
+          "expert_rank": 2,
+          "expert_q": 38.60224533081055,
+          "v_web": 39.411651611328125,
+          "expert_value_gap": 0.8094062805175781,
+          "greedy_action_type": "web_path_enumeration",
+          "top_actions": [
+            {
+              "action_id": 2,
+              "action_type": "web_path_enumeration",
+              "q": 39.411651611328125
+            },
+            {
+              "action_id": 8,
+              "action_type": "vulnerability_check",
+              "q": 38.60224533081055
+            },
+            {
+              "action_id": 1,
+              "action_type": "http_fingerprint",
+              "q": 36.635684967041016
+            }
+          ]
+        },
+        {
+          "step": 4,
+          "expert_action_type": "exploit_attempt",
+          "expert_target": null,
+          "expert_allowed": true,
+          "expert_rank": 2,
+          "expert_q": 34.90929412841797,
+          "v_web": 36.13763427734375,
+          "expert_value_gap": 1.2283401489257812,
+          "greedy_action_type": "web_path_enumeration",
+          "top_actions": [
+            {
+              "action_id": 2,
+              "action_type": "web_path_enumeration",
+              "q": 36.13763427734375
+            },
+            {
+              "action_id": 9,
+              "action_type": "exploit_attempt",
+              "q": 34.90929412841797
+            },
+            {
+              "action_id": 1,
+              "action_type": "http_fingerprint",
+              "q": 33.73335647583008
+            }
+          ]
+        },
+        {
+          "step": 5,
+          "expert_action_type": "credential_use",
+          "expert_target": null,
+          "expert_allowed": true,
+          "expert_rank": 2,
+          "expert_q": 29.387819290161133,
+          "v_web": 30.07911491394043,
+          "expert_value_gap": 0.6912956237792969,
+          "greedy_action_type": "web_path_enumeration",
+          "top_actions": [
+            {
+              "action_id": 2,
+              "action_type": "web_path_enumeration",
+              "q": 30.07911491394043
+            },
+            {
+              "action_id": 7,
+              "action_type": "credential_use",
+              "q": 29.387819290161133
+            },
+            {
+              "action_id": 1,
+              "action_type": "http_fingerprint",
+              "q": 28.706279754638672
+            }
+          ]
+        },
+        {
+          "step": 6,
+          "expert_action_type": "web_path_enumeration",
+          "expert_target": "/upload",
+          "expert_allowed": true,
+          "expert_rank": 1,
+          "expert_q": 26.05093002319336,
+          "v_web": 26.05093002319336,
+          "expert_value_gap": 0.0,
+          "greedy_action_type": "web_path_enumeration",
+          "top_actions": [
+            {
+              "action_id": 2,
+              "action_type": "web_path_enumeration",
+              "q": 26.05093002319336
+            },
+            {
+              "action_id": 1,
+              "action_type": "http_fingerprint",
+              "q": 23.853836059570312
+            }
+          ]
+        },
+        {
+          "step": 7,
+          "expert_action_type": "input_discovery",
+          "expert_target": null,
+          "expert_allowed": true,
+          "expert_rank": 3,
+          "expert_q": 27.29741096496582,
+          "v_web": 30.230533599853516,
+          "expert_value_gap": 2.9331226348876953,
+          "greedy_action_type": "file_upload_attempt",
+          "top_actions": [
+            {
+              "action_id": 10,
+              "action_type": "file_upload_attempt",
+              "q": 30.230533599853516
+            },
+            {
+              "action_id": 1,
+              "action_type": "http_fingerprint",
+              "q": 27.849712371826172
+            },
+            {
+              "action_id": 4,
+              "action_type": "input_discovery",
+              "q": 27.29741096496582
+            }
+          ]
+        },
+        {
+          "step": 8,
+          "expert_action_type": "file_upload_attempt",
+          "expert_target": null,
+          "expert_allowed": true,
+          "expert_rank": 1,
+          "expert_q": 29.110807418823242,
+          "v_web": 29.110807418823242,
+          "expert_value_gap": 0.0,
+          "greedy_action_type": "file_upload_attempt",
+          "top_actions": [
+            {
+              "action_id": 10,
+              "action_type": "file_upload_attempt",
+              "q": 29.110807418823242
+            },
+            {
+              "action_id": 1,
+              "action_type": "http_fingerprint",
+              "q": 26.43684196472168
+            }
+          ]
+        },
+        {
+          "step": 9,
+          "expert_action_type": "command_execution",
+          "expert_target": null,
+          "expert_allowed": true,
+          "expert_rank": 1,
+          "expert_q": 21.71839714050293,
+          "v_web": 21.71839714050293,
+          "expert_value_gap": 0.0,
+          "greedy_action_type": "command_execution",
+          "top_actions": [
+            {
+              "action_id": 11,
+              "action_type": "command_execution",
+              "q": 21.71839714050293
+            },
+            {
+              "action_id": 1,
+              "action_type": "http_fingerprint",
+              "q": 20.77224349975586
+            },
+            {
+              "action_id": 12,
+              "action_type": "sensitive_file_read",
+              "q": 20.054277420043945
+            },
+            {
+              "action_id": 14,
+              "action_type": "post_exploitation",
+              "q": 19.82906150817871
+            }
+          ]
+        },
+        {
+          "step": 10,
+          "expert_action_type": "sensitive_file_read",
+          "expert_target": null,
+          "expert_allowed": true,
+          "expert_rank": 2,
+          "expert_q": 20.5938777923584,
+          "v_web": 20.958049774169922,
+          "expert_value_gap": 0.36417198181152344,
+          "greedy_action_type": "http_fingerprint",
+          "top_actions": [
+            {
+              "action_id": 1,
+              "action_type": "http_fingerprint",
+              "q": 20.958049774169922
+            },
+            {
+              "action_id": 12,
+              "action_type": "sensitive_file_read",
+              "q": 20.5938777923584
+            },
+            {
+              "action_id": 14,
+              "action_type": "post_exploitation",
+              "q": 20.527616500854492
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

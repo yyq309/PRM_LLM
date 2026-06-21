@@ -1,0 +1,14 @@
+{
+  "name": "VulnHub-Toppo-1",
+  "kind": "boot2root-vm",
+  "target": "http://toppo1.lab",
+  "abstract_family": "rce_privesc",
+  "isolation_note": "Full VM on an isolated host-only VMware network. Toppo is distributed as a VMDK-only image, so create the VM shell manually, attach the disk, keep a single host-only NIC, and snapshot after first boot.",
+  "eta_fill": {
+    "wordlist": "/usr/share/wordlists/dirb/common.txt",
+    "webshell": "/shell.php",
+    "file": "/root/root.txt"
+  },
+  "recommended_first": false,
+  "rationale": "Toppo 1 is a lightweight full-VM option from the original shortlist. Public write-ups usually place the root step in the GTFOBins/SUID bucket rather than a clean sudo-only misconfiguration, so use it as the operator-binary-abuse slot."
+}

@@ -1,0 +1,100 @@
+{
+  "relative_ratio_perturbation": {
+    "description": "Fixed scale 1.0; independent per-event jitter (different per seed) perturbs the relative reward ratios. Stable ranking here = robustness to the hand-tuned constants.",
+    "rel_jitter": 0.3,
+    "rows": [
+      {
+        "scale": 1.0,
+        "jitter": 0.0,
+        "seed": 0,
+        "eval_goal_rate": 1.0,
+        "expert_top1": 0.5542168674698795,
+        "expert_top3": 0.927710843373494,
+        "expert_value_gap": 1.38761989179864
+      },
+      {
+        "scale": 1.0,
+        "jitter": 0.3,
+        "seed": 0,
+        "eval_goal_rate": 1.0,
+        "expert_top1": 0.4939759036144578,
+        "expert_top3": 0.9156626506024096,
+        "expert_value_gap": 1.3131257137620305
+      },
+      {
+        "scale": 1.0,
+        "jitter": 0.3,
+        "seed": 1,
+        "eval_goal_rate": 1.0,
+        "expert_top1": 0.4457831325301205,
+        "expert_top3": 0.8313253012048193,
+        "expert_value_gap": 1.6369926498596927
+      },
+      {
+        "scale": 1.0,
+        "jitter": 0.3,
+        "seed": 2,
+        "eval_goal_rate": 1.0,
+        "expert_top1": 0.43373493975903615,
+        "expert_top3": 0.9156626506024096,
+        "expert_value_gap": 1.5888902135642178
+      },
+      {
+        "scale": 1.0,
+        "jitter": 0.3,
+        "seed": 3,
+        "eval_goal_rate": 1.0,
+        "expert_top1": 0.5180722891566265,
+        "expert_top3": 0.8795180722891566,
+        "expert_value_gap": 1.3555745044386531
+      }
+    ],
+    "expert_top1": {
+      "mean": 0.48915662650602415,
+      "min": 0.43373493975903615,
+      "max": 0.5542168674698795,
+      "spread": 0.12048192771084337,
+      "std": 0.04482186804274283
+    },
+    "expert_top3": {
+      "mean": 0.8939759036144578,
+      "min": 0.8313253012048193,
+      "max": 0.927710843373494,
+      "spread": 0.09638554216867468,
+      "std": 0.03524997310440431
+    },
+    "goal_rate": {
+      "mean": 1.0,
+      "min": 1.0,
+      "max": 1.0,
+      "spread": 0.0,
+      "std": 0.0
+    },
+    "verdict_relative_ranking_stable": true
+  },
+  "global_scaling_sanity": {
+    "description": "Pure scalar reward multiplication (jitter 0). Ranking invariance is a trivial MDP property; only value_gap scaling is informative here.",
+    "by_scale": {
+      "0.5": {
+        "goal_rate_mean": 1.0,
+        "top3_mean": 0.927710843373494,
+        "value_gap_mean": 0.7600735986089132
+      },
+      "1.0": {
+        "goal_rate_mean": 1.0,
+        "top3_mean": 0.9337349397590362,
+        "value_gap_mean": 1.3025570260473045
+      },
+      "2.0": {
+        "goal_rate_mean": 1.0,
+        "top3_mean": 0.9036144578313252,
+        "value_gap_mean": 2.8733133063258895
+      }
+    },
+    "value_gap_ratio_observed": 3.7803093168669823,
+    "value_gap_ratio_expected": 4.0,
+    "value_gap_scales_with_reward": true,
+    "note": "If value_gap_ratio_observed differs much from value_gap_ratio_expected, the networks are under-converged at this step budget (a fixed-budget confound), not a robustness signal."
+  },
+  "summary_note": "Relative-ratio perturbation is the real §5.1 robustness test; global scaling is a trivial sanity check. Both are reported separately so the trivial invariance cannot masquerade as robustness."
+}

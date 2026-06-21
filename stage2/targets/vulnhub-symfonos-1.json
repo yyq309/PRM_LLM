@@ -1,0 +1,14 @@
+{
+  "name": "VulnHub-Symfonos-1",
+  "kind": "boot2root-vm",
+  "target": "http://symfonos.local",
+  "abstract_family": "leak_authed_privesc",
+  "isolation_note": "Full VM on an isolated host-only VMware network. The author notes that symfonos.local may require a hosts-file entry. Keep a single host-only NIC, allow DHCP inside the isolated subnet, and snapshot after first boot.",
+  "eta_fill": {
+    "wordlist": "/usr/share/wordlists/dirb/common.txt",
+    "webshell": "/",
+    "file": "/root/proof.txt"
+  },
+  "recommended_first": false,
+  "rationale": "Symfonos 1 is a useful optional alternate third VM, but public write-ups usually end in PATH-hijack or SUID-curl style privilege escalation rather than a clean sudo GTFOBins root path."
+}

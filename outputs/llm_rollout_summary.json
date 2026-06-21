@@ -1,0 +1,18 @@
+{
+  "oracle_checkpoint": "outputs\\seed_gate_destmpl\\seed_1\\web_dqn_seed_1.pt",
+  "model": "deepseek-v4-flash",
+  "llm_calls": 140,
+  "states_visited": 140,
+  "num_samples": 695,
+  "candidate_status_distribution": {
+    "valid": 417,
+    "unsupported": 276,
+    "schema_gap": 2
+  },
+  "label_source_distribution": {
+    "oracle": 164,
+    "normalizer_rule": 278,
+    "precondition_rule": 253
+  },
+  "output": "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\outputs\\llm_rollout_samples.jsonl"
+}

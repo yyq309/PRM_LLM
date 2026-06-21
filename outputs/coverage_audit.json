@@ -1,0 +1,1779 @@
+{
+  "num_tasks": 65,
+  "num_families": 12,
+  "num_distinct_topology_signatures": 12,
+  "family_counts": {
+    "authed_injection": 5,
+    "chained_exploit": 5,
+    "default_pw": 5,
+    "injection_login": 10,
+    "leak_authed_privesc": 5,
+    "leak_file": 5,
+    "leak_login": 5,
+    "rce_privesc": 5,
+    "rce_shell": 5,
+    "upload_default_privesc": 5,
+    "upload_default_shell": 5,
+    "upload_leak_shell": 5
+  },
+  "family_x_difficulty": {
+    "authed_injection": {
+      "hard": 5
+    },
+    "chained_exploit": {
+      "hard": 5
+    },
+    "default_pw": {
+      "easy": 5
+    },
+    "injection_login": {
+      "medium": 10
+    },
+    "leak_authed_privesc": {
+      "hard": 5
+    },
+    "leak_file": {
+      "easy": 5
+    },
+    "leak_login": {
+      "medium": 5
+    },
+    "rce_privesc": {
+      "hard": 5
+    },
+    "rce_shell": {
+      "hard": 5
+    },
+    "upload_default_privesc": {
+      "hard": 5
+    },
+    "upload_default_shell": {
+      "hard": 5
+    },
+    "upload_leak_shell": {
+      "hard": 5
+    }
+  },
+  "vuln_class_counts": {
+    "backup_or_config_leak": 15,
+    "default_or_weak_password": 20,
+    "sqli": 10,
+    "lfi": 5,
+    "rce": 25,
+    "file_upload": 15,
+    "host_privilege_escalation": 15
+  },
+  "attack_surface_counts": {
+    "path": 65,
+    "form": 45,
+    "parameter": 35,
+    "upload": 15
+  },
+  "difficulty_counts": {
+    "easy": 10,
+    "medium": 15,
+    "hard": 40
+  },
+  "chain_depth_histogram": {
+    "2": 5,
+    "5": 5,
+    "6": 5,
+    "7": 10,
+    "8": 20,
+    "9": 10,
+    "10": 5,
+    "12": 5
+  },
+  "tasks_with_distractors": 65,
+  "vuln_class_x_difficulty_grid": {
+    "backup_or_config_leak": {
+      "easy": 5,
+      "medium": 5,
+      "hard": 5
+    },
+    "default_or_weak_password": {
+      "easy": 5,
+      "medium": 0,
+      "hard": 15
+    },
+    "sqli": {
+      "easy": 0,
+      "medium": 5,
+      "hard": 5
+    },
+    "lfi": {
+      "easy": 0,
+      "medium": 5,
+      "hard": 0
+    },
+    "rce": {
+      "easy": 0,
+      "medium": 0,
+      "hard": 25
+    },
+    "file_upload": {
+      "easy": 0,
+      "medium": 0,
+      "hard": 15
+    },
+    "host_privilege_escalation": {
+      "easy": 0,
+      "medium": 0,
+      "hard": 15
+    }
+  },
+  "coverage": {
+    "filled_cells": 11,
+    "total_cells": 21,
+    "fill_rate": 0.524,
+    "empty_cells": [
+      {
+        "vuln_class": "default_or_weak_password",
+        "difficulty": "medium"
+      },
+      {
+        "vuln_class": "sqli",
+        "difficulty": "easy"
+      },
+      {
+        "vuln_class": "lfi",
+        "difficulty": "easy"
+      },
+      {
+        "vuln_class": "lfi",
+        "difficulty": "hard"
+      },
+      {
+        "vuln_class": "rce",
+        "difficulty": "easy"
+      },
+      {
+        "vuln_class": "rce",
+        "difficulty": "medium"
+      },
+      {
+        "vuln_class": "file_upload",
+        "difficulty": "easy"
+      },
+      {
+        "vuln_class": "file_upload",
+        "difficulty": "medium"
+      },
+      {
+        "vuln_class": "host_privilege_escalation",
+        "difficulty": "easy"
+      },
+      {
+        "vuln_class": "host_privilege_escalation",
+        "difficulty": "medium"
+      }
+    ]
+  },
+  "tasks": [
+    {
+      "task_id": "gen_200_leak_file",
+      "family": "leak_file",
+      "topology_signature": [
+        "web_path_enumeration",
+        "content_retrieval"
+      ],
+      "vuln_classes": [
+        "backup_or_config_leak"
+      ],
+      "attack_surfaces": [
+        "path"
+      ],
+      "chain_depth": 2,
+      "difficulty": "easy",
+      "distractor_paths": 2
+    },
+    {
+      "task_id": "gen_201_leak_file",
+      "family": "leak_file",
+      "topology_signature": [
+        "web_path_enumeration",
+        "content_retrieval"
+      ],
+      "vuln_classes": [
+        "backup_or_config_leak"
+      ],
+      "attack_surfaces": [
+        "path"
+      ],
+      "chain_depth": 2,
+      "difficulty": "easy",
+      "distractor_paths": 2
+    },
+    {
+      "task_id": "gen_202_leak_file",
+      "family": "leak_file",
+      "topology_signature": [
+        "web_path_enumeration",
+        "content_retrieval"
+      ],
+      "vuln_classes": [
+        "backup_or_config_leak"
+      ],
+      "attack_surfaces": [
+        "path"
+      ],
+      "chain_depth": 2,
+      "difficulty": "easy",
+      "distractor_paths": 2
+    },
+    {
+      "task_id": "gen_203_leak_file",
+      "family": "leak_file",
+      "topology_signature": [
+        "web_path_enumeration",
+        "content_retrieval"
+      ],
+      "vuln_classes": [
+        "backup_or_config_leak"
+      ],
+      "attack_surfaces": [
+        "path"
+      ],
+      "chain_depth": 2,
+      "difficulty": "easy",
+      "distractor_paths": 2
+    },
+    {
+      "task_id": "gen_204_leak_file",
+      "family": "leak_file",
+      "topology_signature": [
+        "web_path_enumeration",
+        "content_retrieval"
+      ],
+      "vuln_classes": [
+        "backup_or_config_leak"
+      ],
+      "attack_surfaces": [
+        "path"
+      ],
+      "chain_depth": 2,
+      "difficulty": "easy",
+      "distractor_paths": 2
+    },
+    {
+      "task_id": "gen_205_default_pw",
+      "family": "default_pw",
+      "topology_signature": [
+        "web_path_enumeration",
+        "input_discovery",
+        "auth_attempt",
+        "web_path_enumeration",
+        "sensitive_file_read"
+      ],
+      "vuln_classes": [
+        "default_or_weak_password"
+      ],
+      "attack_surfaces": [
+        "path",
+        "form"
+      ],
+      "chain_depth": 5,
+      "difficulty": "easy",
+      "distractor_paths": 2
+    },
+    {
+      "task_id": "gen_206_default_pw",
+      "family": "default_pw",
+      "topology_signature": [
+        "web_path_enumeration",
+        "input_discovery",
+        "auth_attempt",
+        "web_path_enumeration",
+        "sensitive_file_read"
+      ],
+      "vuln_classes": [
+        "default_or_weak_password"
+      ],
+      "attack_surfaces": [
+        "path",
+        "form"
+      ],
+      "chain_depth": 5,
+      "difficulty": "easy",
+      "distractor_paths": 2
+    },
+    {
+      "task_id": "gen_207_default_pw",
+      "family": "default_pw",
+      "topology_signature": [
+        "web_path_enumeration",
+        "input_discovery",
+        "auth_attempt",
+        "web_path_enumeration",
+        "sensitive_file_read"
+      ],
+      "vuln_classes": [
+        "default_or_weak_password"
+      ],
+      "attack_surfaces": [
+        "path",
+        "form"
+      ],
+      "chain_depth": 5,
+      "difficulty": "easy",
+      "distractor_paths": 2
+    },
+    {
+      "task_id": "gen_208_default_pw",
+      "family": "default_pw",
+      "topology_signature": [
+        "web_path_enumeration",
+        "input_discovery",
+        "auth_attempt",
+        "web_path_enumeration",
+        "sensitive_file_read"
+      ],
+      "vuln_classes": [
+        "default_or_weak_password"
+      ],
+      "attack_surfaces": [
+        "path",
+        "form"
+      ],
+      "chain_depth": 5,
+      "difficulty": "easy",
+      "distractor_paths": 2
+    },
+    {
+      "task_id": "gen_209_default_pw",
+      "family": "default_pw",
+      "topology_signature": [
+        "web_path_enumeration",
+        "input_discovery",
+        "auth_attempt",
+        "web_path_enumeration",
+        "sensitive_file_read"
+      ],
+      "vuln_classes": [
+        "default_or_weak_password"
+      ],
+      "attack_surfaces": [
+        "path",
+        "form"
+      ],
+      "chain_depth": 5,
+      "difficulty": "easy",
+      "distractor_paths": 2
+    },
+    {
+      "task_id": "gen_210_leak_login",
+      "family": "leak_login",
+      "topology_signature": [
+        "web_path_enumeration",
+        "content_retrieval",
+        "web_path_enumeration",
+        "input_discovery",
+        "credential_use",
+        "web_path_enumeration",
+        "sensitive_file_read"
+      ],
+      "vuln_classes": [
+        "backup_or_config_leak"
+      ],
+      "attack_surfaces": [
+        "path",
+        "form"
+      ],
+      "chain_depth": 7,
+      "difficulty": "medium",
+      "distractor_paths": 2
+    },
+    {
+      "task_id": "gen_211_leak_login",
+      "family": "leak_login",
+      "topology_signature": [
+        "web_path_enumeration",
+        "content_retrieval",
+        "web_path_enumeration",
+        "input_discovery",
+        "credential_use",
+        "web_path_enumeration",
+        "sensitive_file_read"
+      ],
+      "vuln_classes": [
+        "backup_or_config_leak"
+      ],
+      "attack_surfaces": [
+        "path",
+        "form"
+      ],
+      "chain_depth": 7,
+      "difficulty": "medium",
+      "distractor_paths": 2
+    },
+    {
+      "task_id": "gen_212_leak_login",
+      "family": "leak_login",
+      "topology_signature": [
+        "web_path_enumeration",
+        "content_retrieval",
+        "web_path_enumeration",
+        "input_discovery",
+        "credential_use",
+        "web_path_enumeration",
+        "sensitive_file_read"
+      ],
+      "vuln_classes": [
+        "backup_or_config_leak"
+      ],
+      "attack_surfaces": [
+        "path",
+        "form"
+      ],
+      "chain_depth": 7,
+      "difficulty": "medium",
+      "distractor_paths": 2
+    },
+    {
+      "task_id": "gen_213_leak_login",
+      "family": "leak_login",
+      "topology_signature": [
+        "web_path_enumeration",
+        "content_retrieval",
+        "web_path_enumeration",
+        "input_discovery",
+        "credential_use",
+        "web_path_enumeration",
+        "sensitive_file_read"
+      ],
+      "vuln_classes": [
+        "backup_or_config_leak"
+      ],
+      "attack_surfaces": [
+        "path",
+        "form"
+      ],
+      "chain_depth": 7,
+      "difficulty": "medium",
+      "distractor_paths": 2
+    },
+    {
+      "task_id": "gen_214_leak_login",
+      "family": "leak_login",
+      "topology_signature": [
+        "web_path_enumeration",
+        "content_retrieval",
+        "web_path_enumeration",
+        "input_discovery",
+        "credential_use",
+        "web_path_enumeration",
+        "sensitive_file_read"
+      ],
+      "vuln_classes": [
+        "backup_or_config_leak"
+      ],
+      "attack_surfaces": [
+        "path",
+        "form"
+      ],
+      "chain_depth": 7,
+      "difficulty": "medium",
+      "distractor_paths": 2
+    },
+    {
+      "task_id": "gen_215_sqli_login",
+      "family": "injection_login",
+      "topology_signature": [
+        "web_path_enumeration",
+        "input_discovery",
+        "vulnerability_check",
+        "exploit_attempt",
+        "web_path_enumeration",
+        "web_path_enumeration",
+        "credential_use",
+        "sensitive_file_read"
+      ],
+      "vuln_classes": [
+        "sqli"
+      ],
+      "attack_surfaces": [
+        "path",
+        "form",
+        "parameter"
+      ],
+      "chain_depth": 8,
+      "difficulty": "medium",
+      "distractor_paths": 2
+    },
+    {
+      "task_id": "gen_216_sqli_login",
+      "family": "injection_login",
+      "topology_signature": [
+        "web_path_enumeration",
+        "input_discovery",
+        "vulnerability_check",
+        "exploit_attempt",
+        "web_path_enumeration",
+        "web_path_enumeration",
+        "credential_use",
+        "sensitive_file_read"
+      ],
+      "vuln_classes": [
+        "sqli"
+      ],
+      "attack_surfaces": [
+        "path",
+        "form",
+        "parameter"
+      ],
+      "chain_depth": 8,
+      "difficulty": "medium",
+      "distractor_paths": 2
+    },
+    {
+      "task_id": "gen_217_sqli_login",
+      "family": "injection_login",
+      "topology_signature": [
+        "web_path_enumeration",
+        "input_discovery",
+        "vulnerability_check",
+        "exploit_attempt",
+        "web_path_enumeration",
+        "web_path_enumeration",
+        "credential_use",
+        "sensitive_file_read"
+      ],
+      "vuln_classes": [
+        "sqli"
+      ],
+      "attack_surfaces": [
+        "path",
+        "form",
+        "parameter"
+      ],
+      "chain_depth": 8,
+      "difficulty": "medium",
+      "distractor_paths": 2
+    },
+    {
+      "task_id": "gen_218_sqli_login",
+      "family": "injection_login",
+      "topology_signature": [
+        "web_path_enumeration",
+        "input_discovery",
+        "vulnerability_check",
+        "exploit_attempt",
+        "web_path_enumeration",
+        "web_path_enumeration",
+        "credential_use",
+        "sensitive_file_read"
+      ],
+      "vuln_classes": [
+        "sqli"
+      ],
+      "attack_surfaces": [
+        "path",
+        "form",
+        "parameter"
+      ],
+      "chain_depth": 8,
+      "difficulty": "medium",
+      "distractor_paths": 2
+    },
+    {
+      "task_id": "gen_219_sqli_login",
+      "family": "injection_login",
+      "topology_signature": [
+        "web_path_enumeration",
+        "input_discovery",
+        "vulnerability_check",
+        "exploit_attempt",
+        "web_path_enumeration",
+        "web_path_enumeration",
+        "credential_use",
+        "sensitive_file_read"
+      ],
+      "vuln_classes": [
+        "sqli"
+      ],
+      "attack_surfaces": [
+        "path",
+        "form",
+        "parameter"
+      ],
+      "chain_depth": 8,
+      "difficulty": "medium",
+      "distractor_paths": 2
+    },
+    {
+      "task_id": "gen_220_lfi_login",
+      "family": "injection_login",
+      "topology_signature": [
+        "web_path_enumeration",
+        "input_discovery",
+        "vulnerability_check",
+        "exploit_attempt",
+        "web_path_enumeration",
+        "web_path_enumeration",
+        "credential_use",
+        "sensitive_file_read"
+      ],
+      "vuln_classes": [
+        "lfi"
+      ],
+      "attack_surfaces": [
+        "path",
+        "form",
+        "parameter"
+      ],
+      "chain_depth": 8,
+      "difficulty": "medium",
+      "distractor_paths": 2
+    },
+    {
+      "task_id": "gen_221_lfi_login",
+      "family": "injection_login",
+      "topology_signature": [
+        "web_path_enumeration",
+        "input_discovery",
+        "vulnerability_check",
+        "exploit_attempt",
+        "web_path_enumeration",
+        "web_path_enumeration",
+        "credential_use",
+        "sensitive_file_read"
+      ],
+      "vuln_classes": [
+        "lfi"
+      ],
+      "attack_surfaces": [
+        "path",
+        "form",
+        "parameter"
+      ],
+      "chain_depth": 8,
+      "difficulty": "medium",
+      "distractor_paths": 2
+    },
+    {
+      "task_id": "gen_222_lfi_login",
+      "family": "injection_login",
+      "topology_signature": [
+        "web_path_enumeration",
+        "input_discovery",
+        "vulnerability_check",
+        "exploit_attempt",
+        "web_path_enumeration",
+        "web_path_enumeration",
+        "credential_use",
+        "sensitive_file_read"
+      ],
+      "vuln_classes": [
+        "lfi"
+      ],
+      "attack_surfaces": [
+        "path",
+        "form",
+        "parameter"
+      ],
+      "chain_depth": 8,
+      "difficulty": "medium",
+      "distractor_paths": 2
+    },
+    {
+      "task_id": "gen_223_lfi_login",
+      "family": "injection_login",
+      "topology_signature": [
+        "web_path_enumeration",
+        "input_discovery",
+        "vulnerability_check",
+        "exploit_attempt",
+        "web_path_enumeration",
+        "web_path_enumeration",
+        "credential_use",
+        "sensitive_file_read"
+      ],
+      "vuln_classes": [
+        "lfi"
+      ],
+      "attack_surfaces": [
+        "path",
+        "form",
+        "parameter"
+      ],
+      "chain_depth": 8,
+      "difficulty": "medium",
+      "distractor_paths": 2
+    },
+    {
+      "task_id": "gen_224_lfi_login",
+      "family": "injection_login",
+      "topology_signature": [
+        "web_path_enumeration",
+        "input_discovery",
+        "vulnerability_check",
+        "exploit_attempt",
+        "web_path_enumeration",
+        "web_path_enumeration",
+        "credential_use",
+        "sensitive_file_read"
+      ],
+      "vuln_classes": [
+        "lfi"
+      ],
+      "attack_surfaces": [
+        "path",
+        "form",
+        "parameter"
+      ],
+      "chain_depth": 8,
+      "difficulty": "medium",
+      "distractor_paths": 2
+    },
+    {
+      "task_id": "gen_225_rce_shell",
+      "family": "rce_shell",
+      "topology_signature": [
+        "web_path_enumeration",
+        "input_discovery",
+        "vulnerability_check",
+        "exploit_attempt",
+        "command_execution",
+        "sensitive_file_read"
+      ],
+      "vuln_classes": [
+        "rce"
+      ],
+      "attack_surfaces": [
+        "path",
+        "parameter"
+      ],
+      "chain_depth": 6,
+      "difficulty": "hard",
+      "distractor_paths": 2
+    },
+    {
+      "task_id": "gen_226_rce_shell",
+      "family": "rce_shell",
+      "topology_signature": [
+        "web_path_enumeration",
+        "input_discovery",
+        "vulnerability_check",
+        "exploit_attempt",
+        "command_execution",
+        "sensitive_file_read"
+      ],
+      "vuln_classes": [
+        "rce"
+      ],
+      "attack_surfaces": [
+        "path",
+        "parameter"
+      ],
+      "chain_depth": 6,
+      "difficulty": "hard",
+      "distractor_paths": 2
+    },
+    {
+      "task_id": "gen_227_rce_shell",
+      "family": "rce_shell",
+      "topology_signature": [
+        "web_path_enumeration",
+        "input_discovery",
+        "vulnerability_check",
+        "exploit_attempt",
+        "command_execution",
+        "sensitive_file_read"
+      ],
+      "vuln_classes": [
+        "rce"
+      ],
+      "attack_surfaces": [
+        "path",
+        "parameter"
+      ],
+      "chain_depth": 6,
+      "difficulty": "hard",
+      "distractor_paths": 2
+    },
+    {
+      "task_id": "gen_228_rce_shell",
+      "family": "rce_shell",
+      "topology_signature": [
+        "web_path_enumeration",
+        "input_discovery",
+        "vulnerability_check",
+        "exploit_attempt",
+        "command_execution",
+        "sensitive_file_read"
+      ],
+      "vuln_classes": [
+        "rce"
+      ],
+      "attack_surfaces": [
+        "path",
+        "parameter"
+      ],
+      "chain_depth": 6,
+      "difficulty": "hard",
+      "distractor_paths": 2
+    },
+    {
+      "task_id": "gen_229_rce_shell",
+      "family": "rce_shell",
+      "topology_signature": [
+        "web_path_enumeration",
+        "input_discovery",
+        "vulnerability_check",
+        "exploit_attempt",
+        "command_execution",
+        "sensitive_file_read"
+      ],
+      "vuln_classes": [
+        "rce"
+      ],
+      "attack_surfaces": [
+        "path",
+        "parameter"
+      ],
+      "chain_depth": 6,
+      "difficulty": "hard",
+      "distractor_paths": 2
+    },
+    {
+      "task_id": "gen_230_rce_privesc",
+      "family": "rce_privesc",
+      "topology_signature": [
+        "web_path_enumeration",
+        "input_discovery",
+        "vulnerability_check",
+        "exploit_attempt",
+        "command_execution",
+        "privilege_escalation",
+        "sensitive_file_read"
+      ],
+      "vuln_classes": [
+        "rce",
+        "host_privilege_escalation"
+      ],
+      "attack_surfaces": [
+        "path",
+        "parameter"
+      ],
+      "chain_depth": 7,
+      "difficulty": "hard",
+      "distractor_paths": 2
+    },
+    {
+      "task_id": "gen_231_rce_privesc",
+      "family": "rce_privesc",
+      "topology_signature": [
+        "web_path_enumeration",
+        "input_discovery",
+        "vulnerability_check",
+        "exploit_attempt",
+        "command_execution",
+        "privilege_escalation",
+        "sensitive_file_read"
+      ],
+      "vuln_classes": [
+        "rce",
+        "host_privilege_escalation"
+      ],
+      "attack_surfaces": [
+        "path",
+        "parameter"
+      ],
+      "chain_depth": 7,
+      "difficulty": "hard",
+      "distractor_paths": 2
+    },
+    {
+      "task_id": "gen_232_rce_privesc",
+      "family": "rce_privesc",
+      "topology_signature": [
+        "web_path_enumeration",
+        "input_discovery",
+        "vulnerability_check",
+        "exploit_attempt",
+        "command_execution",
+        "privilege_escalation",
+        "sensitive_file_read"
+      ],
+      "vuln_classes": [
+        "rce",
+        "host_privilege_escalation"
+      ],
+      "attack_surfaces": [
+        "path",
+        "parameter"
+      ],
+      "chain_depth": 7,
+      "difficulty": "hard",
+      "distractor_paths": 2
+    },
+    {
+      "task_id": "gen_233_rce_privesc",
+      "family": "rce_privesc",
+      "topology_signature": [
+        "web_path_enumeration",
+        "input_discovery",
+        "vulnerability_check",
+        "exploit_attempt",
+        "command_execution",
+        "privilege_escalation",
+        "sensitive_file_read"
+      ],
+      "vuln_classes": [
+        "rce",
+        "host_privilege_escalation"
+      ],
+      "attack_surfaces": [
+        "path",
+        "parameter"
+      ],
+      "chain_depth": 7,
+      "difficulty": "hard",
+      "distractor_paths": 2
+    },
+    {
+      "task_id": "gen_234_rce_privesc",
+      "family": "rce_privesc",
+      "topology_signature": [
+        "web_path_enumeration",
+        "input_discovery",
+        "vulnerability_check",
+        "exploit_attempt",
+        "command_execution",
+        "privilege_escalation",
+        "sensitive_file_read"
+      ],
+      "vuln_classes": [
+        "rce",
+        "host_privilege_escalation"
+      ],
+      "attack_surfaces": [
+        "path",
+        "parameter"
+      ],
+      "chain_depth": 7,
+      "difficulty": "hard",
+      "distractor_paths": 2
+    },
+    {
+      "task_id": "gen_235_upload_default_shell",
+      "family": "upload_default_shell",
+      "topology_signature": [
+        "web_path_enumeration",
+        "input_discovery",
+        "auth_attempt",
+        "web_path_enumeration",
+        "input_discovery",
+        "file_upload_attempt",
+        "command_execution",
+        "sensitive_file_read"
+      ],
+      "vuln_classes": [
+        "default_or_weak_password",
+        "file_upload"
+      ],
+      "attack_surfaces": [
+        "path",
+        "form",
+        "upload"
+      ],
+      "chain_depth": 8,
+      "difficulty": "hard",
+      "distractor_paths": 2
+    },
+    {
+      "task_id": "gen_236_upload_default_shell",
+      "family": "upload_default_shell",
+      "topology_signature": [
+        "web_path_enumeration",
+        "input_discovery",
+        "auth_attempt",
+        "web_path_enumeration",
+        "input_discovery",
+        "file_upload_attempt",
+        "command_execution",
+        "sensitive_file_read"
+      ],
+      "vuln_classes": [
+        "default_or_weak_password",
+        "file_upload"
+      ],
+      "attack_surfaces": [
+        "path",
+        "form",
+        "upload"
+      ],
+      "chain_depth": 8,
+      "difficulty": "hard",
+      "distractor_paths": 2
+    },
+    {
+      "task_id": "gen_237_upload_default_shell",
+      "family": "upload_default_shell",
+      "topology_signature": [
+        "web_path_enumeration",
+        "input_discovery",
+        "auth_attempt",
+        "web_path_enumeration",
+        "input_discovery",
+        "file_upload_attempt",
+        "command_execution",
+        "sensitive_file_read"
+      ],
+      "vuln_classes": [
+        "default_or_weak_password",
+        "file_upload"
+      ],
+      "attack_surfaces": [
+        "path",
+        "form",
+        "upload"
+      ],
+      "chain_depth": 8,
+      "difficulty": "hard",
+      "distractor_paths": 2
+    },
+    {
+      "task_id": "gen_238_upload_default_shell",
+      "family": "upload_default_shell",
+      "topology_signature": [
+        "web_path_enumeration",
+        "input_discovery",
+        "auth_attempt",
+        "web_path_enumeration",
+        "input_discovery",
+        "file_upload_attempt",
+        "command_execution",
+        "sensitive_file_read"
+      ],
+      "vuln_classes": [
+        "default_or_weak_password",
+        "file_upload"
+      ],
+      "attack_surfaces": [
+        "path",
+        "form",
+        "upload"
+      ],
+      "chain_depth": 8,
+      "difficulty": "hard",
+      "distractor_paths": 2
+    },
+    {
+      "task_id": "gen_239_upload_default_shell",
+      "family": "upload_default_shell",
+      "topology_signature": [
+        "web_path_enumeration",
+        "input_discovery",
+        "auth_attempt",
+        "web_path_enumeration",
+        "input_discovery",
+        "file_upload_attempt",
+        "command_execution",
+        "sensitive_file_read"
+      ],
+      "vuln_classes": [
+        "default_or_weak_password",
+        "file_upload"
+      ],
+      "attack_surfaces": [
+        "path",
+        "form",
+        "upload"
+      ],
+      "chain_depth": 8,
+      "difficulty": "hard",
+      "distractor_paths": 2
+    },
+    {
+      "task_id": "gen_240_upload_leak_shell",
+      "family": "upload_leak_shell",
+      "topology_signature": [
+        "web_path_enumeration",
+        "content_retrieval",
+        "web_path_enumeration",
+        "input_discovery",
+        "credential_use",
+        "web_path_enumeration",
+        "input_discovery",
+        "file_upload_attempt",
+        "command_execution",
+        "sensitive_file_read"
+      ],
+      "vuln_classes": [
+        "backup_or_config_leak",
+        "file_upload"
+      ],
+      "attack_surfaces": [
+        "path",
+        "form",
+        "upload"
+      ],
+      "chain_depth": 10,
+      "difficulty": "hard",
+      "distractor_paths": 2
+    },
+    {
+      "task_id": "gen_241_upload_leak_shell",
+      "family": "upload_leak_shell",
+      "topology_signature": [
+        "web_path_enumeration",
+        "content_retrieval",
+        "web_path_enumeration",
+        "input_discovery",
+        "credential_use",
+        "web_path_enumeration",
+        "input_discovery",
+        "file_upload_attempt",
+        "command_execution",
+        "sensitive_file_read"
+      ],
+      "vuln_classes": [
+        "backup_or_config_leak",
+        "file_upload"
+      ],
+      "attack_surfaces": [
+        "path",
+        "form",
+        "upload"
+      ],
+      "chain_depth": 10,
+      "difficulty": "hard",
+      "distractor_paths": 2
+    },
+    {
+      "task_id": "gen_242_upload_leak_shell",
+      "family": "upload_leak_shell",
+      "topology_signature": [
+        "web_path_enumeration",
+        "content_retrieval",
+        "web_path_enumeration",
+        "input_discovery",
+        "credential_use",
+        "web_path_enumeration",
+        "input_discovery",
+        "file_upload_attempt",
+        "command_execution",
+        "sensitive_file_read"
+      ],
+      "vuln_classes": [
+        "backup_or_config_leak",
+        "file_upload"
+      ],
+      "attack_surfaces": [
+        "path",
+        "form",
+        "upload"
+      ],
+      "chain_depth": 10,
+      "difficulty": "hard",
+      "distractor_paths": 2
+    },
+    {
+      "task_id": "gen_243_upload_leak_shell",
+      "family": "upload_leak_shell",
+      "topology_signature": [
+        "web_path_enumeration",
+        "content_retrieval",
+        "web_path_enumeration",
+        "input_discovery",
+        "credential_use",
+        "web_path_enumeration",
+        "input_discovery",
+        "file_upload_attempt",
+        "command_execution",
+        "sensitive_file_read"
+      ],
+      "vuln_classes": [
+        "backup_or_config_leak",
+        "file_upload"
+      ],
+      "attack_surfaces": [
+        "path",
+        "form",
+        "upload"
+      ],
+      "chain_depth": 10,
+      "difficulty": "hard",
+      "distractor_paths": 2
+    },
+    {
+      "task_id": "gen_244_upload_leak_shell",
+      "family": "upload_leak_shell",
+      "topology_signature": [
+        "web_path_enumeration",
+        "content_retrieval",
+        "web_path_enumeration",
+        "input_discovery",
+        "credential_use",
+        "web_path_enumeration",
+        "input_discovery",
+        "file_upload_attempt",
+        "command_execution",
+        "sensitive_file_read"
+      ],
+      "vuln_classes": [
+        "backup_or_config_leak",
+        "file_upload"
+      ],
+      "attack_surfaces": [
+        "path",
+        "form",
+        "upload"
+      ],
+      "chain_depth": 10,
+      "difficulty": "hard",
+      "distractor_paths": 2
+    },
+    {
+      "task_id": "gen_245_upload_default_privesc",
+      "family": "upload_default_privesc",
+      "topology_signature": [
+        "web_path_enumeration",
+        "input_discovery",
+        "auth_attempt",
+        "web_path_enumeration",
+        "input_discovery",
+        "file_upload_attempt",
+        "command_execution",
+        "privilege_escalation",
+        "sensitive_file_read"
+      ],
+      "vuln_classes": [
+        "default_or_weak_password",
+        "file_upload",
+        "host_privilege_escalation"
+      ],
+      "attack_surfaces": [
+        "path",
+        "form",
+        "upload"
+      ],
+      "chain_depth": 9,
+      "difficulty": "hard",
+      "distractor_paths": 2
+    },
+    {
+      "task_id": "gen_246_upload_default_privesc",
+      "family": "upload_default_privesc",
+      "topology_signature": [
+        "web_path_enumeration",
+        "input_discovery",
+        "auth_attempt",
+        "web_path_enumeration",
+        "input_discovery",
+        "file_upload_attempt",
+        "command_execution",
+        "privilege_escalation",
+        "sensitive_file_read"
+      ],
+      "vuln_classes": [
+        "default_or_weak_password",
+        "file_upload",
+        "host_privilege_escalation"
+      ],
+      "attack_surfaces": [
+        "path",
+        "form",
+        "upload"
+      ],
+      "chain_depth": 9,
+      "difficulty": "hard",
+      "distractor_paths": 2
+    },
+    {
+      "task_id": "gen_247_upload_default_privesc",
+      "family": "upload_default_privesc",
+      "topology_signature": [
+        "web_path_enumeration",
+        "input_discovery",
+        "auth_attempt",
+        "web_path_enumeration",
+        "input_discovery",
+        "file_upload_attempt",
+        "command_execution",
+        "privilege_escalation",
+        "sensitive_file_read"
+      ],
+      "vuln_classes": [
+        "default_or_weak_password",
+        "file_upload",
+        "host_privilege_escalation"
+      ],
+      "attack_surfaces": [
+        "path",
+        "form",
+        "upload"
+      ],
+      "chain_depth": 9,
+      "difficulty": "hard",
+      "distractor_paths": 2
+    },
+    {
+      "task_id": "gen_248_upload_default_privesc",
+      "family": "upload_default_privesc",
+      "topology_signature": [
+        "web_path_enumeration",
+        "input_discovery",
+        "auth_attempt",
+        "web_path_enumeration",
+        "input_discovery",
+        "file_upload_attempt",
+        "command_execution",
+        "privilege_escalation",
+        "sensitive_file_read"
+      ],
+      "vuln_classes": [
+        "default_or_weak_password",
+        "file_upload",
+        "host_privilege_escalation"
+      ],
+      "attack_surfaces": [
+        "path",
+        "form",
+        "upload"
+      ],
+      "chain_depth": 9,
+      "difficulty": "hard",
+      "distractor_paths": 2
+    },
+    {
+      "task_id": "gen_249_upload_default_privesc",
+      "family": "upload_default_privesc",
+      "topology_signature": [
+        "web_path_enumeration",
+        "input_discovery",
+        "auth_attempt",
+        "web_path_enumeration",
+        "input_discovery",
+        "file_upload_attempt",
+        "command_execution",
+        "privilege_escalation",
+        "sensitive_file_read"
+      ],
+      "vuln_classes": [
+        "default_or_weak_password",
+        "file_upload",
+        "host_privilege_escalation"
+      ],
+      "attack_surfaces": [
+        "path",
+        "form",
+        "upload"
+      ],
+      "chain_depth": 9,
+      "difficulty": "hard",
+      "distractor_paths": 2
+    },
+    {
+      "task_id": "gen_250_authed_injection",
+      "family": "authed_injection",
+      "topology_signature": [
+        "web_path_enumeration",
+        "input_discovery",
+        "auth_attempt",
+        "web_path_enumeration",
+        "input_discovery",
+        "vulnerability_check",
+        "exploit_attempt",
+        "command_execution",
+        "sensitive_file_read"
+      ],
+      "vuln_classes": [
+        "default_or_weak_password",
+        "rce"
+      ],
+      "attack_surfaces": [
+        "path",
+        "form",
+        "parameter"
+      ],
+      "chain_depth": 9,
+      "difficulty": "hard",
+      "distractor_paths": 2
+    },
+    {
+      "task_id": "gen_251_authed_injection",
+      "family": "authed_injection",
+      "topology_signature": [
+        "web_path_enumeration",
+        "input_discovery",
+        "auth_attempt",
+        "web_path_enumeration",
+        "input_discovery",
+        "vulnerability_check",
+        "exploit_attempt",
+        "command_execution",
+        "sensitive_file_read"
+      ],
+      "vuln_classes": [
+        "default_or_weak_password",
+        "rce"
+      ],
+      "attack_surfaces": [
+        "path",
+        "form",
+        "parameter"
+      ],
+      "chain_depth": 9,
+      "difficulty": "hard",
+      "distractor_paths": 2
+    },
+    {
+      "task_id": "gen_252_authed_injection",
+      "family": "authed_injection",
+      "topology_signature": [
+        "web_path_enumeration",
+        "input_discovery",
+        "auth_attempt",
+        "web_path_enumeration",
+        "input_discovery",
+        "vulnerability_check",
+        "exploit_attempt",
+        "command_execution",
+        "sensitive_file_read"
+      ],
+      "vuln_classes": [
+        "default_or_weak_password",
+        "rce"
+      ],
+      "attack_surfaces": [
+        "path",
+        "form",
+        "parameter"
+      ],
+      "chain_depth": 9,
+      "difficulty": "hard",
+      "distractor_paths": 2
+    },
+    {
+      "task_id": "gen_253_authed_injection",
+      "family": "authed_injection",
+      "topology_signature": [
+        "web_path_enumeration",
+        "input_discovery",
+        "auth_attempt",
+        "web_path_enumeration",
+        "input_discovery",
+        "vulnerability_check",
+        "exploit_attempt",
+        "command_execution",
+        "sensitive_file_read"
+      ],
+      "vuln_classes": [
+        "default_or_weak_password",
+        "rce"
+      ],
+      "attack_surfaces": [
+        "path",
+        "form",
+        "parameter"
+      ],
+      "chain_depth": 9,
+      "difficulty": "hard",
+      "distractor_paths": 2
+    },
+    {
+      "task_id": "gen_254_authed_injection",
+      "family": "authed_injection",
+      "topology_signature": [
+        "web_path_enumeration",
+        "input_discovery",
+        "auth_attempt",
+        "web_path_enumeration",
+        "input_discovery",
+        "vulnerability_check",
+        "exploit_attempt",
+        "command_execution",
+        "sensitive_file_read"
+      ],
+      "vuln_classes": [
+        "default_or_weak_password",
+        "rce"
+      ],
+      "attack_surfaces": [
+        "path",
+        "form",
+        "parameter"
+      ],
+      "chain_depth": 9,
+      "difficulty": "hard",
+      "distractor_paths": 2
+    },
+    {
+      "task_id": "gen_255_chained_exploit",
+      "family": "chained_exploit",
+      "topology_signature": [
+        "web_path_enumeration",
+        "input_discovery",
+        "vulnerability_check",
+        "exploit_attempt",
+        "vulnerability_check",
+        "exploit_attempt",
+        "command_execution",
+        "sensitive_file_read"
+      ],
+      "vuln_classes": [
+        "sqli",
+        "rce"
+      ],
+      "attack_surfaces": [
+        "path",
+        "parameter"
+      ],
+      "chain_depth": 8,
+      "difficulty": "hard",
+      "distractor_paths": 2
+    },
+    {
+      "task_id": "gen_256_chained_exploit",
+      "family": "chained_exploit",
+      "topology_signature": [
+        "web_path_enumeration",
+        "input_discovery",
+        "vulnerability_check",
+        "exploit_attempt",
+        "vulnerability_check",
+        "exploit_attempt",
+        "command_execution",
+        "sensitive_file_read"
+      ],
+      "vuln_classes": [
+        "sqli",
+        "rce"
+      ],
+      "attack_surfaces": [
+        "path",
+        "parameter"
+      ],
+      "chain_depth": 8,
+      "difficulty": "hard",
+      "distractor_paths": 2
+    },
+    {
+      "task_id": "gen_257_chained_exploit",
+      "family": "chained_exploit",
+      "topology_signature": [
+        "web_path_enumeration",
+        "input_discovery",
+        "vulnerability_check",
+        "exploit_attempt",
+        "vulnerability_check",
+        "exploit_attempt",
+        "command_execution",
+        "sensitive_file_read"
+      ],
+      "vuln_classes": [
+        "sqli",
+        "rce"
+      ],
+      "attack_surfaces": [
+        "path",
+        "parameter"
+      ],
+      "chain_depth": 8,
+      "difficulty": "hard",
+      "distractor_paths": 2
+    },
+    {
+      "task_id": "gen_258_chained_exploit",
+      "family": "chained_exploit",
+      "topology_signature": [
+        "web_path_enumeration",
+        "input_discovery",
+        "vulnerability_check",
+        "exploit_attempt",
+        "vulnerability_check",
+        "exploit_attempt",
+        "command_execution",
+        "sensitive_file_read"
+      ],
+      "vuln_classes": [
+        "sqli",
+        "rce"
+      ],
+      "attack_surfaces": [
+        "path",
+        "parameter"
+      ],
+      "chain_depth": 8,
+      "difficulty": "hard",
+      "distractor_paths": 2
+    },
+    {
+      "task_id": "gen_259_chained_exploit",
+      "family": "chained_exploit",
+      "topology_signature": [
+        "web_path_enumeration",
+        "input_discovery",
+        "vulnerability_check",
+        "exploit_attempt",
+        "vulnerability_check",
+        "exploit_attempt",
+        "command_execution",
+        "sensitive_file_read"
+      ],
+      "vuln_classes": [
+        "sqli",
+        "rce"
+      ],
+      "attack_surfaces": [
+        "path",
+        "parameter"
+      ],
+      "chain_depth": 8,
+      "difficulty": "hard",
+      "distractor_paths": 2
+    },
+    {
+      "task_id": "gen_260_leak_authed_privesc",
+      "family": "leak_authed_privesc",
+      "topology_signature": [
+        "web_path_enumeration",
+        "content_retrieval",
+        "web_path_enumeration",
+        "input_discovery",
+        "credential_use",
+        "web_path_enumeration",
+        "input_discovery",
+        "vulnerability_check",
+        "exploit_attempt",
+        "command_execution",
+        "privilege_escalation",
+        "sensitive_file_read"
+      ],
+      "vuln_classes": [
+        "rce",
+        "host_privilege_escalation"
+      ],
+      "attack_surfaces": [
+        "path",
+        "form",
+        "parameter"
+      ],
+      "chain_depth": 12,
+      "difficulty": "hard",
+      "distractor_paths": 2
+    },
+    {
+      "task_id": "gen_261_leak_authed_privesc",
+      "family": "leak_authed_privesc",
+      "topology_signature": [
+        "web_path_enumeration",
+        "content_retrieval",
+        "web_path_enumeration",
+        "input_discovery",
+        "credential_use",
+        "web_path_enumeration",
+        "input_discovery",
+        "vulnerability_check",
+        "exploit_attempt",
+        "command_execution",
+        "privilege_escalation",
+        "sensitive_file_read"
+      ],
+      "vuln_classes": [
+        "rce",
+        "host_privilege_escalation"
+      ],
+      "attack_surfaces": [
+        "path",
+        "form",
+        "parameter"
+      ],
+      "chain_depth": 12,
+      "difficulty": "hard",
+      "distractor_paths": 2
+    },
+    {
+      "task_id": "gen_262_leak_authed_privesc",
+      "family": "leak_authed_privesc",
+      "topology_signature": [
+        "web_path_enumeration",
+        "content_retrieval",
+        "web_path_enumeration",
+        "input_discovery",
+        "credential_use",
+        "web_path_enumeration",
+        "input_discovery",
+        "vulnerability_check",
+        "exploit_attempt",
+        "command_execution",
+        "privilege_escalation",
+        "sensitive_file_read"
+      ],
+      "vuln_classes": [
+        "rce",
+        "host_privilege_escalation"
+      ],
+      "attack_surfaces": [
+        "path",
+        "form",
+        "parameter"
+      ],
+      "chain_depth": 12,
+      "difficulty": "hard",
+      "distractor_paths": 2
+    },
+    {
+      "task_id": "gen_263_leak_authed_privesc",
+      "family": "leak_authed_privesc",
+      "topology_signature": [
+        "web_path_enumeration",
+        "content_retrieval",
+        "web_path_enumeration",
+        "input_discovery",
+        "credential_use",
+        "web_path_enumeration",
+        "input_discovery",
+        "vulnerability_check",
+        "exploit_attempt",
+        "command_execution",
+        "privilege_escalation",
+        "sensitive_file_read"
+      ],
+      "vuln_classes": [
+        "rce",
+        "host_privilege_escalation"
+      ],
+      "attack_surfaces": [
+        "path",
+        "form",
+        "parameter"
+      ],
+      "chain_depth": 12,
+      "difficulty": "hard",
+      "distractor_paths": 2
+    },
+    {
+      "task_id": "gen_264_leak_authed_privesc",
+      "family": "leak_authed_privesc",
+      "topology_signature": [
+        "web_path_enumeration",
+        "content_retrieval",
+        "web_path_enumeration",
+        "input_discovery",
+        "credential_use",
+        "web_path_enumeration",
+        "input_discovery",
+        "vulnerability_check",
+        "exploit_attempt",
+        "command_execution",
+        "privilege_escalation",
+        "sensitive_file_read"
+      ],
+      "vuln_classes": [
+        "rce",
+        "host_privilege_escalation"
+      ],
+      "attack_surfaces": [
+        "path",
+        "form",
+        "parameter"
+      ],
+      "chain_depth": 12,
+      "difficulty": "hard",
+      "distractor_paths": 2
+    }
+  ]
+}

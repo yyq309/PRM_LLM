@@ -1,0 +1,89 @@
+{
+  "task_id": "gen_229_rce_shell",
+  "family": "rce_shell",
+  "difficulty": "hard",
+  "target": "http://target:80",
+  "service_surface": [
+    "http:80"
+  ],
+  "initial_observation": {
+    "open_services": [
+      "http:80"
+    ],
+    "discovered_paths": [
+      "/"
+    ]
+  },
+  "hidden_paths": [
+    "/assets",
+    "/news",
+    "/help"
+  ],
+  "technologies": [
+    "ruby",
+    "rails",
+    "postgres"
+  ],
+  "forms": {},
+  "parameters": {
+    "/news": [
+      {
+        "name": "pid",
+        "vulnerability": "rce_pid_229"
+      }
+    ]
+  },
+  "leaks": {},
+  "credentials": {},
+  "auth": {},
+  "vulnerabilities": {
+    "rce_pid_229": {
+      "type": "rce",
+      "target": "/news?pid",
+      "requires": [
+        "parameter_found:/news?pid"
+      ],
+      "effects": {
+        "shell": true
+      }
+    }
+  },
+  "files": {
+    "user_flag": {
+      "path": "/home/web/flag.txt",
+      "requires_shell": true,
+      "flag": "FLAG{gen_229_rceshell}"
+    }
+  },
+  "goal": {
+    "type": "read_file",
+    "file": "user_flag"
+  },
+  "budget": {
+    "max_steps": 8
+  },
+  "expert_plan": [
+    {
+      "action_type": "web_path_enumeration",
+      "target": "/news"
+    },
+    "input_discovery",
+    {
+      "action_type": "vulnerability_check",
+      "target": "/news?pid",
+      "parameter": "pid"
+    },
+    "exploit_attempt",
+    "command_execution",
+    "sensitive_file_read"
+  ],
+  "expert_trajectory": [
+    "Enumerate web directories to discover /news.",
+    "Discover input parameters on the /news endpoint.",
+    "Verify RCE on /news?pid parameter.",
+    "Exploit the RCE to obtain a web shell.",
+    "Run whoami through the web shell.",
+    "Read the target flag file."
+  ],
+  "hard_mode": true
+}

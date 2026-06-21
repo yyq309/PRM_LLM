@@ -1,0 +1,68 @@
+{
+  "n_train": 4176,
+  "n_heldout_oracle": 482,
+  "n_decision_relevant_heldout_groups": 71,
+  "blend": "y = alpha*Q + (1-alpha)*MC on oracle samples (rule rows unchanged)",
+  "selection_criterion": "max oracle_all_pairwise_vs_realized_MC (robust global metric, not the noisy 34-group top-1)",
+  "alpha_sweep": [
+    {
+      "alpha": 1.0,
+      "decision_relevant_top1_realized": 0.3099,
+      "decision_relevant_top1_ci95": [
+        0.2113,
+        0.4225
+      ],
+      "oracle_all_pairwise_vs_realized_MC": 0.5844,
+      "oracle_all_pairwise_vs_dqn_label": 0.8898
+    },
+    {
+      "alpha": 0.7,
+      "decision_relevant_top1_realized": 0.338,
+      "decision_relevant_top1_ci95": [
+        0.2254,
+        0.4507
+      ],
+      "oracle_all_pairwise_vs_realized_MC": 0.5368,
+      "oracle_all_pairwise_vs_dqn_label": 0.8437
+    },
+    {
+      "alpha": 0.5,
+      "decision_relevant_top1_realized": 0.3239,
+      "decision_relevant_top1_ci95": [
+        0.2113,
+        0.4366
+      ],
+      "oracle_all_pairwise_vs_realized_MC": 0.5671,
+      "oracle_all_pairwise_vs_dqn_label": 0.8277
+    },
+    {
+      "alpha": 0.3,
+      "decision_relevant_top1_realized": 0.3944,
+      "decision_relevant_top1_ci95": [
+        0.2817,
+        0.507
+      ],
+      "oracle_all_pairwise_vs_realized_MC": 0.5584,
+      "oracle_all_pairwise_vs_dqn_label": 0.8116
+    },
+    {
+      "alpha": 0.0,
+      "decision_relevant_top1_realized": 0.4648,
+      "decision_relevant_top1_ci95": [
+        0.3521,
+        0.5778
+      ],
+      "oracle_all_pairwise_vs_realized_MC": 0.6017,
+      "oracle_all_pairwise_vs_dqn_label": 0.5671
+    }
+  ],
+  "best_alpha": 0.0,
+  "best_pairwise_vs_realized_MC": 0.6017,
+  "dqn_only_pairwise_vs_realized_MC": 0.5844,
+  "global_pairwise_improvement_over_dqn": 0.0173,
+  "best_decision_relevant_top1": 0.4648,
+  "dqn_only_decision_relevant_top1": 0.3099,
+  "decision_relevant_caveat": "only 71 decision-relevant held-out groups; the top-1 CIs overlap across alphas, so the decision-relevant gain is DIRECTIONAL not significant — global pairwise vs realized MC is the robust signal.",
+  "adopted_model": "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\outputs\\prm_strong_mcblend.joblib",
+  "note": "Target metric = held-out decision-relevant top-1 against REALIZED MC return (ground truth), with a bootstrap 95% CI over the (small) set of decision-relevant groups. oracle_all_pairwise_vs_realized_MC is the honest global ranking metric. MC = V^pi(masked-greedy), not V*. The persisted model uses the best alpha and is a drop-in for prm_strong.joblib."
+}

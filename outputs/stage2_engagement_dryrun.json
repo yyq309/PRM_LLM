@@ -1,0 +1,257 @@
+{
+  "stage": "stage2_engagement",
+  "target": "DVWA",
+  "executor": "dryrun",
+  "proposer": "state",
+  "psi_for_action_mapping": "enhanced",
+  "psi_for_prm_features": "stage1_training_time",
+  "runs": [
+    {
+      "box": "DVWA",
+      "mode": "prm",
+      "budget": 12,
+      "steps_taken": 12,
+      "stop_reason": "budget_exhausted",
+      "reached_shell": false,
+      "reached_root": false,
+      "read_any_file": false,
+      "wasted_actions": 12,
+      "steps": [
+        {
+          "t": 0,
+          "chosen_action": "web_path_enumeration",
+          "eta_tool": "gobuster",
+          "executed": false,
+          "made_progress": false
+        },
+        {
+          "t": 1,
+          "chosen_action": "web_path_enumeration",
+          "eta_tool": "gobuster",
+          "executed": false,
+          "made_progress": false
+        },
+        {
+          "t": 2,
+          "chosen_action": "web_path_enumeration",
+          "eta_tool": "gobuster",
+          "executed": false,
+          "made_progress": false
+        },
+        {
+          "t": 3,
+          "chosen_action": "web_path_enumeration",
+          "eta_tool": "gobuster",
+          "executed": false,
+          "made_progress": false
+        },
+        {
+          "t": 4,
+          "chosen_action": "web_path_enumeration",
+          "eta_tool": "gobuster",
+          "executed": false,
+          "made_progress": false
+        },
+        {
+          "t": 5,
+          "chosen_action": "web_path_enumeration",
+          "eta_tool": "gobuster",
+          "executed": false,
+          "made_progress": false
+        },
+        {
+          "t": 6,
+          "chosen_action": "web_path_enumeration",
+          "eta_tool": "gobuster",
+          "executed": false,
+          "made_progress": false
+        },
+        {
+          "t": 7,
+          "chosen_action": "web_path_enumeration",
+          "eta_tool": "gobuster",
+          "executed": false,
+          "made_progress": false
+        },
+        {
+          "t": 8,
+          "chosen_action": "web_path_enumeration",
+          "eta_tool": "gobuster",
+          "executed": false,
+          "made_progress": false
+        },
+        {
+          "t": 9,
+          "chosen_action": "web_path_enumeration",
+          "eta_tool": "gobuster",
+          "executed": false,
+          "made_progress": false
+        },
+        {
+          "t": 10,
+          "chosen_action": "web_path_enumeration",
+          "eta_tool": "gobuster",
+          "executed": false,
+          "made_progress": false
+        },
+        {
+          "t": 11,
+          "chosen_action": "web_path_enumeration",
+          "eta_tool": "gobuster",
+          "executed": false,
+          "made_progress": false
+        }
+      ],
+      "final_observation": {
+        "target_known": true,
+        "service_known": false,
+        "open_services": [],
+        "base_url_known": true,
+        "discovered_paths": [
+          "/"
+        ],
+        "known_forms": [],
+        "known_parameters": [],
+        "tech_stack": [],
+        "suspected_vulnerabilities": [],
+        "verified_vulnerabilities": [],
+        "credentials": [],
+        "auth_state": "anonymous",
+        "shell_state": "none",
+        "privilege_level": "none",
+        "read_files": [],
+        "failed_actions": [],
+        "failed_branches": {},
+        "remaining_budget": 12
+      }
+    },
+    {
+      "box": "DVWA",
+      "mode": "llm_only",
+      "budget": 12,
+      "steps_taken": 12,
+      "stop_reason": "budget_exhausted",
+      "reached_shell": false,
+      "reached_root": false,
+      "read_any_file": false,
+      "wasted_actions": 12,
+      "steps": [
+        {
+          "t": 0,
+          "chosen_action": "http_fingerprint",
+          "eta_tool": "whatweb",
+          "executed": false,
+          "made_progress": false
+        },
+        {
+          "t": 1,
+          "chosen_action": "http_fingerprint",
+          "eta_tool": "whatweb",
+          "executed": false,
+          "made_progress": false
+        },
+        {
+          "t": 2,
+          "chosen_action": "http_fingerprint",
+          "eta_tool": "whatweb",
+          "executed": false,
+          "made_progress": false
+        },
+        {
+          "t": 3,
+          "chosen_action": "http_fingerprint",
+          "eta_tool": "whatweb",
+          "executed": false,
+          "made_progress": false
+        },
+        {
+          "t": 4,
+          "chosen_action": "http_fingerprint",
+          "eta_tool": "whatweb",
+          "executed": false,
+          "made_progress": false
+        },
+        {
+          "t": 5,
+          "chosen_action": "http_fingerprint",
+          "eta_tool": "whatweb",
+          "executed": false,
+          "made_progress": false
+        },
+        {
+          "t": 6,
+          "chosen_action": "http_fingerprint",
+          "eta_tool": "whatweb",
+          "executed": false,
+          "made_progress": false
+        },
+        {
+          "t": 7,
+          "chosen_action": "http_fingerprint",
+          "eta_tool": "whatweb",
+          "executed": false,
+          "made_progress": false
+        },
+        {
+          "t": 8,
+          "chosen_action": "http_fingerprint",
+          "eta_tool": "whatweb",
+          "executed": false,
+          "made_progress": false
+        },
+        {
+          "t": 9,
+          "chosen_action": "http_fingerprint",
+          "eta_tool": "whatweb",
+          "executed": false,
+          "made_progress": false
+        },
+        {
+          "t": 10,
+          "chosen_action": "http_fingerprint",
+          "eta_tool": "whatweb",
+          "executed": false,
+          "made_progress": false
+        },
+        {
+          "t": 11,
+          "chosen_action": "http_fingerprint",
+          "eta_tool": "whatweb",
+          "executed": false,
+          "made_progress": false
+        }
+      ],
+      "final_observation": {
+        "target_known": true,
+        "service_known": false,
+        "open_services": [],
+        "base_url_known": true,
+        "discovered_paths": [
+          "/"
+        ],
+        "known_forms": [],
+        "known_parameters": [],
+        "tech_stack": [],
+        "suspected_vulnerabilities": [],
+        "verified_vulnerabilities": [],
+        "credentials": [],
+        "auth_state": "anonymous",
+        "shell_state": "none",
+        "privilege_level": "none",
+        "read_files": [],
+        "failed_actions": [],
+        "failed_branches": {},
+        "remaining_budget": 12
+      }
+    }
+  ],
+  "ab": {
+    "prm_reached_root": false,
+    "llm_only_reached_root": false,
+    "prm_steps": 12,
+    "llm_only_steps": 12,
+    "prm_wasted": 12,
+    "llm_only_wasted": 12,
+    "note": "Offline A/B is wiring-validation only; a real uplift number needs the LIVE executor on an authorized isolated target over several boxes with CIs (Phase 3)."
+  }
+}

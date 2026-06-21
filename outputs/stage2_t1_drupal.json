@@ -1,0 +1,533 @@
+{
+  "stage": "stage2_live_ab_trials",
+  "target": "Vulhub-Drupalgeddon2",
+  "proposer": "llm",
+  "model": "deepseek-chat",
+  "trials": 4,
+  "errored_trials": 0,
+  "run_metadata": {
+    "target_name": "Vulhub-Drupalgeddon2",
+    "target_url": "http://127.0.0.1:8081",
+    "descriptor": "drupal-cve-2018-7600.json",
+    "proposer": "llm",
+    "model": "deepseek-chat",
+    "temperature": 0.5,
+    "executor": "live",
+    "budget": 14,
+    "trials": 4,
+    "arm_order_seed": 0,
+    "arm_orders": [
+      [
+        "prm",
+        "llm_only"
+      ],
+      [
+        "prm",
+        "llm_only"
+      ],
+      [
+        "llm_only",
+        "prm"
+      ],
+      [
+        "prm",
+        "llm_only"
+      ]
+    ],
+    "fixed_arm_order": false,
+    "paired_crn": true,
+    "mean_cache_hit_rate": 0.417,
+    "prm_model": "prm_strong.joblib",
+    "started": "2026-06-21T09:18:53",
+    "finished": "2026-06-21T09:19:45",
+    "psi_for_action_mapping": "enhanced",
+    "psi_for_prm_features": "stage1_training_time",
+    "goal_def": "command_execution AND a sensitive-file read (or root/flag file)",
+    "deepseek_key_source": "DEEPSEEK_API_KEY env"
+  },
+  "budget": 14,
+  "prm": {
+    "n": 4,
+    "goal_reached": 2,
+    "goal_rate": 0.5,
+    "goal_rate_ci95": [
+      0.15,
+      0.85
+    ],
+    "shell_rate": 0.5,
+    "command_exec_rate": 0.5,
+    "file_read_rate": 0.5,
+    "root_rate": 0.0,
+    "per_step_progress": {
+      "progress_steps": 8,
+      "total_steps": 11,
+      "rate": 0.727,
+      "ci95": [
+        0.434,
+        0.903
+      ]
+    },
+    "mean_fields_gained": 5.5,
+    "mean_distinct_productive_actions": 2.0,
+    "mean_wasted_rate": 0.25,
+    "mean_steps_when_goal": 4.0,
+    "mean_proposer_calls": 3.25,
+    "mean_eta_executions": 2.75,
+    "mean_live_out_of_abstraction_rate": 0.637,
+    "total_gate_refusals": 0
+  },
+  "llm_only": {
+    "n": 4,
+    "goal_reached": 1,
+    "goal_rate": 0.25,
+    "goal_rate_ci95": [
+      0.046,
+      0.699
+    ],
+    "shell_rate": 0.25,
+    "command_exec_rate": 0.25,
+    "file_read_rate": 0.25,
+    "root_rate": 0.0,
+    "per_step_progress": {
+      "progress_steps": 6,
+      "total_steps": 8,
+      "rate": 0.75,
+      "ci95": [
+        0.409,
+        0.929
+      ]
+    },
+    "mean_fields_gained": 4.75,
+    "mean_distinct_productive_actions": 1.5,
+    "mean_wasted_rate": 0.188,
+    "mean_steps_when_goal": 4.0,
+    "mean_proposer_calls": 2.75,
+    "mean_eta_executions": 2.0,
+    "mean_live_out_of_abstraction_rate": 0.674,
+    "total_gate_refusals": 0
+  },
+  "per_trial": {
+    "prm": [
+      {
+        "box": "Vulhub-Drupalgeddon2",
+        "mode": "prm",
+        "budget": 14,
+        "steps_taken": 1,
+        "stop_reason": "no_available_action",
+        "reached_shell": false,
+        "reached_command_exec": false,
+        "reached_root": false,
+        "read_any_file": false,
+        "exploit_proposed": true,
+        "goal_reached": false,
+        "progress_steps": 1,
+        "per_step_progress_rate": 1.0,
+        "wasted_actions": 0,
+        "wasted_rate": 0.0,
+        "fields_gained_total": 4,
+        "distinct_productive_actions": 1,
+        "proposer_calls": 2,
+        "eta_executions": 1,
+        "n_proposed": 9,
+        "live_out_of_abstraction_rate": 0.6667,
+        "gate_refusals": 0,
+        "steps": [
+          {
+            "t": 0,
+            "chosen_action": "http_fingerprint",
+            "eta_tool": "whatweb",
+            "executed": true,
+            "made_progress": true,
+            "n_candidates": 5,
+            "n_available": 3,
+            "fields_gained": 4,
+            "exhausted_after": false
+          }
+        ]
+      },
+      {
+        "box": "Vulhub-Drupalgeddon2",
+        "mode": "prm",
+        "budget": 14,
+        "steps_taken": 2,
+        "stop_reason": "no_available_action",
+        "reached_shell": false,
+        "reached_command_exec": false,
+        "reached_root": false,
+        "read_any_file": false,
+        "exploit_proposed": true,
+        "goal_reached": false,
+        "progress_steps": 1,
+        "per_step_progress_rate": 0.5,
+        "wasted_actions": 1,
+        "wasted_rate": 0.5,
+        "fields_gained_total": 4,
+        "distinct_productive_actions": 1,
+        "proposer_calls": 3,
+        "eta_executions": 2,
+        "n_proposed": 15,
+        "live_out_of_abstraction_rate": 0.8,
+        "gate_refusals": 0,
+        "steps": [
+          {
+            "t": 0,
+            "chosen_action": "http_fingerprint",
+            "eta_tool": "whatweb",
+            "executed": true,
+            "made_progress": true,
+            "n_candidates": 5,
+            "n_available": 2,
+            "fields_gained": 4,
+            "exhausted_after": false
+          },
+          {
+            "t": 1,
+            "chosen_action": "http_fingerprint",
+            "eta_tool": "whatweb",
+            "executed": true,
+            "made_progress": false,
+            "n_candidates": 5,
+            "n_available": 1,
+            "fields_gained": 0,
+            "exhausted_after": false
+          }
+        ]
+      },
+      {
+        "box": "Vulhub-Drupalgeddon2",
+        "mode": "prm",
+        "budget": 14,
+        "steps_taken": 4,
+        "stop_reason": "goal_reached",
+        "reached_shell": true,
+        "reached_command_exec": true,
+        "reached_root": false,
+        "read_any_file": true,
+        "exploit_proposed": true,
+        "goal_reached": true,
+        "progress_steps": 3,
+        "per_step_progress_rate": 0.75,
+        "wasted_actions": 1,
+        "wasted_rate": 0.25,
+        "fields_gained_total": 7,
+        "distinct_productive_actions": 3,
+        "proposer_calls": 4,
+        "eta_executions": 4,
+        "n_proposed": 17,
+        "live_out_of_abstraction_rate": 0.5294,
+        "gate_refusals": 0,
+        "steps": [
+          {
+            "t": 0,
+            "chosen_action": "http_fingerprint",
+            "eta_tool": "whatweb",
+            "executed": true,
+            "made_progress": true,
+            "n_candidates": 3,
+            "n_available": 1,
+            "fields_gained": 4,
+            "exhausted_after": false
+          },
+          {
+            "t": 1,
+            "chosen_action": "http_fingerprint",
+            "eta_tool": "whatweb",
+            "executed": true,
+            "made_progress": false,
+            "n_candidates": 5,
+            "n_available": 2,
+            "fields_gained": 0,
+            "exhausted_after": false
+          },
+          {
+            "t": 2,
+            "chosen_action": "exploit_attempt",
+            "eta_tool": "exploit",
+            "executed": true,
+            "made_progress": true,
+            "n_candidates": 4,
+            "n_available": 2,
+            "fields_gained": 2,
+            "exhausted_after": false
+          },
+          {
+            "t": 3,
+            "chosen_action": "sensitive_file_read",
+            "eta_tool": "cat",
+            "executed": true,
+            "made_progress": true,
+            "n_candidates": 5,
+            "n_available": 3,
+            "fields_gained": 1,
+            "exhausted_after": false
+          }
+        ]
+      },
+      {
+        "box": "Vulhub-Drupalgeddon2",
+        "mode": "prm",
+        "budget": 14,
+        "steps_taken": 4,
+        "stop_reason": "goal_reached",
+        "reached_shell": true,
+        "reached_command_exec": true,
+        "reached_root": false,
+        "read_any_file": true,
+        "exploit_proposed": true,
+        "goal_reached": true,
+        "progress_steps": 3,
+        "per_step_progress_rate": 0.75,
+        "wasted_actions": 1,
+        "wasted_rate": 0.25,
+        "fields_gained_total": 7,
+        "distinct_productive_actions": 3,
+        "proposer_calls": 4,
+        "eta_executions": 4,
+        "n_proposed": 20,
+        "live_out_of_abstraction_rate": 0.55,
+        "gate_refusals": 0,
+        "steps": [
+          {
+            "t": 0,
+            "chosen_action": "web_path_enumeration",
+            "eta_tool": "gobuster",
+            "executed": true,
+            "made_progress": false,
+            "n_candidates": 5,
+            "n_available": 3,
+            "fields_gained": 0,
+            "exhausted_after": false
+          },
+          {
+            "t": 1,
+            "chosen_action": "http_fingerprint",
+            "eta_tool": "whatweb",
+            "executed": true,
+            "made_progress": true,
+            "n_candidates": 5,
+            "n_available": 2,
+            "fields_gained": 4,
+            "exhausted_after": false
+          },
+          {
+            "t": 2,
+            "chosen_action": "exploit_attempt",
+            "eta_tool": "exploit",
+            "executed": true,
+            "made_progress": true,
+            "n_candidates": 5,
+            "n_available": 2,
+            "fields_gained": 2,
+            "exhausted_after": false
+          },
+          {
+            "t": 3,
+            "chosen_action": "sensitive_file_read",
+            "eta_tool": "cat",
+            "executed": true,
+            "made_progress": true,
+            "n_candidates": 5,
+            "n_available": 2,
+            "fields_gained": 1,
+            "exhausted_after": false
+          }
+        ]
+      }
+    ],
+    "llm_only": [
+      {
+        "box": "Vulhub-Drupalgeddon2",
+        "mode": "llm_only",
+        "budget": 14,
+        "steps_taken": 1,
+        "stop_reason": "no_available_action",
+        "reached_shell": false,
+        "reached_command_exec": false,
+        "reached_root": false,
+        "read_any_file": false,
+        "exploit_proposed": true,
+        "goal_reached": false,
+        "progress_steps": 1,
+        "per_step_progress_rate": 1.0,
+        "wasted_actions": 0,
+        "wasted_rate": 0.0,
+        "fields_gained_total": 4,
+        "distinct_productive_actions": 1,
+        "proposer_calls": 2,
+        "eta_executions": 1,
+        "n_proposed": 9,
+        "live_out_of_abstraction_rate": 0.6667,
+        "gate_refusals": 0,
+        "steps": [
+          {
+            "t": 0,
+            "chosen_action": "http_fingerprint",
+            "eta_tool": "whatweb",
+            "executed": true,
+            "made_progress": true,
+            "n_candidates": 5,
+            "n_available": 3,
+            "fields_gained": 4,
+            "exhausted_after": false
+          }
+        ]
+      },
+      {
+        "box": "Vulhub-Drupalgeddon2",
+        "mode": "llm_only",
+        "budget": 14,
+        "steps_taken": 2,
+        "stop_reason": "no_available_action",
+        "reached_shell": false,
+        "reached_command_exec": false,
+        "reached_root": false,
+        "read_any_file": false,
+        "exploit_proposed": true,
+        "goal_reached": false,
+        "progress_steps": 1,
+        "per_step_progress_rate": 0.5,
+        "wasted_actions": 1,
+        "wasted_rate": 0.5,
+        "fields_gained_total": 4,
+        "distinct_productive_actions": 1,
+        "proposer_calls": 3,
+        "eta_executions": 2,
+        "n_proposed": 15,
+        "live_out_of_abstraction_rate": 0.8,
+        "gate_refusals": 0,
+        "steps": [
+          {
+            "t": 0,
+            "chosen_action": "http_fingerprint",
+            "eta_tool": "whatweb",
+            "executed": true,
+            "made_progress": true,
+            "n_candidates": 5,
+            "n_available": 2,
+            "fields_gained": 4,
+            "exhausted_after": false
+          },
+          {
+            "t": 1,
+            "chosen_action": "http_fingerprint",
+            "eta_tool": "whatweb",
+            "executed": true,
+            "made_progress": false,
+            "n_candidates": 5,
+            "n_available": 1,
+            "fields_gained": 0,
+            "exhausted_after": false
+          }
+        ]
+      },
+      {
+        "box": "Vulhub-Drupalgeddon2",
+        "mode": "llm_only",
+        "budget": 14,
+        "steps_taken": 4,
+        "stop_reason": "goal_reached",
+        "reached_shell": true,
+        "reached_command_exec": true,
+        "reached_root": false,
+        "read_any_file": true,
+        "exploit_proposed": true,
+        "goal_reached": true,
+        "progress_steps": 3,
+        "per_step_progress_rate": 0.75,
+        "wasted_actions": 1,
+        "wasted_rate": 0.25,
+        "fields_gained_total": 7,
+        "distinct_productive_actions": 3,
+        "proposer_calls": 4,
+        "eta_executions": 4,
+        "n_proposed": 17,
+        "live_out_of_abstraction_rate": 0.5294,
+        "gate_refusals": 0,
+        "steps": [
+          {
+            "t": 0,
+            "chosen_action": "http_fingerprint",
+            "eta_tool": "whatweb",
+            "executed": true,
+            "made_progress": true,
+            "n_candidates": 3,
+            "n_available": 1,
+            "fields_gained": 4,
+            "exhausted_after": false
+          },
+          {
+            "t": 1,
+            "chosen_action": "http_fingerprint",
+            "eta_tool": "whatweb",
+            "executed": true,
+            "made_progress": false,
+            "n_candidates": 5,
+            "n_available": 2,
+            "fields_gained": 0,
+            "exhausted_after": false
+          },
+          {
+            "t": 2,
+            "chosen_action": "exploit_attempt",
+            "eta_tool": "exploit",
+            "executed": true,
+            "made_progress": true,
+            "n_candidates": 4,
+            "n_available": 2,
+            "fields_gained": 2,
+            "exhausted_after": false
+          },
+          {
+            "t": 3,
+            "chosen_action": "sensitive_file_read",
+            "eta_tool": "cat",
+            "executed": true,
+            "made_progress": true,
+            "n_candidates": 5,
+            "n_available": 3,
+            "fields_gained": 1,
+            "exhausted_after": false
+          }
+        ]
+      },
+      {
+        "box": "Vulhub-Drupalgeddon2",
+        "mode": "llm_only",
+        "budget": 14,
+        "steps_taken": 1,
+        "stop_reason": "no_available_action",
+        "reached_shell": false,
+        "reached_command_exec": false,
+        "reached_root": false,
+        "read_any_file": false,
+        "exploit_proposed": false,
+        "goal_reached": false,
+        "progress_steps": 1,
+        "per_step_progress_rate": 1.0,
+        "wasted_actions": 0,
+        "wasted_rate": 0.0,
+        "fields_gained_total": 4,
+        "distinct_productive_actions": 1,
+        "proposer_calls": 2,
+        "eta_executions": 1,
+        "n_proposed": 10,
+        "live_out_of_abstraction_rate": 0.7,
+        "gate_refusals": 0,
+        "steps": [
+          {
+            "t": 0,
+            "chosen_action": "http_fingerprint",
+            "eta_tool": "whatweb",
+            "executed": true,
+            "made_progress": true,
+            "n_candidates": 5,
+            "n_available": 3,
+            "fields_gained": 4,
+            "exhausted_after": false
+          }
+        ]
+      }
+    ]
+  },
+  "note": "Live multi-trial A/B on ONE box. Goal = command execution + a sensitive-file read. Small N: read the CIs, not the point estimates. A full uplift study spans several boxes. The LLM proposer is stochastic (temp 0.5), which is the intended variation."
+}

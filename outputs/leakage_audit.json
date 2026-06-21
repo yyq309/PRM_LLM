@@ -1,0 +1,321 @@
+{
+  "train_input": "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\outputs\\prm_samples_train.jsonl",
+  "heldout_input": "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\outputs\\prm_samples_heldout.jsonl",
+  "structural_leak_test": {
+    "train": {
+      "num_samples": 4176,
+      "unique_secret_leaks": 0,
+      "file_path_leaks": 0,
+      "future_path_leaks": 0,
+      "total_leaks": 0,
+      "passed": true,
+      "dictionary_secret_occurrences_skipped": 1152,
+      "samples_with_descriptive_task_id": 0,
+      "examples": []
+    },
+    "heldout": {
+      "num_samples": 1764,
+      "unique_secret_leaks": 0,
+      "file_path_leaks": 0,
+      "future_path_leaks": 0,
+      "total_leaks": 0,
+      "passed": true,
+      "dictionary_secret_occurrences_skipped": 204,
+      "samples_with_descriptive_task_id": 0,
+      "examples": []
+    }
+  },
+  "masking_ablation": {
+    "baseline": {
+      "score_regression": {
+        "mae": 0.04788865441141506,
+        "rmse": 0.11454810478962894,
+        "r2": 0.8660755505271033,
+        "pearson": 0.9334003274377486
+      },
+      "rank_accuracy": 0.9104308390022676,
+      "rank_macro_f1": 0.878072401913127,
+      "diagnosis_accuracy": 0.9070294784580499,
+      "diagnosis_macro_f1": 0.8691831256096431
+    },
+    "fields": [
+      {
+        "masked_field": "Known paths",
+        "metrics": {
+          "score_regression": {
+            "mae": 0.04716039530735864,
+            "rmse": 0.11431955555248727,
+            "r2": 0.8666094361913861,
+            "pearson": 0.9330897164115745
+          },
+          "rank_accuracy": 0.9121315192743764,
+          "rank_macro_f1": 0.8812510453566224,
+          "diagnosis_accuracy": 0.9087301587301587,
+          "diagnosis_macro_f1": 0.8758045490150864
+        },
+        "delta_vs_baseline": {
+          "mae_increase": -0.0007,
+          "pearson_drop": 0.0003,
+          "rank_accuracy_drop": -0.0017,
+          "diagnosis_accuracy_drop": -0.0017,
+          "degradation": "graceful"
+        }
+      },
+      {
+        "masked_field": "Known forms",
+        "metrics": {
+          "score_regression": {
+            "mae": 0.047300924891226725,
+            "rmse": 0.11479878303669692,
+            "r2": 0.8654887458673348,
+            "pearson": 0.9329031018893579
+          },
+          "rank_accuracy": 0.9098639455782312,
+          "rank_macro_f1": 0.877693793139616,
+          "diagnosis_accuracy": 0.905328798185941,
+          "diagnosis_macro_f1": 0.8625186028707161
+        },
+        "delta_vs_baseline": {
+          "mae_increase": -0.0006,
+          "pearson_drop": 0.0005,
+          "rank_accuracy_drop": 0.0006,
+          "diagnosis_accuracy_drop": 0.0017,
+          "degradation": "graceful"
+        }
+      },
+      {
+        "masked_field": "Known parameters",
+        "metrics": {
+          "score_regression": {
+            "mae": 0.04997417522893741,
+            "rmse": 0.11571198768329102,
+            "r2": 0.8633402061372369,
+            "pearson": 0.9313639820579802
+          },
+          "rank_accuracy": 0.9121315192743764,
+          "rank_macro_f1": 0.8814981254503016,
+          "diagnosis_accuracy": 0.9109977324263039,
+          "diagnosis_macro_f1": 0.872354090547066
+        },
+        "delta_vs_baseline": {
+          "mae_increase": 0.0021,
+          "pearson_drop": 0.002,
+          "rank_accuracy_drop": -0.0017,
+          "diagnosis_accuracy_drop": -0.004,
+          "degradation": "graceful"
+        }
+      },
+      {
+        "masked_field": "Credentials",
+        "metrics": {
+          "score_regression": {
+            "mae": 0.04750617306584376,
+            "rmse": 0.1142720597057445,
+            "r2": 0.8667202515572117,
+            "pearson": 0.9336449033003775
+          },
+          "rank_accuracy": 0.9098639455782312,
+          "rank_macro_f1": 0.8769505650158225,
+          "diagnosis_accuracy": 0.9064625850340136,
+          "diagnosis_macro_f1": 0.8716473496113749
+        },
+        "delta_vs_baseline": {
+          "mae_increase": -0.0004,
+          "pearson_drop": -0.0002,
+          "rank_accuracy_drop": 0.0006,
+          "diagnosis_accuracy_drop": 0.0006,
+          "degradation": "graceful"
+        }
+      },
+      {
+        "masked_field": "Auth state",
+        "metrics": {
+          "score_regression": {
+            "mae": 0.04796155983478671,
+            "rmse": 0.11467491977095427,
+            "r2": 0.8657788537325862,
+            "pearson": 0.9332993344825234
+          },
+          "rank_accuracy": 0.9126984126984127,
+          "rank_macro_f1": 0.881498242572901,
+          "diagnosis_accuracy": 0.909297052154195,
+          "diagnosis_macro_f1": 0.8749326328016754
+        },
+        "delta_vs_baseline": {
+          "mae_increase": 0.0001,
+          "pearson_drop": 0.0001,
+          "rank_accuracy_drop": -0.0023,
+          "diagnosis_accuracy_drop": -0.0023,
+          "degradation": "graceful"
+        }
+      },
+      {
+        "masked_field": "Shell state",
+        "metrics": {
+          "score_regression": {
+            "mae": 0.0479208226392008,
+            "rmse": 0.11449611409581041,
+            "r2": 0.866197093261115,
+            "pearson": 0.9334045428462765
+          },
+          "rank_accuracy": 0.9132653061224489,
+          "rank_macro_f1": 0.879925576437879,
+          "diagnosis_accuracy": 0.905328798185941,
+          "diagnosis_macro_f1": 0.867370087687973
+        },
+        "delta_vs_baseline": {
+          "mae_increase": 0.0,
+          "pearson_drop": -0.0,
+          "rank_accuracy_drop": -0.0028,
+          "diagnosis_accuracy_drop": 0.0017,
+          "degradation": "graceful"
+        }
+      },
+      {
+        "masked_field": "Verified vulnerabilities",
+        "metrics": {
+          "score_regression": {
+            "mae": 0.04799764068986681,
+            "rmse": 0.11345562891202066,
+            "r2": 0.8686179153375787,
+            "pearson": 0.9346255558365303
+          },
+          "rank_accuracy": 0.9115646258503401,
+          "rank_macro_f1": 0.8799928197216096,
+          "diagnosis_accuracy": 0.9109977324263039,
+          "diagnosis_macro_f1": 0.8736016591823708
+        },
+        "delta_vs_baseline": {
+          "mae_increase": 0.0001,
+          "pearson_drop": -0.0012,
+          "rank_accuracy_drop": -0.0011,
+          "diagnosis_accuracy_drop": -0.004,
+          "degradation": "graceful"
+        }
+      },
+      {
+        "masked_field": "Read files",
+        "metrics": {
+          "score_regression": {
+            "mae": 0.047844300460012416,
+            "rmse": 0.11456191214011989,
+            "r2": 0.8660432627251862,
+            "pearson": 0.933400030783257
+          },
+          "rank_accuracy": 0.9115646258503401,
+          "rank_macro_f1": 0.8795998308191044,
+          "diagnosis_accuracy": 0.9070294784580499,
+          "diagnosis_macro_f1": 0.8691831256096431
+        },
+        "delta_vs_baseline": {
+          "mae_increase": -0.0,
+          "pearson_drop": 0.0,
+          "rank_accuracy_drop": -0.0011,
+          "diagnosis_accuracy_drop": 0.0,
+          "degradation": "graceful"
+        }
+      },
+      {
+        "masked_field": "Failed branches",
+        "metrics": {
+          "score_regression": {
+            "mae": 0.0478800450904986,
+            "rmse": 0.1145481772131062,
+            "r2": 0.8660753811785592,
+            "pearson": 0.933396534773475
+          },
+          "rank_accuracy": 0.9115646258503401,
+          "rank_macro_f1": 0.8795998308191044,
+          "diagnosis_accuracy": 0.9070294784580499,
+          "diagnosis_macro_f1": 0.8691831256096431
+        },
+        "delta_vs_baseline": {
+          "mae_increase": -0.0,
+          "pearson_drop": 0.0,
+          "rank_accuracy_drop": -0.0011,
+          "diagnosis_accuracy_drop": 0.0,
+          "degradation": "graceful"
+        }
+      },
+      {
+        "masked_field": "Remaining budget",
+        "metrics": {
+          "score_regression": {
+            "mae": 0.048487772941592684,
+            "rmse": 0.11525163663309122,
+            "r2": 0.8644254236102553,
+            "pearson": 0.9327922576327041
+          },
+          "rank_accuracy": 0.9070294784580499,
+          "rank_macro_f1": 0.8724006514740663,
+          "diagnosis_accuracy": 0.8990929705215419,
+          "diagnosis_macro_f1": 0.8594336302984109
+        },
+        "delta_vs_baseline": {
+          "mae_increase": 0.0006,
+          "pearson_drop": 0.0006,
+          "rank_accuracy_drop": 0.0034,
+          "diagnosis_accuracy_drop": 0.0079,
+          "degradation": "graceful"
+        }
+      },
+      {
+        "masked_field": "Recent feedback",
+        "metrics": {
+          "score_regression": {
+            "mae": 0.04069928931310125,
+            "rmse": 0.10983372703767491,
+            "r2": 0.8768723769971132,
+            "pearson": 0.9365258803674773
+          },
+          "rank_accuracy": 0.9172335600907029,
+          "rank_macro_f1": 0.8842073345034362,
+          "diagnosis_accuracy": 0.8934240362811792,
+          "diagnosis_macro_f1": 0.8260625109487179
+        },
+        "delta_vs_baseline": {
+          "mae_increase": -0.0072,
+          "pearson_drop": -0.0031,
+          "rank_accuracy_drop": -0.0068,
+          "diagnosis_accuracy_drop": 0.0136,
+          "degradation": "graceful"
+        }
+      },
+      {
+        "masked_field": "ALL_CONTEXT",
+        "metrics": {
+          "score_regression": {
+            "mae": 0.051459323812358335,
+            "rmse": 0.11961581251148008,
+            "r2": 0.8539635581892537,
+            "pearson": 0.9248605522241921
+          },
+          "rank_accuracy": 0.9160997732426304,
+          "rank_macro_f1": 0.8720363220539051,
+          "diagnosis_accuracy": 0.8860544217687075,
+          "diagnosis_macro_f1": 0.789056945635596
+        },
+        "delta_vs_baseline": {
+          "mae_increase": 0.0036,
+          "pearson_drop": 0.0085,
+          "rank_accuracy_drop": -0.0057,
+          "diagnosis_accuracy_drop": 0.021,
+          "degradation": "graceful"
+        }
+      }
+    ],
+    "thresholds": {
+      "cliff_rank_drop": 0.15,
+      "cliff_mae_increase": 0.06,
+      "cliff_pearson_drop": 0.2
+    }
+  },
+  "verdict": {
+    "no_hidden_truth_leak": true,
+    "degrades_gracefully": true,
+    "num_cliff_fields": 0,
+    "metadata_hygiene_warning": false,
+    "metadata_hygiene_recommendation": "context_from_observation prefixes the verbalized state with the descriptive task_id (e.g. 'web_002_sqli_login'), which names the vulnerability family. This is not hidden instance truth (no path/credential/flag), but for clean leakage hygiene the context builder should use an opaque scenario id so the PRM cannot read the vuln type off the label.",
+    "note": "A cliff on an *observable* field is not leakage (part 1 proves no hidden token is present); it only means the PRM leans on that legitimate field. Leakage would be a non-zero unique_secret/file_path/future_path count. Dictionary-word passwords (e.g. 'admin', 'password') are skipped because they collide with the observable action vocabulary and cannot be string-distinguished from legitimate text."
+  }
+}

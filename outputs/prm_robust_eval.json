@@ -1,0 +1,203 @@
+{
+  "train_input": "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\outputs\\prm_samples_train.jsonl",
+  "heldout_input": "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\outputs\\prm_samples_heldout.jsonl",
+  "config": {
+    "augment_copies": 2,
+    "degrade_fields": 4,
+    "ooa_prob": 0.5,
+    "weight_floor": 0.3,
+    "confidence_weighting": "oracle_labels_only",
+    "degrade_axes": "context_fields + normalized_action_representation"
+  },
+  "baseline": {
+    "clean": {
+      "n": 1764,
+      "score_regression": {
+        "mae": 0.05253591222120625,
+        "rmse": 0.14136574230791862,
+        "r2": 0.7983052955566343,
+        "pearson": 0.8954903545768703
+      },
+      "rank_accuracy": 0.9121315192743764,
+      "rank_macro_f1": 0.8834091656098233,
+      "diagnosis_accuracy": 0.8962585034013606,
+      "rank_calibration_error": 0.060989735408872425,
+      "rank_abstention": {
+        "threshold": 0.6,
+        "coverage": 0.9166666666666666,
+        "high_confidence_accuracy": 0.948051948051948,
+        "overall_accuracy": 0.9121315192743764,
+        "abstention_benefit": 0.03592042877757162
+      },
+      "pairwise": {
+        "pairs": 4671,
+        "pairwise_ranking_accuracy": 0.9094412331406551
+      }
+    },
+    "dirty": {
+      "n": 1764,
+      "score_regression": {
+        "mae": 0.054977216127021104,
+        "rmse": 0.15115591476343782,
+        "r2": 0.7694015246170957,
+        "pearson": 0.8783783971783493
+      },
+      "rank_accuracy": 0.9070294784580499,
+      "rank_macro_f1": 0.8718651371669304,
+      "diagnosis_accuracy": 0.8815192743764172,
+      "rank_calibration_error": 0.032726693783447836,
+      "rank_abstention": {
+        "threshold": 0.6,
+        "coverage": 0.9155328798185941,
+        "high_confidence_accuracy": 0.9380804953560371,
+        "overall_accuracy": 0.9070294784580499,
+        "abstention_benefit": 0.03105101689798717
+      },
+      "pairwise": {
+        "pairs": 4671,
+        "pairwise_ranking_accuracy": 0.8758295868122458
+      }
+    },
+    "dirty_ood": {
+      "n": 1764,
+      "score_regression": {
+        "mae": 0.06322494359240406,
+        "rmse": 0.1416472927505641,
+        "r2": 0.79750108680838,
+        "pearson": 0.8934297091106019
+      },
+      "rank_accuracy": 0.8956916099773242,
+      "rank_macro_f1": 0.8526927052348008,
+      "diagnosis_accuracy": 0.8792517006802721,
+      "rank_calibration_error": 0.06054615129526356,
+      "rank_abstention": {
+        "threshold": 0.6,
+        "coverage": 0.8934240362811792,
+        "high_confidence_accuracy": 0.9359137055837563,
+        "overall_accuracy": 0.8956916099773242,
+        "abstention_benefit": 0.040222095606432084
+      },
+      "pairwise": {
+        "pairs": 4671,
+        "pairwise_ranking_accuracy": 0.9336330550203382
+      }
+    },
+    "robustness_drop": {
+      "rank_accuracy_drop": 0.005102040816326481,
+      "score_mae_increase": 0.0024413039058148525,
+      "pairwise_drop": 0.033611646328409295
+    },
+    "robustness_drop_ood": {
+      "rank_accuracy_drop": 0.01643990929705219,
+      "score_mae_increase": 0.01068903137119781,
+      "pairwise_drop": -0.024191821879683162
+    }
+  },
+  "robust": {
+    "clean": {
+      "n": 1764,
+      "score_regression": {
+        "mae": 0.05375929223813046,
+        "rmse": 0.1406694943745567,
+        "r2": 0.8002871576457289,
+        "pearson": 0.8955556787324823
+      },
+      "rank_accuracy": 0.9246031746031746,
+      "rank_macro_f1": 0.9003198071408957,
+      "diagnosis_accuracy": 0.9109977324263039,
+      "rank_calibration_error": 0.03773009327390651,
+      "rank_abstention": {
+        "threshold": 0.6,
+        "coverage": 0.9336734693877551,
+        "high_confidence_accuracy": 0.9423193685488768,
+        "overall_accuracy": 0.9246031746031746,
+        "abstention_benefit": 0.01771619394570212
+      },
+      "pairwise": {
+        "pairs": 4671,
+        "pairwise_ranking_accuracy": 0.9312780989081567
+      }
+    },
+    "dirty": {
+      "n": 1764,
+      "score_regression": {
+        "mae": 0.051229905691231876,
+        "rmse": 0.1466494079125846,
+        "r2": 0.7829465128192054,
+        "pearson": 0.8858211504799098
+      },
+      "rank_accuracy": 0.9166666666666666,
+      "rank_macro_f1": 0.8862140760919864,
+      "diagnosis_accuracy": 0.8968253968253969,
+      "rank_calibration_error": 0.02962522945582772,
+      "rank_abstention": {
+        "threshold": 0.6,
+        "coverage": 0.9370748299319728,
+        "high_confidence_accuracy": 0.9370840895341803,
+        "overall_accuracy": 0.9166666666666666,
+        "abstention_benefit": 0.02041742286751369
+      },
+      "pairwise": {
+        "pairs": 4671,
+        "pairwise_ranking_accuracy": 0.9252836651680583
+      }
+    },
+    "dirty_ood": {
+      "n": 1764,
+      "score_regression": {
+        "mae": 0.05623721091244739,
+        "rmse": 0.14137586878996028,
+        "r2": 0.798276398443048,
+        "pearson": 0.8935392590136172
+      },
+      "rank_accuracy": 0.909297052154195,
+      "rank_macro_f1": 0.8636965991892195,
+      "diagnosis_accuracy": 0.8956916099773242,
+      "rank_calibration_error": 0.032281129152803595,
+      "rank_abstention": {
+        "threshold": 0.6,
+        "coverage": 0.9297052154195011,
+        "high_confidence_accuracy": 0.9292682926829269,
+        "overall_accuracy": 0.909297052154195,
+        "abstention_benefit": 0.019971240528731893
+      },
+      "pairwise": {
+        "pairs": 4671,
+        "pairwise_ranking_accuracy": 0.9319203596660244
+      }
+    },
+    "robustness_drop": {
+      "rank_accuracy_drop": 0.00793650793650802,
+      "score_mae_increase": -0.0025293865468985835,
+      "pairwise_drop": 0.005994433740098448
+    },
+    "robustness_drop_ood": {
+      "rank_accuracy_drop": 0.015306122448979664,
+      "score_mae_increase": 0.0024779186743169312,
+      "pairwise_drop": -0.0006422607578676631
+    }
+  },
+  "verdict": {
+    "robust_no_clean_accuracy_cost": true,
+    "robust_better_calibrated": true,
+    "robust_more_stable_dirty_ranking": true,
+    "calibration_error_improvement": 0.0233,
+    "dirty_pairwise_improvement": 0.0495,
+    "baseline_rank_drop_clean_to_dirty": 0.0051,
+    "robust_rank_drop_clean_to_dirty": 0.0079,
+    "robust_clean_rank_accuracy": 0.9246,
+    "robust_dirty_rank_accuracy": 0.9167,
+    "robust_calibration_error_clean": 0.0377,
+    "robust_pairwise_clean": 0.9313,
+    "robust_abstention_benefit_clean": 0.0177,
+    "OOD_family_B": "relabel + reorder + spurious-distractor + budget-jitter (held out of training; not masking/OOA)",
+    "OOD_baseline_rank_drop_clean_to_B": 0.0164,
+    "OOD_robust_rank_drop_clean_to_B": 0.0153,
+    "OOD_robust_smaller_rank_drop": true,
+    "OOD_baseline_dirty_pairwise": 0.9336,
+    "OOD_robust_dirty_pairwise": 0.9319,
+    "OOD_robust_pairwise_advantage": -0.0017,
+    "caveats": "HONEST CAVEATS: (1) ADDRESSED — robustness is now tested on a HELD-OUT corruption family B (OOD_* fields: relabel/reorder/distractor/jitter, never trained on), not only the training corruption; read OOD_robust_smaller_rank_drop / OOD_robust_pairwise_advantage for the genuine OOD result. The same-family ('dirty') numbers remain partly in-distribution by construction. (2) Full-set rank/pairwise are inflated by self-predictable rule rows (status copied into input, score=0); see honest_eval.py for oracle-subset metrics (rank ~0.60, pairwise ~0.60), which are the real evaluator quality. (3) Single seed, no CIs. The robustness deltas (ECE, dirty pairwise) are modest and should be read with these caveats.",
+    "note": "Confidence weighting is applied to ORACLE labels only (rule-based negatives are certain). degrade_action drops fields without rewriting the label-bearing status."
+  }
+}

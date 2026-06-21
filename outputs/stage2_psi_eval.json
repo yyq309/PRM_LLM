@@ -1,0 +1,48 @@
+{
+  "dev_benchmark": {
+    "n": 124,
+    "baseline": {
+      "in_abstraction": 112,
+      "accuracy": 0.3393,
+      "correct": 38,
+      "false_reject": 60,
+      "false_reject_rate": 0.5357,
+      "out_abstraction": 12,
+      "false_accept": 4,
+      "false_accept_rate": 0.3333
+    },
+    "enhanced": {
+      "in_abstraction": 112,
+      "accuracy": 0.7589,
+      "correct": 85,
+      "false_reject": 13,
+      "false_reject_rate": 0.1161,
+      "out_abstraction": 12,
+      "false_accept": 0,
+      "false_accept_rate": 0.0
+    }
+  },
+  "heldout_fixtures": {
+    "n": 71,
+    "baseline": {
+      "in_abstraction": 65,
+      "accuracy": 0.4923,
+      "correct": 32,
+      "false_reject": 21,
+      "false_reject_rate": 0.3231,
+      "out_abstraction": 6,
+      "false_accept": 0,
+      "false_accept_rate": 0.0
+    },
+    "enhanced": {
+      "in_abstraction": 65,
+      "accuracy": 0.7846,
+      "correct": 51,
+      "false_reject": 2,
+      "false_reject_rate": 0.0308,
+      "out_abstraction": 6,
+      "false_accept": 0,
+      "false_accept_rate": 0.0
+    }
+  }
+}

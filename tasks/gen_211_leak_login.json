@@ -1,0 +1,105 @@
+{
+  "task_id": "gen_211_leak_login",
+  "family": "leak_login",
+  "difficulty": "medium",
+  "target": "http://target:80",
+  "service_surface": [
+    "http:80"
+  ],
+  "initial_observation": {
+    "open_services": [
+      "http:80"
+    ],
+    "discovered_paths": [
+      "/"
+    ]
+  },
+  "hidden_paths": [
+    "/about",
+    "/conf.old",
+    "/portal",
+    "/console",
+    "/favicon.ico"
+  ],
+  "technologies": [
+    "dotnet",
+    "iis",
+    "mssql"
+  ],
+  "forms": {
+    "/portal": [
+      "username",
+      "password"
+    ]
+  },
+  "parameters": {},
+  "leaks": {
+    "/conf.old": {
+      "credentials": [
+        "admin"
+      ],
+      "files": [
+        "admin_cfg"
+      ]
+    }
+  },
+  "credentials": {
+    "admin": {
+      "username": "admin",
+      "password": "admin_211_pw",
+      "role": "admin",
+      "weak": false
+    }
+  },
+  "auth": {
+    "login_path": "/portal",
+    "valid_credential": "admin",
+    "role": "admin"
+  },
+  "vulnerabilities": {},
+  "files": {
+    "admin_flag": {
+      "path": "/console/flag",
+      "requires_auth": "admin",
+      "flag": "FLAG{gen_211_leaklogin}"
+    }
+  },
+  "goal": {
+    "type": "read_file",
+    "file": "admin_flag"
+  },
+  "budget": {
+    "max_steps": 9
+  },
+  "expert_plan": [
+    {
+      "action_type": "web_path_enumeration",
+      "target": "/conf.old"
+    },
+    {
+      "action_type": "content_retrieval",
+      "target": "/conf.old"
+    },
+    {
+      "action_type": "web_path_enumeration",
+      "target": "/portal"
+    },
+    "input_discovery",
+    "credential_use",
+    {
+      "action_type": "web_path_enumeration",
+      "target": "/console"
+    },
+    "sensitive_file_read"
+  ],
+  "expert_trajectory": [
+    "Enumerate web directories to discover /conf.old.",
+    "Download and inspect the /conf.old content for leaked credentials.",
+    "Enumerate web directories to discover /portal.",
+    "Inspect the login form and discover its input fields.",
+    "Use the leaked credential to login through /portal.",
+    "Enumerate web directories to discover /console.",
+    "Read the admin flag sensitive file."
+  ],
+  "hard_mode": true
+}

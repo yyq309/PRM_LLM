@@ -1,0 +1,132 @@
+{
+  "task_id": "gen_220_lfi_login",
+  "family": "injection_login",
+  "difficulty": "medium",
+  "target": "http://target:80",
+  "service_surface": [
+    "http:80"
+  ],
+  "initial_observation": {
+    "open_services": [
+      "http:80"
+    ],
+    "discovered_paths": [
+      "/"
+    ]
+  },
+  "hidden_paths": [
+    "/favicon.ico",
+    "/item",
+    "/session",
+    "/panel",
+    "/contact"
+  ],
+  "technologies": [
+    "ruby",
+    "rails",
+    "postgres"
+  ],
+  "forms": {
+    "/session": [
+      "username",
+      "password"
+    ]
+  },
+  "parameters": {
+    "/item": [
+      {
+        "name": "file",
+        "vulnerability": "lfi_file_220"
+      }
+    ]
+  },
+  "leaks": {},
+  "credentials": {
+    "admin": {
+      "username": "admin",
+      "password": "dump_220_pw",
+      "role": "admin",
+      "weak": false
+    }
+  },
+  "auth": {
+    "login_path": "/session",
+    "valid_credential": "admin",
+    "role": "admin"
+  },
+  "vulnerabilities": {
+    "lfi_file_220": {
+      "type": "lfi",
+      "target": "/item?file",
+      "requires": [
+        "parameter_found:/item?file"
+      ],
+      "effects": {
+        "credentials": [
+          "admin"
+        ]
+      }
+    }
+  },
+  "files": {
+    "admin_flag": {
+      "path": "/panel/flag",
+      "requires_auth": "admin",
+      "flag": "FLAG{gen_220_lfi}"
+    }
+  },
+  "goal": {
+    "type": "read_file",
+    "file": "admin_flag"
+  },
+  "budget": {
+    "max_steps": 10
+  },
+  "expert_plan": [
+    {
+      "action_type": "web_path_enumeration",
+      "target": "/item"
+    },
+    {
+      "action_type": "input_discovery",
+      "target": "/item"
+    },
+    {
+      "action_type": "vulnerability_check",
+      "target": "/item?file",
+      "parameter": "file"
+    },
+    {
+      "action_type": "exploit_attempt",
+      "target": "/item?file",
+      "parameter": "file"
+    },
+    {
+      "action_type": "web_path_enumeration",
+      "target": "/session"
+    },
+    {
+      "action_type": "web_path_enumeration",
+      "target": "/panel"
+    },
+    {
+      "action_type": "credential_use",
+      "target": "/session"
+    },
+    {
+      "action_type": "sensitive_file_read",
+      "target": "/panel/flag"
+    }
+  ],
+  "expert_trajectory": [
+    "Enumerate web directories to discover /item.",
+    "Discover input parameters on the /item endpoint.",
+    "Verify LFI on /item?file parameter.",
+    "Exploit the LFI to dump the admin credential.",
+    "Enumerate web directories to discover /session.",
+    "Enumerate web directories to discover /panel.",
+    "Use the known admin credential to login through /session.",
+    "Read the admin flag sensitive file."
+  ],
+  "hard_mode": true
+}

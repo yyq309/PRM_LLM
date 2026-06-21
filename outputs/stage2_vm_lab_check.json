@@ -1,0 +1,105 @@
+{
+  "generated_at": "2026-06-21T01:19:02.453616+00:00",
+  "targets": [
+    {
+      "label": "DC-1",
+      "target": "http://dc1.lab",
+      "descriptor": "targets/vulnhub-dc-1.json",
+      "ok": false,
+      "checks": [
+        {
+          "name": "ip is private/loopback",
+          "ok": true,
+          "detail": "192.168.56.110"
+        },
+        {
+          "name": "target is lab-scoped",
+          "ok": true,
+          "detail": "http://dc1.lab"
+        },
+        {
+          "name": "descriptor exists",
+          "ok": true,
+          "detail": "stage2\\targets\\vulnhub-dc-1.json"
+        },
+        {
+          "name": "target hostname resolves",
+          "ok": false,
+          "detail": "dc1.lab -> 198.18.0.107"
+        },
+        {
+          "name": "http healthcheck reachable",
+          "ok": false,
+          "detail": "http://192.168.56.110/ -> 502"
+        }
+      ]
+    },
+    {
+      "label": "Raven-2",
+      "target": "http://raven2.lab",
+      "descriptor": "targets/vulnhub-raven-2.json",
+      "ok": false,
+      "checks": [
+        {
+          "name": "ip is private/loopback",
+          "ok": true,
+          "detail": "192.168.56.111"
+        },
+        {
+          "name": "target is lab-scoped",
+          "ok": true,
+          "detail": "http://raven2.lab"
+        },
+        {
+          "name": "descriptor exists",
+          "ok": true,
+          "detail": "stage2\\targets\\vulnhub-raven-2.json"
+        },
+        {
+          "name": "target hostname resolves",
+          "ok": false,
+          "detail": "raven2.lab -> 198.18.0.108"
+        },
+        {
+          "name": "http healthcheck reachable",
+          "ok": false,
+          "detail": "http://192.168.56.111/ -> 502"
+        }
+      ]
+    },
+    {
+      "label": "Toppo-1",
+      "target": "http://toppo1.lab",
+      "descriptor": "targets/vulnhub-toppo-1.json",
+      "ok": false,
+      "checks": [
+        {
+          "name": "ip is private/loopback",
+          "ok": true,
+          "detail": "192.168.56.112"
+        },
+        {
+          "name": "target is lab-scoped",
+          "ok": true,
+          "detail": "http://toppo1.lab"
+        },
+        {
+          "name": "descriptor exists",
+          "ok": true,
+          "detail": "stage2\\targets\\vulnhub-toppo-1.json"
+        },
+        {
+          "name": "target hostname resolves",
+          "ok": false,
+          "detail": "toppo1.lab -> 198.18.0.109"
+        },
+        {
+          "name": "http healthcheck reachable",
+          "ok": false,
+          "detail": "http://192.168.56.112/ -> TimeoutError"
+        }
+      ]
+    }
+  ],
+  "all_ok": false
+}

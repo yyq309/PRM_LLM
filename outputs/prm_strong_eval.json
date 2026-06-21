@@ -1,0 +1,258 @@
+{
+  "n_train": 4176,
+  "n_heldout": 1764,
+  "n_oracle_all": 482,
+  "n_oracle_unseen_instance": 247,
+  "n_oracle_unseen_chain": 235,
+  "seeds": [
+    0,
+    1,
+    2,
+    3,
+    4
+  ],
+  "multiseed": {
+    "oracle_all": {
+      "rank_accuracy": {
+        "mean": 0.7987551867219918,
+        "std": 0.0,
+        "min": 0.7987551867219918,
+        "max": 0.7987551867219918
+      },
+      "pairwise_accuracy": {
+        "mean": 0.8897795591182366,
+        "std": 1.1102230246251565e-16,
+        "min": 0.8897795591182365,
+        "max": 0.8897795591182365
+      },
+      "ece": {
+        "mean": 0.16561849784919747,
+        "std": 0.0,
+        "min": 0.16561849784919747,
+        "max": 0.16561849784919747
+      },
+      "majority_floor": {
+        "mean": 0.3983402489626556,
+        "std": 0.0,
+        "min": 0.3983402489626556,
+        "max": 0.3983402489626556
+      }
+    },
+    "oracle_unseen_instance": {
+      "rank_accuracy": {
+        "mean": 0.97165991902834,
+        "std": 0.0,
+        "min": 0.97165991902834,
+        "max": 0.97165991902834
+      },
+      "pairwise_accuracy": {
+        "mean": 0.9799196787148594,
+        "std": 0.0,
+        "min": 0.9799196787148594,
+        "max": 0.9799196787148594
+      },
+      "ece": {
+        "mean": 0.03169332355125471,
+        "std": 0.0,
+        "min": 0.03169332355125471,
+        "max": 0.03169332355125471
+      }
+    },
+    "oracle_unseen_chain": {
+      "rank_accuracy": {
+        "mean": 0.6170212765957447,
+        "std": 0.0,
+        "min": 0.6170212765957447,
+        "max": 0.6170212765957447
+      },
+      "pairwise_accuracy": {
+        "mean": 0.8,
+        "std": 0.0,
+        "min": 0.8,
+        "max": 0.8
+      },
+      "ece": {
+        "mean": 0.34692849506293943,
+        "std": 0.0,
+        "min": 0.34692849506293943,
+        "max": 0.34692849506293943
+      }
+    }
+  },
+  "bootstrap_oracle_all_pairwise_ci95": {
+    "mean": 0.892085659926331,
+    "ci95_low": 0.8430726636594957,
+    "ci95_high": 0.9371885238061075
+  },
+  "calibration_ece": {
+    "oracle_all": {
+      "ece_uncalibrated": 0.16561849784919747,
+      "ece_isotonic": 0.09045647358298628,
+      "ece_sigmoid": 0.07890586382711695
+    },
+    "oracle_unseen_instance": {
+      "ece_uncalibrated": 0.03169332355125471,
+      "ece_isotonic": 0.09943464903503514,
+      "ece_sigmoid": 0.1392897406455696
+    },
+    "oracle_unseen_chain": {
+      "ece_uncalibrated": 0.34692849506293943,
+      "ece_isotonic": 0.2308528242408055,
+      "ece_sigmoid": 0.24340223930815974
+    },
+    "note": "Isotonic helps the worst-calibrated slices (oracle_all, unseen_chain) but can OVERFIT and hurt the already-well-calibrated unseen_instance; sigmoid/Platt is gentler. Calibration is a net win only on the hard unseen-chain slice; apply selectively, not globally."
+  },
+  "per_seed": [
+    {
+      "seed": 0,
+      "oracle_all": {
+        "n": 482,
+        "rank_accuracy": 0.7987551867219918,
+        "rank_macro_f1": 0.6098135791931396,
+        "majority_floor": 0.3983402489626556,
+        "pairwise_accuracy": 0.8897795591182365,
+        "pairwise_pairs": 499,
+        "ece": 0.16561849784919747
+      },
+      "oracle_unseen_instance": {
+        "n": 247,
+        "rank_accuracy": 0.97165991902834,
+        "rank_macro_f1": 0.9727901029787823,
+        "majority_floor": 0.39271255060728744,
+        "pairwise_accuracy": 0.9799196787148594,
+        "pairwise_pairs": 249,
+        "ece": 0.03169332355125471
+      },
+      "oracle_unseen_chain": {
+        "n": 235,
+        "rank_accuracy": 0.6170212765957447,
+        "rank_macro_f1": 0.47633204633204634,
+        "majority_floor": 0.40425531914893614,
+        "pairwise_accuracy": 0.8,
+        "pairwise_pairs": 250,
+        "ece": 0.34692849506293943
+      }
+    },
+    {
+      "seed": 1,
+      "oracle_all": {
+        "n": 482,
+        "rank_accuracy": 0.7987551867219918,
+        "rank_macro_f1": 0.6098135791931396,
+        "majority_floor": 0.3983402489626556,
+        "pairwise_accuracy": 0.8897795591182365,
+        "pairwise_pairs": 499,
+        "ece": 0.16561849784919747
+      },
+      "oracle_unseen_instance": {
+        "n": 247,
+        "rank_accuracy": 0.97165991902834,
+        "rank_macro_f1": 0.9727901029787823,
+        "majority_floor": 0.39271255060728744,
+        "pairwise_accuracy": 0.9799196787148594,
+        "pairwise_pairs": 249,
+        "ece": 0.03169332355125471
+      },
+      "oracle_unseen_chain": {
+        "n": 235,
+        "rank_accuracy": 0.6170212765957447,
+        "rank_macro_f1": 0.47633204633204634,
+        "majority_floor": 0.40425531914893614,
+        "pairwise_accuracy": 0.8,
+        "pairwise_pairs": 250,
+        "ece": 0.34692849506293943
+      }
+    },
+    {
+      "seed": 2,
+      "oracle_all": {
+        "n": 482,
+        "rank_accuracy": 0.7987551867219918,
+        "rank_macro_f1": 0.6098135791931396,
+        "majority_floor": 0.3983402489626556,
+        "pairwise_accuracy": 0.8897795591182365,
+        "pairwise_pairs": 499,
+        "ece": 0.16561849784919747
+      },
+      "oracle_unseen_instance": {
+        "n": 247,
+        "rank_accuracy": 0.97165991902834,
+        "rank_macro_f1": 0.9727901029787823,
+        "majority_floor": 0.39271255060728744,
+        "pairwise_accuracy": 0.9799196787148594,
+        "pairwise_pairs": 249,
+        "ece": 0.03169332355125471
+      },
+      "oracle_unseen_chain": {
+        "n": 235,
+        "rank_accuracy": 0.6170212765957447,
+        "rank_macro_f1": 0.47633204633204634,
+        "majority_floor": 0.40425531914893614,
+        "pairwise_accuracy": 0.8,
+        "pairwise_pairs": 250,
+        "ece": 0.34692849506293943
+      }
+    },
+    {
+      "seed": 3,
+      "oracle_all": {
+        "n": 482,
+        "rank_accuracy": 0.7987551867219918,
+        "rank_macro_f1": 0.6098135791931396,
+        "majority_floor": 0.3983402489626556,
+        "pairwise_accuracy": 0.8897795591182365,
+        "pairwise_pairs": 499,
+        "ece": 0.16561849784919747
+      },
+      "oracle_unseen_instance": {
+        "n": 247,
+        "rank_accuracy": 0.97165991902834,
+        "rank_macro_f1": 0.9727901029787823,
+        "majority_floor": 0.39271255060728744,
+        "pairwise_accuracy": 0.9799196787148594,
+        "pairwise_pairs": 249,
+        "ece": 0.03169332355125471
+      },
+      "oracle_unseen_chain": {
+        "n": 235,
+        "rank_accuracy": 0.6170212765957447,
+        "rank_macro_f1": 0.47633204633204634,
+        "majority_floor": 0.40425531914893614,
+        "pairwise_accuracy": 0.8,
+        "pairwise_pairs": 250,
+        "ece": 0.34692849506293943
+      }
+    },
+    {
+      "seed": 4,
+      "oracle_all": {
+        "n": 482,
+        "rank_accuracy": 0.7987551867219918,
+        "rank_macro_f1": 0.6098135791931396,
+        "majority_floor": 0.3983402489626556,
+        "pairwise_accuracy": 0.8897795591182365,
+        "pairwise_pairs": 499,
+        "ece": 0.16561849784919747
+      },
+      "oracle_unseen_instance": {
+        "n": 247,
+        "rank_accuracy": 0.97165991902834,
+        "rank_macro_f1": 0.9727901029787823,
+        "majority_floor": 0.39271255060728744,
+        "pairwise_accuracy": 0.9799196787148594,
+        "pairwise_pairs": 249,
+        "ece": 0.03169332355125471
+      },
+      "oracle_unseen_chain": {
+        "n": 235,
+        "rank_accuracy": 0.6170212765957447,
+        "rank_macro_f1": 0.47633204633204634,
+        "majority_floor": 0.40425531914893614,
+        "pairwise_accuracy": 0.8,
+        "pairwise_pairs": 250,
+        "ece": 0.34692849506293943
+      }
+    }
+  ],
+  "note": "All metrics are on the ORACLE-labeled subset (genuine state-dependent ranking); rule rows are excluded. unseen_chain is the hard generalization (whole topology family absent from train). Compare pairwise vs the TF-IDF baseline's oracle-only pairwise from honest_eval."
+}

@@ -1,0 +1,15 @@
+{
+  "name": "Vulhub-Gitea-1.4-rce",
+  "kind": "single-web-app-container",
+  "target": "http://127.0.0.1:8091",
+  "abstract_family": "default_pw",
+  "isolation_note": "Vulhub gitea/1.4-rce (Gitea 1.4.0, installed sqlite), bound to 127.0.0.1:8091 only. Owned, disposable local lab.",
+  "eta_fill": {"login": "/user/login", "wordlist": "/usr/share/wordlists/dirb/common.txt", "webshell": "/", "file": "/etc/passwd"},
+  "eta_recipes": {
+    "http_fingerprint": "curl -s -i \"{target}/\"",
+    "content_retrieval": "curl -s \"{target}/\"",
+    "auth_attempt": "bash -c 'C=$(curl -s -c /tmp/g.jar \"{target}/user/sign_up\" | grep -oP \"name=._csrf. (content|value)=.\\\\K[^\\\"]+\" | head -1); curl -s -b /tmp/g.jar -i \"{target}/user/sign_up\" --data-urlencode \"_csrf=$C\" --data \"user_name=labtester&email=lab@example.com&password=LabPass123!&retype=LabPass123!\" | grep -qiE \"location: /($|user)\" && echo \"logged in: gitea account dashboard created\"'"
+  },
+  "recommended_first": false,
+  "rationale": "Gitea 1.4.0 — self-advertising (Gitea). Installed via the setup wizard. AUTH/RECON box: the 1.4 RCE is a MULTI-STEP authenticated git-hook injection (login -> repo -> pre-receive hook -> push) that does not fit a single η command; the wired auth_attempt registers an account (CSRF-chained) as an auth milestone. Goal not reachable single-curl. A contrast case for the 7-dim metrics."
+}

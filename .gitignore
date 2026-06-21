@@ -1,0 +1,49 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.ipynb_checkpoints/
+
+# Editor / session / OS / scratch
+.claude/
+_report_render/
+.DS_Store
+Thumbs.db
+
+# Secrets / session state — never commit (DeepSeek key must stay env-only; cookies from live runs)
+.env
+*.key
+*.pem
+secrets*.json
+cookies.txt
+cookies*.jar
+*.cookies
+
+# stray temp/scratch scripts at repo root
+_tmp*.py
+_scratch*
+
+# Large / generated artifacts — regenerate via the training + inference scripts (see README / STAGE2_HANDOFF.md).
+# Kept OUT to keep the repo lean; the small experiment-result JSONs in outputs/ ARE committed.
+outputs/*.joblib
+outputs/*audit*.jsonl
+outputs/*.log
+outputs/prm_train*.jsonl
+outputs/prm_samples*.jsonl
+outputs/prm_heldout*.jsonl
+outputs/*multiseed*.jsonl
+outputs/prm_candidate_ranking.json
+outputs/prm_policy_eval*.json
+outputs/prm_baseline_predictions.jsonl
+outputs/random_transitions*.jsonl
+outputs/demo_prm_samples*.jsonl
+outputs/web_dqn*.pt
+outputs/*.pt
+outputs/seed_gate*/
+outputs/_*
+
+# Held-out benchmark data must never be committed (canary-marked). XBEN sources live outside this repo
+# (E:\PT\xben) and are not tracked here; exclude any local copies / flags defensively.
+**/xben/**/.env
+**/flag*.txt

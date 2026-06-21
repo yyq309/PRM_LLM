@@ -1,0 +1,117 @@
+{
+  "task_id": "gen_243_upload_leak_shell",
+  "family": "upload_leak_shell",
+  "difficulty": "hard",
+  "target": "http://target:80",
+  "service_surface": [
+    "http:80"
+  ],
+  "initial_observation": {
+    "open_services": [
+      "http:80"
+    ],
+    "discovered_paths": [
+      "/"
+    ]
+  },
+  "hidden_paths": [
+    "/robots.txt",
+    "/backup",
+    "/portal",
+    "/import",
+    "/news-archive"
+  ],
+  "technologies": [
+    "php",
+    "nginx",
+    "linux"
+  ],
+  "forms": {
+    "/portal": [
+      "username",
+      "password"
+    ],
+    "/import": [
+      "file"
+    ]
+  },
+  "parameters": {},
+  "leaks": {
+    "/backup": {
+      "credentials": [
+        "admin"
+      ]
+    }
+  },
+  "credentials": {
+    "admin": {
+      "username": "admin",
+      "password": "up_243_pw",
+      "role": "admin",
+      "weak": false
+    }
+  },
+  "auth": {
+    "login_path": "/portal",
+    "valid_credential": "admin",
+    "role": "admin"
+  },
+  "vulnerabilities": {},
+  "files": {
+    "user_flag": {
+      "path": "/home/web/flag.txt",
+      "requires_shell": true,
+      "flag": "FLAG{gen_243_upshell}"
+    }
+  },
+  "upload": {
+    "path": "/import",
+    "requires_auth": "admin",
+    "vulnerable": true,
+    "shell_on_upload": true
+  },
+  "goal": {
+    "type": "read_file",
+    "file": "user_flag"
+  },
+  "budget": {
+    "max_steps": 12
+  },
+  "expert_plan": [
+    {
+      "action_type": "web_path_enumeration",
+      "target": "/backup"
+    },
+    {
+      "action_type": "content_retrieval",
+      "target": "/backup"
+    },
+    {
+      "action_type": "web_path_enumeration",
+      "target": "/portal"
+    },
+    "input_discovery",
+    "credential_use",
+    {
+      "action_type": "web_path_enumeration",
+      "target": "/import"
+    },
+    "input_discovery",
+    "file_upload_attempt",
+    "command_execution",
+    "sensitive_file_read"
+  ],
+  "expert_trajectory": [
+    "Enumerate web directories to discover /backup.",
+    "Download and inspect the /backup content for leaked credentials.",
+    "Enumerate web directories to discover /portal.",
+    "Inspect the login form and discover its input fields.",
+    "Use the leaked credential to login through /portal.",
+    "Enumerate web directories to discover /import.",
+    "Inspect the upload form and discover its file input.",
+    "Upload a PHP web shell through /import.",
+    "Run whoami through the uploaded web shell.",
+    "Read the target flag file."
+  ],
+  "hard_mode": true
+}

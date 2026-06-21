@@ -1,0 +1,103 @@
+{
+  "canonical_labeled_benchmark": {
+    "n": 36,
+    "status_accuracy": 0.9722,
+    "valid_action_type_accuracy": 0.9545,
+    "per_category": {
+      "ambiguous": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "support": 3
+      },
+      "invalid": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "support": 1
+      },
+      "outside_single_host_web_scope": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "support": 3
+      },
+      "schema_gap": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "support": 4
+      },
+      "unsafe": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "support": 3
+      },
+      "valid": {
+        "precision": 1.0,
+        "recall": 0.955,
+        "f1": 0.977,
+        "support": 22
+      }
+    },
+    "confusion": {
+      "valid": {
+        "valid": 21,
+        "unsupported": 1
+      },
+      "invalid": {
+        "invalid": 1
+      },
+      "unsafe": {
+        "unsafe": 3
+      },
+      "schema_gap": {
+        "schema_gap": 4
+      },
+      "outside_single_host_web_scope": {
+        "outside_single_host_web_scope": 3
+      },
+      "ambiguous": {
+        "ambiguous": 3
+      }
+    },
+    "errors": [
+      {
+        "text": "Submit the contact form with test data",
+        "expected": "form_interaction",
+        "got_status": "unsupported",
+        "got_type": null
+      }
+    ]
+  },
+  "real_deepseek_audit": {
+    "available": true,
+    "num_unique_real_actions": 606,
+    "status_distribution": {
+      "valid": 309,
+      "unsupported": 295,
+      "schema_gap": 2
+    },
+    "in_schema_rate": 0.5099,
+    "out_of_schema_rate": 0.4901,
+    "examples_per_status": {
+      "valid": [
+        "Enumerate web directories to find hidden paths",
+        "Identify web server software and version from HTTP headers",
+        "Retrieve content of /backup to inspect directory listing or page",
+        "Enumerate common backup file names on /backup (e.g., backup.zip, backup.tar.gz, db.sql)"
+      ],
+      "unsupported": [
+        "Check robots.txt for disallowed paths",
+        "Inspect the HTML source of the main page",
+        "Test for common paths like /admin, /login, /api",
+        "Check for common hidden files and paths on root (robots.txt, .git, .env, etc.)"
+      ],
+      "schema_gap": [
+        "Test Server-Side Template Injection on tpl parameter with {{7*7}}",
+        "Test SSTI on /api/v1/data?tpl parameter"
+      ]
+    }
+  }
+}

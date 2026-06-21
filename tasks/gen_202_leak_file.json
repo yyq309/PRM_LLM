@@ -1,0 +1,67 @@
+{
+  "task_id": "gen_202_leak_file",
+  "family": "leak_file",
+  "difficulty": "easy",
+  "target": "http://target:80",
+  "service_surface": [
+    "http:80"
+  ],
+  "initial_observation": {
+    "open_services": [
+      "http:80"
+    ],
+    "discovered_paths": [
+      "/"
+    ]
+  },
+  "hidden_paths": [
+    "/news-archive",
+    "/dump.sql",
+    "/robots.txt"
+  ],
+  "technologies": [
+    "ruby",
+    "rails",
+    "postgres"
+  ],
+  "forms": {},
+  "parameters": {},
+  "leaks": {
+    "/dump.sql": {
+      "files": [
+        "flag_202"
+      ]
+    }
+  },
+  "credentials": {},
+  "auth": {},
+  "vulnerabilities": {},
+  "files": {
+    "flag_202": {
+      "path": "/dump.sql/flag_202.txt",
+      "flag": "FLAG{gen_202_leakfile}"
+    }
+  },
+  "goal": {
+    "type": "read_file",
+    "file": "flag_202"
+  },
+  "budget": {
+    "max_steps": 4
+  },
+  "expert_plan": [
+    {
+      "action_type": "web_path_enumeration",
+      "target": "/dump.sql"
+    },
+    {
+      "action_type": "content_retrieval",
+      "target": "/dump.sql"
+    }
+  ],
+  "expert_trajectory": [
+    "Enumerate web directories to discover /dump.sql.",
+    "Download and inspect the /dump.sql content for leaked data."
+  ],
+  "hard_mode": true
+}

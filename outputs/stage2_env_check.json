@@ -1,0 +1,191 @@
+{
+  "summary": {
+    "offline_phase1_ready": true,
+    "live_phase2_ready": false,
+    "failure_count": 0,
+    "live_blocker_count": 3
+  },
+  "config": {
+    "root": "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim",
+    "compose_dir": "E:\\PT\\vulhub\\thinkphp\\5-rce",
+    "target_url": "http://127.0.0.1:8080/",
+    "docker_network": "5-rce_default",
+    "tools_image": "webattacksim-stage2-tools"
+  },
+  "sections": {
+    "python": [
+      {
+        "name": "python",
+        "status": "ok",
+        "detail": "3.12.7",
+        "executable": "D:\\software\\anaconda3\\python.exe"
+      },
+      {
+        "name": "python package: joblib",
+        "status": "ok",
+        "detail": ""
+      },
+      {
+        "name": "python package: numpy",
+        "status": "ok",
+        "detail": ""
+      },
+      {
+        "name": "python package: pytest",
+        "status": "ok",
+        "detail": ""
+      },
+      {
+        "name": "python package: requests",
+        "status": "ok",
+        "detail": ""
+      },
+      {
+        "name": "python package: scikit-learn",
+        "status": "ok",
+        "detail": ""
+      },
+      {
+        "name": "python package: torch",
+        "status": "ok",
+        "detail": ""
+      }
+    ],
+    "artifacts": [
+      {
+        "name": "path exists: outputs\\prm_strong.joblib",
+        "status": "ok",
+        "detail": "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\outputs\\prm_strong.joblib"
+      },
+      {
+        "name": "path exists: outputs\\oracle_seed_gate.json",
+        "status": "ok",
+        "detail": "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\outputs\\oracle_seed_gate.json"
+      },
+      {
+        "name": "path exists: stage2\\walkthroughs",
+        "status": "ok",
+        "detail": "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\stage2\\walkthroughs"
+      },
+      {
+        "name": "oracle seed gate passed",
+        "status": "ok",
+        "detail": "True"
+      },
+      {
+        "name": "canonical oracle checkpoint",
+        "status": "ok",
+        "detail": "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\outputs\\seed_gate_12fam_80k\\seed_2\\web_dqn_seed_2.pt"
+      },
+      {
+        "name": "walkthrough fixture count",
+        "status": "ok",
+        "detail": "7"
+      }
+    ],
+    "docker_lab": [
+      {
+        "name": "docker engine",
+        "status": "ok",
+        "detail": "29.5.3"
+      },
+      {
+        "name": "docker compose",
+        "status": "ok",
+        "detail": "Docker Compose version v5.1.4"
+      },
+      {
+        "name": "vulhub compose file",
+        "status": "ok",
+        "detail": "E:\\PT\\vulhub\\thinkphp\\5-rce\\docker-compose.yml"
+      },
+      {
+        "name": "vulhub host port bound to localhost",
+        "status": "ok",
+        "detail": "expected 127.0.0.1:8080:80"
+      },
+      {
+        "name": "thinkphp container running",
+        "status": "ok",
+        "detail": "5-rce-web-1 127.0.0.1:8080->80/tcp"
+      },
+      {
+        "name": "thinkphp docker port inspect",
+        "status": "ok",
+        "detail": "{\"80/tcp\":[{\"HostIp\":\"127.0.0.1\",\"HostPort\":\"8080\"}]}"
+      },
+      {
+        "name": "docker lab network",
+        "status": "ok",
+        "detail": "5-rce_default"
+      },
+      {
+        "name": "target HTTP reachable from host",
+        "status": "ok",
+        "detail": "http://127.0.0.1:8080/ -> 200",
+        "sample": "<style type=\"text/css\">*{ padding: 0; margin: 0; } .think_default_text{ padding: 4px 48px;} a{color:#2E5CD5;cursor: poin"
+      }
+    ],
+    "tools": [
+      {
+        "name": "stage2 Docker tool image",
+        "status": "warn",
+        "detail": "not built yet"
+      },
+      {
+        "name": "host PATH tool: curl",
+        "status": "ok",
+        "detail": "Alias"
+      },
+      {
+        "name": "host PATH tool: nmap",
+        "status": "warn",
+        "detail": "not on PATH"
+      },
+      {
+        "name": "host PATH tool: gobuster",
+        "status": "warn",
+        "detail": "not on PATH"
+      },
+      {
+        "name": "host PATH tool: ffuf",
+        "status": "warn",
+        "detail": "not on PATH"
+      },
+      {
+        "name": "host PATH tool: sqlmap",
+        "status": "warn",
+        "detail": "not on PATH"
+      },
+      {
+        "name": "host PATH tool: whatweb",
+        "status": "warn",
+        "detail": "not on PATH"
+      },
+      {
+        "name": "host PATH tool: nikto",
+        "status": "warn",
+        "detail": "not on PATH"
+      }
+    ],
+    "environment_variables": [
+      {
+        "name": "DEEPSEEK_API_KEY",
+        "status": "warn",
+        "detail": "not set; offline replay does not need it"
+      },
+      {
+        "name": "STAGE2_LIVE_AUTHORIZED",
+        "status": "ok",
+        "detail": "not set; live execution cannot start accidentally"
+      }
+    ],
+    "live_executor": [
+      {
+        "name": "LiveExecutor implemented",
+        "status": "warn",
+        "detail": "still a safety-gated stub"
+      }
+    ]
+  }
+}

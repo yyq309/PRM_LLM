@@ -1,0 +1,87 @@
+{
+  "label_version": "webattacksim_prm_v1",
+  "oracle_checkpoint": "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\outputs\\seed_gate_12fam_80k\\seed_2\\web_dqn_seed_2.pt",
+  "seed_gate_report": "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\outputs\\oracle_seed_gate.json",
+  "seed_gate_passed": true,
+  "train_output": "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\outputs\\prm_samples_train.jsonl",
+  "heldout_output": "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\outputs\\prm_samples_heldout.jsonl",
+  "ranking_output": "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\outputs\\prm_candidate_ranking.json",
+  "splits": {
+    "train": {
+      "split": "train",
+      "num_tasks": 45,
+      "num_solved_tasks": 45,
+      "num_candidate_groups": 348,
+      "num_samples": 4176,
+      "label_source_counts": {
+        "normalizer_rule": 1740,
+        "oracle": 1118,
+        "precondition_rule": 1318
+      },
+      "rank_label_counts": {
+        "ambiguous": 348,
+        "high": 448,
+        "low": 310,
+        "medium": 360,
+        "outside_single_host_web_scope": 348,
+        "precondition_missing": 1318,
+        "schema_gap": 696,
+        "unsafe": 348
+      },
+      "diagnosis_counts": {
+        "action_intent_is_too_vague": 348,
+        "credential_missing": 224,
+        "duplicate_action": 8,
+        "high_value_action": 448,
+        "low_oracle_value": 310,
+        "medium_value_action": 319,
+        "no_new_information": 338,
+        "out_of_scope_or_destructive_action": 348,
+        "outside_single_host_web_scope": 348,
+        "precondition_missing": 505,
+        "premature_privilege_escalation": 284,
+        "unsupported_in_scope": 696
+      },
+      "score_mean": 0.141881,
+      "label_confidence_mean": 0.485775
+    },
+    "heldout": {
+      "split": "heldout",
+      "num_tasks": 20,
+      "num_solved_tasks": 20,
+      "num_candidate_groups": 147,
+      "num_samples": 1764,
+      "label_source_counts": {
+        "normalizer_rule": 735,
+        "oracle": 482,
+        "precondition_rule": 547
+      },
+      "rank_label_counts": {
+        "ambiguous": 147,
+        "high": 192,
+        "low": 145,
+        "medium": 145,
+        "outside_single_host_web_scope": 147,
+        "precondition_missing": 547,
+        "schema_gap": 294,
+        "unsafe": 147
+      },
+      "diagnosis_counts": {
+        "action_intent_is_too_vague": 147,
+        "credential_missing": 96,
+        "duplicate_action": 9,
+        "high_value_action": 192,
+        "low_oracle_value": 145,
+        "medium_value_action": 137,
+        "no_new_information": 139,
+        "out_of_scope_or_destructive_action": 147,
+        "outside_single_host_web_scope": 147,
+        "precondition_missing": 195,
+        "premature_privilege_escalation": 116,
+        "unsupported_in_scope": 294
+      },
+      "score_mean": 0.139928,
+      "label_confidence_mean": 0.487799
+    }
+  }
+}

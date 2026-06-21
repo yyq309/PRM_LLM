@@ -1,0 +1,43 @@
+{
+  "n_train_samples": 2784,
+  "n_train_rows_excluded_as_new_family": 1392,
+  "n_new_family_samples": 1740,
+  "n_new_family_oracle_labeled": 460,
+  "trained_on": "original families only (new-family rows excluded from prm_samples_train)",
+  "oracle_labels_from": "canonical seed-gate oracle (same oracle labels train + new families)",
+  "per_new_family": {
+    "authed_injection": {
+      "n": 135,
+      "majority_floor": 0.362962962962963,
+      "pairwise_accuracy": 0.968,
+      "pairwise_pairs": 125,
+      "rank_accuracy": 0.7777777777777778,
+      "rank_lift_over_floor": 0.4148148148148148
+    },
+    "chained_exploit": {
+      "n": 120,
+      "majority_floor": 0.375,
+      "pairwise_accuracy": 0.8260869565217391,
+      "pairwise_pairs": 115,
+      "rank_accuracy": 0.7083333333333334,
+      "rank_lift_over_floor": 0.33333333333333337
+    },
+    "leak_authed_privesc": {
+      "n": 205,
+      "majority_floor": 0.3902439024390244,
+      "pairwise_accuracy": 0.8444444444444444,
+      "pairwise_pairs": 225,
+      "rank_accuracy": 0.7609756097560976,
+      "rank_lift_over_floor": 0.37073170731707317
+    }
+  },
+  "all_new_families": {
+    "n": 460,
+    "majority_floor": 0.3782608695652174,
+    "pairwise_accuracy": 0.8731182795698925,
+    "pairwise_pairs": 465,
+    "rank_accuracy": 0.7521739130434782,
+    "rank_lift_over_floor": 0.3739130434782609
+  },
+  "note": "Pairwise/rank accuracy on the oracle-labeled subset of the NEW families, with a PRM that trained on the original families only. Compare against the in-distribution oracle-subset pairwise (~0.94) and the majority floor. A large drop = the new chain TOPOLOGIES are genuinely out of the PRM's structural coverage (more families would help); near-parity = the PRM already generalizes structurally."
+}

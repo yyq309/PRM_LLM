@@ -1,0 +1,243 @@
+{
+  "training_steps": 12000,
+  "seed": 1,
+  "mask_invalid_actions": true,
+  "reward_scale": 2.0,
+  "reward_jitter": 0.25,
+  "train_tasks": [
+    "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\tasks\\backup_flag_leak_easy.json",
+    "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\tasks\\backup_leak.json",
+    "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\tasks\\config_leak_login.json",
+    "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\tasks\\default_admin_pw_easy.json",
+    "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\tasks\\default_password_shell.json",
+    "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\tasks\\env_leak_login_medium.json",
+    "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\tasks\\export_flag_leak_easy.json",
+    "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\tasks\\git_leak_upload.json",
+    "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\tasks\\lfi_view_login_medium.json",
+    "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\tasks\\rce_ping_shell_hard.json",
+    "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\tasks\\rce_shell.json",
+    "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\tasks\\sqli_api_login_medium.json",
+    "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\tasks\\sqli_login.json",
+    "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\tasks\\sqli_search_login_medium.json",
+    "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\tasks\\swp_flag_leak_easy.json",
+    "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\tasks\\upload_default_shell_hard.json",
+    "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\tasks\\upload_privesc_root.json",
+    "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\tasks\\upload_shell.json",
+    "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\tasks\\weak_password.json"
+  ],
+  "eval_tasks": [
+    "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\tasks\\bak_leak_login_medium.json",
+    "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\tasks\\config_flag_leak_easy.json",
+    "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\tasks\\lfi_config_leak.json",
+    "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\tasks\\lfi_include_login_medium.json",
+    "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\tasks\\rce_exec_privesc_hard.json",
+    "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\tasks\\rce_privesc_root.json",
+    "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\tasks\\sqli_product_login_medium.json",
+    "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\tasks\\sqli_upload_shell.json",
+    "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\tasks\\upload_default_privesc_hard.json",
+    "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\tasks\\upload_leak_shell_hard.json",
+    "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\tasks\\weak_password123_easy.json"
+  ],
+  "eval_goal_rate": 1.0,
+  "eval_avg_reward": 102.6456018349932,
+  "eval_results": [
+    {
+      "task_id": "web_107_bak_leak_login_medium",
+      "reward": 91.35349187741227,
+      "steps": 10,
+      "goal": true
+    },
+    {
+      "task_id": "web_107_bak_leak_login_medium",
+      "reward": 91.35349187741227,
+      "steps": 10,
+      "goal": true
+    },
+    {
+      "task_id": "web_107_bak_leak_login_medium",
+      "reward": 91.35349187741227,
+      "steps": 10,
+      "goal": true
+    },
+    {
+      "task_id": "web_102_config_flag_leak_easy",
+      "reward": 50.990750807216095,
+      "steps": 5,
+      "goal": true
+    },
+    {
+      "task_id": "web_102_config_flag_leak_easy",
+      "reward": 50.990750807216095,
+      "steps": 5,
+      "goal": true
+    },
+    {
+      "task_id": "web_102_config_flag_leak_easy",
+      "reward": 50.990750807216095,
+      "steps": 5,
+      "goal": true
+    },
+    {
+      "task_id": "web_006_lfi_config_leak",
+      "reward": 98.28381133143088,
+      "steps": 10,
+      "goal": true
+    },
+    {
+      "task_id": "web_006_lfi_config_leak",
+      "reward": 98.28381133143088,
+      "steps": 10,
+      "goal": true
+    },
+    {
+      "task_id": "web_006_lfi_config_leak",
+      "reward": 98.28381133143088,
+      "steps": 10,
+      "goal": true
+    },
+    {
+      "task_id": "web_111_lfi_include_login_medium",
+      "reward": 107.65138703121993,
+      "steps": 12,
+      "goal": true
+    },
+    {
+      "task_id": "web_111_lfi_include_login_medium",
+      "reward": 107.65138703121993,
+      "steps": 12,
+      "goal": true
+    },
+    {
+      "task_id": "web_111_lfi_include_login_medium",
+      "reward": 107.65138703121993,
+      "steps": 12,
+      "goal": true
+    },
+    {
+      "task_id": "web_113_rce_exec_privesc_hard",
+      "reward": 123.80706487054296,
+      "steps": 11,
+      "goal": true
+    },
+    {
+      "task_id": "web_113_rce_exec_privesc_hard",
+      "reward": 123.80706487054296,
+      "steps": 11,
+      "goal": true
+    },
+    {
+      "task_id": "web_113_rce_exec_privesc_hard",
+      "reward": 123.80706487054296,
+      "steps": 11,
+      "goal": true
+    },
+    {
+      "task_id": "web_011_rce_privesc_root",
+      "reward": 114.4394891707539,
+      "steps": 9,
+      "goal": true
+    },
+    {
+      "task_id": "web_011_rce_privesc_root",
+      "reward": 114.4394891707539,
+      "steps": 9,
+      "goal": true
+    },
+    {
+      "task_id": "web_011_rce_privesc_root",
+      "reward": 114.4394891707539,
+      "steps": 9,
+      "goal": true
+    },
+    {
+      "task_id": "web_109_sqli_product_login_medium",
+      "reward": 107.65138703121993,
+      "steps": 12,
+      "goal": true
+    },
+    {
+      "task_id": "web_109_sqli_product_login_medium",
+      "reward": 107.65138703121993,
+      "steps": 12,
+      "goal": true
+    },
+    {
+      "task_id": "web_109_sqli_product_login_medium",
+      "reward": 107.65138703121993,
+      "steps": 12,
+      "goal": true
+    },
+    {
+      "task_id": "web_010_sqli_upload_shell",
+      "reward": 118.0903783500472,
+      "steps": 11,
+      "goal": true
+    },
+    {
+      "task_id": "web_010_sqli_upload_shell",
+      "reward": 118.0903783500472,
+      "steps": 11,
+      "goal": true
+    },
+    {
+      "task_id": "web_010_sqli_upload_shell",
+      "reward": 118.0903783500472,
+      "steps": 11,
+      "goal": true
+    },
+    {
+      "task_id": "web_116_upload_default_privesc_hard",
+      "reward": 123.68867162590408,
+      "steps": 11,
+      "goal": true
+    },
+    {
+      "task_id": "web_116_upload_default_privesc_hard",
+      "reward": 123.68867162590408,
+      "steps": 11,
+      "goal": true
+    },
+    {
+      "task_id": "web_116_upload_default_privesc_hard",
+      "reward": 123.68867162590408,
+      "steps": 11,
+      "goal": true
+    },
+    {
+      "task_id": "web_115_upload_leak_shell_hard",
+      "reward": 115.977247361561,
+      "steps": 12,
+      "goal": true
+    },
+    {
+      "task_id": "web_115_upload_leak_shell_hard",
+      "reward": 115.977247361561,
+      "steps": 12,
+      "goal": true
+    },
+    {
+      "task_id": "web_115_upload_leak_shell_hard",
+      "reward": 115.977247361561,
+      "steps": 12,
+      "goal": true
+    },
+    {
+      "task_id": "web_105_weak_password123_easy",
+      "reward": 77.16794072761701,
+      "steps": 8,
+      "goal": true
+    },
+    {
+      "task_id": "web_105_weak_password123_easy",
+      "reward": 77.16794072761701,
+      "steps": 8,
+      "goal": true
+    },
+    {
+      "task_id": "web_105_weak_password123_easy",
+      "reward": 77.16794072761701,
+      "steps": 8,
+      "goal": true
+    }
+  ]
+}

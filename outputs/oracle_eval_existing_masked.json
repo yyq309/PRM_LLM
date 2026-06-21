@@ -1,0 +1,1505 @@
+{
+  "checkpoint": "WebAttackSim\\outputs\\web_dqn.pt",
+  "use_action_mask": true,
+  "tasks": [
+    "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\tasks\\backup_leak.json",
+    "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\tasks\\sqli_login.json",
+    "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\tasks\\upload_shell.json"
+  ],
+  "episodes": 3,
+  "eval_goal_rate": 1.0,
+  "eval_avg_reward": 41.833333333333336,
+  "eval_avg_steps": 8.333333333333334,
+  "task_reports": [
+    {
+      "task_id": "web_001_backup_leak",
+      "episode": 0,
+      "goal": true,
+      "steps": 7,
+      "total_reward": 36.3,
+      "final_observation": {
+        "target_known": true,
+        "service_known": true,
+        "open_services": [
+          "http:80"
+        ],
+        "base_url_known": true,
+        "discovered_paths": [
+          "/",
+          "/admin",
+          "/backup",
+          "/login"
+        ],
+        "known_forms": [
+          "form:/login"
+        ],
+        "known_parameters": [],
+        "tech_stack": [],
+        "suspected_vulnerabilities": [],
+        "verified_vulnerabilities": [],
+        "credentials": [
+          "admin"
+        ],
+        "auth_state": "admin",
+        "shell_state": "none",
+        "privilege_level": "none",
+        "read_files": [
+          "admin_flag",
+          "config_backup"
+        ],
+        "failed_actions": [],
+        "failed_branches": {},
+        "remaining_budget": 13
+      },
+      "trace": [
+        {
+          "step": 0,
+          "action_id": 2,
+          "action_type": "web_path_enumeration",
+          "allowed": true,
+          "q_selected": 34.22319030761719,
+          "v_web": 34.22319030761719,
+          "value_gap": 0.0,
+          "reward": 1.9,
+          "feedback": {
+            "success": true,
+            "progress_event": "path_found",
+            "new_observation": null,
+            "discovered_items": [
+              "/login"
+            ],
+            "evidence": "path discovered: /login",
+            "auth_change": null,
+            "foothold_change": null,
+            "privilege_change": null,
+            "file_change": null,
+            "error_type": null,
+            "cost": 1.0,
+            "terminal": false
+          },
+          "done": false,
+          "top_actions": [
+            {
+              "action_id": 2,
+              "action_type": "web_path_enumeration",
+              "q": 34.22319030761719
+            },
+            {
+              "action_id": 4,
+              "action_type": "input_discovery",
+              "q": 28.388408660888672
+            },
+            {
+              "action_id": 6,
+              "action_type": "auth_attempt",
+              "q": 26.644182205200195
+            },
+            {
+              "action_id": 0,
+              "action_type": "service_enumeration",
+              "q": 26.03365707397461
+            },
+            {
+              "action_id": 3,
+              "action_type": "content_retrieval",
+              "q": 26.00305938720703
+            }
+          ]
+        },
+        {
+          "step": 1,
+          "action_id": 2,
+          "action_type": "web_path_enumeration",
+          "allowed": true,
+          "q_selected": 37.930641174316406,
+          "v_web": 37.930641174316406,
+          "value_gap": 0.0,
+          "reward": 1.9,
+          "feedback": {
+            "success": true,
+            "progress_event": "path_found",
+            "new_observation": null,
+            "discovered_items": [
+              "/backup"
+            ],
+            "evidence": "path discovered: /backup",
+            "auth_change": null,
+            "foothold_change": null,
+            "privilege_change": null,
+            "file_change": null,
+            "error_type": null,
+            "cost": 1.0,
+            "terminal": false
+          },
+          "done": false,
+          "top_actions": [
+            {
+              "action_id": 2,
+              "action_type": "web_path_enumeration",
+              "q": 37.930641174316406
+            },
+            {
+              "action_id": 4,
+              "action_type": "input_discovery",
+              "q": 34.859375
+            },
+            {
+              "action_id": 6,
+              "action_type": "auth_attempt",
+              "q": 32.80241775512695
+            },
+            {
+              "action_id": 0,
+              "action_type": "service_enumeration",
+              "q": 28.97501564025879
+            },
+            {
+              "action_id": 3,
+              "action_type": "content_retrieval",
+              "q": 28.971614837646484
+            }
+          ]
+        },
+        {
+          "step": 2,
+          "action_id": 3,
+          "action_type": "content_retrieval",
+          "allowed": true,
+          "q_selected": 54.13010025024414,
+          "v_web": 54.13010025024414,
+          "value_gap": 0.0,
+          "reward": 3.9,
+          "feedback": {
+            "success": true,
+            "progress_event": "credential_found",
+            "new_observation": null,
+            "discovered_items": [
+              "credential:admin",
+              "file:config_backup"
+            ],
+            "evidence": "content retrieval exposed credential:admin, file:config_backup",
+            "auth_change": null,
+            "foothold_change": null,
+            "privilege_change": null,
+            "file_change": null,
+            "error_type": null,
+            "cost": 1.0,
+            "terminal": false
+          },
+          "done": false,
+          "top_actions": [
+            {
+              "action_id": 3,
+              "action_type": "content_retrieval",
+              "q": 54.13010025024414
+            },
+            {
+              "action_id": 2,
+              "action_type": "web_path_enumeration",
+              "q": 53.39457702636719
+            },
+            {
+              "action_id": 4,
+              "action_type": "input_discovery",
+              "q": 51.298282623291016
+            },
+            {
+              "action_id": 0,
+              "action_type": "service_enumeration",
+              "q": 48.4772834777832
+            },
+            {
+              "action_id": 6,
+              "action_type": "auth_attempt",
+              "q": 48.37254333496094
+            }
+          ]
+        },
+        {
+          "step": 3,
+          "action_id": 2,
+          "action_type": "web_path_enumeration",
+          "allowed": true,
+          "q_selected": 54.623817443847656,
+          "v_web": 54.623817443847656,
+          "value_gap": 0.0,
+          "reward": 1.9,
+          "feedback": {
+            "success": true,
+            "progress_event": "path_found",
+            "new_observation": null,
+            "discovered_items": [
+              "/admin"
+            ],
+            "evidence": "path discovered: /admin",
+            "auth_change": null,
+            "foothold_change": null,
+            "privilege_change": null,
+            "file_change": null,
+            "error_type": null,
+            "cost": 1.0,
+            "terminal": false
+          },
+          "done": false,
+          "top_actions": [
+            {
+              "action_id": 2,
+              "action_type": "web_path_enumeration",
+              "q": 54.623817443847656
+            },
+            {
+              "action_id": 7,
+              "action_type": "credential_use",
+              "q": 53.95164108276367
+            },
+            {
+              "action_id": 4,
+              "action_type": "input_discovery",
+              "q": 52.211456298828125
+            },
+            {
+              "action_id": 3,
+              "action_type": "content_retrieval",
+              "q": 49.031532287597656
+            },
+            {
+              "action_id": 0,
+              "action_type": "service_enumeration",
+              "q": 49.00202178955078
+            }
+          ]
+        },
+        {
+          "step": 4,
+          "action_id": 7,
+          "action_type": "credential_use",
+          "allowed": true,
+          "q_selected": 57.198974609375,
+          "v_web": 57.198974609375,
+          "value_gap": 0.0,
+          "reward": 4.9,
+          "feedback": {
+            "success": true,
+            "progress_event": "session_obtained",
+            "new_observation": null,
+            "discovered_items": [],
+            "evidence": "known credential produced an authenticated session",
+            "auth_change": "anonymous->admin",
+            "foothold_change": null,
+            "privilege_change": null,
+            "file_change": null,
+            "error_type": null,
+            "cost": 1.0,
+            "terminal": false
+          },
+          "done": false,
+          "top_actions": [
+            {
+              "action_id": 7,
+              "action_type": "credential_use",
+              "q": 57.198974609375
+            },
+            {
+              "action_id": 2,
+              "action_type": "web_path_enumeration",
+              "q": 54.84844970703125
+            },
+            {
+              "action_id": 4,
+              "action_type": "input_discovery",
+              "q": 53.97792434692383
+            },
+            {
+              "action_id": 6,
+              "action_type": "auth_attempt",
+              "q": 53.04982376098633
+            },
+            {
+              "action_id": 3,
+              "action_type": "content_retrieval",
+              "q": 51.8077278137207
+            }
+          ]
+        },
+        {
+          "step": 5,
+          "action_id": 4,
+          "action_type": "input_discovery",
+          "allowed": true,
+          "q_selected": 51.93636703491211,
+          "v_web": 56.107112884521484,
+          "value_gap": 4.170745849609375,
+          "reward": 1.9,
+          "feedback": {
+            "success": true,
+            "progress_event": "input_found",
+            "new_observation": null,
+            "discovered_items": [
+              "form:/login"
+            ],
+            "evidence": "input discovery found forms or parameters",
+            "auth_change": null,
+            "foothold_change": null,
+            "privilege_change": null,
+            "file_change": null,
+            "error_type": null,
+            "cost": 1.0,
+            "terminal": false
+          },
+          "done": false,
+          "top_actions": [
+            {
+              "action_id": 7,
+              "action_type": "credential_use",
+              "q": 56.107112884521484
+            },
+            {
+              "action_id": 4,
+              "action_type": "input_discovery",
+              "q": 51.93636703491211
+            },
+            {
+              "action_id": 2,
+              "action_type": "web_path_enumeration",
+              "q": 51.933433532714844
+            },
+            {
+              "action_id": 3,
+              "action_type": "content_retrieval",
+              "q": 51.055015563964844
+            },
+            {
+              "action_id": 10,
+              "action_type": "file_upload_attempt",
+              "q": 50.6436653137207
+            }
+          ]
+        },
+        {
+          "step": 6,
+          "action_id": 12,
+          "action_type": "sensitive_file_read",
+          "allowed": true,
+          "q_selected": 48.915687561035156,
+          "v_web": 55.24575424194336,
+          "value_gap": 6.330066680908203,
+          "reward": 19.9,
+          "feedback": {
+            "success": true,
+            "progress_event": "sensitive_file_read",
+            "new_observation": null,
+            "discovered_items": [
+              "admin_flag",
+              "goal_reached"
+            ],
+            "evidence": "sensitive file read: admin_flag",
+            "auth_change": null,
+            "foothold_change": null,
+            "privilege_change": null,
+            "file_change": null,
+            "error_type": null,
+            "cost": 1.0,
+            "terminal": true
+          },
+          "done": true,
+          "top_actions": [
+            {
+              "action_id": 7,
+              "action_type": "credential_use",
+              "q": 55.24575424194336
+            },
+            {
+              "action_id": 2,
+              "action_type": "web_path_enumeration",
+              "q": 51.416221618652344
+            },
+            {
+              "action_id": 3,
+              "action_type": "content_retrieval",
+              "q": 50.616355895996094
+            },
+            {
+              "action_id": 4,
+              "action_type": "input_discovery",
+              "q": 50.09642791748047
+            },
+            {
+              "action_id": 10,
+              "action_type": "file_upload_attempt",
+              "q": 49.971214294433594
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "task_id": "web_002_sqli_login",
+      "episode": 0,
+      "goal": true,
+      "steps": 9,
+      "total_reward": 43.6,
+      "final_observation": {
+        "target_known": true,
+        "service_known": true,
+        "open_services": [
+          "http:80"
+        ],
+        "base_url_known": true,
+        "discovered_paths": [
+          "/",
+          "/admin",
+          "/item",
+          "/login"
+        ],
+        "known_forms": [
+          "form:/login"
+        ],
+        "known_parameters": [
+          "/item?id"
+        ],
+        "tech_stack": [
+          "flask",
+          "python",
+          "sqlite"
+        ],
+        "suspected_vulnerabilities": [
+          "sqli_item_id"
+        ],
+        "verified_vulnerabilities": [
+          "sqli_item_id"
+        ],
+        "credentials": [
+          "admin"
+        ],
+        "auth_state": "admin",
+        "shell_state": "none",
+        "privilege_level": "none",
+        "read_files": [
+          "admin_flag"
+        ],
+        "failed_actions": [],
+        "failed_branches": {},
+        "remaining_budget": 13
+      },
+      "trace": [
+        {
+          "step": 0,
+          "action_id": 2,
+          "action_type": "web_path_enumeration",
+          "allowed": true,
+          "q_selected": 34.22319030761719,
+          "v_web": 34.22319030761719,
+          "value_gap": 0.0,
+          "reward": 1.9,
+          "feedback": {
+            "success": true,
+            "progress_event": "path_found",
+            "new_observation": null,
+            "discovered_items": [
+              "/login"
+            ],
+            "evidence": "path discovered: /login",
+            "auth_change": null,
+            "foothold_change": null,
+            "privilege_change": null,
+            "file_change": null,
+            "error_type": null,
+            "cost": 1.0,
+            "terminal": false
+          },
+          "done": false,
+          "top_actions": [
+            {
+              "action_id": 2,
+              "action_type": "web_path_enumeration",
+              "q": 34.22319030761719
+            },
+            {
+              "action_id": 4,
+              "action_type": "input_discovery",
+              "q": 28.388408660888672
+            },
+            {
+              "action_id": 6,
+              "action_type": "auth_attempt",
+              "q": 26.644182205200195
+            },
+            {
+              "action_id": 0,
+              "action_type": "service_enumeration",
+              "q": 26.03365707397461
+            },
+            {
+              "action_id": 3,
+              "action_type": "content_retrieval",
+              "q": 26.00305938720703
+            }
+          ]
+        },
+        {
+          "step": 1,
+          "action_id": 2,
+          "action_type": "web_path_enumeration",
+          "allowed": true,
+          "q_selected": 38.11198806762695,
+          "v_web": 38.11198806762695,
+          "value_gap": 0.0,
+          "reward": 1.9,
+          "feedback": {
+            "success": true,
+            "progress_event": "path_found",
+            "new_observation": null,
+            "discovered_items": [
+              "/item"
+            ],
+            "evidence": "path discovered: /item",
+            "auth_change": null,
+            "foothold_change": null,
+            "privilege_change": null,
+            "file_change": null,
+            "error_type": null,
+            "cost": 1.0,
+            "terminal": false
+          },
+          "done": false,
+          "top_actions": [
+            {
+              "action_id": 2,
+              "action_type": "web_path_enumeration",
+              "q": 38.11198806762695
+            },
+            {
+              "action_id": 4,
+              "action_type": "input_discovery",
+              "q": 35.0252571105957
+            },
+            {
+              "action_id": 6,
+              "action_type": "auth_attempt",
+              "q": 33.002254486083984
+            },
+            {
+              "action_id": 3,
+              "action_type": "content_retrieval",
+              "q": 29.13452911376953
+            },
+            {
+              "action_id": 0,
+              "action_type": "service_enumeration",
+              "q": 29.128000259399414
+            }
+          ]
+        },
+        {
+          "step": 2,
+          "action_id": 2,
+          "action_type": "web_path_enumeration",
+          "allowed": true,
+          "q_selected": 21.19658660888672,
+          "v_web": 21.19658660888672,
+          "value_gap": 0.0,
+          "reward": 1.9,
+          "feedback": {
+            "success": true,
+            "progress_event": "path_found",
+            "new_observation": null,
+            "discovered_items": [
+              "/admin"
+            ],
+            "evidence": "path discovered: /admin",
+            "auth_change": null,
+            "foothold_change": null,
+            "privilege_change": null,
+            "file_change": null,
+            "error_type": null,
+            "cost": 1.0,
+            "terminal": false
+          },
+          "done": false,
+          "top_actions": [
+            {
+              "action_id": 2,
+              "action_type": "web_path_enumeration",
+              "q": 21.19658660888672
+            },
+            {
+              "action_id": 4,
+              "action_type": "input_discovery",
+              "q": 19.826017379760742
+            },
+            {
+              "action_id": 0,
+              "action_type": "service_enumeration",
+              "q": 15.689312934875488
+            },
+            {
+              "action_id": 3,
+              "action_type": "content_retrieval",
+              "q": 14.912384033203125
+            },
+            {
+              "action_id": 7,
+              "action_type": "credential_use",
+              "q": 14.359708786010742
+            }
+          ]
+        },
+        {
+          "step": 3,
+          "action_id": 4,
+          "action_type": "input_discovery",
+          "allowed": true,
+          "q_selected": 20.406444549560547,
+          "v_web": 23.098041534423828,
+          "value_gap": 2.6915969848632812,
+          "reward": 1.9,
+          "feedback": {
+            "success": true,
+            "progress_event": "input_found",
+            "new_observation": null,
+            "discovered_items": [
+              "form:/login",
+              "parameter:/item?id"
+            ],
+            "evidence": "input discovery found forms or parameters",
+            "auth_change": null,
+            "foothold_change": null,
+            "privilege_change": null,
+            "file_change": null,
+            "error_type": null,
+            "cost": 1.0,
+            "terminal": false
+          },
+          "done": false,
+          "top_actions": [
+            {
+              "action_id": 6,
+              "action_type": "auth_attempt",
+              "q": 23.098041534423828
+            },
+            {
+              "action_id": 4,
+              "action_type": "input_discovery",
+              "q": 20.406444549560547
+            },
+            {
+              "action_id": 2,
+              "action_type": "web_path_enumeration",
+              "q": 20.287248611450195
+            },
+            {
+              "action_id": 1,
+              "action_type": "http_fingerprint",
+              "q": 17.74561882019043
+            },
+            {
+              "action_id": 3,
+              "action_type": "content_retrieval",
+              "q": 17.64461326599121
+            }
+          ]
+        },
+        {
+          "step": 4,
+          "action_id": 1,
+          "action_type": "http_fingerprint",
+          "allowed": true,
+          "q_selected": 8.603048324584961,
+          "v_web": 10.728371620178223,
+          "value_gap": 2.1253232955932617,
+          "reward": 1.4,
+          "feedback": {
+            "success": true,
+            "progress_event": "fingerprint_found",
+            "new_observation": null,
+            "discovered_items": [
+              "flask",
+              "python",
+              "sqlite"
+            ],
+            "evidence": "web fingerprinting exposed technology stack",
+            "auth_change": null,
+            "foothold_change": null,
+            "privilege_change": null,
+            "file_change": null,
+            "error_type": null,
+            "cost": 1.0,
+            "terminal": false
+          },
+          "done": false,
+          "top_actions": [
+            {
+              "action_id": 6,
+              "action_type": "auth_attempt",
+              "q": 10.728371620178223
+            },
+            {
+              "action_id": 2,
+              "action_type": "web_path_enumeration",
+              "q": 9.01676082611084
+            },
+            {
+              "action_id": 1,
+              "action_type": "http_fingerprint",
+              "q": 8.603048324584961
+            },
+            {
+              "action_id": 8,
+              "action_type": "vulnerability_check",
+              "q": 8.418987274169922
+            },
+            {
+              "action_id": 3,
+              "action_type": "content_retrieval",
+              "q": 8.248164176940918
+            }
+          ]
+        },
+        {
+          "step": 5,
+          "action_id": 8,
+          "action_type": "vulnerability_check",
+          "allowed": true,
+          "q_selected": 5.0604567527771,
+          "v_web": 6.238702297210693,
+          "value_gap": 1.1782455444335938,
+          "reward": 3.9,
+          "feedback": {
+            "success": true,
+            "progress_event": "vulnerability_verified",
+            "new_observation": null,
+            "discovered_items": [
+              "sqli_item_id"
+            ],
+            "evidence": "vulnerability verified: sqli_item_id",
+            "auth_change": null,
+            "foothold_change": null,
+            "privilege_change": null,
+            "file_change": null,
+            "error_type": null,
+            "cost": 1.0,
+            "terminal": false
+          },
+          "done": false,
+          "top_actions": [
+            {
+              "action_id": 6,
+              "action_type": "auth_attempt",
+              "q": 6.238702297210693
+            },
+            {
+              "action_id": 2,
+              "action_type": "web_path_enumeration",
+              "q": 5.597590446472168
+            },
+            {
+              "action_id": 8,
+              "action_type": "vulnerability_check",
+              "q": 5.0604567527771
+            },
+            {
+              "action_id": 3,
+              "action_type": "content_retrieval",
+              "q": 4.957342147827148
+            },
+            {
+              "action_id": 4,
+              "action_type": "input_discovery",
+              "q": 4.942734241485596
+            }
+          ]
+        },
+        {
+          "step": 6,
+          "action_id": 9,
+          "action_type": "exploit_attempt",
+          "allowed": true,
+          "q_selected": -0.4137071371078491,
+          "v_web": 1.5683284997940063,
+          "value_gap": 1.9820356369018555,
+          "reward": 5.9,
+          "feedback": {
+            "success": true,
+            "progress_event": "exploit_succeeded",
+            "new_observation": null,
+            "discovered_items": [
+              "credential:admin"
+            ],
+            "evidence": "exploit produced credential:admin",
+            "auth_change": null,
+            "foothold_change": null,
+            "privilege_change": null,
+            "file_change": null,
+            "error_type": null,
+            "cost": 1.0,
+            "terminal": false
+          },
+          "done": false,
+          "top_actions": [
+            {
+              "action_id": 6,
+              "action_type": "auth_attempt",
+              "q": 1.5683284997940063
+            },
+            {
+              "action_id": 2,
+              "action_type": "web_path_enumeration",
+              "q": 1.525330662727356
+            },
+            {
+              "action_id": 3,
+              "action_type": "content_retrieval",
+              "q": 1.1427851915359497
+            },
+            {
+              "action_id": 1,
+              "action_type": "http_fingerprint",
+              "q": 1.085745096206665
+            },
+            {
+              "action_id": 4,
+              "action_type": "input_discovery",
+              "q": 1.0715004205703735
+            }
+          ]
+        },
+        {
+          "step": 7,
+          "action_id": 7,
+          "action_type": "credential_use",
+          "allowed": true,
+          "q_selected": -0.938339114189148,
+          "v_web": -0.4862481355667114,
+          "value_gap": 0.4520909786224365,
+          "reward": 4.9,
+          "feedback": {
+            "success": true,
+            "progress_event": "session_obtained",
+            "new_observation": null,
+            "discovered_items": [],
+            "evidence": "known credential produced an authenticated session",
+            "auth_change": "anonymous->admin",
+            "foothold_change": null,
+            "privilege_change": null,
+            "file_change": null,
+            "error_type": null,
+            "cost": 1.0,
+            "terminal": false
+          },
+          "done": false,
+          "top_actions": [
+            {
+              "action_id": 15,
+              "action_type": "stop_or_report",
+              "q": -0.4862481355667114
+            },
+            {
+              "action_id": 7,
+              "action_type": "credential_use",
+              "q": -0.938339114189148
+            },
+            {
+              "action_id": 4,
+              "action_type": "input_discovery",
+              "q": -1.1334787607192993
+            },
+            {
+              "action_id": 0,
+              "action_type": "service_enumeration",
+              "q": -1.2603670358657837
+            },
+            {
+              "action_id": 5,
+              "action_type": "form_interaction",
+              "q": -1.3567019701004028
+            }
+          ]
+        },
+        {
+          "step": 8,
+          "action_id": 12,
+          "action_type": "sensitive_file_read",
+          "allowed": true,
+          "q_selected": 58.199581146240234,
+          "v_web": 64.62715148925781,
+          "value_gap": 6.427570343017578,
+          "reward": 19.9,
+          "feedback": {
+            "success": true,
+            "progress_event": "sensitive_file_read",
+            "new_observation": null,
+            "discovered_items": [
+              "admin_flag",
+              "goal_reached"
+            ],
+            "evidence": "sensitive file read: admin_flag",
+            "auth_change": null,
+            "foothold_change": null,
+            "privilege_change": null,
+            "file_change": null,
+            "error_type": null,
+            "cost": 1.0,
+            "terminal": true
+          },
+          "done": true,
+          "top_actions": [
+            {
+              "action_id": 2,
+              "action_type": "web_path_enumeration",
+              "q": 64.62715148925781
+            },
+            {
+              "action_id": 6,
+              "action_type": "auth_attempt",
+              "q": 62.26586151123047
+            },
+            {
+              "action_id": 1,
+              "action_type": "http_fingerprint",
+              "q": 59.779563903808594
+            },
+            {
+              "action_id": 7,
+              "action_type": "credential_use",
+              "q": 59.25324630737305
+            },
+            {
+              "action_id": 10,
+              "action_type": "file_upload_attempt",
+              "q": 58.98336410522461
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "task_id": "web_003_upload_shell",
+      "episode": 0,
+      "goal": true,
+      "steps": 9,
+      "total_reward": 45.6,
+      "final_observation": {
+        "target_known": true,
+        "service_known": true,
+        "open_services": [
+          "http:80"
+        ],
+        "base_url_known": true,
+        "discovered_paths": [
+          "/",
+          "/admin",
+          "/login",
+          "/upload"
+        ],
+        "known_forms": [
+          "form:/login",
+          "form:/upload"
+        ],
+        "known_parameters": [],
+        "tech_stack": [
+          "nginx",
+          "php"
+        ],
+        "suspected_vulnerabilities": [],
+        "verified_vulnerabilities": [],
+        "credentials": [],
+        "auth_state": "admin",
+        "shell_state": "command_execution",
+        "privilege_level": "web_user",
+        "read_files": [
+          "user_flag"
+        ],
+        "failed_actions": [],
+        "failed_branches": {},
+        "remaining_budget": 15
+      },
+      "trace": [
+        {
+          "step": 0,
+          "action_id": 2,
+          "action_type": "web_path_enumeration",
+          "allowed": true,
+          "q_selected": 34.22319030761719,
+          "v_web": 34.22319030761719,
+          "value_gap": 0.0,
+          "reward": 1.9,
+          "feedback": {
+            "success": true,
+            "progress_event": "path_found",
+            "new_observation": null,
+            "discovered_items": [
+              "/login"
+            ],
+            "evidence": "path discovered: /login",
+            "auth_change": null,
+            "foothold_change": null,
+            "privilege_change": null,
+            "file_change": null,
+            "error_type": null,
+            "cost": 1.0,
+            "terminal": false
+          },
+          "done": false,
+          "top_actions": [
+            {
+              "action_id": 2,
+              "action_type": "web_path_enumeration",
+              "q": 34.22319030761719
+            },
+            {
+              "action_id": 4,
+              "action_type": "input_discovery",
+              "q": 28.388408660888672
+            },
+            {
+              "action_id": 6,
+              "action_type": "auth_attempt",
+              "q": 26.644182205200195
+            },
+            {
+              "action_id": 0,
+              "action_type": "service_enumeration",
+              "q": 26.03365707397461
+            },
+            {
+              "action_id": 3,
+              "action_type": "content_retrieval",
+              "q": 26.00305938720703
+            }
+          ]
+        },
+        {
+          "step": 1,
+          "action_id": 2,
+          "action_type": "web_path_enumeration",
+          "allowed": true,
+          "q_selected": 38.26311111450195,
+          "v_web": 38.26311111450195,
+          "value_gap": 0.0,
+          "reward": 1.9,
+          "feedback": {
+            "success": true,
+            "progress_event": "path_found",
+            "new_observation": null,
+            "discovered_items": [
+              "/admin"
+            ],
+            "evidence": "path discovered: /admin",
+            "auth_change": null,
+            "foothold_change": null,
+            "privilege_change": null,
+            "file_change": null,
+            "error_type": null,
+            "cost": 1.0,
+            "terminal": false
+          },
+          "done": false,
+          "top_actions": [
+            {
+              "action_id": 2,
+              "action_type": "web_path_enumeration",
+              "q": 38.26311111450195
+            },
+            {
+              "action_id": 4,
+              "action_type": "input_discovery",
+              "q": 35.163490295410156
+            },
+            {
+              "action_id": 6,
+              "action_type": "auth_attempt",
+              "q": 33.16878890991211
+            },
+            {
+              "action_id": 3,
+              "action_type": "content_retrieval",
+              "q": 29.27029037475586
+            },
+            {
+              "action_id": 0,
+              "action_type": "service_enumeration",
+              "q": 29.255489349365234
+            }
+          ]
+        },
+        {
+          "step": 2,
+          "action_id": 6,
+          "action_type": "auth_attempt",
+          "allowed": true,
+          "q_selected": 42.62177276611328,
+          "v_web": 42.62177276611328,
+          "value_gap": 0.0,
+          "reward": 4.9,
+          "feedback": {
+            "success": true,
+            "progress_event": "session_obtained",
+            "new_observation": null,
+            "discovered_items": [],
+            "evidence": "weak/default credential login succeeded",
+            "auth_change": "anonymous->admin",
+            "foothold_change": null,
+            "privilege_change": null,
+            "file_change": null,
+            "error_type": null,
+            "cost": 1.0,
+            "terminal": false
+          },
+          "done": false,
+          "top_actions": [
+            {
+              "action_id": 6,
+              "action_type": "auth_attempt",
+              "q": 42.62177276611328
+            },
+            {
+              "action_id": 2,
+              "action_type": "web_path_enumeration",
+              "q": 37.5708122253418
+            },
+            {
+              "action_id": 4,
+              "action_type": "input_discovery",
+              "q": 36.0965690612793
+            },
+            {
+              "action_id": 1,
+              "action_type": "http_fingerprint",
+              "q": 32.75686264038086
+            },
+            {
+              "action_id": 3,
+              "action_type": "content_retrieval",
+              "q": 32.52602767944336
+            }
+          ]
+        },
+        {
+          "step": 3,
+          "action_id": 2,
+          "action_type": "web_path_enumeration",
+          "allowed": true,
+          "q_selected": 111.66426849365234,
+          "v_web": 111.66426849365234,
+          "value_gap": 0.0,
+          "reward": 1.9,
+          "feedback": {
+            "success": true,
+            "progress_event": "path_found",
+            "new_observation": null,
+            "discovered_items": [
+              "/upload"
+            ],
+            "evidence": "path discovered: /upload",
+            "auth_change": null,
+            "foothold_change": null,
+            "privilege_change": null,
+            "file_change": null,
+            "error_type": null,
+            "cost": 1.0,
+            "terminal": false
+          },
+          "done": false,
+          "top_actions": [
+            {
+              "action_id": 2,
+              "action_type": "web_path_enumeration",
+              "q": 111.66426849365234
+            },
+            {
+              "action_id": 6,
+              "action_type": "auth_attempt",
+              "q": 106.66610717773438
+            },
+            {
+              "action_id": 4,
+              "action_type": "input_discovery",
+              "q": 106.0665283203125
+            },
+            {
+              "action_id": 1,
+              "action_type": "http_fingerprint",
+              "q": 103.89861297607422
+            },
+            {
+              "action_id": 0,
+              "action_type": "service_enumeration",
+              "q": 101.06842041015625
+            }
+          ]
+        },
+        {
+          "step": 4,
+          "action_id": 10,
+          "action_type": "file_upload_attempt",
+          "allowed": true,
+          "q_selected": 118.2576904296875,
+          "v_web": 118.2576904296875,
+          "value_gap": 0.0,
+          "reward": 7.9,
+          "feedback": {
+            "success": true,
+            "progress_event": "shell_obtained",
+            "new_observation": null,
+            "discovered_items": [
+              "webshell"
+            ],
+            "evidence": "uploaded webshell is reachable",
+            "auth_change": null,
+            "foothold_change": "none->webshell",
+            "privilege_change": null,
+            "file_change": null,
+            "error_type": null,
+            "cost": 1.0,
+            "terminal": false
+          },
+          "done": false,
+          "top_actions": [
+            {
+              "action_id": 10,
+              "action_type": "file_upload_attempt",
+              "q": 118.2576904296875
+            },
+            {
+              "action_id": 6,
+              "action_type": "auth_attempt",
+              "q": 115.02656555175781
+            },
+            {
+              "action_id": 4,
+              "action_type": "input_discovery",
+              "q": 114.82881927490234
+            },
+            {
+              "action_id": 1,
+              "action_type": "http_fingerprint",
+              "q": 112.54493713378906
+            },
+            {
+              "action_id": 2,
+              "action_type": "web_path_enumeration",
+              "q": 111.61234283447266
+            }
+          ]
+        },
+        {
+          "step": 5,
+          "action_id": 4,
+          "action_type": "input_discovery",
+          "allowed": true,
+          "q_selected": 112.05076599121094,
+          "v_web": 116.40906524658203,
+          "value_gap": 4.358299255371094,
+          "reward": 1.9,
+          "feedback": {
+            "success": true,
+            "progress_event": "input_found",
+            "new_observation": null,
+            "discovered_items": [
+              "form:/login",
+              "form:/upload"
+            ],
+            "evidence": "input discovery found forms or parameters",
+            "auth_change": null,
+            "foothold_change": null,
+            "privilege_change": null,
+            "file_change": null,
+            "error_type": null,
+            "cost": 1.0,
+            "terminal": false
+          },
+          "done": false,
+          "top_actions": [
+            {
+              "action_id": 10,
+              "action_type": "file_upload_attempt",
+              "q": 116.40906524658203
+            },
+            {
+              "action_id": 6,
+              "action_type": "auth_attempt",
+              "q": 112.85655212402344
+            },
+            {
+              "action_id": 4,
+              "action_type": "input_discovery",
+              "q": 112.05076599121094
+            },
+            {
+              "action_id": 8,
+              "action_type": "vulnerability_check",
+              "q": 110.04652404785156
+            },
+            {
+              "action_id": 1,
+              "action_type": "http_fingerprint",
+              "q": 109.38673400878906
+            }
+          ]
+        },
+        {
+          "step": 6,
+          "action_id": 1,
+          "action_type": "http_fingerprint",
+          "allowed": true,
+          "q_selected": 109.96089172363281,
+          "v_web": 116.6443099975586,
+          "value_gap": 6.683418273925781,
+          "reward": 1.4,
+          "feedback": {
+            "success": true,
+            "progress_event": "fingerprint_found",
+            "new_observation": null,
+            "discovered_items": [
+              "nginx",
+              "php"
+            ],
+            "evidence": "web fingerprinting exposed technology stack",
+            "auth_change": null,
+            "foothold_change": null,
+            "privilege_change": null,
+            "file_change": null,
+            "error_type": null,
+            "cost": 1.0,
+            "terminal": false
+          },
+          "done": false,
+          "top_actions": [
+            {
+              "action_id": 10,
+              "action_type": "file_upload_attempt",
+              "q": 116.6443099975586
+            },
+            {
+              "action_id": 6,
+              "action_type": "auth_attempt",
+              "q": 112.62973022460938
+            },
+            {
+              "action_id": 8,
+              "action_type": "vulnerability_check",
+              "q": 110.26935577392578
+            },
+            {
+              "action_id": 1,
+              "action_type": "http_fingerprint",
+              "q": 109.96089172363281
+            },
+            {
+              "action_id": 4,
+              "action_type": "input_discovery",
+              "q": 109.7302017211914
+            }
+          ]
+        },
+        {
+          "step": 7,
+          "action_id": 11,
+          "action_type": "command_execution",
+          "allowed": true,
+          "q_selected": 109.60955810546875,
+          "v_web": 117.66586303710938,
+          "value_gap": 8.056304931640625,
+          "reward": 3.9,
+          "feedback": {
+            "success": true,
+            "progress_event": "command_execution_obtained",
+            "new_observation": null,
+            "discovered_items": [],
+            "evidence": "command execution confirmed",
+            "auth_change": null,
+            "foothold_change": "webshell->command_execution",
+            "privilege_change": null,
+            "file_change": null,
+            "error_type": null,
+            "cost": 1.0,
+            "terminal": false
+          },
+          "done": false,
+          "top_actions": [
+            {
+              "action_id": 10,
+              "action_type": "file_upload_attempt",
+              "q": 117.66586303710938
+            },
+            {
+              "action_id": 6,
+              "action_type": "auth_attempt",
+              "q": 113.84749603271484
+            },
+            {
+              "action_id": 8,
+              "action_type": "vulnerability_check",
+              "q": 111.5045166015625
+            },
+            {
+              "action_id": 4,
+              "action_type": "input_discovery",
+              "q": 110.90866088867188
+            },
+            {
+              "action_id": 1,
+              "action_type": "http_fingerprint",
+              "q": 110.68194580078125
+            }
+          ]
+        },
+        {
+          "step": 8,
+          "action_id": 12,
+          "action_type": "sensitive_file_read",
+          "allowed": true,
+          "q_selected": 107.19336700439453,
+          "v_web": 118.30369567871094,
+          "value_gap": 11.110328674316406,
+          "reward": 19.9,
+          "feedback": {
+            "success": true,
+            "progress_event": "sensitive_file_read",
+            "new_observation": null,
+            "discovered_items": [
+              "user_flag",
+              "goal_reached"
+            ],
+            "evidence": "sensitive file read: user_flag",
+            "auth_change": null,
+            "foothold_change": null,
+            "privilege_change": null,
+            "file_change": null,
+            "error_type": null,
+            "cost": 1.0,
+            "terminal": true
+          },
+          "done": true,
+          "top_actions": [
+            {
+              "action_id": 10,
+              "action_type": "file_upload_attempt",
+              "q": 118.30369567871094
+            },
+            {
+              "action_id": 6,
+              "action_type": "auth_attempt",
+              "q": 116.01588439941406
+            },
+            {
+              "action_id": 2,
+              "action_type": "web_path_enumeration",
+              "q": 112.74214935302734
+            },
+            {
+              "action_id": 4,
+              "action_type": "input_discovery",
+              "q": 112.68555450439453
+            },
+            {
+              "action_id": 8,
+              "action_type": "vulnerability_check",
+              "q": 112.24093627929688
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

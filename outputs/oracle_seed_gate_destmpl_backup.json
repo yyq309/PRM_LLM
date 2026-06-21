@@ -1,0 +1,165 @@
+{
+  "passed": true,
+  "thresholds": {
+    "min_goal_rate": 0.7,
+    "min_expert_top3_rate": 0.6,
+    "max_expert_avg_value_gap": 6.0
+  },
+  "training_steps": 45000,
+  "train_tasks": [
+    "tasks/gen_201_leak_file.json",
+    "tasks/gen_202_leak_file.json",
+    "tasks/gen_203_leak_file.json",
+    "tasks/gen_204_leak_file.json",
+    "tasks/gen_206_default_pw.json",
+    "tasks/gen_207_default_pw.json",
+    "tasks/gen_208_default_pw.json",
+    "tasks/gen_209_default_pw.json",
+    "tasks/gen_216_sqli_login.json",
+    "tasks/gen_217_sqli_login.json",
+    "tasks/gen_218_sqli_login.json",
+    "tasks/gen_219_sqli_login.json",
+    "tasks/gen_220_lfi_login.json",
+    "tasks/gen_221_lfi_login.json",
+    "tasks/gen_222_lfi_login.json",
+    "tasks/gen_223_lfi_login.json",
+    "tasks/gen_224_lfi_login.json",
+    "tasks/gen_226_rce_shell.json",
+    "tasks/gen_227_rce_shell.json",
+    "tasks/gen_228_rce_shell.json",
+    "tasks/gen_229_rce_shell.json",
+    "tasks/gen_236_upload_default_shell.json",
+    "tasks/gen_237_upload_default_shell.json",
+    "tasks/gen_238_upload_default_shell.json",
+    "tasks/gen_239_upload_default_shell.json",
+    "tasks/gen_241_upload_leak_shell.json",
+    "tasks/gen_242_upload_leak_shell.json",
+    "tasks/gen_243_upload_leak_shell.json",
+    "tasks/gen_244_upload_leak_shell.json",
+    "tasks/gen_246_upload_default_privesc.json",
+    "tasks/gen_247_upload_default_privesc.json",
+    "tasks/gen_248_upload_default_privesc.json",
+    "tasks/gen_249_upload_default_privesc.json"
+  ],
+  "eval_tasks": [
+    "tasks/gen_200_leak_file.json",
+    "tasks/gen_205_default_pw.json",
+    "tasks/gen_210_leak_login.json",
+    "tasks/gen_211_leak_login.json",
+    "tasks/gen_212_leak_login.json",
+    "tasks/gen_213_leak_login.json",
+    "tasks/gen_214_leak_login.json",
+    "tasks/gen_215_sqli_login.json",
+    "tasks/gen_225_rce_shell.json",
+    "tasks/gen_230_rce_privesc.json",
+    "tasks/gen_231_rce_privesc.json",
+    "tasks/gen_232_rce_privesc.json",
+    "tasks/gen_233_rce_privesc.json",
+    "tasks/gen_234_rce_privesc.json",
+    "tasks/gen_235_upload_default_shell.json",
+    "tasks/gen_240_upload_leak_shell.json",
+    "tasks/gen_245_upload_default_privesc.json"
+  ],
+  "seeds": [
+    0,
+    1,
+    2
+  ],
+  "metrics": {
+    "eval_goal_rate": {
+      "mean": 1.0,
+      "std": 0.0,
+      "min": 1.0,
+      "max": 1.0
+    },
+    "eval_avg_reward": {
+      "mean": 45.40392156862745,
+      "std": 0.22743407645096259,
+      "min": 45.14705882352941,
+      "max": 45.699999999999996
+    },
+    "eval_avg_steps": {
+      "mean": 9.588235294117647,
+      "std": 0.14408763192842244,
+      "min": 9.411764705882353,
+      "max": 9.764705882352942
+    },
+    "expert_action_allowed_rate": {
+      "mean": 1.0,
+      "std": 0.0,
+      "min": 1.0,
+      "max": 1.0
+    },
+    "expert_action_top1_rate": {
+      "mean": 0.24011299435028247,
+      "std": 0.07202004962701673,
+      "min": 0.1694915254237288,
+      "max": 0.3389830508474576
+    },
+    "expert_action_top3_rate": {
+      "mean": 0.8757062146892656,
+      "std": 0.04709980791111037,
+      "min": 0.8305084745762712,
+      "max": 0.940677966101695
+    },
+    "expert_action_avg_value_gap": {
+      "mean": 2.3898700138943343,
+      "std": 0.4840362720763028,
+      "min": 1.7374844136884657,
+      "max": 2.8955939826318775
+    }
+  },
+  "seed_reports": [
+    {
+      "seed": 0,
+      "passed": true,
+      "checkpoint": "outputs\\seed_gate_destmpl\\seed_0\\web_dqn_seed_0.pt",
+      "train_eval_report": "outputs\\seed_gate_destmpl\\seed_0\\web_dqn_seed_0.eval.json",
+      "eval_report": "outputs\\seed_gate_destmpl\\seed_0\\oracle_eval_heldout.json",
+      "q_report": "outputs\\seed_gate_destmpl\\seed_0\\oracle_q_gap_heldout.jsonl",
+      "metrics": {
+        "eval_goal_rate": 1.0,
+        "eval_avg_reward": 45.699999999999996,
+        "eval_avg_steps": 9.764705882352942,
+        "expert_action_allowed_rate": 1.0,
+        "expert_action_top1_rate": 0.3389830508474576,
+        "expert_action_top3_rate": 0.8305084745762712,
+        "expert_action_avg_value_gap": 2.53653164536266
+      }
+    },
+    {
+      "seed": 1,
+      "passed": true,
+      "checkpoint": "outputs\\seed_gate_destmpl\\seed_1\\web_dqn_seed_1.pt",
+      "train_eval_report": "outputs\\seed_gate_destmpl\\seed_1\\web_dqn_seed_1.eval.json",
+      "eval_report": "outputs\\seed_gate_destmpl\\seed_1\\oracle_eval_heldout.json",
+      "q_report": "outputs\\seed_gate_destmpl\\seed_1\\oracle_q_gap_heldout.jsonl",
+      "metrics": {
+        "eval_goal_rate": 1.0,
+        "eval_avg_reward": 45.36470588235294,
+        "eval_avg_steps": 9.588235294117647,
+        "expert_action_allowed_rate": 1.0,
+        "expert_action_top1_rate": 0.211864406779661,
+        "expert_action_top3_rate": 0.940677966101695,
+        "expert_action_avg_value_gap": 2.8955939826318775
+      }
+    },
+    {
+      "seed": 2,
+      "passed": true,
+      "checkpoint": "outputs\\seed_gate_destmpl\\seed_2\\web_dqn_seed_2.pt",
+      "train_eval_report": "outputs\\seed_gate_destmpl\\seed_2\\web_dqn_seed_2.eval.json",
+      "eval_report": "outputs\\seed_gate_destmpl\\seed_2\\oracle_eval_heldout.json",
+      "q_report": "outputs\\seed_gate_destmpl\\seed_2\\oracle_q_gap_heldout.jsonl",
+      "metrics": {
+        "eval_goal_rate": 1.0,
+        "eval_avg_reward": 45.14705882352941,
+        "eval_avg_steps": 9.411764705882353,
+        "expert_action_allowed_rate": 1.0,
+        "expert_action_top1_rate": 0.1694915254237288,
+        "expert_action_top3_rate": 0.8559322033898306,
+        "expert_action_avg_value_gap": 1.7374844136884657
+      }
+    }
+  ]
+}

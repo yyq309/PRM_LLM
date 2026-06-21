@@ -1,0 +1,129 @@
+{
+  "task_id": "web_110_lfi_view_login_medium",
+  "target": "http://target:80",
+  "service_surface": [
+    "http:80"
+  ],
+  "initial_observation": {
+    "open_services": [
+      "http:80"
+    ],
+    "discovered_paths": [
+      "/"
+    ]
+  },
+  "hidden_paths": [
+    "/view",
+    "/login",
+    "/admin",
+    "/static",
+    "/assets"
+  ],
+  "technologies": [
+    "php",
+    "nginx",
+    "linux"
+  ],
+  "forms": {
+    "/login": [
+      "username",
+      "password"
+    ]
+  },
+  "parameters": {
+    "/view": [
+      {
+        "name": "page",
+        "vulnerability": "lfi_page_10"
+      }
+    ]
+  },
+  "leaks": {},
+  "credentials": {
+    "admin": {
+      "username": "admin",
+      "password": "lfi_view_login_medium_pw",
+      "role": "admin",
+      "weak": false
+    }
+  },
+  "auth": {
+    "login_path": "/login",
+    "valid_credential": "admin",
+    "role": "admin"
+  },
+  "vulnerabilities": {
+    "lfi_page_10": {
+      "type": "lfi",
+      "target": "/view?page",
+      "requires": [
+        "parameter_found:/view?page"
+      ],
+      "effects": {
+        "credentials": [
+          "admin"
+        ]
+      }
+    }
+  },
+  "files": {
+    "admin_flag": {
+      "path": "/admin/flag",
+      "requires_auth": "admin",
+      "flag": "FLAG{lfi_view_login_medium}"
+    }
+  },
+  "goal": {
+    "type": "read_file",
+    "file": "admin_flag"
+  },
+  "budget": {
+    "max_steps": 22
+  },
+  "expert_plan": [
+    {
+      "action_type": "web_path_enumeration",
+      "target": "/view"
+    },
+    {
+      "action_type": "input_discovery",
+      "target": "/view"
+    },
+    {
+      "action_type": "vulnerability_check",
+      "target": "/view?page",
+      "parameter": "page"
+    },
+    {
+      "action_type": "exploit_attempt",
+      "target": "/view?page",
+      "parameter": "page"
+    },
+    {
+      "action_type": "web_path_enumeration",
+      "target": "/login"
+    },
+    {
+      "action_type": "web_path_enumeration",
+      "target": "/admin"
+    },
+    {
+      "action_type": "credential_use",
+      "target": "/login"
+    },
+    {
+      "action_type": "sensitive_file_read",
+      "target": "/admin/flag"
+    }
+  ],
+  "expert_trajectory": [
+    "Enumerate web directories to discover /view.",
+    "Discover input parameters on the /view endpoint.",
+    "Verify LFI on /view?page parameter.",
+    "Exploit the LFI to dump the admin credential.",
+    "Enumerate web directories to discover /login.",
+    "Enumerate web directories to discover /admin.",
+    "Use the known admin credential to login through /login.",
+    "Read the /admin/flag sensitive file."
+  ]
+}

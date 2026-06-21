@@ -1,0 +1,88 @@
+{
+  "task_id": "gen_208_default_pw",
+  "family": "default_pw",
+  "difficulty": "easy",
+  "target": "http://target:80",
+  "service_surface": [
+    "http:80"
+  ],
+  "initial_observation": {
+    "open_services": [
+      "http:80"
+    ],
+    "discovered_paths": [
+      "/"
+    ]
+  },
+  "hidden_paths": [
+    "/help",
+    "/user/login",
+    "/console",
+    "/terms"
+  ],
+  "technologies": [
+    "php",
+    "nginx",
+    "linux"
+  ],
+  "forms": {
+    "/user/login": [
+      "username",
+      "password"
+    ]
+  },
+  "parameters": {},
+  "leaks": {},
+  "credentials": {
+    "admin": {
+      "username": "admin",
+      "password": "admin",
+      "role": "admin",
+      "weak": true
+    }
+  },
+  "auth": {
+    "login_path": "/user/login",
+    "valid_credential": "admin",
+    "role": "admin"
+  },
+  "vulnerabilities": {},
+  "files": {
+    "admin_flag": {
+      "path": "/console/flag",
+      "requires_auth": "admin",
+      "flag": "FLAG{gen_208_defpw}"
+    }
+  },
+  "goal": {
+    "type": "read_file",
+    "file": "admin_flag"
+  },
+  "budget": {
+    "max_steps": 7
+  },
+  "expert_plan": [
+    {
+      "action_type": "web_path_enumeration",
+      "target": "/user/login"
+    },
+    {
+      "action_type": "input_discovery",
+      "target": "/user/login"
+    },
+    "auth_attempt",
+    {
+      "action_type": "web_path_enumeration",
+      "target": "/console"
+    },
+    "sensitive_file_read"
+  ],
+  "expert_trajectory": [
+    "Enumerate web directories to discover /user/login.",
+    "Inspect the login form and discover its input fields.",
+    "Login with default password admin/admin.",
+    "Enumerate web directories to discover /console.",
+    "Read the admin flag sensitive file."
+  ],
+  "hard_mode": true
+}

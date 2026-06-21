@@ -1,0 +1,167 @@
+{
+  "stage": "stage2_engagement",
+  "target": "Vulhub-ThinkPHP-5-RCE",
+  "executor": "live",
+  "proposer": "llm",
+  "psi_for_action_mapping": "enhanced",
+  "psi_for_prm_features": "stage1_training_time",
+  "runs": [
+    {
+      "box": "Vulhub-ThinkPHP-5-RCE",
+      "mode": "prm",
+      "budget": 14,
+      "steps_taken": 4,
+      "stop_reason": "goal_reached",
+      "reached_shell": true,
+      "reached_root": false,
+      "read_any_file": true,
+      "wasted_actions": 1,
+      "steps": [
+        {
+          "t": 0,
+          "chosen_action": "exploit_attempt",
+          "eta_tool": "exploit",
+          "executed": true,
+          "made_progress": true,
+          "exhausted_after": false
+        },
+        {
+          "t": 1,
+          "chosen_action": "command_execution",
+          "eta_tool": "shell",
+          "executed": true,
+          "made_progress": true,
+          "exhausted_after": false
+        },
+        {
+          "t": 2,
+          "chosen_action": "command_execution",
+          "eta_tool": "shell",
+          "executed": true,
+          "made_progress": false,
+          "exhausted_after": false
+        },
+        {
+          "t": 3,
+          "chosen_action": "sensitive_file_read",
+          "eta_tool": "cat",
+          "executed": true,
+          "made_progress": true,
+          "exhausted_after": false
+        }
+      ],
+      "final_observation": {
+        "target_known": true,
+        "service_known": false,
+        "open_services": [],
+        "base_url_known": true,
+        "discovered_paths": [
+          "/"
+        ],
+        "known_forms": [],
+        "known_parameters": [],
+        "tech_stack": [],
+        "suspected_vulnerabilities": [],
+        "verified_vulnerabilities": [],
+        "credentials": [],
+        "auth_state": "anonymous",
+        "shell_state": "command_execution",
+        "privilege_level": "web_user",
+        "read_files": [
+          "etc_passwd"
+        ],
+        "failed_actions": [],
+        "failed_branches": {},
+        "remaining_budget": 14
+      }
+    },
+    {
+      "box": "Vulhub-ThinkPHP-5-RCE",
+      "mode": "llm_only",
+      "budget": 14,
+      "steps_taken": 5,
+      "stop_reason": "no_available_action",
+      "reached_shell": true,
+      "reached_root": false,
+      "read_any_file": false,
+      "wasted_actions": 2,
+      "steps": [
+        {
+          "t": 0,
+          "chosen_action": "http_fingerprint",
+          "eta_tool": "whatweb",
+          "executed": true,
+          "made_progress": true,
+          "exhausted_after": false
+        },
+        {
+          "t": 1,
+          "chosen_action": "exploit_attempt",
+          "eta_tool": "exploit",
+          "executed": true,
+          "made_progress": true,
+          "exhausted_after": false
+        },
+        {
+          "t": 2,
+          "chosen_action": "command_execution",
+          "eta_tool": "shell",
+          "executed": true,
+          "made_progress": true,
+          "exhausted_after": false
+        },
+        {
+          "t": 3,
+          "chosen_action": "command_execution",
+          "eta_tool": "shell",
+          "executed": true,
+          "made_progress": false,
+          "exhausted_after": false
+        },
+        {
+          "t": 4,
+          "chosen_action": "command_execution",
+          "eta_tool": "shell",
+          "executed": true,
+          "made_progress": false,
+          "exhausted_after": true
+        }
+      ],
+      "final_observation": {
+        "target_known": true,
+        "service_known": false,
+        "open_services": [],
+        "base_url_known": true,
+        "discovered_paths": [
+          "/"
+        ],
+        "known_forms": [],
+        "known_parameters": [],
+        "tech_stack": [
+          "apache",
+          "php",
+          "thinkphp"
+        ],
+        "suspected_vulnerabilities": [],
+        "verified_vulnerabilities": [],
+        "credentials": [],
+        "auth_state": "anonymous",
+        "shell_state": "command_execution",
+        "privilege_level": "web_user",
+        "read_files": [],
+        "failed_actions": [],
+        "failed_branches": {},
+        "remaining_budget": 14
+      }
+    }
+  ],
+  "ab": {
+    "prm_reached_root": false,
+    "llm_only_reached_root": false,
+    "prm_steps": 4,
+    "llm_only_steps": 5,
+    "prm_wasted": 1,
+    "llm_only_wasted": 2,
+    "note": "Offline A/B is wiring-validation only; a real uplift number needs the LIVE executor on an authorized isolated target over several boxes with CIs (Phase 3)."
+  }
+}

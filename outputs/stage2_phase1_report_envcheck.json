@@ -1,0 +1,1980 @@
+{
+  "stage": "stage2_phase1_offline_replay",
+  "psi_variant": "stage1_baseline",
+  "prm_candidate_psi": "stage1_training_time",
+  "prm_model": "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\outputs\\prm_strong.joblib",
+  "prm_loaded": true,
+  "summary": {
+    "n_boxes": 7,
+    "total_steps": 71,
+    "out_of_abstraction_rate": 0.0845,
+    "psi_accuracy_in_abstraction": 0.4923,
+    "psi_false_reject_rate": 0.3231,
+    "psi_false_accept_on_out_steps": 0,
+    "phi_field_recall": 0.9485,
+    "prm_rerank_top1_rate": 0.5,
+    "prm_rerank_decision_points": 10,
+    "decision_gate": {
+      "threshold": 0.6,
+      "tripped": false,
+      "verdict": "Abstraction covers the bulk of the real chains (out-of-abstraction 8.45% <= 60%); proceed to Phase 2 (η + single-box loop).",
+      "schema_extension_shortlist": [
+        "offline_credential_cracking",
+        "ssh_remote_login",
+        "binary_service_exploit",
+        "local_account_switch"
+      ],
+      "schema_gap_token_counts": {
+        "offline_credential_cracking": 2,
+        "ssh_remote_login": 2,
+        "binary_service_exploit": 1,
+        "local_account_switch": 1
+      }
+    }
+  },
+  "per_box": [
+    {
+      "box": "DC-1",
+      "abstract_family": "rce_privesc",
+      "source": "Representative walkthrough constructed from public DC-1 write-ups (Drupalgeddon2 -> SUID find privesc). Author-constructed for offline Phase-1 mapping measurement; NOT a live capture.",
+      "fixture": "stage2\\walkthroughs\\dc-1.json",
+      "n_steps": 10,
+      "n_out_of_abstraction": 1,
+      "out_of_abstraction_rate": 0.1,
+      "psi": {
+        "in_abstraction_steps": 9,
+        "accuracy": 0.7778,
+        "correct": 7,
+        "wrong_action": 1,
+        "false_reject": 1,
+        "false_accept_on_out_steps": 0
+      },
+      "phi": {
+        "field_recall": 1.0,
+        "asserts": 14,
+        "hits": 14,
+        "per_field_recall": {
+          "discovered_paths": 1.0,
+          "open_services": 1.0,
+          "privilege_level": 1.0,
+          "read_files": 1.0,
+          "shell_state": 1.0,
+          "tech_stack": 1.0,
+          "verified_vulnerabilities": 1.0
+        },
+        "unparsed_outputs": [
+          "curl: no abstract facts extracted",
+          "shell: no abstract facts extracted",
+          "command: no abstract facts extracted"
+        ]
+      },
+      "prm_rerank": {
+        "decision_points": 3,
+        "top1_rate": 0.3333,
+        "pairwise_accuracy": 0.5
+      },
+      "schema_gap_tokens": {
+        "offline_credential_cracking": 1
+      },
+      "steps": [
+        {
+          "step": 0,
+          "phase": "recon",
+          "reference_abstract_action": "service_enumeration",
+          "psi_status": "valid",
+          "psi_action": "service_enumeration",
+          "psi_correct": true,
+          "phi_extracted": {
+            "open_services": [
+              "http:80",
+              "rpcbind:111",
+              "ssh:22"
+            ],
+            "tech_stack": [
+              "apache"
+            ]
+          },
+          "phi_field_assert": 2,
+          "phi_field_hit": 2,
+          "rerank": null,
+          "out_of_abstraction_reason": null,
+          "suggested_schema_extension": null
+        },
+        {
+          "step": 1,
+          "phase": "recon",
+          "reference_abstract_action": "http_fingerprint",
+          "psi_status": "valid",
+          "psi_action": "http_fingerprint",
+          "psi_correct": true,
+          "phi_extracted": {
+            "tech_stack": [
+              "apache",
+              "drupal",
+              "php"
+            ]
+          },
+          "phi_field_assert": 3,
+          "phi_field_hit": 3,
+          "rerank": null,
+          "out_of_abstraction_reason": null,
+          "suggested_schema_extension": null
+        },
+        {
+          "step": 2,
+          "phase": "enumeration",
+          "reference_abstract_action": "web_path_enumeration",
+          "psi_status": "valid",
+          "psi_action": "web_path_enumeration",
+          "psi_correct": true,
+          "phi_extracted": {
+            "discovered_paths": [
+              "/CHANGELOG.txt",
+              "/admin",
+              "/includes",
+              "/scripts",
+              "/user"
+            ]
+          },
+          "phi_field_assert": 3,
+          "phi_field_hit": 3,
+          "rerank": {
+            "scores": [
+              1.0,
+              0.1313,
+              0.0032,
+              0.0011
+            ],
+            "good_ranked_first": true
+          },
+          "out_of_abstraction_reason": null,
+          "suggested_schema_extension": null
+        },
+        {
+          "step": 3,
+          "phase": "vuln-id",
+          "reference_abstract_action": "vulnerability_check",
+          "psi_status": "unsupported",
+          "psi_action": null,
+          "psi_correct": false,
+          "phi_extracted": {},
+          "phi_field_assert": 0,
+          "phi_field_hit": 0,
+          "rerank": null,
+          "out_of_abstraction_reason": null,
+          "suggested_schema_extension": null
+        },
+        {
+          "step": 4,
+          "phase": "exploit",
+          "reference_abstract_action": "exploit_attempt",
+          "psi_status": "valid",
+          "psi_action": "exploit_attempt",
+          "psi_correct": true,
+          "phi_extracted": {
+            "verified_vulnerabilities": [
+              "drupalgeddon2"
+            ],
+            "shell_state": "webshell"
+          },
+          "phi_field_assert": 2,
+          "phi_field_hit": 2,
+          "rerank": null,
+          "out_of_abstraction_reason": null,
+          "suggested_schema_extension": null
+        },
+        {
+          "step": 5,
+          "phase": "post-exploit",
+          "reference_abstract_action": "command_execution",
+          "psi_status": "valid",
+          "psi_action": "command_execution",
+          "psi_correct": true,
+          "phi_extracted": {
+            "shell_state": "command_execution",
+            "privilege_level": "web_user",
+            "user": "www-data"
+          },
+          "phi_field_assert": 2,
+          "phi_field_hit": 2,
+          "rerank": {
+            "scores": [
+              0.1044,
+              0.996,
+              0.1294,
+              0.0161
+            ],
+            "good_ranked_first": false
+          },
+          "out_of_abstraction_reason": null,
+          "suggested_schema_extension": null
+        },
+        {
+          "step": 6,
+          "phase": "privesc-recon",
+          "reference_abstract_action": "post_exploitation",
+          "psi_status": "valid",
+          "psi_action": "privilege_escalation",
+          "psi_correct": false,
+          "phi_extracted": {},
+          "phi_field_assert": 0,
+          "phi_field_hit": 0,
+          "rerank": null,
+          "out_of_abstraction_reason": null,
+          "suggested_schema_extension": null
+        },
+        {
+          "step": 7,
+          "phase": "privesc",
+          "reference_abstract_action": "privilege_escalation",
+          "psi_status": "valid",
+          "psi_action": "privilege_escalation",
+          "psi_correct": true,
+          "phi_extracted": {
+            "privilege_level": "root"
+          },
+          "phi_field_assert": 1,
+          "phi_field_hit": 1,
+          "rerank": {
+            "scores": [
+              0.19,
+              0.2923,
+              0.6159
+            ],
+            "good_ranked_first": false
+          },
+          "out_of_abstraction_reason": null,
+          "suggested_schema_extension": null
+        },
+        {
+          "step": 8,
+          "phase": "loot",
+          "reference_abstract_action": "sensitive_file_read",
+          "psi_status": "valid",
+          "psi_action": "sensitive_file_read",
+          "psi_correct": true,
+          "phi_extracted": {
+            "read_files": [
+              "root_flag"
+            ]
+          },
+          "phi_field_assert": 1,
+          "phi_field_hit": 1,
+          "rerank": null,
+          "out_of_abstraction_reason": null,
+          "suggested_schema_extension": null
+        },
+        {
+          "step": 9,
+          "phase": "out-of-band",
+          "reference_abstract_action": "out_of_abstraction",
+          "psi_status": "unsupported",
+          "psi_action": null,
+          "psi_correct": false,
+          "phi_extracted": {},
+          "phi_field_assert": 0,
+          "phi_field_hit": 0,
+          "rerank": null,
+          "out_of_abstraction_reason": "Offline password-hash cracking (john/hashcat) is not representable in the 16-action web schema; it is a local credential-recovery step, not a web interaction.",
+          "suggested_schema_extension": "offline_credential_cracking"
+        }
+      ],
+      "final_observation": {
+        "target_known": true,
+        "service_known": true,
+        "open_services": [
+          "http:80",
+          "rpcbind:111",
+          "ssh:22"
+        ],
+        "base_url_known": true,
+        "discovered_paths": [
+          "/",
+          "/CHANGELOG.txt",
+          "/admin",
+          "/includes",
+          "/scripts",
+          "/user"
+        ],
+        "known_forms": [],
+        "known_parameters": [],
+        "tech_stack": [
+          "apache",
+          "drupal",
+          "php"
+        ],
+        "suspected_vulnerabilities": [
+          "drupalgeddon2"
+        ],
+        "verified_vulnerabilities": [
+          "drupalgeddon2"
+        ],
+        "credentials": [],
+        "auth_state": "anonymous",
+        "shell_state": "command_execution",
+        "privilege_level": "root",
+        "read_files": [
+          "root_flag"
+        ],
+        "failed_actions": [],
+        "failed_branches": {},
+        "remaining_budget": 12
+      }
+    },
+    {
+      "box": "Kioptrix-L1",
+      "abstract_family": "rce_privesc",
+      "source": "Representative walkthrough constructed from public Kioptrix Level 1 write-up structure (Samba trans2open remote overflow -> direct root). Author-constructed for offline Phase-1 mapping measurement; NOT a live capture. Included deliberately as a largely NON-web box to test whether the adapter correctly FLAGS the out-of-abstraction primitive instead of hallucinating a web action.",
+      "fixture": "stage2\\walkthroughs\\kioptrix-1.json",
+      "n_steps": 7,
+      "n_out_of_abstraction": 1,
+      "out_of_abstraction_rate": 0.1429,
+      "psi": {
+        "in_abstraction_steps": 6,
+        "accuracy": 0.3333,
+        "correct": 2,
+        "wrong_action": 1,
+        "false_reject": 3,
+        "false_accept_on_out_steps": 0
+      },
+      "phi": {
+        "field_recall": 0.8889,
+        "asserts": 9,
+        "hits": 8,
+        "per_field_recall": {
+          "open_services": 0.5,
+          "privilege_level": 1.0,
+          "read_files": 1.0,
+          "shell_state": 1.0,
+          "tech_stack": 1.0
+        },
+        "unparsed_outputs": [
+          "searchsploit: no abstract facts extracted"
+        ]
+      },
+      "prm_rerank": {
+        "decision_points": 0,
+        "top1_rate": null,
+        "pairwise_accuracy": null
+      },
+      "schema_gap_tokens": {
+        "binary_service_exploit": 1
+      },
+      "steps": [
+        {
+          "step": 0,
+          "phase": "recon",
+          "reference_abstract_action": "service_enumeration",
+          "psi_status": "valid",
+          "psi_action": "service_enumeration",
+          "psi_correct": true,
+          "phi_extracted": {
+            "open_services": [
+              "http:80",
+              "netbios-ssn:139",
+              "ssh:22",
+              "status:32768"
+            ],
+            "tech_stack": [
+              "apache",
+              "openssl"
+            ]
+          },
+          "phi_field_assert": 4,
+          "phi_field_hit": 3,
+          "rerank": null,
+          "out_of_abstraction_reason": null,
+          "suggested_schema_extension": null
+        },
+        {
+          "step": 1,
+          "phase": "enumeration",
+          "reference_abstract_action": "http_fingerprint",
+          "psi_status": "valid",
+          "psi_action": "http_fingerprint",
+          "psi_correct": true,
+          "phi_extracted": {
+            "tech_stack": [
+              "apache",
+              "openssl"
+            ]
+          },
+          "phi_field_assert": 2,
+          "phi_field_hit": 2,
+          "rerank": null,
+          "out_of_abstraction_reason": null,
+          "suggested_schema_extension": null
+        },
+        {
+          "step": 2,
+          "phase": "enumeration",
+          "reference_abstract_action": "service_enumeration",
+          "psi_status": "unsupported",
+          "psi_action": null,
+          "psi_correct": false,
+          "phi_extracted": {
+            "open_services": [
+              "netbios-ssn:139"
+            ],
+            "tech_stack": []
+          },
+          "phi_field_assert": 0,
+          "phi_field_hit": 0,
+          "rerank": null,
+          "out_of_abstraction_reason": null,
+          "suggested_schema_extension": null
+        },
+        {
+          "step": 3,
+          "phase": "vuln-id",
+          "reference_abstract_action": "vulnerability_check",
+          "psi_status": "valid",
+          "psi_action": "exploit_attempt",
+          "psi_correct": false,
+          "phi_extracted": {},
+          "phi_field_assert": 0,
+          "phi_field_hit": 0,
+          "rerank": null,
+          "out_of_abstraction_reason": null,
+          "suggested_schema_extension": null
+        },
+        {
+          "step": 4,
+          "phase": "exploit",
+          "reference_abstract_action": "out_of_abstraction",
+          "psi_status": "unsupported",
+          "psi_action": null,
+          "psi_correct": false,
+          "phi_extracted": {
+            "credentials": [
+              "cred:10.10.10.5:139"
+            ],
+            "shell_state": "webshell"
+          },
+          "phi_field_assert": 0,
+          "phi_field_hit": 0,
+          "rerank": null,
+          "out_of_abstraction_reason": "A remote memory-corruption (stack buffer overflow) exploit against the SMB/Samba network service is a non-web binary exploitation primitive; the schema's exploit_attempt is scoped to web vulnerabilities (injection, RCE via HTTP, upload) and cannot represent it.",
+          "suggested_schema_extension": "binary_service_exploit"
+        },
+        {
+          "step": 5,
+          "phase": "post-exploit",
+          "reference_abstract_action": "command_execution",
+          "psi_status": "unsupported",
+          "psi_action": null,
+          "psi_correct": false,
+          "phi_extracted": {
+            "shell_state": "command_execution",
+            "privilege_level": "root",
+            "user": "root"
+          },
+          "phi_field_assert": 2,
+          "phi_field_hit": 2,
+          "rerank": null,
+          "out_of_abstraction_reason": null,
+          "suggested_schema_extension": null
+        },
+        {
+          "step": 6,
+          "phase": "loot",
+          "reference_abstract_action": "sensitive_file_read",
+          "psi_status": "unsupported",
+          "psi_action": null,
+          "psi_correct": false,
+          "phi_extracted": {
+            "read_files": [
+              "etc_shadow"
+            ]
+          },
+          "phi_field_assert": 1,
+          "phi_field_hit": 1,
+          "rerank": null,
+          "out_of_abstraction_reason": null,
+          "suggested_schema_extension": null
+        }
+      ],
+      "final_observation": {
+        "target_known": true,
+        "service_known": true,
+        "open_services": [
+          "http:80",
+          "netbios-ssn:139",
+          "ssh:22",
+          "status:32768"
+        ],
+        "base_url_known": true,
+        "discovered_paths": [
+          "/"
+        ],
+        "known_forms": [],
+        "known_parameters": [],
+        "tech_stack": [
+          "apache",
+          "openssl"
+        ],
+        "suspected_vulnerabilities": [],
+        "verified_vulnerabilities": [],
+        "credentials": [
+          "cred:10.10.10.5:139"
+        ],
+        "auth_state": "anonymous",
+        "shell_state": "command_execution",
+        "privilege_level": "root",
+        "read_files": [
+          "etc_shadow"
+        ],
+        "failed_actions": [],
+        "failed_branches": {},
+        "remaining_budget": 9
+      }
+    },
+    {
+      "box": "Mercury",
+      "abstract_family": "leak_authed_privesc",
+      "source": "Representative walkthrough constructed from public Mercury write-up structure (Django path SQLi -> dumped creds -> SSH pivot -> sudo PATH-hijack root). Author-constructed for offline Phase-1 mapping measurement; NOT a live capture.",
+      "fixture": "stage2\\walkthroughs\\mercury.json",
+      "n_steps": 10,
+      "n_out_of_abstraction": 1,
+      "out_of_abstraction_rate": 0.1,
+      "psi": {
+        "in_abstraction_steps": 9,
+        "accuracy": 0.5556,
+        "correct": 5,
+        "wrong_action": 1,
+        "false_reject": 3,
+        "false_accept_on_out_steps": 0
+      },
+      "phi": {
+        "field_recall": 1.0,
+        "asserts": 9,
+        "hits": 9,
+        "per_field_recall": {
+          "discovered_paths": 1.0,
+          "open_services": 1.0,
+          "privilege_level": 1.0,
+          "read_files": 1.0,
+          "tech_stack": 1.0,
+          "verified_vulnerabilities": 1.0
+        },
+        "unparsed_outputs": [
+          "curl: no abstract facts extracted",
+          "command: no abstract facts extracted"
+        ]
+      },
+      "prm_rerank": {
+        "decision_points": 1,
+        "top1_rate": 1.0,
+        "pairwise_accuracy": 1.0
+      },
+      "schema_gap_tokens": {
+        "ssh_remote_login": 1
+      },
+      "steps": [
+        {
+          "step": 0,
+          "phase": "recon",
+          "reference_abstract_action": "service_enumeration",
+          "psi_status": "valid",
+          "psi_action": "service_enumeration",
+          "psi_correct": true,
+          "phi_extracted": {
+            "open_services": [
+              "http:8080",
+              "ssh:22"
+            ],
+            "tech_stack": [
+              "python"
+            ]
+          },
+          "phi_field_assert": 2,
+          "phi_field_hit": 2,
+          "rerank": null,
+          "out_of_abstraction_reason": null,
+          "suggested_schema_extension": null
+        },
+        {
+          "step": 1,
+          "phase": "enumeration",
+          "reference_abstract_action": "http_fingerprint",
+          "psi_status": "valid",
+          "psi_action": "http_fingerprint",
+          "psi_correct": true,
+          "phi_extracted": {
+            "tech_stack": [
+              "python"
+            ]
+          },
+          "phi_field_assert": 1,
+          "phi_field_hit": 1,
+          "rerank": null,
+          "out_of_abstraction_reason": null,
+          "suggested_schema_extension": null
+        },
+        {
+          "step": 2,
+          "phase": "enumeration",
+          "reference_abstract_action": "web_path_enumeration",
+          "psi_status": "unsupported",
+          "psi_action": null,
+          "psi_correct": false,
+          "phi_extracted": {
+            "discovered_paths": [
+              "/mercuryfacts",
+              "/mercuryfacts/1",
+              "/mercuryfacts/list-facts",
+              "/robots.txt"
+            ]
+          },
+          "phi_field_assert": 2,
+          "phi_field_hit": 2,
+          "rerank": null,
+          "out_of_abstraction_reason": null,
+          "suggested_schema_extension": null
+        },
+        {
+          "step": 3,
+          "phase": "vuln-id",
+          "reference_abstract_action": "vulnerability_check",
+          "psi_status": "valid",
+          "psi_action": "vulnerability_check",
+          "psi_correct": true,
+          "phi_extracted": {},
+          "phi_field_assert": 0,
+          "phi_field_hit": 0,
+          "rerank": null,
+          "out_of_abstraction_reason": null,
+          "suggested_schema_extension": null
+        },
+        {
+          "step": 4,
+          "phase": "exploit",
+          "reference_abstract_action": "exploit_attempt",
+          "psi_status": "valid",
+          "psi_action": "exploit_attempt",
+          "psi_correct": true,
+          "phi_extracted": {
+            "verified_vulnerabilities": [
+              "django_path_sqli"
+            ],
+            "credentials": [
+              "linuxmaster:reallaxsX",
+              "webmaster:johnny1987"
+            ]
+          },
+          "phi_field_assert": 1,
+          "phi_field_hit": 1,
+          "rerank": null,
+          "out_of_abstraction_reason": null,
+          "suggested_schema_extension": null
+        },
+        {
+          "step": 5,
+          "phase": "pivot",
+          "reference_abstract_action": "out_of_abstraction",
+          "psi_status": "outside_single_host_web_scope",
+          "psi_action": null,
+          "psi_correct": false,
+          "phi_extracted": {
+            "shell_state": "command_execution",
+            "privilege_level": "web_user",
+            "user": "webmaster"
+          },
+          "phi_field_assert": 0,
+          "phi_field_hit": 0,
+          "rerank": null,
+          "out_of_abstraction_reason": "Interactive SSH login with the recovered credentials is a non-web service authentication; the schema's auth_attempt/credential_use are web-form/HTTP only and there is no SSH-login action.",
+          "suggested_schema_extension": "ssh_remote_login"
+        },
+        {
+          "step": 6,
+          "phase": "loot",
+          "reference_abstract_action": "sensitive_file_read",
+          "psi_status": "unsupported",
+          "psi_action": null,
+          "psi_correct": false,
+          "phi_extracted": {
+            "read_files": [
+              "notes"
+            ]
+          },
+          "phi_field_assert": 1,
+          "phi_field_hit": 1,
+          "rerank": null,
+          "out_of_abstraction_reason": null,
+          "suggested_schema_extension": null
+        },
+        {
+          "step": 7,
+          "phase": "privesc-recon",
+          "reference_abstract_action": "post_exploitation",
+          "psi_status": "valid",
+          "psi_action": "privilege_escalation",
+          "psi_correct": false,
+          "phi_extracted": {},
+          "phi_field_assert": 0,
+          "phi_field_hit": 0,
+          "rerank": null,
+          "out_of_abstraction_reason": null,
+          "suggested_schema_extension": null
+        },
+        {
+          "step": 8,
+          "phase": "privesc",
+          "reference_abstract_action": "privilege_escalation",
+          "psi_status": "valid",
+          "psi_action": "privilege_escalation",
+          "psi_correct": true,
+          "phi_extracted": {
+            "privilege_level": "root"
+          },
+          "phi_field_assert": 1,
+          "phi_field_hit": 1,
+          "rerank": {
+            "scores": [
+              0.3066,
+              0.0,
+              0.126
+            ],
+            "good_ranked_first": true
+          },
+          "out_of_abstraction_reason": null,
+          "suggested_schema_extension": null
+        },
+        {
+          "step": 9,
+          "phase": "loot",
+          "reference_abstract_action": "sensitive_file_read",
+          "psi_status": "unsupported",
+          "psi_action": null,
+          "psi_correct": false,
+          "phi_extracted": {
+            "read_files": [
+              "root_flag"
+            ]
+          },
+          "phi_field_assert": 1,
+          "phi_field_hit": 1,
+          "rerank": null,
+          "out_of_abstraction_reason": null,
+          "suggested_schema_extension": null
+        }
+      ],
+      "final_observation": {
+        "target_known": true,
+        "service_known": true,
+        "open_services": [
+          "http:8080",
+          "ssh:22"
+        ],
+        "base_url_known": true,
+        "discovered_paths": [
+          "/",
+          "/mercuryfacts",
+          "/mercuryfacts/1",
+          "/mercuryfacts/list-facts",
+          "/robots.txt"
+        ],
+        "known_forms": [],
+        "known_parameters": [],
+        "tech_stack": [
+          "python"
+        ],
+        "suspected_vulnerabilities": [
+          "django_path_sqli"
+        ],
+        "verified_vulnerabilities": [
+          "django_path_sqli"
+        ],
+        "credentials": [
+          "linuxmaster:reallaxsX",
+          "webmaster:johnny1987"
+        ],
+        "auth_state": "anonymous",
+        "shell_state": "command_execution",
+        "privilege_level": "root",
+        "read_files": [
+          "notes",
+          "root_flag"
+        ],
+        "failed_actions": [],
+        "failed_branches": {},
+        "remaining_budget": 12
+      }
+    },
+    {
+      "box": "Mr-Robot",
+      "abstract_family": "default_or_weak_password",
+      "source": "Representative walkthrough constructed from public Mr-Robot write-up structure (robots.txt wordlist -> WordPress weak-cred brute -> theme-editor webshell -> SUID nmap root). Author-constructed for offline Phase-1 mapping measurement; NOT a live capture.",
+      "fixture": "stage2\\walkthroughs\\mr-robot.json",
+      "n_steps": 15,
+      "n_out_of_abstraction": 2,
+      "out_of_abstraction_rate": 0.1333,
+      "psi": {
+        "in_abstraction_steps": 13,
+        "accuracy": 0.3846,
+        "correct": 5,
+        "wrong_action": 3,
+        "false_reject": 5,
+        "false_accept_on_out_steps": 0
+      },
+      "phi": {
+        "field_recall": 0.8333,
+        "asserts": 18,
+        "hits": 15,
+        "per_field_recall": {
+          "auth_state": 1.0,
+          "credentials": 1.0,
+          "discovered_paths": 0.0,
+          "open_services": 0.5,
+          "privilege_level": 1.0,
+          "read_files": 1.0,
+          "shell_state": 1.0,
+          "tech_stack": 1.0,
+          "verified_vulnerabilities": 1.0
+        },
+        "unparsed_outputs": [
+          "curl: no abstract facts extracted",
+          "command: no abstract facts extracted",
+          "command: no abstract facts extracted",
+          "command: no abstract facts extracted"
+        ]
+      },
+      "prm_rerank": {
+        "decision_points": 2,
+        "top1_rate": 1.0,
+        "pairwise_accuracy": 1.0
+      },
+      "schema_gap_tokens": {
+        "offline_credential_cracking": 1,
+        "local_account_switch": 1
+      },
+      "steps": [
+        {
+          "step": 0,
+          "phase": "recon",
+          "reference_abstract_action": "service_enumeration",
+          "psi_status": "valid",
+          "psi_action": "service_enumeration",
+          "psi_correct": true,
+          "phi_extracted": {
+            "open_services": [
+              "http:80"
+            ],
+            "tech_stack": [
+              "apache"
+            ]
+          },
+          "phi_field_assert": 3,
+          "phi_field_hit": 2,
+          "rerank": null,
+          "out_of_abstraction_reason": null,
+          "suggested_schema_extension": null
+        },
+        {
+          "step": 1,
+          "phase": "enumeration",
+          "reference_abstract_action": "http_fingerprint",
+          "psi_status": "valid",
+          "psi_action": "http_fingerprint",
+          "psi_correct": true,
+          "phi_extracted": {
+            "tech_stack": [
+              "apache",
+              "php",
+              "wordpress"
+            ]
+          },
+          "phi_field_assert": 2,
+          "phi_field_hit": 2,
+          "rerank": null,
+          "out_of_abstraction_reason": null,
+          "suggested_schema_extension": null
+        },
+        {
+          "step": 2,
+          "phase": "enumeration",
+          "reference_abstract_action": "content_retrieval",
+          "psi_status": "valid",
+          "psi_action": "content_retrieval",
+          "psi_correct": true,
+          "phi_extracted": {},
+          "phi_field_assert": 2,
+          "phi_field_hit": 0,
+          "rerank": null,
+          "out_of_abstraction_reason": null,
+          "suggested_schema_extension": null
+        },
+        {
+          "step": 3,
+          "phase": "loot",
+          "reference_abstract_action": "sensitive_file_read",
+          "psi_status": "unsupported",
+          "psi_action": null,
+          "psi_correct": false,
+          "phi_extracted": {
+            "read_files": [
+              "key_1"
+            ]
+          },
+          "phi_field_assert": 1,
+          "phi_field_hit": 1,
+          "rerank": null,
+          "out_of_abstraction_reason": null,
+          "suggested_schema_extension": null
+        },
+        {
+          "step": 4,
+          "phase": "loot",
+          "reference_abstract_action": "content_retrieval",
+          "psi_status": "unsupported",
+          "psi_action": null,
+          "psi_correct": false,
+          "phi_extracted": {
+            "credentials": [
+              "cred:elliot:ER28-0652"
+            ]
+          },
+          "phi_field_assert": 1,
+          "phi_field_hit": 1,
+          "rerank": null,
+          "out_of_abstraction_reason": null,
+          "suggested_schema_extension": null
+        },
+        {
+          "step": 5,
+          "phase": "auth",
+          "reference_abstract_action": "auth_attempt",
+          "psi_status": "valid",
+          "psi_action": "input_discovery",
+          "psi_correct": false,
+          "phi_extracted": {
+            "auth_state": "admin"
+          },
+          "phi_field_assert": 1,
+          "phi_field_hit": 1,
+          "rerank": null,
+          "out_of_abstraction_reason": null,
+          "suggested_schema_extension": null
+        },
+        {
+          "step": 6,
+          "phase": "exploit",
+          "reference_abstract_action": "exploit_attempt",
+          "psi_status": "valid",
+          "psi_action": "file_upload_attempt",
+          "psi_correct": false,
+          "phi_extracted": {
+            "verified_vulnerabilities": [
+              "wp_theme_editor_rce"
+            ],
+            "shell_state": "webshell"
+          },
+          "phi_field_assert": 2,
+          "phi_field_hit": 2,
+          "rerank": null,
+          "out_of_abstraction_reason": null,
+          "suggested_schema_extension": null
+        },
+        {
+          "step": 7,
+          "phase": "post-exploit",
+          "reference_abstract_action": "command_execution",
+          "psi_status": "valid",
+          "psi_action": "command_execution",
+          "psi_correct": true,
+          "phi_extracted": {
+            "shell_state": "command_execution",
+            "privilege_level": "web_user",
+            "user": "daemon"
+          },
+          "phi_field_assert": 2,
+          "phi_field_hit": 2,
+          "rerank": {
+            "scores": [
+              0.0813,
+              0.0001,
+              0.0724,
+              0.0001
+            ],
+            "good_ranked_first": true
+          },
+          "out_of_abstraction_reason": null,
+          "suggested_schema_extension": null
+        },
+        {
+          "step": 8,
+          "phase": "loot",
+          "reference_abstract_action": "sensitive_file_read",
+          "psi_status": "unsupported",
+          "psi_action": null,
+          "psi_correct": false,
+          "phi_extracted": {
+            "read_files": [
+              "robot_md5"
+            ]
+          },
+          "phi_field_assert": 1,
+          "phi_field_hit": 1,
+          "rerank": null,
+          "out_of_abstraction_reason": null,
+          "suggested_schema_extension": null
+        },
+        {
+          "step": 9,
+          "phase": "out-of-band",
+          "reference_abstract_action": "out_of_abstraction",
+          "psi_status": "unsupported",
+          "psi_action": null,
+          "psi_correct": false,
+          "phi_extracted": {},
+          "phi_field_assert": 0,
+          "phi_field_hit": 0,
+          "rerank": null,
+          "out_of_abstraction_reason": "Offline hash cracking (john/hashcat against a leaked OS hash) is local cryptographic work with no HTTP request or web interaction; the 16-action web schema cannot represent it.",
+          "suggested_schema_extension": "offline_credential_cracking"
+        },
+        {
+          "step": 10,
+          "phase": "pivot",
+          "reference_abstract_action": "out_of_abstraction",
+          "psi_status": "unsupported",
+          "psi_action": null,
+          "psi_correct": false,
+          "phi_extracted": {},
+          "phi_field_assert": 0,
+          "phi_field_hit": 0,
+          "rerank": null,
+          "out_of_abstraction_reason": "A local Unix account switch via su/PAM on an interactive shell is not a web-form or HTTP auth; the schema's auth_attempt/credential_use are web-context only.",
+          "suggested_schema_extension": "local_account_switch"
+        },
+        {
+          "step": 11,
+          "phase": "loot",
+          "reference_abstract_action": "sensitive_file_read",
+          "psi_status": "unsupported",
+          "psi_action": null,
+          "psi_correct": false,
+          "phi_extracted": {
+            "read_files": [
+              "key_2"
+            ]
+          },
+          "phi_field_assert": 1,
+          "phi_field_hit": 1,
+          "rerank": null,
+          "out_of_abstraction_reason": null,
+          "suggested_schema_extension": null
+        },
+        {
+          "step": 12,
+          "phase": "privesc-recon",
+          "reference_abstract_action": "post_exploitation",
+          "psi_status": "valid",
+          "psi_action": "privilege_escalation",
+          "psi_correct": false,
+          "phi_extracted": {},
+          "phi_field_assert": 0,
+          "phi_field_hit": 0,
+          "rerank": null,
+          "out_of_abstraction_reason": null,
+          "suggested_schema_extension": null
+        },
+        {
+          "step": 13,
+          "phase": "privesc",
+          "reference_abstract_action": "privilege_escalation",
+          "psi_status": "valid",
+          "psi_action": "privilege_escalation",
+          "psi_correct": true,
+          "phi_extracted": {
+            "privilege_level": "root"
+          },
+          "phi_field_assert": 1,
+          "phi_field_hit": 1,
+          "rerank": {
+            "scores": [
+              0.2992,
+              0.0,
+              0.0
+            ],
+            "good_ranked_first": true
+          },
+          "out_of_abstraction_reason": null,
+          "suggested_schema_extension": null
+        },
+        {
+          "step": 14,
+          "phase": "loot",
+          "reference_abstract_action": "sensitive_file_read",
+          "psi_status": "unsupported",
+          "psi_action": null,
+          "psi_correct": false,
+          "phi_extracted": {
+            "read_files": [
+              "key_3"
+            ]
+          },
+          "phi_field_assert": 1,
+          "phi_field_hit": 1,
+          "rerank": null,
+          "out_of_abstraction_reason": null,
+          "suggested_schema_extension": null
+        }
+      ],
+      "final_observation": {
+        "target_known": true,
+        "service_known": true,
+        "open_services": [
+          "http:80"
+        ],
+        "base_url_known": true,
+        "discovered_paths": [
+          "/"
+        ],
+        "known_forms": [],
+        "known_parameters": [],
+        "tech_stack": [
+          "apache",
+          "php",
+          "wordpress"
+        ],
+        "suspected_vulnerabilities": [
+          "wp_theme_editor_rce"
+        ],
+        "verified_vulnerabilities": [
+          "wp_theme_editor_rce"
+        ],
+        "credentials": [
+          "cred:elliot:ER28-0652"
+        ],
+        "auth_state": "admin",
+        "shell_state": "command_execution",
+        "privilege_level": "root",
+        "read_files": [
+          "key_1",
+          "key_2",
+          "key_3",
+          "robot_md5"
+        ],
+        "failed_actions": [],
+        "failed_branches": {},
+        "remaining_budget": 17
+      }
+    },
+    {
+      "box": "Raven-2",
+      "abstract_family": "chained_exploit",
+      "source": "Representative walkthrough constructed from public Raven-2 write-up structure (PHPMailer CVE-2016-10033 RCE via contact form -> www-data webshell -> MySQL UDF root). Author-constructed for offline Phase-1 mapping measurement; NOT a live capture.",
+      "fixture": "stage2\\walkthroughs\\raven-2.json",
+      "n_steps": 11,
+      "n_out_of_abstraction": 0,
+      "out_of_abstraction_rate": 0.0,
+      "psi": {
+        "in_abstraction_steps": 11,
+        "accuracy": 0.4545,
+        "correct": 5,
+        "wrong_action": 1,
+        "false_reject": 5,
+        "false_accept_on_out_steps": 0
+      },
+      "phi": {
+        "field_recall": 1.0,
+        "asserts": 18,
+        "hits": 18,
+        "per_field_recall": {
+          "discovered_paths": 1.0,
+          "open_services": 1.0,
+          "privilege_level": 1.0,
+          "read_files": 1.0,
+          "shell_state": 1.0,
+          "tech_stack": 1.0,
+          "verified_vulnerabilities": 1.0
+        },
+        "unparsed_outputs": [
+          "curl: no abstract facts extracted",
+          "command: no abstract facts extracted"
+        ]
+      },
+      "prm_rerank": {
+        "decision_points": 2,
+        "top1_rate": 0.0,
+        "pairwise_accuracy": 0.4
+      },
+      "schema_gap_tokens": {},
+      "steps": [
+        {
+          "step": 0,
+          "phase": "recon",
+          "reference_abstract_action": "service_enumeration",
+          "psi_status": "valid",
+          "psi_action": "service_enumeration",
+          "psi_correct": true,
+          "phi_extracted": {
+            "open_services": [
+              "http:80",
+              "rpcbind:111",
+              "ssh:22"
+            ],
+            "tech_stack": [
+              "apache",
+              "mysql"
+            ]
+          },
+          "phi_field_assert": 3,
+          "phi_field_hit": 3,
+          "rerank": null,
+          "out_of_abstraction_reason": null,
+          "suggested_schema_extension": null
+        },
+        {
+          "step": 1,
+          "phase": "enumeration",
+          "reference_abstract_action": "http_fingerprint",
+          "psi_status": "valid",
+          "psi_action": "http_fingerprint",
+          "psi_correct": true,
+          "phi_extracted": {
+            "tech_stack": [
+              "apache",
+              "php",
+              "wordpress"
+            ]
+          },
+          "phi_field_assert": 3,
+          "phi_field_hit": 3,
+          "rerank": null,
+          "out_of_abstraction_reason": null,
+          "suggested_schema_extension": null
+        },
+        {
+          "step": 2,
+          "phase": "enumeration",
+          "reference_abstract_action": "web_path_enumeration",
+          "psi_status": "valid",
+          "psi_action": "web_path_enumeration",
+          "psi_correct": true,
+          "phi_extracted": {
+            "discovered_paths": [
+              "/contact.php",
+              "/vendor",
+              "/wordpress",
+              "/wp-login.php"
+            ]
+          },
+          "phi_field_assert": 4,
+          "phi_field_hit": 4,
+          "rerank": null,
+          "out_of_abstraction_reason": null,
+          "suggested_schema_extension": null
+        },
+        {
+          "step": 3,
+          "phase": "vuln-id",
+          "reference_abstract_action": "vulnerability_check",
+          "psi_status": "unsupported",
+          "psi_action": null,
+          "psi_correct": false,
+          "phi_extracted": {},
+          "phi_field_assert": 0,
+          "phi_field_hit": 0,
+          "rerank": null,
+          "out_of_abstraction_reason": null,
+          "suggested_schema_extension": null
+        },
+        {
+          "step": 4,
+          "phase": "exploit",
+          "reference_abstract_action": "exploit_attempt",
+          "psi_status": "valid",
+          "psi_action": "exploit_attempt",
+          "psi_correct": true,
+          "phi_extracted": {
+            "verified_vulnerabilities": [
+              "phpmailer_rce"
+            ],
+            "shell_state": "webshell"
+          },
+          "phi_field_assert": 2,
+          "phi_field_hit": 2,
+          "rerank": null,
+          "out_of_abstraction_reason": null,
+          "suggested_schema_extension": null
+        },
+        {
+          "step": 5,
+          "phase": "post-exploit",
+          "reference_abstract_action": "command_execution",
+          "psi_status": "unsupported",
+          "psi_action": null,
+          "psi_correct": false,
+          "phi_extracted": {
+            "shell_state": "command_execution",
+            "privilege_level": "web_user",
+            "user": "www-data"
+          },
+          "phi_field_assert": 2,
+          "phi_field_hit": 2,
+          "rerank": {
+            "scores": [
+              0.0,
+              0.3796,
+              0.996,
+              0.0
+            ],
+            "good_ranked_first": false
+          },
+          "out_of_abstraction_reason": null,
+          "suggested_schema_extension": null
+        },
+        {
+          "step": 6,
+          "phase": "loot",
+          "reference_abstract_action": "sensitive_file_read",
+          "psi_status": "unsupported",
+          "psi_action": null,
+          "psi_correct": false,
+          "phi_extracted": {
+            "read_files": [
+              "flag2"
+            ]
+          },
+          "phi_field_assert": 1,
+          "phi_field_hit": 1,
+          "rerank": null,
+          "out_of_abstraction_reason": null,
+          "suggested_schema_extension": null
+        },
+        {
+          "step": 7,
+          "phase": "loot",
+          "reference_abstract_action": "sensitive_file_read",
+          "psi_status": "valid",
+          "psi_action": "content_retrieval",
+          "psi_correct": false,
+          "phi_extracted": {
+            "read_files": [
+              "wp_config"
+            ]
+          },
+          "phi_field_assert": 1,
+          "phi_field_hit": 1,
+          "rerank": null,
+          "out_of_abstraction_reason": null,
+          "suggested_schema_extension": null
+        },
+        {
+          "step": 8,
+          "phase": "privesc-recon",
+          "reference_abstract_action": "post_exploitation",
+          "psi_status": "unsupported",
+          "psi_action": null,
+          "psi_correct": false,
+          "phi_extracted": {},
+          "phi_field_assert": 0,
+          "phi_field_hit": 0,
+          "rerank": null,
+          "out_of_abstraction_reason": null,
+          "suggested_schema_extension": null
+        },
+        {
+          "step": 9,
+          "phase": "privesc",
+          "reference_abstract_action": "privilege_escalation",
+          "psi_status": "valid",
+          "psi_action": "privilege_escalation",
+          "psi_correct": true,
+          "phi_extracted": {
+            "privilege_level": "root"
+          },
+          "phi_field_assert": 1,
+          "phi_field_hit": 1,
+          "rerank": {
+            "scores": [
+              0.19,
+              0.0032,
+              0.3551
+            ],
+            "good_ranked_first": false
+          },
+          "out_of_abstraction_reason": null,
+          "suggested_schema_extension": null
+        },
+        {
+          "step": 10,
+          "phase": "loot",
+          "reference_abstract_action": "sensitive_file_read",
+          "psi_status": "unsupported",
+          "psi_action": null,
+          "psi_correct": false,
+          "phi_extracted": {
+            "read_files": [
+              "flag4"
+            ]
+          },
+          "phi_field_assert": 1,
+          "phi_field_hit": 1,
+          "rerank": null,
+          "out_of_abstraction_reason": null,
+          "suggested_schema_extension": null
+        }
+      ],
+      "final_observation": {
+        "target_known": true,
+        "service_known": true,
+        "open_services": [
+          "http:80",
+          "rpcbind:111",
+          "ssh:22"
+        ],
+        "base_url_known": true,
+        "discovered_paths": [
+          "/",
+          "/contact.php",
+          "/vendor",
+          "/wordpress",
+          "/wp-login.php"
+        ],
+        "known_forms": [],
+        "known_parameters": [],
+        "tech_stack": [
+          "apache",
+          "mysql",
+          "php",
+          "wordpress"
+        ],
+        "suspected_vulnerabilities": [
+          "phpmailer_rce"
+        ],
+        "verified_vulnerabilities": [
+          "phpmailer_rce"
+        ],
+        "credentials": [],
+        "auth_state": "anonymous",
+        "shell_state": "command_execution",
+        "privilege_level": "root",
+        "read_files": [
+          "flag2",
+          "flag4",
+          "wp_config"
+        ],
+        "failed_actions": [],
+        "failed_branches": {},
+        "remaining_budget": 13
+      }
+    },
+    {
+      "box": "SkyTower",
+      "abstract_family": "leak_authed_privesc",
+      "source": "Representative walkthrough constructed from public SkyTower write-up structure (SQLi login bypass -> leaked creds -> SSH-via-Squid pivot -> sudo root). Author-constructed for offline Phase-1 mapping measurement; NOT a live capture.",
+      "fixture": "stage2\\walkthroughs\\skytower.json",
+      "n_steps": 8,
+      "n_out_of_abstraction": 1,
+      "out_of_abstraction_rate": 0.125,
+      "psi": {
+        "in_abstraction_steps": 7,
+        "accuracy": 0.4286,
+        "correct": 3,
+        "wrong_action": 2,
+        "false_reject": 2,
+        "false_accept_on_out_steps": 0
+      },
+      "phi": {
+        "field_recall": 1.0,
+        "asserts": 11,
+        "hits": 11,
+        "per_field_recall": {
+          "known_forms": 1.0,
+          "known_parameters": 1.0,
+          "open_services": 1.0,
+          "privilege_level": 1.0,
+          "read_files": 1.0,
+          "tech_stack": 1.0,
+          "verified_vulnerabilities": 1.0
+        },
+        "unparsed_outputs": [
+          "command: no abstract facts extracted"
+        ]
+      },
+      "prm_rerank": {
+        "decision_points": 1,
+        "top1_rate": 0.0,
+        "pairwise_accuracy": 0.5
+      },
+      "schema_gap_tokens": {
+        "ssh_remote_login": 1
+      },
+      "steps": [
+        {
+          "step": 0,
+          "phase": "recon",
+          "reference_abstract_action": "service_enumeration",
+          "psi_status": "valid",
+          "psi_action": "service_enumeration",
+          "psi_correct": true,
+          "phi_extracted": {
+            "open_services": [
+              "http:3128",
+              "http:80"
+            ],
+            "tech_stack": [
+              "apache"
+            ]
+          },
+          "phi_field_assert": 2,
+          "phi_field_hit": 2,
+          "rerank": null,
+          "out_of_abstraction_reason": null,
+          "suggested_schema_extension": null
+        },
+        {
+          "step": 1,
+          "phase": "enumeration",
+          "reference_abstract_action": "http_fingerprint",
+          "psi_status": "valid",
+          "psi_action": "http_fingerprint",
+          "psi_correct": true,
+          "phi_extracted": {
+            "tech_stack": [
+              "apache",
+              "php"
+            ]
+          },
+          "phi_field_assert": 2,
+          "phi_field_hit": 2,
+          "rerank": null,
+          "out_of_abstraction_reason": null,
+          "suggested_schema_extension": null
+        },
+        {
+          "step": 2,
+          "phase": "input-discovery",
+          "reference_abstract_action": "input_discovery",
+          "psi_status": "unsupported",
+          "psi_action": null,
+          "psi_correct": false,
+          "phi_extracted": {
+            "known_forms": [
+              "form:/login.php"
+            ],
+            "known_parameters": [
+              "/login.php?email",
+              "/login.php?password"
+            ]
+          },
+          "phi_field_assert": 3,
+          "phi_field_hit": 3,
+          "rerank": null,
+          "out_of_abstraction_reason": null,
+          "suggested_schema_extension": null
+        },
+        {
+          "step": 3,
+          "phase": "exploit",
+          "reference_abstract_action": "exploit_attempt",
+          "psi_status": "valid",
+          "psi_action": "vulnerability_check",
+          "psi_correct": false,
+          "phi_extracted": {
+            "verified_vulnerabilities": [
+              "sqli_auth_bypass"
+            ],
+            "credentials": [
+              "cred:hereisjohn"
+            ]
+          },
+          "phi_field_assert": 1,
+          "phi_field_hit": 1,
+          "rerank": null,
+          "out_of_abstraction_reason": null,
+          "suggested_schema_extension": null
+        },
+        {
+          "step": 4,
+          "phase": "pivot",
+          "reference_abstract_action": "out_of_abstraction",
+          "psi_status": "outside_single_host_web_scope",
+          "psi_action": null,
+          "psi_correct": false,
+          "phi_extracted": {},
+          "phi_field_assert": 0,
+          "phi_field_hit": 0,
+          "rerank": null,
+          "out_of_abstraction_reason": "Interactive SSH login (here tunnelled through Squid) is a non-web service authentication; the schema's auth_attempt/credential_use are web-form/HTTP only and there is no SSH/proxy-pivot action.",
+          "suggested_schema_extension": "ssh_remote_login"
+        },
+        {
+          "step": 5,
+          "phase": "loot",
+          "reference_abstract_action": "sensitive_file_read",
+          "psi_status": "valid",
+          "psi_action": "content_retrieval",
+          "psi_correct": false,
+          "phi_extracted": {
+            "read_files": [
+              "db_config"
+            ]
+          },
+          "phi_field_assert": 1,
+          "phi_field_hit": 1,
+          "rerank": null,
+          "out_of_abstraction_reason": null,
+          "suggested_schema_extension": null
+        },
+        {
+          "step": 6,
+          "phase": "privesc",
+          "reference_abstract_action": "privilege_escalation",
+          "psi_status": "valid",
+          "psi_action": "privilege_escalation",
+          "psi_correct": true,
+          "phi_extracted": {
+            "privilege_level": "root"
+          },
+          "phi_field_assert": 1,
+          "phi_field_hit": 1,
+          "rerank": {
+            "scores": [
+              0.0026,
+              0.0,
+              0.0692
+            ],
+            "good_ranked_first": false
+          },
+          "out_of_abstraction_reason": null,
+          "suggested_schema_extension": null
+        },
+        {
+          "step": 7,
+          "phase": "loot",
+          "reference_abstract_action": "sensitive_file_read",
+          "psi_status": "unsupported",
+          "psi_action": null,
+          "psi_correct": false,
+          "phi_extracted": {
+            "read_files": [
+              "root_flag"
+            ]
+          },
+          "phi_field_assert": 1,
+          "phi_field_hit": 1,
+          "rerank": null,
+          "out_of_abstraction_reason": null,
+          "suggested_schema_extension": null
+        }
+      ],
+      "final_observation": {
+        "target_known": true,
+        "service_known": true,
+        "open_services": [
+          "http:3128",
+          "http:80"
+        ],
+        "base_url_known": true,
+        "discovered_paths": [
+          "/"
+        ],
+        "known_forms": [
+          "form:/login.php"
+        ],
+        "known_parameters": [
+          "/login.php?email",
+          "/login.php?password"
+        ],
+        "tech_stack": [
+          "apache",
+          "php"
+        ],
+        "suspected_vulnerabilities": [
+          "sqli_auth_bypass"
+        ],
+        "verified_vulnerabilities": [
+          "sqli_auth_bypass"
+        ],
+        "credentials": [
+          "cred:hereisjohn"
+        ],
+        "auth_state": "anonymous",
+        "shell_state": "command_execution",
+        "privilege_level": "root",
+        "read_files": [
+          "db_config",
+          "root_flag"
+        ],
+        "failed_actions": [],
+        "failed_branches": {},
+        "remaining_budget": 10
+      }
+    },
+    {
+      "box": "Stapler",
+      "abstract_family": "default_or_weak_password",
+      "source": "Representative walkthrough constructed from public Stapler write-up structure (WordPress on 12380 -> wpscan brute -> admin plugin upload webshell -> sudo root). Author-constructed for offline Phase-1 mapping measurement; NOT a live capture.",
+      "fixture": "stage2\\walkthroughs\\stapler.json",
+      "n_steps": 10,
+      "n_out_of_abstraction": 0,
+      "out_of_abstraction_rate": 0.0,
+      "psi": {
+        "in_abstraction_steps": 10,
+        "accuracy": 0.5,
+        "correct": 5,
+        "wrong_action": 3,
+        "false_reject": 2,
+        "false_accept_on_out_steps": 0
+      },
+      "phi": {
+        "field_recall": 0.9444,
+        "asserts": 18,
+        "hits": 17,
+        "per_field_recall": {
+          "auth_state": 0.0,
+          "discovered_paths": 1.0,
+          "open_services": 1.0,
+          "privilege_level": 1.0,
+          "read_files": 1.0,
+          "shell_state": 1.0,
+          "tech_stack": 1.0
+        },
+        "unparsed_outputs": [
+          "login: no abstract facts extracted",
+          "command: no abstract facts extracted"
+        ]
+      },
+      "prm_rerank": {
+        "decision_points": 1,
+        "top1_rate": 1.0,
+        "pairwise_accuracy": 1.0
+      },
+      "schema_gap_tokens": {},
+      "steps": [
+        {
+          "step": 0,
+          "phase": "recon",
+          "reference_abstract_action": "service_enumeration",
+          "psi_status": "valid",
+          "psi_action": "service_enumeration",
+          "psi_correct": true,
+          "phi_extracted": {
+            "open_services": [
+              "http:12380",
+              "http:80",
+              "mysql:3306",
+              "netbios-ssn:139",
+              "ssh:22"
+            ],
+            "tech_stack": [
+              "apache",
+              "mysql"
+            ]
+          },
+          "phi_field_assert": 5,
+          "phi_field_hit": 5,
+          "rerank": null,
+          "out_of_abstraction_reason": null,
+          "suggested_schema_extension": null
+        },
+        {
+          "step": 1,
+          "phase": "enumeration",
+          "reference_abstract_action": "http_fingerprint",
+          "psi_status": "valid",
+          "psi_action": "http_fingerprint",
+          "psi_correct": true,
+          "phi_extracted": {
+            "tech_stack": [
+              "apache",
+              "php",
+              "wordpress"
+            ]
+          },
+          "phi_field_assert": 3,
+          "phi_field_hit": 3,
+          "rerank": null,
+          "out_of_abstraction_reason": null,
+          "suggested_schema_extension": null
+        },
+        {
+          "step": 2,
+          "phase": "enumeration",
+          "reference_abstract_action": "web_path_enumeration",
+          "psi_status": "valid",
+          "psi_action": "input_discovery",
+          "psi_correct": false,
+          "phi_extracted": {
+            "discovered_paths": [
+              "/wp-admin",
+              "/wp-content",
+              "/wp-login.php"
+            ]
+          },
+          "phi_field_assert": 3,
+          "phi_field_hit": 3,
+          "rerank": null,
+          "out_of_abstraction_reason": null,
+          "suggested_schema_extension": null
+        },
+        {
+          "step": 3,
+          "phase": "auth",
+          "reference_abstract_action": "auth_attempt",
+          "psi_status": "unsupported",
+          "psi_action": null,
+          "psi_correct": false,
+          "phi_extracted": {},
+          "phi_field_assert": 1,
+          "phi_field_hit": 0,
+          "rerank": null,
+          "out_of_abstraction_reason": null,
+          "suggested_schema_extension": null
+        },
+        {
+          "step": 4,
+          "phase": "exploit",
+          "reference_abstract_action": "file_upload_attempt",
+          "psi_status": "valid",
+          "psi_action": "file_upload_attempt",
+          "psi_correct": true,
+          "phi_extracted": {
+            "shell_state": "webshell"
+          },
+          "phi_field_assert": 1,
+          "phi_field_hit": 1,
+          "rerank": null,
+          "out_of_abstraction_reason": null,
+          "suggested_schema_extension": null
+        },
+        {
+          "step": 5,
+          "phase": "post-exploit",
+          "reference_abstract_action": "command_execution",
+          "psi_status": "valid",
+          "psi_action": "command_execution",
+          "psi_correct": true,
+          "phi_extracted": {
+            "shell_state": "command_execution",
+            "privilege_level": "web_user",
+            "user": "www-data"
+          },
+          "phi_field_assert": 2,
+          "phi_field_hit": 2,
+          "rerank": {
+            "scores": [
+              0.1332,
+              0.0429,
+              0.0,
+              0.0
+            ],
+            "good_ranked_first": true
+          },
+          "out_of_abstraction_reason": null,
+          "suggested_schema_extension": null
+        },
+        {
+          "step": 6,
+          "phase": "loot",
+          "reference_abstract_action": "sensitive_file_read",
+          "psi_status": "valid",
+          "psi_action": "content_retrieval",
+          "psi_correct": false,
+          "phi_extracted": {
+            "read_files": [
+              "wp_config"
+            ]
+          },
+          "phi_field_assert": 1,
+          "phi_field_hit": 1,
+          "rerank": null,
+          "out_of_abstraction_reason": null,
+          "suggested_schema_extension": null
+        },
+        {
+          "step": 7,
+          "phase": "privesc-recon",
+          "reference_abstract_action": "post_exploitation",
+          "psi_status": "valid",
+          "psi_action": "privilege_escalation",
+          "psi_correct": false,
+          "phi_extracted": {},
+          "phi_field_assert": 0,
+          "phi_field_hit": 0,
+          "rerank": null,
+          "out_of_abstraction_reason": null,
+          "suggested_schema_extension": null
+        },
+        {
+          "step": 8,
+          "phase": "privesc",
+          "reference_abstract_action": "privilege_escalation",
+          "psi_status": "valid",
+          "psi_action": "privilege_escalation",
+          "psi_correct": true,
+          "phi_extracted": {
+            "privilege_level": "root"
+          },
+          "phi_field_assert": 1,
+          "phi_field_hit": 1,
+          "rerank": null,
+          "out_of_abstraction_reason": null,
+          "suggested_schema_extension": null
+        },
+        {
+          "step": 9,
+          "phase": "loot",
+          "reference_abstract_action": "sensitive_file_read",
+          "psi_status": "unsupported",
+          "psi_action": null,
+          "psi_correct": false,
+          "phi_extracted": {
+            "read_files": [
+              "root_flag"
+            ]
+          },
+          "phi_field_assert": 1,
+          "phi_field_hit": 1,
+          "rerank": null,
+          "out_of_abstraction_reason": null,
+          "suggested_schema_extension": null
+        }
+      ],
+      "final_observation": {
+        "target_known": true,
+        "service_known": true,
+        "open_services": [
+          "http:12380",
+          "http:80",
+          "mysql:3306",
+          "netbios-ssn:139",
+          "ssh:22"
+        ],
+        "base_url_known": true,
+        "discovered_paths": [
+          "/",
+          "/wp-admin",
+          "/wp-content",
+          "/wp-login.php"
+        ],
+        "known_forms": [],
+        "known_parameters": [],
+        "tech_stack": [
+          "apache",
+          "mysql",
+          "php",
+          "wordpress"
+        ],
+        "suspected_vulnerabilities": [],
+        "verified_vulnerabilities": [],
+        "credentials": [],
+        "auth_state": "anonymous",
+        "shell_state": "command_execution",
+        "privilege_level": "root",
+        "read_files": [
+          "root_flag",
+          "wp_config"
+        ],
+        "failed_actions": [],
+        "failed_branches": {},
+        "remaining_budget": 12
+      }
+    }
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "n_scripted_train": 2784,
+  "n_llm_reflux_train": 445,
+  "n_llm_test_total": 250,
+  "n_llm_test_oracle_subset": 52,
+  "evaluated_on": "held-out tasks' real-DeepSeek candidate actions, oracle-labeled subset",
+  "model_A_no_reflux": {
+    "n": 52,
+    "rank_accuracy": 0.75,
+    "rank_macro_f1": 0.5764023210831721,
+    "majority_floor": 0.38461538461538464,
+    "pairwise_accuracy": 1.0,
+    "pairwise_pairs": 11,
+    "ece": 0.24068473269348994
+  },
+  "model_B_with_reflux": {
+    "n": 52,
+    "rank_accuracy": 0.8461538461538461,
+    "rank_macro_f1": 0.6416040100250626,
+    "majority_floor": 0.38461538461538464,
+    "pairwise_accuracy": 1.0,
+    "pairwise_pairs": 11,
+    "ece": 0.19153187296086727
+  },
+  "reflux_pairwise_gain": 0.0,
+  "reflux_rank_gain": 0.09615384615384615,
+  "note": "Positive gains mean refluxing real DeepSeek-proposed, oracle-labeled actions into PRM training improves ranking of the LLM's actions on held-out states (DAgger-style alignment)."
+}

@@ -1,0 +1,75 @@
+{
+  "oracle_gate_vs_random": {
+    "checkpoint": "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\outputs\\seed_gate_12fam_80k\\seed_2\\web_dqn_seed_2.pt",
+    "oracle_goal_rate_masked": 0.7,
+    "oracle_goal_rate_permissive": 0.4,
+    "random_goal_rate_masked": 0.54375,
+    "random_goal_rate_permissive": 0.0125,
+    "oracle_expert_top1": 0.46258503401360546,
+    "oracle_expert_top3": 0.9455782312925171,
+    "random_masked_expert_top1": 0.33548752834467116,
+    "random_masked_expert_top3": 0.8976190476190475,
+    "mean_allowed_set_size": 3.2108843537414966,
+    "frac_steps_le3_allowed": 0.6190476190476191,
+    "oracle_top1_lift_over_random": 0.1270975056689343,
+    "oracle_top3_lift_over_random": 0.04795918367346952,
+    "verdict_note": "goal_rate and top-3 are mask-saturated (a random masked policy matches them); the oracle's genuine signal is the top-1 LIFT over the random-within-mask baseline. Report lift, not raw."
+  },
+  "prm_oracle_subset": {
+    "n_heldout": 1764,
+    "n_oracle_labeled": 482,
+    "n_rule_labeled": 1282,
+    "frac_score_zero": 0.7267573696145124,
+    "rank_accuracy_full": 0.9121315192743764,
+    "rank_accuracy_rule_subset": 0.9929797191887676,
+    "rank_accuracy_oracle_subset": 0.6970954356846473,
+    "oracle_subset_majority_floor": 0.3983402489626556,
+    "oracle_subset_rank_lift_over_floor": 0.2987551867219917,
+    "pairwise_all_pairs": {
+      "pairs": 4671,
+      "pairwise_accuracy": 0.9094412331406551
+    },
+    "pairwise_oracle_only": {
+      "pairs": 499,
+      "pairwise_accuracy": 0.7895791583166333
+    },
+    "verdict_note": "Rule rows (status copied into input, score=0) are trivially self-predictable. The real evaluator quality is rank/pairwise on the ORACLE subset vs the majority floor."
+  },
+  "full_input_leakage": {
+    "train": {
+      "num_samples": 4176,
+      "unique_secret_leaks_in_context": 0,
+      "unique_secret_leaks_in_action_only": 4,
+      "undiscovered_hidden_path_in_candidate_action": 0
+    },
+    "heldout": {
+      "num_samples": 1764,
+      "unique_secret_leaks_in_context": 0,
+      "unique_secret_leaks_in_action_only": 2,
+      "undiscovered_hidden_path_in_candidate_action": 0
+    },
+    "interpretation": "Secret tokens (flags/passwords) must be 0 everywhere — they are. Undiscovered hidden paths DO appear in the candidate-action text: this is the action's own target (the LLM proposes the path to probe), not hidden STATE leaked into context. It is benign per-sample, but the dataset's candidate generator is task-aware, so the candidate distribution is task-correlated (a candidate-quality limitation, not a context leak). Real LLM rollouts would propose paths without ground-truth knowledge."
+  },
+  "split_integrity": {
+    "n_heldout": 1764,
+    "heldout_inputs_byte_identical_to_train": 245,
+    "frac_heldout_inputs_duplicated": 0.1389,
+    "heldout_contexts_collapsing_onto_train": 252,
+    "frac_heldout_contexts_duplicated": 0.1429,
+    "heldout_tasks_with_novel_plan_signature": [
+      "gen_210_leak_login",
+      "gen_211_leak_login",
+      "gen_212_leak_login",
+      "gen_213_leak_login",
+      "gen_214_leak_login",
+      "gen_230_rce_privesc",
+      "gen_231_rce_privesc",
+      "gen_232_rce_privesc",
+      "gen_233_rce_privesc",
+      "gen_234_rce_privesc"
+    ],
+    "num_heldout_tasks_novel": 10,
+    "num_heldout_tasks_total": 20,
+    "verdict_note": "After normalizing the OOV scenario hash, duplicated held-out inputs are effectively in-distribution; held-out tasks sharing a train plan-signature are re-skinned templates (sub-chain overlap, method §13.1). 'Unseen' should be interpreted as unseen-token, not unseen-structure."
+  }
+}

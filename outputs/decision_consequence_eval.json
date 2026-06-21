@@ -1,0 +1,35 @@
+{
+  "checkpoint": "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\outputs\\seed_gate_12fam_80k\\seed_2\\web_dqn_seed_2.pt",
+  "meaningful_threshold": 0.02,
+  "sweep": [
+    {
+      "slack": "loose(default)",
+      "expert_solvable_rate": 1.0,
+      "forced_action_goal_recovery_rate": 0.9647,
+      "decision_relevant_group_frac": 0.2313,
+      "n_groups": 147
+    },
+    {
+      "slack": 1,
+      "expert_solvable_rate": 1.0,
+      "forced_action_goal_recovery_rate": 0.4087,
+      "decision_relevant_group_frac": 0.381,
+      "n_groups": 147
+    },
+    {
+      "slack": 2,
+      "expert_solvable_rate": 1.0,
+      "forced_action_goal_recovery_rate": 0.7884,
+      "decision_relevant_group_frac": 0.415,
+      "n_groups": 147
+    },
+    {
+      "slack": 3,
+      "expert_solvable_rate": 1.0,
+      "forced_action_goal_recovery_rate": 0.9647,
+      "decision_relevant_group_frac": 0.3673,
+      "n_groups": 147
+    }
+  ],
+  "note": "Lower forced_action_goal_recovery_rate + higher decision_relevant_group_frac as slack shrinks => a tight-budget hard mode makes decisions consequential (the lever works). expert_solvable_rate must stay high (the scripted optimal must still fit the budget)."
+}

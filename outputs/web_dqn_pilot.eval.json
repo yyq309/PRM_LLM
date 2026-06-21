@@ -1,0 +1,115 @@
+{
+  "training_steps": 25000,
+  "seed": 0,
+  "mask_invalid_actions": true,
+  "train_tasks": [
+    "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\tasks\\backup_leak.json",
+    "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\tasks\\config_leak_login.json",
+    "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\tasks\\default_password_shell.json",
+    "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\tasks\\git_leak_upload.json",
+    "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\tasks\\rce_shell.json",
+    "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\tasks\\sqli_login.json",
+    "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\tasks\\upload_privesc_root.json",
+    "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\tasks\\upload_shell.json",
+    "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\tasks\\weak_password.json"
+  ],
+  "eval_tasks": [
+    "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\tasks\\lfi_config_leak.json",
+    "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\tasks\\rce_privesc_root.json",
+    "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\tasks\\sqli_upload_shell.json"
+  ],
+  "eval_goal_rate": 1.0,
+  "eval_avg_reward": 52.49999999999999,
+  "eval_results": [
+    {
+      "task_id": "web_006_lfi_config_leak",
+      "reward": 43.599999999999994,
+      "steps": 9,
+      "goal": true
+    },
+    {
+      "task_id": "web_006_lfi_config_leak",
+      "reward": 43.599999999999994,
+      "steps": 9,
+      "goal": true
+    },
+    {
+      "task_id": "web_006_lfi_config_leak",
+      "reward": 43.599999999999994,
+      "steps": 9,
+      "goal": true
+    },
+    {
+      "task_id": "web_006_lfi_config_leak",
+      "reward": 43.599999999999994,
+      "steps": 9,
+      "goal": true
+    },
+    {
+      "task_id": "web_006_lfi_config_leak",
+      "reward": 43.599999999999994,
+      "steps": 9,
+      "goal": true
+    },
+    {
+      "task_id": "web_011_rce_privesc_root",
+      "reward": 56.599999999999994,
+      "steps": 9,
+      "goal": true
+    },
+    {
+      "task_id": "web_011_rce_privesc_root",
+      "reward": 56.599999999999994,
+      "steps": 9,
+      "goal": true
+    },
+    {
+      "task_id": "web_011_rce_privesc_root",
+      "reward": 56.599999999999994,
+      "steps": 9,
+      "goal": true
+    },
+    {
+      "task_id": "web_011_rce_privesc_root",
+      "reward": 56.599999999999994,
+      "steps": 9,
+      "goal": true
+    },
+    {
+      "task_id": "web_011_rce_privesc_root",
+      "reward": 56.599999999999994,
+      "steps": 9,
+      "goal": true
+    },
+    {
+      "task_id": "web_010_sqli_upload_shell",
+      "reward": 57.3,
+      "steps": 12,
+      "goal": true
+    },
+    {
+      "task_id": "web_010_sqli_upload_shell",
+      "reward": 57.3,
+      "steps": 12,
+      "goal": true
+    },
+    {
+      "task_id": "web_010_sqli_upload_shell",
+      "reward": 57.3,
+      "steps": 12,
+      "goal": true
+    },
+    {
+      "task_id": "web_010_sqli_upload_shell",
+      "reward": 57.3,
+      "steps": 12,
+      "goal": true
+    },
+    {
+      "task_id": "web_010_sqli_upload_shell",
+      "reward": 57.3,
+      "steps": 12,
+      "goal": true
+    }
+  ]
+}

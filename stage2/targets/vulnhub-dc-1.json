@@ -1,0 +1,17 @@
+{
+  "name": "VulnHub-DC-1",
+  "kind": "boot2root-vm",
+  "target": "http://dc1.lab",
+  "abstract_family": "rce_privesc",
+  "isolation_note": "VulnHub boxes are full VMs. Run on an isolated host-only / internal virtual network (VirtualBox host-only or an air-gapped vSwitch), take a snapshot before the run, and keep a kill switch. Confirm the target IP is private before authorizing.",
+  "eta_fill": {
+    "login": "/user/login",
+    "user": "admin",
+    "password": "admin",
+    "wordlist": "/usr/share/wordlists/dirb/common.txt",
+    "webshell": "/shell.php",
+    "file": "/root/thefinalflag.txt"
+  },
+  "recommended_first": false,
+  "rationale": "Drupalgeddon2 RCE -> SUID find privesc. A web-entry VulnHub box that matches the abstraction well, but it is a full VM with a non-web privesc step (SUID) and an out-of-abstraction offline-crack branch. Use only AFTER the DVWA closed loop works end-to-end (Phase 3)."
+}

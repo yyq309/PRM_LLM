@@ -1,0 +1,18 @@
+{
+  "env_improvement_1": "Hard mode (tight budget, consequential decisions) — NOW THE CANONICAL DEFAULT. This records the before/after that justified promotion.",
+  "before_loose_canonical": {
+    "forced_action_goal_recovery_rate": 0.9525,
+    "decision_relevant_group_frac": 0.202,
+    "n_decision_relevant_groups": 100,
+    "dqn_pick_mc_optimal_on_decision_relevant": 0.46,
+    "spearman_dqn_vs_realizedMC_on_decision_relevant": -0.0052
+  },
+  "after_hard_now_canonical": {
+    "forced_action_goal_recovery_rate": 0.7,
+    "decision_relevant_group_frac": 0.4909,
+    "n_decision_relevant_groups": 243,
+    "dqn_pick_mc_optimal_on_decision_relevant": 0.5679,
+    "spearman_dqn_vs_realizedMC_on_decision_relevant": 0.3731
+  },
+  "verdict": "Promoting hard mode to canonical turns the oracle from uninformative where decisions matter (Spearman vs realized return -0.005) to genuinely informative (+0.373); decision-relevant groups 0.20->0.49 (2.4x). masked goal_rate is now 0.667 (meaningful, no longer saturated at 1.0)."
+}

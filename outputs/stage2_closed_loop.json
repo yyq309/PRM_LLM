@@ -1,0 +1,792 @@
+{
+  "stage": "stage2_closed_loop_offline",
+  "summary": {
+    "n_boxes": 7,
+    "mean_chain_adherence": 0.3841,
+    "boxes_replay_reached_shell": 6,
+    "boxes_replay_reached_root": 6,
+    "note": "chain_adherence = fraction of loop iterations where the abstract-trained PRM ranked the recorded-correct next action #1 among the policy candidate set at the φ-reconstructed state. Offline proxy for closed-loop fidelity; reached_shell/root reflect the REPLAYED chain (driven by recorded output), not autonomous live success (Phase 2/3, gated)."
+  },
+  "per_box": [
+    {
+      "box": "DC-1",
+      "abstract_family": "rce_privesc",
+      "in_abstraction_steps": 9,
+      "loop_iterations": 9,
+      "chain_adherence": 0.3333,
+      "reached_shell": true,
+      "reached_root": true,
+      "read_any_file": true,
+      "final_observation": {
+        "target_known": true,
+        "service_known": true,
+        "open_services": [
+          "http:80",
+          "rpcbind:111",
+          "ssh:22"
+        ],
+        "base_url_known": true,
+        "discovered_paths": [
+          "/",
+          "/CHANGELOG.txt",
+          "/admin",
+          "/includes",
+          "/scripts",
+          "/user"
+        ],
+        "known_forms": [],
+        "known_parameters": [],
+        "tech_stack": [
+          "apache",
+          "drupal",
+          "php"
+        ],
+        "suspected_vulnerabilities": [],
+        "verified_vulnerabilities": [],
+        "credentials": [],
+        "auth_state": "anonymous",
+        "shell_state": "command_execution",
+        "privilege_level": "root",
+        "read_files": [
+          "root_flag"
+        ],
+        "failed_actions": [],
+        "failed_branches": {},
+        "remaining_budget": 12
+      },
+      "iters": [
+        {
+          "iter": 0,
+          "recorded_action": "service_enumeration",
+          "prm_top_action": "web_path_enumeration",
+          "prm_ranked_correct_first": false,
+          "eta_tool": "nmap"
+        },
+        {
+          "iter": 1,
+          "recorded_action": "http_fingerprint",
+          "prm_top_action": "web_path_enumeration",
+          "prm_ranked_correct_first": false,
+          "eta_tool": "whatweb"
+        },
+        {
+          "iter": 2,
+          "recorded_action": "web_path_enumeration",
+          "prm_top_action": "web_path_enumeration",
+          "prm_ranked_correct_first": true,
+          "eta_tool": "gobuster"
+        },
+        {
+          "iter": 3,
+          "recorded_action": "vulnerability_check",
+          "prm_top_action": "input_discovery",
+          "prm_ranked_correct_first": false,
+          "eta_tool": null
+        },
+        {
+          "iter": 4,
+          "recorded_action": "exploit_attempt",
+          "prm_top_action": "exploit_attempt",
+          "prm_ranked_correct_first": true,
+          "eta_tool": "exploit"
+        },
+        {
+          "iter": 5,
+          "recorded_action": "command_execution",
+          "prm_top_action": "sensitive_file_read",
+          "prm_ranked_correct_first": false,
+          "eta_tool": "shell"
+        },
+        {
+          "iter": 6,
+          "recorded_action": "post_exploitation",
+          "prm_top_action": "sensitive_file_read",
+          "prm_ranked_correct_first": false,
+          "eta_tool": "privesc"
+        },
+        {
+          "iter": 7,
+          "recorded_action": "privilege_escalation",
+          "prm_top_action": "sensitive_file_read",
+          "prm_ranked_correct_first": false,
+          "eta_tool": "privesc"
+        },
+        {
+          "iter": 8,
+          "recorded_action": "sensitive_file_read",
+          "prm_top_action": "sensitive_file_read",
+          "prm_ranked_correct_first": true,
+          "eta_tool": "cat"
+        }
+      ]
+    },
+    {
+      "box": "Kioptrix-L1",
+      "abstract_family": "rce_privesc",
+      "in_abstraction_steps": 6,
+      "loop_iterations": 6,
+      "chain_adherence": 0.1667,
+      "reached_shell": false,
+      "reached_root": false,
+      "read_any_file": false,
+      "final_observation": {
+        "target_known": true,
+        "service_known": true,
+        "open_services": [
+          "http:80",
+          "netbios-ssn:139",
+          "ssh:22",
+          "status:32768"
+        ],
+        "base_url_known": true,
+        "discovered_paths": [
+          "/"
+        ],
+        "known_forms": [],
+        "known_parameters": [],
+        "tech_stack": [
+          "apache",
+          "openssl"
+        ],
+        "suspected_vulnerabilities": [],
+        "verified_vulnerabilities": [],
+        "credentials": [],
+        "auth_state": "anonymous",
+        "shell_state": "none",
+        "privilege_level": "none",
+        "read_files": [],
+        "failed_actions": [],
+        "failed_branches": {},
+        "remaining_budget": 9
+      },
+      "iters": [
+        {
+          "iter": 0,
+          "recorded_action": "service_enumeration",
+          "prm_top_action": "http_fingerprint",
+          "prm_ranked_correct_first": false,
+          "eta_tool": "nmap"
+        },
+        {
+          "iter": 1,
+          "recorded_action": "http_fingerprint",
+          "prm_top_action": "http_fingerprint",
+          "prm_ranked_correct_first": true,
+          "eta_tool": "whatweb"
+        },
+        {
+          "iter": 2,
+          "recorded_action": "service_enumeration",
+          "prm_top_action": null,
+          "prm_ranked_correct_first": false,
+          "eta_tool": null
+        },
+        {
+          "iter": 3,
+          "recorded_action": "vulnerability_check",
+          "prm_top_action": "exploit_attempt",
+          "prm_ranked_correct_first": false,
+          "eta_tool": "exploit"
+        },
+        {
+          "iter": 4,
+          "recorded_action": "command_execution",
+          "prm_top_action": null,
+          "prm_ranked_correct_first": false,
+          "eta_tool": null
+        },
+        {
+          "iter": 5,
+          "recorded_action": "sensitive_file_read",
+          "prm_top_action": null,
+          "prm_ranked_correct_first": false,
+          "eta_tool": null
+        }
+      ]
+    },
+    {
+      "box": "Mercury",
+      "abstract_family": "leak_authed_privesc",
+      "in_abstraction_steps": 9,
+      "loop_iterations": 9,
+      "chain_adherence": 0.4444,
+      "reached_shell": true,
+      "reached_root": true,
+      "read_any_file": false,
+      "final_observation": {
+        "target_known": true,
+        "service_known": true,
+        "open_services": [
+          "http:8080",
+          "ssh:22"
+        ],
+        "base_url_known": true,
+        "discovered_paths": [
+          "/"
+        ],
+        "known_forms": [],
+        "known_parameters": [],
+        "tech_stack": [
+          "python"
+        ],
+        "suspected_vulnerabilities": [
+          "django_path_sqli"
+        ],
+        "verified_vulnerabilities": [
+          "django_path_sqli"
+        ],
+        "credentials": [
+          "linuxmaster:reallaxsX",
+          "webmaster:johnny1987"
+        ],
+        "auth_state": "anonymous",
+        "shell_state": "command_execution",
+        "privilege_level": "root",
+        "read_files": [],
+        "failed_actions": [],
+        "failed_branches": {},
+        "remaining_budget": 12
+      },
+      "iters": [
+        {
+          "iter": 0,
+          "recorded_action": "service_enumeration",
+          "prm_top_action": "web_path_enumeration",
+          "prm_ranked_correct_first": false,
+          "eta_tool": "nmap"
+        },
+        {
+          "iter": 1,
+          "recorded_action": "http_fingerprint",
+          "prm_top_action": "web_path_enumeration",
+          "prm_ranked_correct_first": false,
+          "eta_tool": "whatweb"
+        },
+        {
+          "iter": 2,
+          "recorded_action": "web_path_enumeration",
+          "prm_top_action": "web_path_enumeration",
+          "prm_ranked_correct_first": true,
+          "eta_tool": null
+        },
+        {
+          "iter": 3,
+          "recorded_action": "vulnerability_check",
+          "prm_top_action": "vulnerability_check",
+          "prm_ranked_correct_first": true,
+          "eta_tool": "sqlmap"
+        },
+        {
+          "iter": 4,
+          "recorded_action": "exploit_attempt",
+          "prm_top_action": "exploit_attempt",
+          "prm_ranked_correct_first": true,
+          "eta_tool": "exploit"
+        },
+        {
+          "iter": 5,
+          "recorded_action": "sensitive_file_read",
+          "prm_top_action": null,
+          "prm_ranked_correct_first": false,
+          "eta_tool": null
+        },
+        {
+          "iter": 6,
+          "recorded_action": "post_exploitation",
+          "prm_top_action": "privilege_escalation",
+          "prm_ranked_correct_first": false,
+          "eta_tool": "privesc"
+        },
+        {
+          "iter": 7,
+          "recorded_action": "privilege_escalation",
+          "prm_top_action": "sensitive_file_read",
+          "prm_ranked_correct_first": false,
+          "eta_tool": "privesc"
+        },
+        {
+          "iter": 8,
+          "recorded_action": "sensitive_file_read",
+          "prm_top_action": "sensitive_file_read",
+          "prm_ranked_correct_first": true,
+          "eta_tool": null
+        }
+      ]
+    },
+    {
+      "box": "Mr-Robot",
+      "abstract_family": "default_or_weak_password",
+      "in_abstraction_steps": 13,
+      "loop_iterations": 13,
+      "chain_adherence": 0.4615,
+      "reached_shell": true,
+      "reached_root": true,
+      "read_any_file": false,
+      "final_observation": {
+        "target_known": true,
+        "service_known": true,
+        "open_services": [
+          "http:80"
+        ],
+        "base_url_known": true,
+        "discovered_paths": [
+          "/"
+        ],
+        "known_forms": [],
+        "known_parameters": [],
+        "tech_stack": [
+          "apache",
+          "php",
+          "wordpress"
+        ],
+        "suspected_vulnerabilities": [],
+        "verified_vulnerabilities": [],
+        "credentials": [],
+        "auth_state": "anonymous",
+        "shell_state": "command_execution",
+        "privilege_level": "root",
+        "read_files": [],
+        "failed_actions": [],
+        "failed_branches": {},
+        "remaining_budget": 17
+      },
+      "iters": [
+        {
+          "iter": 0,
+          "recorded_action": "service_enumeration",
+          "prm_top_action": "http_fingerprint",
+          "prm_ranked_correct_first": false,
+          "eta_tool": "nmap"
+        },
+        {
+          "iter": 1,
+          "recorded_action": "http_fingerprint",
+          "prm_top_action": "http_fingerprint",
+          "prm_ranked_correct_first": true,
+          "eta_tool": "whatweb"
+        },
+        {
+          "iter": 2,
+          "recorded_action": "content_retrieval",
+          "prm_top_action": "content_retrieval",
+          "prm_ranked_correct_first": true,
+          "eta_tool": "curl"
+        },
+        {
+          "iter": 3,
+          "recorded_action": "sensitive_file_read",
+          "prm_top_action": null,
+          "prm_ranked_correct_first": false,
+          "eta_tool": null
+        },
+        {
+          "iter": 4,
+          "recorded_action": "content_retrieval",
+          "prm_top_action": null,
+          "prm_ranked_correct_first": false,
+          "eta_tool": null
+        },
+        {
+          "iter": 5,
+          "recorded_action": "auth_attempt",
+          "prm_top_action": "input_discovery",
+          "prm_ranked_correct_first": false,
+          "eta_tool": "curl"
+        },
+        {
+          "iter": 6,
+          "recorded_action": "exploit_attempt",
+          "prm_top_action": "file_upload_attempt",
+          "prm_ranked_correct_first": false,
+          "eta_tool": "upload"
+        },
+        {
+          "iter": 7,
+          "recorded_action": "command_execution",
+          "prm_top_action": "command_execution",
+          "prm_ranked_correct_first": true,
+          "eta_tool": "shell"
+        },
+        {
+          "iter": 8,
+          "recorded_action": "sensitive_file_read",
+          "prm_top_action": "sensitive_file_read",
+          "prm_ranked_correct_first": true,
+          "eta_tool": null
+        },
+        {
+          "iter": 9,
+          "recorded_action": "sensitive_file_read",
+          "prm_top_action": "sensitive_file_read",
+          "prm_ranked_correct_first": true,
+          "eta_tool": null
+        },
+        {
+          "iter": 10,
+          "recorded_action": "post_exploitation",
+          "prm_top_action": "sensitive_file_read",
+          "prm_ranked_correct_first": false,
+          "eta_tool": "privesc"
+        },
+        {
+          "iter": 11,
+          "recorded_action": "privilege_escalation",
+          "prm_top_action": "sensitive_file_read",
+          "prm_ranked_correct_first": false,
+          "eta_tool": "privesc"
+        },
+        {
+          "iter": 12,
+          "recorded_action": "sensitive_file_read",
+          "prm_top_action": "sensitive_file_read",
+          "prm_ranked_correct_first": true,
+          "eta_tool": null
+        }
+      ]
+    },
+    {
+      "box": "Raven-2",
+      "abstract_family": "chained_exploit",
+      "in_abstraction_steps": 11,
+      "loop_iterations": 11,
+      "chain_adherence": 0.4545,
+      "reached_shell": true,
+      "reached_root": true,
+      "read_any_file": true,
+      "final_observation": {
+        "target_known": true,
+        "service_known": true,
+        "open_services": [
+          "http:80",
+          "rpcbind:111",
+          "ssh:22"
+        ],
+        "base_url_known": true,
+        "discovered_paths": [
+          "/",
+          "/contact.php",
+          "/vendor",
+          "/wordpress",
+          "/wp-login.php"
+        ],
+        "known_forms": [],
+        "known_parameters": [],
+        "tech_stack": [
+          "apache",
+          "mysql",
+          "php",
+          "wordpress"
+        ],
+        "suspected_vulnerabilities": [
+          "phpmailer_rce"
+        ],
+        "verified_vulnerabilities": [
+          "phpmailer_rce"
+        ],
+        "credentials": [],
+        "auth_state": "anonymous",
+        "shell_state": "webshell",
+        "privilege_level": "root",
+        "read_files": [
+          "wp_config"
+        ],
+        "failed_actions": [],
+        "failed_branches": {},
+        "remaining_budget": 13
+      },
+      "iters": [
+        {
+          "iter": 0,
+          "recorded_action": "service_enumeration",
+          "prm_top_action": "web_path_enumeration",
+          "prm_ranked_correct_first": false,
+          "eta_tool": "nmap"
+        },
+        {
+          "iter": 1,
+          "recorded_action": "http_fingerprint",
+          "prm_top_action": "web_path_enumeration",
+          "prm_ranked_correct_first": false,
+          "eta_tool": "whatweb"
+        },
+        {
+          "iter": 2,
+          "recorded_action": "web_path_enumeration",
+          "prm_top_action": "web_path_enumeration",
+          "prm_ranked_correct_first": true,
+          "eta_tool": "gobuster"
+        },
+        {
+          "iter": 3,
+          "recorded_action": "vulnerability_check",
+          "prm_top_action": "input_discovery",
+          "prm_ranked_correct_first": false,
+          "eta_tool": null
+        },
+        {
+          "iter": 4,
+          "recorded_action": "exploit_attempt",
+          "prm_top_action": "exploit_attempt",
+          "prm_ranked_correct_first": true,
+          "eta_tool": "exploit"
+        },
+        {
+          "iter": 5,
+          "recorded_action": "command_execution",
+          "prm_top_action": "sensitive_file_read",
+          "prm_ranked_correct_first": false,
+          "eta_tool": null
+        },
+        {
+          "iter": 6,
+          "recorded_action": "sensitive_file_read",
+          "prm_top_action": "sensitive_file_read",
+          "prm_ranked_correct_first": true,
+          "eta_tool": null
+        },
+        {
+          "iter": 7,
+          "recorded_action": "sensitive_file_read",
+          "prm_top_action": "sensitive_file_read",
+          "prm_ranked_correct_first": true,
+          "eta_tool": "curl"
+        },
+        {
+          "iter": 8,
+          "recorded_action": "post_exploitation",
+          "prm_top_action": "sensitive_file_read",
+          "prm_ranked_correct_first": false,
+          "eta_tool": null
+        },
+        {
+          "iter": 9,
+          "recorded_action": "privilege_escalation",
+          "prm_top_action": "sensitive_file_read",
+          "prm_ranked_correct_first": false,
+          "eta_tool": "privesc"
+        },
+        {
+          "iter": 10,
+          "recorded_action": "sensitive_file_read",
+          "prm_top_action": "sensitive_file_read",
+          "prm_ranked_correct_first": true,
+          "eta_tool": null
+        }
+      ]
+    },
+    {
+      "box": "SkyTower",
+      "abstract_family": "leak_authed_privesc",
+      "in_abstraction_steps": 7,
+      "loop_iterations": 7,
+      "chain_adherence": 0.4286,
+      "reached_shell": true,
+      "reached_root": true,
+      "read_any_file": true,
+      "final_observation": {
+        "target_known": true,
+        "service_known": true,
+        "open_services": [
+          "http:3128",
+          "http:80"
+        ],
+        "base_url_known": true,
+        "discovered_paths": [
+          "/"
+        ],
+        "known_forms": [],
+        "known_parameters": [],
+        "tech_stack": [
+          "apache",
+          "php"
+        ],
+        "suspected_vulnerabilities": [
+          "sqli_auth_bypass"
+        ],
+        "verified_vulnerabilities": [
+          "sqli_auth_bypass"
+        ],
+        "credentials": [
+          "cred:hereisjohn"
+        ],
+        "auth_state": "anonymous",
+        "shell_state": "command_execution",
+        "privilege_level": "root",
+        "read_files": [
+          "db_config"
+        ],
+        "failed_actions": [],
+        "failed_branches": {},
+        "remaining_budget": 10
+      },
+      "iters": [
+        {
+          "iter": 0,
+          "recorded_action": "service_enumeration",
+          "prm_top_action": "http_fingerprint",
+          "prm_ranked_correct_first": false,
+          "eta_tool": "nmap"
+        },
+        {
+          "iter": 1,
+          "recorded_action": "http_fingerprint",
+          "prm_top_action": "http_fingerprint",
+          "prm_ranked_correct_first": true,
+          "eta_tool": "whatweb"
+        },
+        {
+          "iter": 2,
+          "recorded_action": "input_discovery",
+          "prm_top_action": null,
+          "prm_ranked_correct_first": false,
+          "eta_tool": null
+        },
+        {
+          "iter": 3,
+          "recorded_action": "exploit_attempt",
+          "prm_top_action": "vulnerability_check",
+          "prm_ranked_correct_first": false,
+          "eta_tool": "sqlmap"
+        },
+        {
+          "iter": 4,
+          "recorded_action": "sensitive_file_read",
+          "prm_top_action": "content_retrieval",
+          "prm_ranked_correct_first": false,
+          "eta_tool": "curl"
+        },
+        {
+          "iter": 5,
+          "recorded_action": "privilege_escalation",
+          "prm_top_action": "privilege_escalation",
+          "prm_ranked_correct_first": true,
+          "eta_tool": "privesc"
+        },
+        {
+          "iter": 6,
+          "recorded_action": "sensitive_file_read",
+          "prm_top_action": "sensitive_file_read",
+          "prm_ranked_correct_first": true,
+          "eta_tool": null
+        }
+      ]
+    },
+    {
+      "box": "Stapler",
+      "abstract_family": "default_or_weak_password",
+      "in_abstraction_steps": 10,
+      "loop_iterations": 10,
+      "chain_adherence": 0.4,
+      "reached_shell": true,
+      "reached_root": true,
+      "read_any_file": true,
+      "final_observation": {
+        "target_known": true,
+        "service_known": true,
+        "open_services": [
+          "http:12380",
+          "http:80",
+          "mysql:3306",
+          "netbios-ssn:139",
+          "ssh:22"
+        ],
+        "base_url_known": true,
+        "discovered_paths": [
+          "/"
+        ],
+        "known_forms": [],
+        "known_parameters": [],
+        "tech_stack": [
+          "apache",
+          "mysql",
+          "php",
+          "wordpress"
+        ],
+        "suspected_vulnerabilities": [],
+        "verified_vulnerabilities": [],
+        "credentials": [],
+        "auth_state": "anonymous",
+        "shell_state": "command_execution",
+        "privilege_level": "root",
+        "read_files": [
+          "wp_config"
+        ],
+        "failed_actions": [],
+        "failed_branches": {},
+        "remaining_budget": 12
+      },
+      "iters": [
+        {
+          "iter": 0,
+          "recorded_action": "service_enumeration",
+          "prm_top_action": "web_path_enumeration",
+          "prm_ranked_correct_first": false,
+          "eta_tool": "nmap"
+        },
+        {
+          "iter": 1,
+          "recorded_action": "http_fingerprint",
+          "prm_top_action": "web_path_enumeration",
+          "prm_ranked_correct_first": false,
+          "eta_tool": "whatweb"
+        },
+        {
+          "iter": 2,
+          "recorded_action": "web_path_enumeration",
+          "prm_top_action": "web_path_enumeration",
+          "prm_ranked_correct_first": true,
+          "eta_tool": "curl"
+        },
+        {
+          "iter": 3,
+          "recorded_action": "auth_attempt",
+          "prm_top_action": null,
+          "prm_ranked_correct_first": false,
+          "eta_tool": null
+        },
+        {
+          "iter": 4,
+          "recorded_action": "file_upload_attempt",
+          "prm_top_action": "file_upload_attempt",
+          "prm_ranked_correct_first": true,
+          "eta_tool": "upload"
+        },
+        {
+          "iter": 5,
+          "recorded_action": "command_execution",
+          "prm_top_action": "sensitive_file_read",
+          "prm_ranked_correct_first": false,
+          "eta_tool": "shell"
+        },
+        {
+          "iter": 6,
+          "recorded_action": "sensitive_file_read",
+          "prm_top_action": "sensitive_file_read",
+          "prm_ranked_correct_first": true,
+          "eta_tool": "curl"
+        },
+        {
+          "iter": 7,
+          "recorded_action": "post_exploitation",
+          "prm_top_action": "sensitive_file_read",
+          "prm_ranked_correct_first": false,
+          "eta_tool": "privesc"
+        },
+        {
+          "iter": 8,
+          "recorded_action": "privilege_escalation",
+          "prm_top_action": "sensitive_file_read",
+          "prm_ranked_correct_first": false,
+          "eta_tool": "privesc"
+        },
+        {
+          "iter": 9,
+          "recorded_action": "sensitive_file_read",
+          "prm_top_action": "sensitive_file_read",
+          "prm_ranked_correct_first": true,
+          "eta_tool": null
+        }
+      ]
+    }
+  ]
+}

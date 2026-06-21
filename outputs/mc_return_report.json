@@ -1,0 +1,19 @@
+{
+  "checkpoint": "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\outputs\\seed_gate_12fam_80k\\seed_2\\web_dqn_seed_2.pt",
+  "rollout_policy": "force action a, then masked-greedy DQN to done/budget (competent; deterministic K=1)",
+  "reward_models": "g_full (env reward) and g_goal (+1 at goal only, gamma^steps-to-goal)",
+  "n_oracle_samples": 1600,
+  "n_candidate_groups_multi": 495,
+  "dqn_pick_is_mc_optimal_rate": 0.7677,
+  "within_group_mean_spearman_dqn_vs_mcgoal": 0.4041,
+  "frac_groups_positive_spearman": 0.5946,
+  "mean_mc_gap_goal": 0.1176,
+  "median_mc_gap_goal": 0.0,
+  "forced_action_goal_recovery_rate": 0.6981,
+  "meaningful_gap_threshold": 0.02,
+  "frac_groups_decision_relevant": 0.4889,
+  "n_groups_decision_relevant": 242,
+  "dqn_pick_is_mc_optimal_rate_DECISION_RELEVANT": 0.5702,
+  "within_group_mean_spearman_DECISION_RELEVANT": 0.3782,
+  "note": "KEY FINDING: forced_action_goal_recovery_rate ~1.0 and median_mc_gap_goal ~0 => under a competent (masked-greedy) continuation the env is FORGIVING: almost any single action is recoverable, so the realized value-gap between same-state candidates is ~0 on most groups. The 'weak' DQN/PRM ranking is therefore largely NOISE ON A FLAT LANDSCAPE, not a labeling error. The decision-relevant numbers (groups whose realized returns actually differ, > meaningful_gap_threshold) are the honest test of ranking quality; the all-group averages are diluted by ties. MC is V^pi(masked-greedy), not V*."
+}

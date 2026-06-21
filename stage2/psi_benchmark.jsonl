@@ -1,0 +1,124 @@
+{"intent": "Run a full TCP port scan to list every open service", "label": "service_enumeration"}
+{"intent": "Use nmap to discover which ports are listening on the host", "label": "service_enumeration"}
+{"intent": "Identify the network services exposed by the target", "label": "service_enumeration"}
+{"intent": "Probe the box for running services and their versions", "label": "service_enumeration"}
+{"intent": "Map the attack surface by enumerating open services", "label": "service_enumeration"}
+{"intent": "Scan the SMB service to recover its exact version", "label": "service_enumeration"}
+{"intent": "Determine which daemons are reachable on the machine", "label": "service_enumeration"}
+{"intent": "Enumerate the listening services with a version scan", "label": "service_enumeration"}
+{"intent": "Fingerprint the web server and the framework it runs", "label": "http_fingerprint"}
+{"intent": "Identify the CMS powering the website", "label": "http_fingerprint"}
+{"intent": "Use whatweb to detect the technology stack", "label": "http_fingerprint"}
+{"intent": "Grab the HTTP server banner and response headers", "label": "http_fingerprint"}
+{"intent": "Detect the web application framework and version", "label": "http_fingerprint"}
+{"intent": "Profile the technology stack behind the site", "label": "http_fingerprint"}
+{"intent": "Determine what software the web server is running", "label": "http_fingerprint"}
+{"intent": "Brute-force directories to find hidden paths on the site", "label": "web_path_enumeration"}
+{"intent": "Enumerate web routes and endpoints with a wordlist", "label": "web_path_enumeration"}
+{"intent": "Use gobuster to discover directories", "label": "web_path_enumeration"}
+{"intent": "Find hidden admin pages on the web application", "label": "web_path_enumeration"}
+{"intent": "Discover unlinked URLs by fuzzing paths", "label": "web_path_enumeration"}
+{"intent": "Map the site's directory structure", "label": "web_path_enumeration"}
+{"intent": "Look for hidden directories and backup files via path brute force", "label": "web_path_enumeration"}
+{"intent": "Download the backup archive served from the web root", "label": "content_retrieval"}
+{"intent": "Fetch the page source to inspect HTML comments", "label": "content_retrieval"}
+{"intent": "Retrieve the contents of robots.txt", "label": "content_retrieval"}
+{"intent": "Pull down the exposed git configuration", "label": "content_retrieval"}
+{"intent": "Open the listing page and read what it returns", "label": "content_retrieval"}
+{"intent": "View the rendered HTML source of the landing page", "label": "content_retrieval"}
+{"intent": "Get the body of the changelog page", "label": "content_retrieval"}
+{"intent": "Inspect the login page fields to find the form inputs", "label": "input_discovery"}
+{"intent": "Discover the parameters the search endpoint accepts", "label": "input_discovery"}
+{"intent": "Find the input parameters of the upload form", "label": "input_discovery"}
+{"intent": "Enumerate the query-string parameters of the request", "label": "input_discovery"}
+{"intent": "Identify the user-controllable fields in the contact form", "label": "input_discovery"}
+{"intent": "Locate injectable parameters on the page", "label": "input_discovery"}
+{"intent": "Examine the form and list its input fields", "label": "input_discovery"}
+{"intent": "Submit the contact form with benign test data", "label": "form_interaction"}
+{"intent": "Fill in and post the login form", "label": "form_interaction"}
+{"intent": "Send a crafted POST request through the form", "label": "form_interaction"}
+{"intent": "Complete and submit the registration form", "label": "form_interaction"}
+{"intent": "Post values into the form fields and submit it", "label": "form_interaction"}
+{"intent": "Interact with the feedback form by submitting it", "label": "form_interaction"}
+{"intent": "Try logging in with default credentials", "label": "auth_attempt"}
+{"intent": "Brute-force the login with a password list", "label": "auth_attempt"}
+{"intent": "Attempt admin/admin on the management panel", "label": "auth_attempt"}
+{"intent": "Guess weak passwords against the web login", "label": "auth_attempt"}
+{"intent": "Run a dictionary attack on the authentication endpoint", "label": "auth_attempt"}
+{"intent": "Try common username and password pairs on the portal", "label": "auth_attempt"}
+{"intent": "Attempt to authenticate by spraying a wordlist of passwords", "label": "auth_attempt"}
+{"intent": "Log in using the credentials we leaked earlier", "label": "credential_use"}
+{"intent": "Reuse the dumped password to authenticate as admin", "label": "credential_use"}
+{"intent": "Use the recovered administrator credentials to sign in", "label": "credential_use"}
+{"intent": "Authenticate with the known username and password", "label": "credential_use"}
+{"intent": "Log into the panel with the stolen credentials", "label": "credential_use"}
+{"intent": "Apply the leaked credentials at the admin login", "label": "credential_use"}
+{"intent": "Sign in with the harvested account password", "label": "credential_use"}
+{"intent": "Verify the application is vulnerable to SQL injection", "label": "vulnerability_check"}
+{"intent": "Confirm the id parameter is injectable", "label": "vulnerability_check"}
+{"intent": "Test the endpoint for command injection", "label": "vulnerability_check"}
+{"intent": "Check whether the installed version is affected by the CVE", "label": "vulnerability_check"}
+{"intent": "Probe the field to confirm it is exploitable", "label": "vulnerability_check"}
+{"intent": "Validate that the file inclusion is present before exploiting", "label": "vulnerability_check"}
+{"intent": "Read the version banner to confirm it is a vulnerable build", "label": "vulnerability_check"}
+{"intent": "Assess whether the upload handler is susceptible to bypass", "label": "vulnerability_check"}
+{"intent": "Exploit the SQL injection to dump the database", "label": "exploit_attempt"}
+{"intent": "Launch the remote code execution exploit against the endpoint", "label": "exploit_attempt"}
+{"intent": "Trigger the injection to gain code execution", "label": "exploit_attempt"}
+{"intent": "Abuse the file inclusion to read application source", "label": "exploit_attempt"}
+{"intent": "Fire the exploit to drop a shell on the target", "label": "exploit_attempt"}
+{"intent": "Use the known exploit to compromise the web app", "label": "exploit_attempt"}
+{"intent": "Run the deserialization exploit to execute code", "label": "exploit_attempt"}
+{"intent": "Upload a PHP web shell through the upload form", "label": "file_upload_attempt"}
+{"intent": "Bypass the extension filter and upload a malicious file", "label": "file_upload_attempt"}
+{"intent": "Plant a webshell via the file upload feature", "label": "file_upload_attempt"}
+{"intent": "Upload a reverse-shell script to the server", "label": "file_upload_attempt"}
+{"intent": "Abuse the upload to drop a backdoor on the host", "label": "file_upload_attempt"}
+{"intent": "Submit a malicious plugin archive to get code execution", "label": "file_upload_attempt"}
+{"intent": "Run id to check which user the shell runs as", "label": "command_execution"}
+{"intent": "Execute whoami through the obtained shell", "label": "command_execution"}
+{"intent": "Issue uname -a to read the kernel version", "label": "command_execution"}
+{"intent": "Run a system command via the webshell", "label": "command_execution"}
+{"intent": "Execute ls in the foothold shell to list files", "label": "command_execution"}
+{"intent": "Confirm code execution by running a command through the backdoor", "label": "command_execution"}
+{"intent": "Run hostname over the established command channel", "label": "command_execution"}
+{"intent": "Read /etc/passwd to enumerate the local users", "label": "sensitive_file_read"}
+{"intent": "Cat the user flag file in the home directory", "label": "sensitive_file_read"}
+{"intent": "Read the SSH private key id_rsa from the home folder", "label": "sensitive_file_read"}
+{"intent": "Dump the contents of the shadow file", "label": "sensitive_file_read"}
+{"intent": "Read the configuration file that stores the database password", "label": "sensitive_file_read"}
+{"intent": "Retrieve the saved credentials file from disk", "label": "sensitive_file_read"}
+{"intent": "Print the root flag now that we have access", "label": "sensitive_file_read"}
+{"intent": "Read the password hash file left in the user's directory", "label": "sensitive_file_read"}
+{"intent": "Open and read the secret notes file on the box", "label": "sensitive_file_read"}
+{"intent": "Escalate to root by abusing the SUID binary", "label": "privilege_escalation"}
+{"intent": "Abuse a sudo rule to get a root shell", "label": "privilege_escalation"}
+{"intent": "Use the writable cron job to elevate privileges", "label": "privilege_escalation"}
+{"intent": "Leverage the misconfiguration to become root", "label": "privilege_escalation"}
+{"intent": "Elevate to root through the permitted sudo command", "label": "privilege_escalation"}
+{"intent": "Get root by exploiting the SUID find binary", "label": "privilege_escalation"}
+{"intent": "Privilege-escalate using a GTFOBins technique", "label": "privilege_escalation"}
+{"intent": "Enumerate the system for privilege-escalation vectors", "label": "post_exploitation"}
+{"intent": "Run linpeas to find local escalation paths", "label": "post_exploitation"}
+{"intent": "Check sudo -l for commands the user may run", "label": "post_exploitation"}
+{"intent": "Look for SUID binaries across the filesystem", "label": "post_exploitation"}
+{"intent": "Gather local information after landing the shell", "label": "post_exploitation"}
+{"intent": "Search the host for stored credentials and config files", "label": "post_exploitation"}
+{"intent": "Inspect cron jobs and writable files for escalation leads", "label": "post_exploitation"}
+{"intent": "Stop here and write up the findings", "label": "stop_or_report"}
+{"intent": "Report the compromise and finish the engagement", "label": "stop_or_report"}
+{"intent": "Conclude the test and submit the report", "label": "stop_or_report"}
+{"intent": "We are done; report that we reached root", "label": "stop_or_report"}
+{"intent": "Finalize the assessment and document the flags", "label": "stop_or_report"}
+{"intent": "Crack the captured NTLM hash offline with hashcat", "label": "out_of_abstraction"}
+{"intent": "Use john the ripper to recover the password from the shadow hash", "label": "out_of_abstraction"}
+{"intent": "SSH into the box with the recovered password", "label": "out_of_abstraction"}
+{"intent": "Connect over SSH using the leaked private key", "label": "out_of_abstraction"}
+{"intent": "Switch to the user account with su using the cracked password", "label": "out_of_abstraction"}
+{"intent": "su to root with the discovered password", "label": "out_of_abstraction"}
+{"intent": "Run the DirtyCow kernel exploit to get root", "label": "out_of_abstraction"}
+{"intent": "Compile and launch the local kernel privilege-escalation exploit", "label": "out_of_abstraction"}
+{"intent": "Exploit the SMB stack buffer overflow to spawn a shell", "label": "out_of_abstraction"}
+{"intent": "Run the remote overflow exploit against the FTP service", "label": "out_of_abstraction"}
+{"intent": "Brute-force the SSH service with hydra", "label": "out_of_abstraction"}
+{"intent": "Pivot through this host to reach the internal network", "label": "out_of_abstraction"}

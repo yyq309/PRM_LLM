@@ -1,0 +1,1053 @@
+{
+  "meta": {
+    "proposer": "LLMProposer(deepseek-chat,temp=0.5)",
+    "executor": "live",
+    "seeds": 10,
+    "budget": 12,
+    "modes": [
+      "llm_only",
+      "prm"
+    ],
+    "boxes": [
+      "ThinkPHP-5-rce",
+      "ThinkPHP-5.0.23",
+      "Struts2-S2-048",
+      "Struts2-S2-045",
+      "Joomla-8917-sqli"
+    ],
+    "n_episodes": 100,
+    "note": "reranker isolation; real LLM proposer (stochastic trial variation)"
+  },
+  "per_box": {
+    "ThinkPHP-5-rce": {
+      "llm_only": {
+        "goal": 4,
+        "prog": 21,
+        "tot": 41,
+        "milestone": [
+          0,
+          4,
+          4,
+          0,
+          4,
+          0,
+          4,
+          4,
+          0,
+          4
+        ]
+      },
+      "prm": {
+        "goal": 4,
+        "prog": 18,
+        "tot": 26,
+        "milestone": [
+          0,
+          0,
+          0,
+          4,
+          0,
+          4,
+          4,
+          0,
+          0,
+          4
+        ]
+      }
+    },
+    "ThinkPHP-5.0.23": {
+      "llm_only": {
+        "goal": 7,
+        "prog": 24,
+        "tot": 36,
+        "milestone": [
+          4,
+          4,
+          0,
+          4,
+          4,
+          0,
+          4,
+          4,
+          4,
+          0
+        ]
+      },
+      "prm": {
+        "goal": 4,
+        "prog": 15,
+        "tot": 19,
+        "milestone": [
+          0,
+          0,
+          4,
+          4,
+          0,
+          4,
+          0,
+          4,
+          0,
+          0
+        ]
+      }
+    },
+    "Struts2-S2-048": {
+      "llm_only": {
+        "goal": 3,
+        "prog": 31,
+        "tot": 65,
+        "milestone": [
+          0,
+          5,
+          4,
+          5,
+          5,
+          4,
+          4,
+          4,
+          4,
+          4
+        ]
+      },
+      "prm": {
+        "goal": 4,
+        "prog": 26,
+        "tot": 43,
+        "milestone": [
+          5,
+          4,
+          4,
+          0,
+          5,
+          0,
+          5,
+          4,
+          0,
+          5
+        ]
+      }
+    },
+    "Struts2-S2-045": {
+      "llm_only": {
+        "goal": 6,
+        "prog": 31,
+        "tot": 56,
+        "milestone": [
+          5,
+          4,
+          0,
+          5,
+          5,
+          5,
+          5,
+          0,
+          4,
+          5
+        ]
+      },
+      "prm": {
+        "goal": 9,
+        "prog": 35,
+        "tot": 45,
+        "milestone": [
+          5,
+          5,
+          5,
+          5,
+          0,
+          5,
+          5,
+          5,
+          5,
+          5
+        ]
+      }
+    },
+    "Joomla-8917-sqli": {
+      "llm_only": {
+        "goal": 1,
+        "prog": 12,
+        "tot": 20,
+        "milestone": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          4,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "prm": {
+        "goal": 0,
+        "prog": 10,
+        "tot": 23,
+        "milestone": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      }
+    }
+  },
+  "pooled_full_goal": {
+    "llm_only": {
+      "progress": [
+        119,
+        218
+      ],
+      "progress_rate": 0.546,
+      "progress_ci95": [
+        0.48,
+        0.611
+      ],
+      "goal": [
+        21,
+        50
+      ],
+      "goal_rate": 0.42
+    },
+    "prm": {
+      "progress": [
+        104,
+        156
+      ],
+      "progress_rate": 0.667,
+      "progress_ci95": [
+        0.589,
+        0.736
+      ],
+      "goal": [
+        21,
+        50
+      ],
+      "goal_rate": 0.42
+    }
+  },
+  "permutation_prm_vs_baseline": {
+    "prm_vs_llm_only": {
+      "delta_pp": 12.1,
+      "perm_p_clustered": 0.0123,
+      "significant": true
+    }
+  },
+  "goal_permutation_prm_vs_baseline": {
+    "prm_vs_llm_only": {
+      "delta_pp": 0.0,
+      "perm_p_clustered": 1.0,
+      "significant": false
+    }
+  },
+  "episodes": [
+    {
+      "box": "ThinkPHP-5-rce",
+      "arm": "llm_only",
+      "reachable": true,
+      "goal": 0,
+      "prog_steps": 1,
+      "total_steps": 1
+    },
+    {
+      "box": "ThinkPHP-5-rce",
+      "arm": "prm",
+      "reachable": true,
+      "goal": 0,
+      "prog_steps": 0,
+      "total_steps": 0
+    },
+    {
+      "box": "ThinkPHP-5-rce",
+      "arm": "llm_only",
+      "reachable": true,
+      "goal": 1,
+      "prog_steps": 4,
+      "total_steps": 10
+    },
+    {
+      "box": "ThinkPHP-5-rce",
+      "arm": "prm",
+      "reachable": true,
+      "goal": 0,
+      "prog_steps": 1,
+      "total_steps": 1
+    },
+    {
+      "box": "ThinkPHP-5-rce",
+      "arm": "llm_only",
+      "reachable": true,
+      "goal": 1,
+      "prog_steps": 3,
+      "total_steps": 3
+    },
+    {
+      "box": "ThinkPHP-5-rce",
+      "arm": "prm",
+      "reachable": true,
+      "goal": 0,
+      "prog_steps": 0,
+      "total_steps": 0
+    },
+    {
+      "box": "ThinkPHP-5-rce",
+      "arm": "llm_only",
+      "reachable": true,
+      "goal": 0,
+      "prog_steps": 1,
+      "total_steps": 1
+    },
+    {
+      "box": "ThinkPHP-5-rce",
+      "arm": "prm",
+      "reachable": true,
+      "goal": 1,
+      "prog_steps": 3,
+      "total_steps": 5
+    },
+    {
+      "box": "ThinkPHP-5-rce",
+      "arm": "llm_only",
+      "reachable": true,
+      "goal": 0,
+      "prog_steps": 3,
+      "total_steps": 10
+    },
+    {
+      "box": "ThinkPHP-5-rce",
+      "arm": "prm",
+      "reachable": true,
+      "goal": 0,
+      "prog_steps": 0,
+      "total_steps": 0
+    },
+    {
+      "box": "ThinkPHP-5-rce",
+      "arm": "llm_only",
+      "reachable": true,
+      "goal": 0,
+      "prog_steps": 0,
+      "total_steps": 0
+    },
+    {
+      "box": "ThinkPHP-5-rce",
+      "arm": "prm",
+      "reachable": true,
+      "goal": 1,
+      "prog_steps": 4,
+      "total_steps": 7
+    },
+    {
+      "box": "ThinkPHP-5-rce",
+      "arm": "llm_only",
+      "reachable": true,
+      "goal": 1,
+      "prog_steps": 3,
+      "total_steps": 3
+    },
+    {
+      "box": "ThinkPHP-5-rce",
+      "arm": "prm",
+      "reachable": true,
+      "goal": 1,
+      "prog_steps": 4,
+      "total_steps": 6
+    },
+    {
+      "box": "ThinkPHP-5-rce",
+      "arm": "llm_only",
+      "reachable": true,
+      "goal": 0,
+      "prog_steps": 3,
+      "total_steps": 10
+    },
+    {
+      "box": "ThinkPHP-5-rce",
+      "arm": "prm",
+      "reachable": true,
+      "goal": 0,
+      "prog_steps": 1,
+      "total_steps": 1
+    },
+    {
+      "box": "ThinkPHP-5-rce",
+      "arm": "llm_only",
+      "reachable": true,
+      "goal": 0,
+      "prog_steps": 0,
+      "total_steps": 0
+    },
+    {
+      "box": "ThinkPHP-5-rce",
+      "arm": "prm",
+      "reachable": true,
+      "goal": 0,
+      "prog_steps": 1,
+      "total_steps": 1
+    },
+    {
+      "box": "ThinkPHP-5-rce",
+      "arm": "llm_only",
+      "reachable": true,
+      "goal": 1,
+      "prog_steps": 3,
+      "total_steps": 3
+    },
+    {
+      "box": "ThinkPHP-5-rce",
+      "arm": "prm",
+      "reachable": true,
+      "goal": 1,
+      "prog_steps": 4,
+      "total_steps": 5
+    },
+    {
+      "box": "ThinkPHP-5.0.23",
+      "arm": "llm_only",
+      "reachable": true,
+      "goal": 1,
+      "prog_steps": 3,
+      "total_steps": 3
+    },
+    {
+      "box": "ThinkPHP-5.0.23",
+      "arm": "prm",
+      "reachable": true,
+      "goal": 0,
+      "prog_steps": 0,
+      "total_steps": 0
+    },
+    {
+      "box": "ThinkPHP-5.0.23",
+      "arm": "llm_only",
+      "reachable": true,
+      "goal": 1,
+      "prog_steps": 4,
+      "total_steps": 7
+    },
+    {
+      "box": "ThinkPHP-5.0.23",
+      "arm": "prm",
+      "reachable": true,
+      "goal": 0,
+      "prog_steps": 0,
+      "total_steps": 0
+    },
+    {
+      "box": "ThinkPHP-5.0.23",
+      "arm": "llm_only",
+      "reachable": true,
+      "goal": 0,
+      "prog_steps": 0,
+      "total_steps": 0
+    },
+    {
+      "box": "ThinkPHP-5.0.23",
+      "arm": "prm",
+      "reachable": true,
+      "goal": 1,
+      "prog_steps": 3,
+      "total_steps": 3
+    },
+    {
+      "box": "ThinkPHP-5.0.23",
+      "arm": "llm_only",
+      "reachable": true,
+      "goal": 1,
+      "prog_steps": 3,
+      "total_steps": 3
+    },
+    {
+      "box": "ThinkPHP-5.0.23",
+      "arm": "prm",
+      "reachable": true,
+      "goal": 1,
+      "prog_steps": 4,
+      "total_steps": 5
+    },
+    {
+      "box": "ThinkPHP-5.0.23",
+      "arm": "llm_only",
+      "reachable": true,
+      "goal": 1,
+      "prog_steps": 4,
+      "total_steps": 8
+    },
+    {
+      "box": "ThinkPHP-5.0.23",
+      "arm": "prm",
+      "reachable": true,
+      "goal": 0,
+      "prog_steps": 0,
+      "total_steps": 0
+    },
+    {
+      "box": "ThinkPHP-5.0.23",
+      "arm": "llm_only",
+      "reachable": true,
+      "goal": 0,
+      "prog_steps": 0,
+      "total_steps": 0
+    },
+    {
+      "box": "ThinkPHP-5.0.23",
+      "arm": "prm",
+      "reachable": true,
+      "goal": 1,
+      "prog_steps": 4,
+      "total_steps": 5
+    },
+    {
+      "box": "ThinkPHP-5.0.23",
+      "arm": "llm_only",
+      "reachable": true,
+      "goal": 1,
+      "prog_steps": 3,
+      "total_steps": 3
+    },
+    {
+      "box": "ThinkPHP-5.0.23",
+      "arm": "prm",
+      "reachable": true,
+      "goal": 0,
+      "prog_steps": 0,
+      "total_steps": 0
+    },
+    {
+      "box": "ThinkPHP-5.0.23",
+      "arm": "llm_only",
+      "reachable": true,
+      "goal": 1,
+      "prog_steps": 3,
+      "total_steps": 3
+    },
+    {
+      "box": "ThinkPHP-5.0.23",
+      "arm": "prm",
+      "reachable": true,
+      "goal": 1,
+      "prog_steps": 4,
+      "total_steps": 6
+    },
+    {
+      "box": "ThinkPHP-5.0.23",
+      "arm": "llm_only",
+      "reachable": true,
+      "goal": 1,
+      "prog_steps": 4,
+      "total_steps": 9
+    },
+    {
+      "box": "ThinkPHP-5.0.23",
+      "arm": "prm",
+      "reachable": true,
+      "goal": 0,
+      "prog_steps": 0,
+      "total_steps": 0
+    },
+    {
+      "box": "ThinkPHP-5.0.23",
+      "arm": "llm_only",
+      "reachable": true,
+      "goal": 0,
+      "prog_steps": 0,
+      "total_steps": 0
+    },
+    {
+      "box": "ThinkPHP-5.0.23",
+      "arm": "prm",
+      "reachable": true,
+      "goal": 0,
+      "prog_steps": 0,
+      "total_steps": 0
+    },
+    {
+      "box": "Struts2-S2-048",
+      "arm": "llm_only",
+      "reachable": true,
+      "goal": 0,
+      "prog_steps": 1,
+      "total_steps": 1
+    },
+    {
+      "box": "Struts2-S2-048",
+      "arm": "prm",
+      "reachable": true,
+      "goal": 1,
+      "prog_steps": 4,
+      "total_steps": 6
+    },
+    {
+      "box": "Struts2-S2-048",
+      "arm": "llm_only",
+      "reachable": true,
+      "goal": 1,
+      "prog_steps": 4,
+      "total_steps": 9
+    },
+    {
+      "box": "Struts2-S2-048",
+      "arm": "prm",
+      "reachable": true,
+      "goal": 0,
+      "prog_steps": 2,
+      "total_steps": 3
+    },
+    {
+      "box": "Struts2-S2-048",
+      "arm": "llm_only",
+      "reachable": true,
+      "goal": 0,
+      "prog_steps": 3,
+      "total_steps": 5
+    },
+    {
+      "box": "Struts2-S2-048",
+      "arm": "prm",
+      "reachable": true,
+      "goal": 0,
+      "prog_steps": 3,
+      "total_steps": 6
+    },
+    {
+      "box": "Struts2-S2-048",
+      "arm": "llm_only",
+      "reachable": true,
+      "goal": 1,
+      "prog_steps": 4,
+      "total_steps": 8
+    },
+    {
+      "box": "Struts2-S2-048",
+      "arm": "prm",
+      "reachable": true,
+      "goal": 0,
+      "prog_steps": 1,
+      "total_steps": 3
+    },
+    {
+      "box": "Struts2-S2-048",
+      "arm": "llm_only",
+      "reachable": true,
+      "goal": 1,
+      "prog_steps": 4,
+      "total_steps": 8
+    },
+    {
+      "box": "Struts2-S2-048",
+      "arm": "prm",
+      "reachable": true,
+      "goal": 1,
+      "prog_steps": 4,
+      "total_steps": 7
+    },
+    {
+      "box": "Struts2-S2-048",
+      "arm": "llm_only",
+      "reachable": true,
+      "goal": 0,
+      "prog_steps": 3,
+      "total_steps": 6
+    },
+    {
+      "box": "Struts2-S2-048",
+      "arm": "prm",
+      "reachable": true,
+      "goal": 0,
+      "prog_steps": 1,
+      "total_steps": 1
+    },
+    {
+      "box": "Struts2-S2-048",
+      "arm": "llm_only",
+      "reachable": true,
+      "goal": 0,
+      "prog_steps": 3,
+      "total_steps": 7
+    },
+    {
+      "box": "Struts2-S2-048",
+      "arm": "prm",
+      "reachable": true,
+      "goal": 1,
+      "prog_steps": 4,
+      "total_steps": 6
+    },
+    {
+      "box": "Struts2-S2-048",
+      "arm": "llm_only",
+      "reachable": true,
+      "goal": 0,
+      "prog_steps": 3,
+      "total_steps": 6
+    },
+    {
+      "box": "Struts2-S2-048",
+      "arm": "prm",
+      "reachable": true,
+      "goal": 0,
+      "prog_steps": 3,
+      "total_steps": 7
+    },
+    {
+      "box": "Struts2-S2-048",
+      "arm": "llm_only",
+      "reachable": true,
+      "goal": 0,
+      "prog_steps": 3,
+      "total_steps": 7
+    },
+    {
+      "box": "Struts2-S2-048",
+      "arm": "prm",
+      "reachable": true,
+      "goal": 0,
+      "prog_steps": 1,
+      "total_steps": 1
+    },
+    {
+      "box": "Struts2-S2-048",
+      "arm": "llm_only",
+      "reachable": true,
+      "goal": 0,
+      "prog_steps": 3,
+      "total_steps": 8
+    },
+    {
+      "box": "Struts2-S2-048",
+      "arm": "prm",
+      "reachable": true,
+      "goal": 1,
+      "prog_steps": 3,
+      "total_steps": 3
+    },
+    {
+      "box": "Struts2-S2-045",
+      "arm": "llm_only",
+      "reachable": true,
+      "goal": 1,
+      "prog_steps": 5,
+      "total_steps": 10
+    },
+    {
+      "box": "Struts2-S2-045",
+      "arm": "prm",
+      "reachable": true,
+      "goal": 1,
+      "prog_steps": 5,
+      "total_steps": 5
+    },
+    {
+      "box": "Struts2-S2-045",
+      "arm": "llm_only",
+      "reachable": true,
+      "goal": 0,
+      "prog_steps": 3,
+      "total_steps": 6
+    },
+    {
+      "box": "Struts2-S2-045",
+      "arm": "prm",
+      "reachable": true,
+      "goal": 1,
+      "prog_steps": 4,
+      "total_steps": 6
+    },
+    {
+      "box": "Struts2-S2-045",
+      "arm": "llm_only",
+      "reachable": true,
+      "goal": 0,
+      "prog_steps": 0,
+      "total_steps": 0
+    },
+    {
+      "box": "Struts2-S2-045",
+      "arm": "prm",
+      "reachable": true,
+      "goal": 1,
+      "prog_steps": 3,
+      "total_steps": 3
+    },
+    {
+      "box": "Struts2-S2-045",
+      "arm": "llm_only",
+      "reachable": true,
+      "goal": 1,
+      "prog_steps": 4,
+      "total_steps": 7
+    },
+    {
+      "box": "Struts2-S2-045",
+      "arm": "prm",
+      "reachable": true,
+      "goal": 1,
+      "prog_steps": 4,
+      "total_steps": 6
+    },
+    {
+      "box": "Struts2-S2-045",
+      "arm": "llm_only",
+      "reachable": true,
+      "goal": 1,
+      "prog_steps": 4,
+      "total_steps": 7
+    },
+    {
+      "box": "Struts2-S2-045",
+      "arm": "prm",
+      "reachable": true,
+      "goal": 0,
+      "prog_steps": 1,
+      "total_steps": 2
+    },
+    {
+      "box": "Struts2-S2-045",
+      "arm": "llm_only",
+      "reachable": true,
+      "goal": 1,
+      "prog_steps": 4,
+      "total_steps": 7
+    },
+    {
+      "box": "Struts2-S2-045",
+      "arm": "prm",
+      "reachable": true,
+      "goal": 1,
+      "prog_steps": 3,
+      "total_steps": 4
+    },
+    {
+      "box": "Struts2-S2-045",
+      "arm": "llm_only",
+      "reachable": true,
+      "goal": 1,
+      "prog_steps": 4,
+      "total_steps": 6
+    },
+    {
+      "box": "Struts2-S2-045",
+      "arm": "prm",
+      "reachable": true,
+      "goal": 1,
+      "prog_steps": 3,
+      "total_steps": 4
+    },
+    {
+      "box": "Struts2-S2-045",
+      "arm": "llm_only",
+      "reachable": true,
+      "goal": 0,
+      "prog_steps": 0,
+      "total_steps": 0
+    },
+    {
+      "box": "Struts2-S2-045",
+      "arm": "prm",
+      "reachable": true,
+      "goal": 1,
+      "prog_steps": 4,
+      "total_steps": 5
+    },
+    {
+      "box": "Struts2-S2-045",
+      "arm": "llm_only",
+      "reachable": true,
+      "goal": 0,
+      "prog_steps": 3,
+      "total_steps": 6
+    },
+    {
+      "box": "Struts2-S2-045",
+      "arm": "prm",
+      "reachable": true,
+      "goal": 1,
+      "prog_steps": 4,
+      "total_steps": 5
+    },
+    {
+      "box": "Struts2-S2-045",
+      "arm": "llm_only",
+      "reachable": true,
+      "goal": 1,
+      "prog_steps": 4,
+      "total_steps": 7
+    },
+    {
+      "box": "Struts2-S2-045",
+      "arm": "prm",
+      "reachable": true,
+      "goal": 1,
+      "prog_steps": 4,
+      "total_steps": 5
+    },
+    {
+      "box": "Joomla-8917-sqli",
+      "arm": "llm_only",
+      "reachable": true,
+      "goal": 0,
+      "prog_steps": 1,
+      "total_steps": 1
+    },
+    {
+      "box": "Joomla-8917-sqli",
+      "arm": "prm",
+      "reachable": true,
+      "goal": 0,
+      "prog_steps": 1,
+      "total_steps": 1
+    },
+    {
+      "box": "Joomla-8917-sqli",
+      "arm": "llm_only",
+      "reachable": true,
+      "goal": 0,
+      "prog_steps": 1,
+      "total_steps": 1
+    },
+    {
+      "box": "Joomla-8917-sqli",
+      "arm": "prm",
+      "reachable": true,
+      "goal": 0,
+      "prog_steps": 1,
+      "total_steps": 1
+    },
+    {
+      "box": "Joomla-8917-sqli",
+      "arm": "llm_only",
+      "reachable": true,
+      "goal": 0,
+      "prog_steps": 1,
+      "total_steps": 4
+    },
+    {
+      "box": "Joomla-8917-sqli",
+      "arm": "prm",
+      "reachable": true,
+      "goal": 0,
+      "prog_steps": 2,
+      "total_steps": 7
+    },
+    {
+      "box": "Joomla-8917-sqli",
+      "arm": "llm_only",
+      "reachable": true,
+      "goal": 0,
+      "prog_steps": 1,
+      "total_steps": 2
+    },
+    {
+      "box": "Joomla-8917-sqli",
+      "arm": "prm",
+      "reachable": true,
+      "goal": 0,
+      "prog_steps": 1,
+      "total_steps": 1
+    },
+    {
+      "box": "Joomla-8917-sqli",
+      "arm": "llm_only",
+      "reachable": true,
+      "goal": 0,
+      "prog_steps": 1,
+      "total_steps": 1
+    },
+    {
+      "box": "Joomla-8917-sqli",
+      "arm": "prm",
+      "reachable": true,
+      "goal": 0,
+      "prog_steps": 1,
+      "total_steps": 1
+    },
+    {
+      "box": "Joomla-8917-sqli",
+      "arm": "llm_only",
+      "reachable": true,
+      "goal": 1,
+      "prog_steps": 3,
+      "total_steps": 5
+    },
+    {
+      "box": "Joomla-8917-sqli",
+      "arm": "prm",
+      "reachable": true,
+      "goal": 0,
+      "prog_steps": 1,
+      "total_steps": 4
+    },
+    {
+      "box": "Joomla-8917-sqli",
+      "arm": "llm_only",
+      "reachable": true,
+      "goal": 0,
+      "prog_steps": 1,
+      "total_steps": 3
+    },
+    {
+      "box": "Joomla-8917-sqli",
+      "arm": "prm",
+      "reachable": true,
+      "goal": 0,
+      "prog_steps": 1,
+      "total_steps": 1
+    },
+    {
+      "box": "Joomla-8917-sqli",
+      "arm": "llm_only",
+      "reachable": true,
+      "goal": 0,
+      "prog_steps": 1,
+      "total_steps": 1
+    },
+    {
+      "box": "Joomla-8917-sqli",
+      "arm": "prm",
+      "reachable": true,
+      "goal": 0,
+      "prog_steps": 1,
+      "total_steps": 6
+    },
+    {
+      "box": "Joomla-8917-sqli",
+      "arm": "llm_only",
+      "reachable": true,
+      "goal": 0,
+      "prog_steps": 1,
+      "total_steps": 1
+    },
+    {
+      "box": "Joomla-8917-sqli",
+      "arm": "prm",
+      "reachable": true,
+      "goal": 0,
+      "prog_steps": 1,
+      "total_steps": 1
+    },
+    {
+      "box": "Joomla-8917-sqli",
+      "arm": "llm_only",
+      "reachable": true,
+      "goal": 0,
+      "prog_steps": 1,
+      "total_steps": 1
+    },
+    {
+      "box": "Joomla-8917-sqli",
+      "arm": "prm",
+      "reachable": true,
+      "goal": 0,
+      "prog_steps": 0,
+      "total_steps": 0
+    }
+  ]
+}

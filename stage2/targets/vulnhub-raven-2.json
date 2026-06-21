@@ -1,0 +1,15 @@
+{
+  "name": "VulnHub-Raven-2",
+  "kind": "boot2root-vm",
+  "target": "http://raven2.lab",
+  "abstract_family": "chained_exploit",
+  "isolation_note": "Full VM on an isolated host-only VMware network. Add a hosts entry for raven2.lab (or retarget this descriptor with stage2/vm_lab.py), keep a clean snapshot, and keep the VM off bridged/NAT while testing.",
+  "eta_fill": {
+    "login": "/wordpress/wp-login.php",
+    "wordlist": "/usr/share/wordlists/dirb/common.txt",
+    "webshell": "/backdoor.php",
+    "file": "/root/flag4.txt"
+  },
+  "recommended_first": false,
+  "rationale": "Raven 2 adds the service/database privilege-escalation layer that Docker-only Web targets miss: a Web foothold to www-data followed by a MySQL/UDF-style host escalation to root."
+}

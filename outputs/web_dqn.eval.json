@@ -1,0 +1,62 @@
+{
+  "training_steps": 5000,
+  "seed": 0,
+  "eval_goal_rate": 0.0,
+  "eval_avg_reward": 92.20000000000002,
+  "eval_results": [
+    {
+      "task_id": "web_001_backup_leak",
+      "reward": 100.0,
+      "steps": 20,
+      "goal": false
+    },
+    {
+      "task_id": "web_001_backup_leak",
+      "reward": 100.0,
+      "steps": 20,
+      "goal": false
+    },
+    {
+      "task_id": "web_001_backup_leak",
+      "reward": 100.0,
+      "steps": 20,
+      "goal": false
+    },
+    {
+      "task_id": "web_002_sqli_login",
+      "reward": -4.0,
+      "steps": 22,
+      "goal": false
+    },
+    {
+      "task_id": "web_002_sqli_login",
+      "reward": -4.0,
+      "steps": 22,
+      "goal": false
+    },
+    {
+      "task_id": "web_002_sqli_login",
+      "reward": -4.0,
+      "steps": 22,
+      "goal": false
+    },
+    {
+      "task_id": "web_003_upload_shell",
+      "reward": 180.60000000000005,
+      "steps": 24,
+      "goal": false
+    },
+    {
+      "task_id": "web_003_upload_shell",
+      "reward": 180.60000000000005,
+      "steps": 24,
+      "goal": false
+    },
+    {
+      "task_id": "web_003_upload_shell",
+      "reward": 180.60000000000005,
+      "steps": 24,
+      "goal": false
+    }
+  ]
+}

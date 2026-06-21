@@ -1,0 +1,18 @@
+{
+  "n_train_oracle": 1118,
+  "n_heldout_oracle": 482,
+  "metric": "on HELD-OUT decision-relevant groups, does the model's top pick have the (near-)max REALIZED MC goal-return",
+  "raw_dqn_label": {
+    "decision_relevant_groups": 34,
+    "top1_realized_optimal_rate": 0.4706
+  },
+  "prm_trained_on_dqn_labels": {
+    "decision_relevant_groups": 34,
+    "top1_realized_optimal_rate": 0.2941
+  },
+  "prm_trained_on_mc_labels": {
+    "decision_relevant_groups": 34,
+    "top1_realized_optimal_rate": 0.6765
+  },
+  "note": "All three are scored against the SAME realized-MC ground truth on disjoint held-out tasks. If prm_trained_on_mc_labels > the DQN-based ones, MC relabeling genuinely improves decisions where they matter. If all ~equal/low, the bottleneck is the PRM INPUT FEATURES (the observable state does not distinguish the better fork), not the label source — reported honestly either way."
+}

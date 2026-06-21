@@ -1,0 +1,67 @@
+{
+  "task_id": "web_005_config_leak_login",
+  "target": "http://target:80",
+  "service_surface": ["http:80"],
+  "initial_observation": {
+    "open_services": ["http:80"],
+    "discovered_paths": ["/"]
+  },
+  "hidden_paths": ["/config", "/login", "/admin"],
+  "technologies": ["php", "nginx", "mysql"],
+  "forms": {
+    "/login": ["username", "password"]
+  },
+  "parameters": {},
+  "leaks": {
+    "/config": {
+      "credentials": ["site_admin"],
+      "files": ["config_php"]
+    }
+  },
+  "credentials": {
+    "site_admin": {
+      "username": "siteadmin",
+      "password": "config_pw",
+      "role": "admin",
+      "weak": false
+    }
+  },
+  "auth": {
+    "login_path": "/login",
+    "valid_credential": "site_admin",
+    "role": "admin"
+  },
+  "vulnerabilities": {},
+  "files": {
+    "admin_flag": {
+      "path": "/admin/flag",
+      "requires_auth": "admin",
+      "flag": "FLAG{config_leak_admin}"
+    }
+  },
+  "goal": {
+    "type": "read_file",
+    "file": "admin_flag"
+  },
+  "budget": {
+    "max_steps": 20
+  },
+  "expert_plan": [
+    {"action_type": "web_path_enumeration", "target": "/config"},
+    {"action_type": "content_retrieval", "target": "/config"},
+    {"action_type": "web_path_enumeration", "target": "/login"},
+    "input_discovery",
+    "credential_use",
+    {"action_type": "web_path_enumeration", "target": "/admin"},
+    "sensitive_file_read"
+  ],
+  "expert_trajectory": [
+    "Enumerate web directories to discover /config.",
+    "Download and inspect the /config content for leaked credentials.",
+    "Enumerate web directories to discover /login.",
+    "Inspect the login form and discover its input fields.",
+    "Use leaked credential to login through /login.",
+    "Enumerate web directories to discover /admin.",
+    "Read the /admin/flag sensitive file."
+  ]
+}

@@ -1,0 +1,86 @@
+{
+  "model": "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\outputs\\prm_strong.joblib",
+  "n_heldout": 1764,
+  "error_label_rule": "is_error = rank_label not in {high, medium}",
+  "full_set_INFLATED": {
+    "n": 1764,
+    "n_error": 1427,
+    "error_base_rate": 0.809,
+    "score_roc_auc": 0.9854,
+    "score_pr_auc": 0.9965,
+    "rankhead_precision": 0.9817,
+    "rankhead_recall": 0.9783,
+    "rankhead_f1": 0.98,
+    "score_at_0.5_precision": 0.9215,
+    "score_at_0.5_recall": 0.9958,
+    "CAVEAT": "rule rows copy the normalizer status into the PRM input, so errors are trivially separable here; not the genuine signal."
+  },
+  "oracle_subset_HEADLINE": {
+    "n": 482,
+    "n_error": 145,
+    "error_base_rate": 0.3008,
+    "score_roc_auc": 0.8934,
+    "score_pr_auc": 0.7072,
+    "rankhead_precision": 0.8143,
+    "rankhead_recall": 0.7862,
+    "rankhead_f1": 0.8,
+    "score_at_0.5_precision": 0.5346,
+    "score_at_0.5_recall": 0.9586,
+    "error_definition": "oracle rank_label == 'low' (valid action, but a poor choice at this state)"
+  },
+  "rule_subset_sanity": {
+    "n": 1282,
+    "n_error": 1282,
+    "error_base_rate": 1.0,
+    "score_roc_auc": null,
+    "score_pr_auc": null,
+    "rankhead_precision": 1.0,
+    "rankhead_recall": 1.0,
+    "rankhead_f1": 1.0,
+    "score_at_0.5_precision": 1.0,
+    "score_at_0.5_recall": 1.0
+  },
+  "per_error_category_recall": {
+    "ambiguous": {
+      "n": 147,
+      "recall_as_any_error": 1.0,
+      "recall_exact_category": 1.0
+    },
+    "low": {
+      "n": 145,
+      "recall_as_any_error": 0.7862,
+      "recall_exact_category": 0.7862
+    },
+    "outside_single_host_web_scope": {
+      "n": 147,
+      "recall_as_any_error": 1.0,
+      "recall_exact_category": 1.0
+    },
+    "precondition_missing": {
+      "n": 547,
+      "recall_as_any_error": 1.0,
+      "recall_exact_category": 1.0
+    },
+    "schema_gap": {
+      "n": 294,
+      "recall_as_any_error": 1.0,
+      "recall_exact_category": 1.0
+    },
+    "unsafe": {
+      "n": 147,
+      "recall_as_any_error": 1.0,
+      "recall_exact_category": 1.0
+    }
+  },
+  "predicted_rank_distribution": {
+    "ambiguous": 147,
+    "high": 188,
+    "low": 120,
+    "medium": 154,
+    "outside_single_host_web_scope": 147,
+    "precondition_missing": 567,
+    "schema_gap": 294,
+    "unsafe": 147
+  },
+  "note": "HEADLINE = oracle_subset: among valid, executed candidates the PRM must flag the low-value ('wrong choice') actions. Score ROC/PR-AUC is the threshold-free error-discrimination; the rank-head P/R is the interpretable operating point. Full-set is reported but inflated."
+}

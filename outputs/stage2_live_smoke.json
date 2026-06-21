@@ -1,0 +1,155 @@
+{
+  "stage": "stage2_live_smoke",
+  "target": "Vulhub-WebLogic-weak-password",
+  "target_url": "http://127.0.0.1:8090",
+  "reached_command_execution": true,
+  "reached_root": false,
+  "read_files": [
+    "etc_passwd"
+  ],
+  "final_observation": {
+    "target_known": true,
+    "service_known": false,
+    "open_services": [],
+    "base_url_known": true,
+    "discovered_paths": [
+      "/"
+    ],
+    "known_forms": [],
+    "known_parameters": [],
+    "tech_stack": [],
+    "suspected_vulnerabilities": [],
+    "verified_vulnerabilities": [],
+    "credentials": [],
+    "auth_state": "anonymous",
+    "shell_state": "webshell",
+    "privilege_level": "web_user",
+    "read_files": [
+      "etc_passwd"
+    ],
+    "failed_actions": [],
+    "failed_branches": {},
+    "remaining_budget": 7
+  },
+  "steps": [
+    {
+      "action": "http_fingerprint",
+      "tool": "whatweb",
+      "executed": true,
+      "output_head": "HTTP/1.1 200 OK Cache-Control: no-cache Date: Wed, 17 Jun 2026 15:17:49 GMT Pragma: no-cache Content-Length: 3162 Conten",
+      "phi_extracted": {},
+      "state": {
+        "open_services": [],
+        "tech_stack": [],
+        "discovered_paths": [
+          "/"
+        ],
+        "known_forms": [],
+        "known_parameters": [],
+        "verified_vulnerabilities": [],
+        "credentials": [],
+        "auth_state": "anonymous",
+        "shell_state": "none",
+        "privilege_level": "none",
+        "read_files": []
+      }
+    },
+    {
+      "action": "vulnerability_check",
+      "tool": "sqlmap",
+      "executed": true,
+      "output_head": "[eta] tool not installed on runner",
+      "phi_extracted": {},
+      "state": {
+        "open_services": [],
+        "tech_stack": [],
+        "discovered_paths": [
+          "/"
+        ],
+        "known_forms": [],
+        "known_parameters": [],
+        "verified_vulnerabilities": [],
+        "credentials": [],
+        "auth_state": "anonymous",
+        "shell_state": "none",
+        "privilege_level": "none",
+        "read_files": []
+      }
+    },
+    {
+      "action": "exploit_attempt",
+      "tool": "exploit",
+      "executed": true,
+      "output_head": "[eta] tool not installed on runner",
+      "phi_extracted": {
+        "shell_state": "webshell"
+      },
+      "state": {
+        "open_services": [],
+        "tech_stack": [],
+        "discovered_paths": [
+          "/"
+        ],
+        "known_forms": [],
+        "known_parameters": [],
+        "verified_vulnerabilities": [],
+        "credentials": [],
+        "auth_state": "anonymous",
+        "shell_state": "webshell",
+        "privilege_level": "web_user",
+        "read_files": []
+      }
+    },
+    {
+      "action": "command_execution",
+      "tool": "shell",
+      "executed": true,
+      "output_head": "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0 Draft//EN\"> <HTML> <HEAD> <TITLE>Error 404--Not Found</TITLE> </HEAD> <BODY ",
+      "phi_extracted": {},
+      "state": {
+        "open_services": [],
+        "tech_stack": [],
+        "discovered_paths": [
+          "/"
+        ],
+        "known_forms": [],
+        "known_parameters": [],
+        "verified_vulnerabilities": [],
+        "credentials": [],
+        "auth_state": "anonymous",
+        "shell_state": "webshell",
+        "privilege_level": "web_user",
+        "read_files": []
+      }
+    },
+    {
+      "action": "sensitive_file_read",
+      "tool": "cat",
+      "executed": true,
+      "output_head": "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0 Draft//EN\"> <HTML> <HEAD> <TITLE>Error 404--Not Found</TITLE> </HEAD> <BODY ",
+      "phi_extracted": {
+        "read_files": [
+          "etc_passwd"
+        ]
+      },
+      "state": {
+        "open_services": [],
+        "tech_stack": [],
+        "discovered_paths": [
+          "/"
+        ],
+        "known_forms": [],
+        "known_parameters": [],
+        "verified_vulnerabilities": [],
+        "credentials": [],
+        "auth_state": "anonymous",
+        "shell_state": "webshell",
+        "privilege_level": "web_user",
+        "read_files": [
+          "etc_passwd"
+        ]
+      }
+    }
+  ],
+  "note": "Fixed-sequence LIVE pipeline validation (η→gated LiveExecutor→real target→φ). NOT the autonomous PRM loop and NOT an uplift measurement — that is the A/B engagement, which additionally needs the tools image and an LLM proposer."
+}

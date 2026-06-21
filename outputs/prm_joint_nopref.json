@@ -1,0 +1,40 @@
+{
+  "objective": "L_gap + L_rank + L_diag + L_pref (joint, confidence-weighted)",
+  "lambdas": {
+    "gap": 1.0,
+    "rank": 1.0,
+    "diag": 0.5,
+    "pref": 0.0
+  },
+  "n_train": 2784,
+  "n_preference_pairs": 843,
+  "oracle_all": {
+    "n": 390,
+    "rank_accuracy": 0.8358974358974359,
+    "majority_floor": 0.38974358974358975,
+    "pairwise_accuracy": 0.9300225733634312,
+    "pairwise_pairs": 443,
+    "ece": 0.12882235050201418
+  },
+  "oracle_unseen_instance": {
+    "n": 155,
+    "rank_accuracy": 0.9290322580645162,
+    "majority_floor": 0.4,
+    "pairwise_accuracy": 0.930635838150289,
+    "pairwise_pairs": 173,
+    "ece": 0.057985210034155125
+  },
+  "oracle_unseen_chain": {
+    "n": 235,
+    "rank_accuracy": 0.774468085106383,
+    "majority_floor": 0.3829787234042553,
+    "pairwise_accuracy": 0.9296296296296296,
+    "pairwise_pairs": 270,
+    "ece": 0.1820173068249479
+  },
+  "bootstrap_oracle_all_pairwise_ci95": {
+    "mean": 0.9322571516726695,
+    "ci95_low": 0.888010836217747,
+    "ci95_high": 0.9682460968026204
+  }
+}

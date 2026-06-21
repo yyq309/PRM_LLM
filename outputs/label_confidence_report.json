@@ -1,0 +1,18 @@
+{
+  "train": {
+    "num_samples": 4176,
+    "num_oracle_labeled": 1118,
+    "oracle_seed_rank_agreement_mean": 0.9615,
+    "oracle_frac_full_agreement": 0.8873,
+    "oracle_multiseed_confidence_mean": 0.6121,
+    "oracle_value_gap_std_mean": 0.6599
+  },
+  "heldout": {
+    "num_samples": 1764,
+    "num_oracle_labeled": 482,
+    "oracle_seed_rank_agreement_mean": 0.9723,
+    "oracle_frac_full_agreement": 0.917,
+    "oracle_multiseed_confidence_mean": 0.6129,
+    "oracle_value_gap_std_mean": 0.6332
+  }
+}

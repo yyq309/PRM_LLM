@@ -1,0 +1,17 @@
+{
+  "name": "DVWA",
+  "kind": "single-web-app-container",
+  "target": "http://dvwa.lab",
+  "abstract_family": "leak_authed_privesc",
+  "isolation_note": "Run DVWA only as a local Docker container on an isolated bridge network (e.g. http://127.0.0.1:8080 mapped to a *.lab host). Never point at a public address.",
+  "eta_fill": {
+    "login": "/login.php",
+    "user": "admin",
+    "password": "password",
+    "wordlist": "/usr/share/wordlists/dirb/common.txt",
+    "webshell": "/hackable/uploads/shell.php",
+    "file": "/etc/passwd"
+  },
+  "recommended_first": true,
+  "rationale": "Single web-app Docker container — Docker-native, low infra, and its vulns (SQLi, command injection, file upload, auth) sit squarely inside the 16-action web abstraction. The right first live closed-loop target before any VulnHub VM."
+}

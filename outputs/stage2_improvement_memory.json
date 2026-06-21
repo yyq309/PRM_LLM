@@ -1,0 +1,697 @@
+{
+  "compare": "memory",
+  "model": "deepseek-chat",
+  "temperature": 0.5,
+  "mode": "llm_only",
+  "trials_per_box": 4,
+  "boxes": [
+    "ThinkPHP-5-rce",
+    "ThinkPHP-5.0.23",
+    "Struts2-S2-048",
+    "Struts2-S2-045",
+    "Drupalgeddon2",
+    "Joomla-8917-sqli",
+    "Tomcat-12615",
+    "php-cgi-2012-1823"
+  ],
+  "baseline_arm": "baseline_poormem",
+  "treatment_arm": "rich_memory",
+  "baseline_poormem": {
+    "n": 32,
+    "episodes_steps": 99,
+    "consecutive_repeat_rate": 0.527,
+    "wasted_rate": 0.525,
+    "exploit_proposed_rate": 0.406,
+    "goal_rate": 0.125,
+    "mean_steps": 3.09
+  },
+  "rich_memory": {
+    "n": 32,
+    "episodes_steps": 185,
+    "consecutive_repeat_rate": 0.273,
+    "wasted_rate": 0.546,
+    "exploit_proposed_rate": 0.75,
+    "goal_rate": 0.438,
+    "mean_steps": 5.78
+  },
+  "tests_treatment_vs_baseline": {
+    "consecutive_repeat_rate": {
+      "delta": -0.254,
+      "perm_p": 0.0
+    },
+    "wasted_rate": {
+      "delta": 0.021,
+      "perm_p": 0.6279
+    },
+    "goal_rate": {
+      "delta": 0.312,
+      "perm_p": 0.0036
+    },
+    "exploit_proposed_rate": {
+      "delta": 0.344,
+      "perm_p": 0.0074
+    }
+  },
+  "episodes": [
+    {
+      "box": "ThinkPHP-5-rce",
+      "arm": "baseline_poormem",
+      "goal": 0,
+      "exploit_proposed": 0,
+      "total_steps": 1,
+      "wasted": 0,
+      "rep": 0,
+      "rep_den": 0
+    },
+    {
+      "box": "ThinkPHP-5-rce",
+      "arm": "baseline_poormem",
+      "goal": 0,
+      "exploit_proposed": 0,
+      "total_steps": 1,
+      "wasted": 0,
+      "rep": 0,
+      "rep_den": 0
+    },
+    {
+      "box": "ThinkPHP-5-rce",
+      "arm": "baseline_poormem",
+      "goal": 0,
+      "exploit_proposed": 0,
+      "total_steps": 0,
+      "wasted": 0,
+      "rep": 0,
+      "rep_den": 0
+    },
+    {
+      "box": "ThinkPHP-5-rce",
+      "arm": "baseline_poormem",
+      "goal": 0,
+      "exploit_proposed": 0,
+      "total_steps": 0,
+      "wasted": 0,
+      "rep": 0,
+      "rep_den": 0
+    },
+    {
+      "box": "ThinkPHP-5.0.23",
+      "arm": "baseline_poormem",
+      "goal": 1,
+      "exploit_proposed": 1,
+      "total_steps": 9,
+      "wasted": 5,
+      "rep": 4,
+      "rep_den": 8
+    },
+    {
+      "box": "ThinkPHP-5.0.23",
+      "arm": "baseline_poormem",
+      "goal": 1,
+      "exploit_proposed": 1,
+      "total_steps": 9,
+      "wasted": 5,
+      "rep": 2,
+      "rep_den": 8
+    },
+    {
+      "box": "ThinkPHP-5.0.23",
+      "arm": "baseline_poormem",
+      "goal": 1,
+      "exploit_proposed": 1,
+      "total_steps": 8,
+      "wasted": 4,
+      "rep": 3,
+      "rep_den": 7
+    },
+    {
+      "box": "ThinkPHP-5.0.23",
+      "arm": "baseline_poormem",
+      "goal": 0,
+      "exploit_proposed": 0,
+      "total_steps": 1,
+      "wasted": 0,
+      "rep": 0,
+      "rep_den": 0
+    },
+    {
+      "box": "Struts2-S2-048",
+      "arm": "baseline_poormem",
+      "goal": 1,
+      "exploit_proposed": 1,
+      "total_steps": 6,
+      "wasted": 2,
+      "rep": 1,
+      "rep_den": 5
+    },
+    {
+      "box": "Struts2-S2-048",
+      "arm": "baseline_poormem",
+      "goal": 0,
+      "exploit_proposed": 0,
+      "total_steps": 0,
+      "wasted": 0,
+      "rep": 0,
+      "rep_den": 0
+    },
+    {
+      "box": "Struts2-S2-048",
+      "arm": "baseline_poormem",
+      "goal": 0,
+      "exploit_proposed": 1,
+      "total_steps": 2,
+      "wasted": 1,
+      "rep": 1,
+      "rep_den": 1
+    },
+    {
+      "box": "Struts2-S2-048",
+      "arm": "baseline_poormem",
+      "goal": 0,
+      "exploit_proposed": 1,
+      "total_steps": 6,
+      "wasted": 3,
+      "rep": 3,
+      "rep_den": 5
+    },
+    {
+      "box": "Struts2-S2-045",
+      "arm": "baseline_poormem",
+      "goal": 0,
+      "exploit_proposed": 1,
+      "total_steps": 6,
+      "wasted": 3,
+      "rep": 3,
+      "rep_den": 5
+    },
+    {
+      "box": "Struts2-S2-045",
+      "arm": "baseline_poormem",
+      "goal": 0,
+      "exploit_proposed": 1,
+      "total_steps": 6,
+      "wasted": 3,
+      "rep": 3,
+      "rep_den": 5
+    },
+    {
+      "box": "Struts2-S2-045",
+      "arm": "baseline_poormem",
+      "goal": 0,
+      "exploit_proposed": 1,
+      "total_steps": 1,
+      "wasted": 0,
+      "rep": 0,
+      "rep_den": 0
+    },
+    {
+      "box": "Struts2-S2-045",
+      "arm": "baseline_poormem",
+      "goal": 0,
+      "exploit_proposed": 1,
+      "total_steps": 6,
+      "wasted": 3,
+      "rep": 2,
+      "rep_den": 5
+    },
+    {
+      "box": "Drupalgeddon2",
+      "arm": "baseline_poormem",
+      "goal": 0,
+      "exploit_proposed": 0,
+      "total_steps": 1,
+      "wasted": 0,
+      "rep": 0,
+      "rep_den": 0
+    },
+    {
+      "box": "Drupalgeddon2",
+      "arm": "baseline_poormem",
+      "goal": 0,
+      "exploit_proposed": 0,
+      "total_steps": 0,
+      "wasted": 0,
+      "rep": 0,
+      "rep_den": 0
+    },
+    {
+      "box": "Drupalgeddon2",
+      "arm": "baseline_poormem",
+      "goal": 0,
+      "exploit_proposed": 1,
+      "total_steps": 8,
+      "wasted": 5,
+      "rep": 3,
+      "rep_den": 7
+    },
+    {
+      "box": "Drupalgeddon2",
+      "arm": "baseline_poormem",
+      "goal": 0,
+      "exploit_proposed": 0,
+      "total_steps": 1,
+      "wasted": 0,
+      "rep": 0,
+      "rep_den": 0
+    },
+    {
+      "box": "Joomla-8917-sqli",
+      "arm": "baseline_poormem",
+      "goal": 0,
+      "exploit_proposed": 0,
+      "total_steps": 3,
+      "wasted": 2,
+      "rep": 2,
+      "rep_den": 2
+    },
+    {
+      "box": "Joomla-8917-sqli",
+      "arm": "baseline_poormem",
+      "goal": 0,
+      "exploit_proposed": 0,
+      "total_steps": 1,
+      "wasted": 0,
+      "rep": 0,
+      "rep_den": 0
+    },
+    {
+      "box": "Joomla-8917-sqli",
+      "arm": "baseline_poormem",
+      "goal": 0,
+      "exploit_proposed": 0,
+      "total_steps": 0,
+      "wasted": 0,
+      "rep": 0,
+      "rep_den": 0
+    },
+    {
+      "box": "Joomla-8917-sqli",
+      "arm": "baseline_poormem",
+      "goal": 0,
+      "exploit_proposed": 0,
+      "total_steps": 1,
+      "wasted": 0,
+      "rep": 0,
+      "rep_den": 0
+    },
+    {
+      "box": "Tomcat-12615",
+      "arm": "baseline_poormem",
+      "goal": 0,
+      "exploit_proposed": 0,
+      "total_steps": 6,
+      "wasted": 5,
+      "rep": 2,
+      "rep_den": 5
+    },
+    {
+      "box": "Tomcat-12615",
+      "arm": "baseline_poormem",
+      "goal": 0,
+      "exploit_proposed": 0,
+      "total_steps": 3,
+      "wasted": 2,
+      "rep": 2,
+      "rep_den": 2
+    },
+    {
+      "box": "Tomcat-12615",
+      "arm": "baseline_poormem",
+      "goal": 0,
+      "exploit_proposed": 0,
+      "total_steps": 0,
+      "wasted": 0,
+      "rep": 0,
+      "rep_den": 0
+    },
+    {
+      "box": "Tomcat-12615",
+      "arm": "baseline_poormem",
+      "goal": 0,
+      "exploit_proposed": 1,
+      "total_steps": 4,
+      "wasted": 3,
+      "rep": 2,
+      "rep_den": 3
+    },
+    {
+      "box": "php-cgi-2012-1823",
+      "arm": "baseline_poormem",
+      "goal": 0,
+      "exploit_proposed": 0,
+      "total_steps": 3,
+      "wasted": 2,
+      "rep": 2,
+      "rep_den": 2
+    },
+    {
+      "box": "php-cgi-2012-1823",
+      "arm": "baseline_poormem",
+      "goal": 0,
+      "exploit_proposed": 0,
+      "total_steps": 0,
+      "wasted": 0,
+      "rep": 0,
+      "rep_den": 0
+    },
+    {
+      "box": "php-cgi-2012-1823",
+      "arm": "baseline_poormem",
+      "goal": 0,
+      "exploit_proposed": 1,
+      "total_steps": 3,
+      "wasted": 2,
+      "rep": 2,
+      "rep_den": 2
+    },
+    {
+      "box": "php-cgi-2012-1823",
+      "arm": "baseline_poormem",
+      "goal": 0,
+      "exploit_proposed": 0,
+      "total_steps": 3,
+      "wasted": 2,
+      "rep": 2,
+      "rep_den": 2
+    },
+    {
+      "box": "ThinkPHP-5-rce",
+      "arm": "rich_memory",
+      "goal": 1,
+      "exploit_proposed": 1,
+      "total_steps": 7,
+      "wasted": 3,
+      "rep": 2,
+      "rep_den": 6
+    },
+    {
+      "box": "ThinkPHP-5-rce",
+      "arm": "rich_memory",
+      "goal": 1,
+      "exploit_proposed": 1,
+      "total_steps": 9,
+      "wasted": 5,
+      "rep": 2,
+      "rep_den": 8
+    },
+    {
+      "box": "ThinkPHP-5-rce",
+      "arm": "rich_memory",
+      "goal": 1,
+      "exploit_proposed": 1,
+      "total_steps": 7,
+      "wasted": 3,
+      "rep": 2,
+      "rep_den": 6
+    },
+    {
+      "box": "ThinkPHP-5-rce",
+      "arm": "rich_memory",
+      "goal": 1,
+      "exploit_proposed": 1,
+      "total_steps": 7,
+      "wasted": 3,
+      "rep": 2,
+      "rep_den": 6
+    },
+    {
+      "box": "ThinkPHP-5.0.23",
+      "arm": "rich_memory",
+      "goal": 0,
+      "exploit_proposed": 1,
+      "total_steps": 8,
+      "wasted": 5,
+      "rep": 4,
+      "rep_den": 7
+    },
+    {
+      "box": "ThinkPHP-5.0.23",
+      "arm": "rich_memory",
+      "goal": 1,
+      "exploit_proposed": 1,
+      "total_steps": 9,
+      "wasted": 5,
+      "rep": 1,
+      "rep_den": 8
+    },
+    {
+      "box": "ThinkPHP-5.0.23",
+      "arm": "rich_memory",
+      "goal": 1,
+      "exploit_proposed": 1,
+      "total_steps": 7,
+      "wasted": 3,
+      "rep": 1,
+      "rep_den": 6
+    },
+    {
+      "box": "ThinkPHP-5.0.23",
+      "arm": "rich_memory",
+      "goal": 1,
+      "exploit_proposed": 1,
+      "total_steps": 8,
+      "wasted": 4,
+      "rep": 2,
+      "rep_den": 7
+    },
+    {
+      "box": "Struts2-S2-048",
+      "arm": "rich_memory",
+      "goal": 1,
+      "exploit_proposed": 1,
+      "total_steps": 7,
+      "wasted": 3,
+      "rep": 2,
+      "rep_den": 6
+    },
+    {
+      "box": "Struts2-S2-048",
+      "arm": "rich_memory",
+      "goal": 0,
+      "exploit_proposed": 0,
+      "total_steps": 1,
+      "wasted": 0,
+      "rep": 0,
+      "rep_den": 0
+    },
+    {
+      "box": "Struts2-S2-048",
+      "arm": "rich_memory",
+      "goal": 0,
+      "exploit_proposed": 1,
+      "total_steps": 5,
+      "wasted": 2,
+      "rep": 2,
+      "rep_den": 4
+    },
+    {
+      "box": "Struts2-S2-048",
+      "arm": "rich_memory",
+      "goal": 1,
+      "exploit_proposed": 1,
+      "total_steps": 8,
+      "wasted": 4,
+      "rep": 2,
+      "rep_den": 7
+    },
+    {
+      "box": "Struts2-S2-045",
+      "arm": "rich_memory",
+      "goal": 1,
+      "exploit_proposed": 1,
+      "total_steps": 7,
+      "wasted": 3,
+      "rep": 2,
+      "rep_den": 6
+    },
+    {
+      "box": "Struts2-S2-045",
+      "arm": "rich_memory",
+      "goal": 0,
+      "exploit_proposed": 1,
+      "total_steps": 6,
+      "wasted": 3,
+      "rep": 2,
+      "rep_den": 5
+    },
+    {
+      "box": "Struts2-S2-045",
+      "arm": "rich_memory",
+      "goal": 0,
+      "exploit_proposed": 1,
+      "total_steps": 5,
+      "wasted": 2,
+      "rep": 2,
+      "rep_den": 4
+    },
+    {
+      "box": "Struts2-S2-045",
+      "arm": "rich_memory",
+      "goal": 0,
+      "exploit_proposed": 0,
+      "total_steps": 0,
+      "wasted": 0,
+      "rep": 0,
+      "rep_den": 0
+    },
+    {
+      "box": "Drupalgeddon2",
+      "arm": "rich_memory",
+      "goal": 0,
+      "exploit_proposed": 0,
+      "total_steps": 1,
+      "wasted": 0,
+      "rep": 0,
+      "rep_den": 0
+    },
+    {
+      "box": "Drupalgeddon2",
+      "arm": "rich_memory",
+      "goal": 0,
+      "exploit_proposed": 1,
+      "total_steps": 5,
+      "wasted": 3,
+      "rep": 1,
+      "rep_den": 4
+    },
+    {
+      "box": "Drupalgeddon2",
+      "arm": "rich_memory",
+      "goal": 0,
+      "exploit_proposed": 1,
+      "total_steps": 8,
+      "wasted": 4,
+      "rep": 3,
+      "rep_den": 7
+    },
+    {
+      "box": "Drupalgeddon2",
+      "arm": "rich_memory",
+      "goal": 0,
+      "exploit_proposed": 0,
+      "total_steps": 1,
+      "wasted": 0,
+      "rep": 0,
+      "rep_den": 0
+    },
+    {
+      "box": "Joomla-8917-sqli",
+      "arm": "rich_memory",
+      "goal": 0,
+      "exploit_proposed": 0,
+      "total_steps": 1,
+      "wasted": 0,
+      "rep": 0,
+      "rep_den": 0
+    },
+    {
+      "box": "Joomla-8917-sqli",
+      "arm": "rich_memory",
+      "goal": 1,
+      "exploit_proposed": 1,
+      "total_steps": 8,
+      "wasted": 4,
+      "rep": 0,
+      "rep_den": 7
+    },
+    {
+      "box": "Joomla-8917-sqli",
+      "arm": "rich_memory",
+      "goal": 1,
+      "exploit_proposed": 1,
+      "total_steps": 7,
+      "wasted": 4,
+      "rep": 0,
+      "rep_den": 6
+    },
+    {
+      "box": "Joomla-8917-sqli",
+      "arm": "rich_memory",
+      "goal": 1,
+      "exploit_proposed": 0,
+      "total_steps": 3,
+      "wasted": 1,
+      "rep": 1,
+      "rep_den": 2
+    },
+    {
+      "box": "Tomcat-12615",
+      "arm": "rich_memory",
+      "goal": 0,
+      "exploit_proposed": 1,
+      "total_steps": 6,
+      "wasted": 5,
+      "rep": 2,
+      "rep_den": 5
+    },
+    {
+      "box": "Tomcat-12615",
+      "arm": "rich_memory",
+      "goal": 0,
+      "exploit_proposed": 1,
+      "total_steps": 12,
+      "wasted": 11,
+      "rep": 1,
+      "rep_den": 11
+    },
+    {
+      "box": "Tomcat-12615",
+      "arm": "rich_memory",
+      "goal": 0,
+      "exploit_proposed": 0,
+      "total_steps": 1,
+      "wasted": 0,
+      "rep": 0,
+      "rep_den": 0
+    },
+    {
+      "box": "Tomcat-12615",
+      "arm": "rich_memory",
+      "goal": 0,
+      "exploit_proposed": 1,
+      "total_steps": 5,
+      "wasted": 4,
+      "rep": 0,
+      "rep_den": 4
+    },
+    {
+      "box": "php-cgi-2012-1823",
+      "arm": "rich_memory",
+      "goal": 0,
+      "exploit_proposed": 1,
+      "total_steps": 3,
+      "wasted": 2,
+      "rep": 0,
+      "rep_den": 2
+    },
+    {
+      "box": "php-cgi-2012-1823",
+      "arm": "rich_memory",
+      "goal": 0,
+      "exploit_proposed": 1,
+      "total_steps": 9,
+      "wasted": 6,
+      "rep": 3,
+      "rep_den": 8
+    },
+    {
+      "box": "php-cgi-2012-1823",
+      "arm": "rich_memory",
+      "goal": 1,
+      "exploit_proposed": 1,
+      "total_steps": 10,
+      "wasted": 6,
+      "rep": 3,
+      "rep_den": 9
+    },
+    {
+      "box": "php-cgi-2012-1823",
+      "arm": "rich_memory",
+      "goal": 0,
+      "exploit_proposed": 0,
+      "total_steps": 4,
+      "wasted": 3,
+      "rep": 0,
+      "rep_den": 3
+    }
+  ]
+}

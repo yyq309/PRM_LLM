@@ -1,0 +1,101 @@
+{
+  "offline_ready": true,
+  "live_infra_ready": true,
+  "checks": [
+    {
+      "name": "strong PRM artifact present",
+      "ok": true,
+      "detail": "outputs\\prm_strong.joblib"
+    },
+    {
+      "name": "Stage-1 ψ normalizer importable",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "η templates cover all 16 actions",
+      "ok": true,
+      "detail": "16/16"
+    },
+    {
+      "name": "enhanced ψ held-out accuracy >= 0.7",
+      "ok": true,
+      "detail": "acc=0.785"
+    },
+    {
+      "name": "enhanced ψ false-accept == 0 (held-out)",
+      "ok": true,
+      "detail": "false_accept=0"
+    },
+    {
+      "name": "Phase-1 decision gate: no schema extension required",
+      "ok": true,
+      "detail": "Abstraction covers the bulk of the real chains (out-of-abstraction 8.45% <= 60%)"
+    },
+    {
+      "name": "safety gate denies by default (no live exec possible now)",
+      "ok": true,
+      "detail": "env STAGE2_LIVE_AUTHORIZED is not set to the confirmation string"
+    },
+    {
+      "name": "public targets refused",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "destructive commands refused",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "target descriptors load",
+      "ok": true,
+      "detail": "14 descriptor(s)"
+    },
+    {
+      "name": "engagement runner importable",
+      "ok": true,
+      "detail": ""
+    }
+  ],
+  "live_infra": [
+    {
+      "name": "docker CLI on PATH",
+      "ok": true,
+      "detail": "C:\\Program Files\\Docker\\Docker\\resources\\bin\\docker.EXE"
+    },
+    {
+      "name": "docker daemon reachable",
+      "ok": true,
+      "detail": "13 container(s) up"
+    },
+    {
+      "name": "registered target containers running",
+      "ok": true,
+      "detail": "12/12 of the registry up"
+    },
+    {
+      "name": "target healthchecks reachable on 127.0.0.1",
+      "ok": true,
+      "detail": "12/12 healthy"
+    },
+    {
+      "name": "runner has `curl`",
+      "ok": true,
+      "detail": "C:\\WINDOWS\\system32\\curl.EXE"
+    },
+    {
+      "name": "runner has `bash`",
+      "ok": true,
+      "detail": "C:\\WINDOWS\\system32\\bash.EXE"
+    }
+  ],
+  "operator_blocked": [
+    "Written authorization + scope for the chosen lab target (owned / CTF only).",
+    "Isolated lab network + VM/container snapshot-restore + kill switch (set STAGE2_KILL_SWITCH).",
+    "Set STAGE2_LIVE_AUTHORIZED='i-own-this-isolated-authorized-lab' AND pass --confirmed-isolated.",
+    "Install the real tool set on the runner (nmap/gobuster/sqlmap/curl/whatweb).",
+    "A few RECORDED real walkthrough logs to validate φ/ψ on non-synthetic output (STAGE2_PLAN §3).",
+    "First live target = DVWA container (stage2/targets/dvwa.json), NOT a VulnHub VM."
+  ]
+}

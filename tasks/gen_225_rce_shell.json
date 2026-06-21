@@ -1,0 +1,89 @@
+{
+  "task_id": "gen_225_rce_shell",
+  "family": "rce_shell",
+  "difficulty": "hard",
+  "target": "http://target:80",
+  "service_surface": [
+    "http:80"
+  ],
+  "initial_observation": {
+    "open_services": [
+      "http:80"
+    ],
+    "discovered_paths": [
+      "/"
+    ]
+  },
+  "hidden_paths": [
+    "/favicon.ico",
+    "/item",
+    "/docs"
+  ],
+  "technologies": [
+    "php",
+    "nginx",
+    "mysql"
+  ],
+  "forms": {},
+  "parameters": {
+    "/item": [
+      {
+        "name": "pid",
+        "vulnerability": "rce_pid_225"
+      }
+    ]
+  },
+  "leaks": {},
+  "credentials": {},
+  "auth": {},
+  "vulnerabilities": {
+    "rce_pid_225": {
+      "type": "rce",
+      "target": "/item?pid",
+      "requires": [
+        "parameter_found:/item?pid"
+      ],
+      "effects": {
+        "shell": true
+      }
+    }
+  },
+  "files": {
+    "user_flag": {
+      "path": "/home/web/flag.txt",
+      "requires_shell": true,
+      "flag": "FLAG{gen_225_rceshell}"
+    }
+  },
+  "goal": {
+    "type": "read_file",
+    "file": "user_flag"
+  },
+  "budget": {
+    "max_steps": 8
+  },
+  "expert_plan": [
+    {
+      "action_type": "web_path_enumeration",
+      "target": "/item"
+    },
+    "input_discovery",
+    {
+      "action_type": "vulnerability_check",
+      "target": "/item?pid",
+      "parameter": "pid"
+    },
+    "exploit_attempt",
+    "command_execution",
+    "sensitive_file_read"
+  ],
+  "expert_trajectory": [
+    "Enumerate web directories to discover /item.",
+    "Discover input parameters on the /item endpoint.",
+    "Verify RCE on /item?pid parameter.",
+    "Exploit the RCE to obtain a web shell.",
+    "Run whoami through the web shell.",
+    "Read the target flag file."
+  ],
+  "hard_mode": true
+}

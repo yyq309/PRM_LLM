@@ -1,0 +1,409 @@
+{
+  "meta": {
+    "proposer": "LLMProposer(deepseek-chat,temp=0.5)",
+    "executor": "live",
+    "seeds": 5,
+    "budget": 12,
+    "modes": [
+      "llm_only",
+      "random",
+      "prm",
+      "oracle"
+    ],
+    "boxes": [
+      "ThinkPHP-5-rce",
+      "ThinkPHP-5.0.23",
+      "Struts2-S2-048",
+      "Struts2-S2-045",
+      "Joomla-8917-sqli",
+      "php-cgi-2012-1823"
+    ],
+    "n_episodes": 120,
+    "note": "reranker isolation; real LLM proposer (stochastic trial variation)"
+  },
+  "per_box": {
+    "ThinkPHP-5-rce": {
+      "llm_only": {
+        "goal": 3,
+        "prog": 11,
+        "tot": 16,
+        "milestone": [
+          4,
+          0,
+          4,
+          0,
+          4
+        ]
+      },
+      "random": {
+        "goal": 3,
+        "prog": 10,
+        "tot": 17,
+        "milestone": [
+          0,
+          0,
+          4,
+          4,
+          4
+        ]
+      },
+      "prm": {
+        "goal": 4,
+        "prog": 13,
+        "tot": 19,
+        "milestone": [
+          4,
+          0,
+          4,
+          4,
+          4
+        ]
+      },
+      "oracle": {
+        "goal": 1,
+        "prog": 4,
+        "tot": 12,
+        "milestone": [
+          0,
+          0,
+          0,
+          4,
+          0
+        ]
+      }
+    },
+    "ThinkPHP-5.0.23": {
+      "llm_only": {
+        "goal": 1,
+        "prog": 11,
+        "tot": 29,
+        "milestone": [
+          4,
+          4,
+          0,
+          0,
+          4
+        ]
+      },
+      "random": {
+        "goal": 2,
+        "prog": 7,
+        "tot": 10,
+        "milestone": [
+          0,
+          4,
+          4,
+          0,
+          0
+        ]
+      },
+      "prm": {
+        "goal": 3,
+        "prog": 12,
+        "tot": 14,
+        "milestone": [
+          4,
+          4,
+          0,
+          0,
+          4
+        ]
+      },
+      "oracle": {
+        "goal": 3,
+        "prog": 12,
+        "tot": 17,
+        "milestone": [
+          0,
+          4,
+          4,
+          4,
+          4
+        ]
+      }
+    },
+    "Struts2-S2-048": {
+      "llm_only": {
+        "goal": 0,
+        "prog": 11,
+        "tot": 22,
+        "milestone": [
+          0,
+          0,
+          4,
+          4,
+          4
+        ]
+      },
+      "random": {
+        "goal": 1,
+        "prog": 10,
+        "tot": 28,
+        "milestone": [
+          0,
+          5,
+          0,
+          4,
+          4
+        ]
+      },
+      "prm": {
+        "goal": 2,
+        "prog": 14,
+        "tot": 20,
+        "milestone": [
+          0,
+          5,
+          4,
+          4,
+          5
+        ]
+      },
+      "oracle": {
+        "goal": 0,
+        "prog": 11,
+        "tot": 23,
+        "milestone": [
+          4,
+          4,
+          4,
+          0,
+          0
+        ]
+      }
+    },
+    "Struts2-S2-045": {
+      "llm_only": {
+        "goal": 3,
+        "prog": 20,
+        "tot": 36,
+        "milestone": [
+          4,
+          4,
+          5,
+          5,
+          5
+        ]
+      },
+      "random": {
+        "goal": 3,
+        "prog": 14,
+        "tot": 23,
+        "milestone": [
+          4,
+          5,
+          4,
+          5,
+          5
+        ]
+      },
+      "prm": {
+        "goal": 3,
+        "prog": 15,
+        "tot": 22,
+        "milestone": [
+          0,
+          5,
+          5,
+          5,
+          0
+        ]
+      },
+      "oracle": {
+        "goal": 3,
+        "prog": 17,
+        "tot": 31,
+        "milestone": [
+          4,
+          4,
+          5,
+          5,
+          5
+        ]
+      }
+    },
+    "Joomla-8917-sqli": {
+      "llm_only": {
+        "goal": 0,
+        "prog": 5,
+        "tot": 9,
+        "milestone": [
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "random": {
+        "goal": 0,
+        "prog": 5,
+        "tot": 6,
+        "milestone": [
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "prm": {
+        "goal": 0,
+        "prog": 3,
+        "tot": 3,
+        "milestone": [
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "oracle": {
+        "goal": 1,
+        "prog": 8,
+        "tot": 17,
+        "milestone": [
+          4,
+          0,
+          0,
+          0,
+          0
+        ]
+      }
+    },
+    "php-cgi-2012-1823": {
+      "llm_only": {
+        "goal": 0,
+        "prog": 5,
+        "tot": 19,
+        "milestone": [
+          4,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "random": {
+        "goal": 1,
+        "prog": 9,
+        "tot": 26,
+        "milestone": [
+          4,
+          0,
+          0,
+          0,
+          4
+        ]
+      },
+      "prm": {
+        "goal": 0,
+        "prog": 4,
+        "tot": 11,
+        "milestone": [
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "oracle": {
+        "goal": 0,
+        "prog": 5,
+        "tot": 19,
+        "milestone": [
+          0,
+          4,
+          0,
+          0,
+          0
+        ]
+      }
+    }
+  },
+  "pooled_full_goal": {
+    "llm_only": {
+      "progress": [
+        63,
+        131
+      ],
+      "progress_rate": 0.481,
+      "progress_ci95": [
+        0.397,
+        0.566
+      ],
+      "goal": [
+        7,
+        30
+      ],
+      "goal_rate": 0.233
+    },
+    "random": {
+      "progress": [
+        55,
+        110
+      ],
+      "progress_rate": 0.5,
+      "progress_ci95": [
+        0.408,
+        0.592
+      ],
+      "goal": [
+        10,
+        30
+      ],
+      "goal_rate": 0.333
+    },
+    "prm": {
+      "progress": [
+        61,
+        89
+      ],
+      "progress_rate": 0.685,
+      "progress_ci95": [
+        0.583,
+        0.772
+      ],
+      "goal": [
+        12,
+        30
+      ],
+      "goal_rate": 0.4
+    },
+    "oracle": {
+      "progress": [
+        57,
+        119
+      ],
+      "progress_rate": 0.479,
+      "progress_ci95": [
+        0.391,
+        0.568
+      ],
+      "goal": [
+        8,
+        30
+      ],
+      "goal_rate": 0.267
+    }
+  },
+  "permutation_prm_vs_baseline": {
+    "prm_vs_llm_only": {
+      "delta_pp": 20.4,
+      "perm_p_clustered": 0.0055,
+      "significant": true
+    },
+    "prm_vs_random": {
+      "delta_pp": 18.5,
+      "perm_p_clustered": 0.0068,
+      "significant": true
+    },
+    "prm_vs_oracle": {
+      "delta_pp": 20.6,
+      "perm_p_clustered": 0.001,
+      "significant": true
+    }
+  }
+}

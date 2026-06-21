@@ -1,0 +1,26 @@
+{
+  "training_steps": 1000,
+  "seed": 0,
+  "eval_goal_rate": 0.0,
+  "eval_avg_reward": 6.599999999999995,
+  "eval_results": [
+    {
+      "task_id": "web_001_backup_leak",
+      "reward": 8.899999999999997,
+      "steps": 16,
+      "goal": false
+    },
+    {
+      "task_id": "web_002_sqli_login",
+      "reward": 4.199999999999996,
+      "steps": 17,
+      "goal": false
+    },
+    {
+      "task_id": "web_003_upload_shell",
+      "reward": 6.699999999999994,
+      "steps": 24,
+      "goal": false
+    }
+  ]
+}

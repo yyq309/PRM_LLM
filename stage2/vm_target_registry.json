@@ -1,0 +1,88 @@
+{
+  "_doc": "Local VMware VulnHub lab registry. Edit the IPs after first boot. Targets with enabled=true are used by stage2/vm_lab.py for hosts rendering, health checks, and descriptor sync.",
+  "lab": {
+    "virtualizer": "VMware Workstation / VMware Player",
+    "network_mode": "host-only",
+    "vmnet": "VMnet2",
+    "subnet_example": "192.168.56.0/24",
+    "notes": [
+      "Keep the target VMs off bridged/NAT while doing live testing.",
+      "Attach the attacker VM (for example Kali) to the same host-only segment.",
+      "Take a clean snapshot immediately after first successful boot."
+    ]
+  },
+  "targets": [
+    {
+      "label": "DC-1",
+      "enabled": true,
+      "descriptor": "targets/vulnhub-dc-1.json",
+      "target": "http://dc1.lab",
+      "hostname": "dc1.lab",
+      "ip": "192.168.56.110",
+      "healthcheck": "/",
+      "expect_status": [
+        200,
+        301,
+        302,
+        403
+      ],
+      "vm_format": "ova",
+      "source_url": "https://www.vulnhub.com/entry/dc-1,292/",
+      "notes": "Drupal web entry plus SUID find root. Good for restoring the host-level privesc layer missing from the Docker-only Drupal path."
+    },
+    {
+      "label": "Raven-2",
+      "enabled": true,
+      "descriptor": "targets/vulnhub-raven-2.json",
+      "target": "http://raven2.lab",
+      "hostname": "raven2.lab",
+      "ip": "192.168.56.111",
+      "healthcheck": "/",
+      "expect_status": [
+        200,
+        301,
+        302
+      ],
+      "vm_format": "ova",
+      "source_url": "https://www.vulnhub.com/entry/raven-2,269/",
+      "notes": "Web foothold to service/database privilege escalation. Keep it as the MySQL/UDF class VM."
+    },
+    {
+      "label": "Toppo-1",
+      "enabled": true,
+      "descriptor": "targets/vulnhub-toppo-1.json",
+      "target": "http://toppo1.lab",
+      "hostname": "toppo1.lab",
+      "ip": "192.168.56.112",
+      "healthcheck": "/",
+      "expect_status": [
+        200,
+        301,
+        302,
+        403
+      ],
+      "vm_format": "vmdk",
+      "source_url": "https://www.vulnhub.com/entry/toppo-1,245/",
+      "notes": "Kept to match the original shortlist. Public write-ups usually classify the root step closer to SUID/GTFOBins than a clean sudo-only misconfiguration."
+    },
+    {
+      "label": "Symfonos-1",
+      "enabled": false,
+      "descriptor": "targets/vulnhub-symfonos-1.json",
+      "target": "http://symfonos.local",
+      "hostname": "symfonos.local",
+      "http_host": "symfonos.local",
+      "ip": "192.168.56.113",
+      "healthcheck": "/",
+      "expect_status": [
+        200,
+        301,
+        302,
+        403
+      ],
+      "vm_format": "ova",
+      "source_url": "https://www.vulnhub.com/entry/symfonos-1,322/",
+      "notes": "Optional replacement for Toppo. Common write-ups treat it as a PATH-hijack/SUID style root path rather than a pure sudo GTFOBins box."
+    }
+  ]
+}

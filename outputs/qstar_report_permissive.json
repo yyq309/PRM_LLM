@@ -1,0 +1,3287 @@
+{
+  "checkpoint": "outputs\\seed_gate_permissive\\seed_1\\web_dqn_seed_1.pt",
+  "aggregate": {
+    "num_tasks": 30,
+    "gamma": 0.98,
+    "dqn_qstar_top1_agreement": 0.46651668406055674,
+    "dqn_qstar_top3_hit_rate_ALL_states": 0.9424383212657442,
+    "frac_states_degenerate_le3_allowed": 0.699193346182296,
+    "nondegenerate_top1_agreement": 0.24082301350761845,
+    "nondegenerate_top3_hit_rate": 0.776503003944707,
+    "nondegenerate_mean_spearman": -0.21646286061506445,
+    "dqn_qstar_mean_spearman_ALL": -0.0736044499753213,
+    "decisive_top1_agreement": 0.24736746464659884,
+    "oracle_greedy_mean_value_gap": 1.232389358970408,
+    "per_decision_gap_fraction": 0.52907147841901,
+    "expert_qstar_avg_value_gap": 1.0073135542328044,
+    "mean_vstar_initial": 39.772346666666664,
+    "total_reachable_states": 22256,
+    "verdict": {
+      "labels_consistent_with_qstar_nondegenerate": false,
+      "primary_gate": {
+        "nondegenerate_top3_hit_ok": false,
+        "per_decision_gap_fraction_ok": false
+      },
+      "honest_caveats": {
+        "all_states_top3_is_vacuous": "Top-3 on ALL states (~0.98) is inflated: ~75% of states have <=3 allowed actions where top-3 is 1.0 by construction. The gate now uses the non-degenerate (>=4 allowed) subset.",
+        "ranking_is_weak": "Mean Spearman vs Q* is low and several tasks are anti-correlated; exact/decisive top-1 are modest. The oracle's full-ranking agreement with Q* is WEAK — its genuine signal is a small top-1 lift over random, not strong rank consistency.",
+        "decoy_milking_note": "Literal-reward Q* milks distractor path_found rewards before a terminal on short leak tasks, inflating absolute V*/gap there (the DQN does not milk). This explains absolute-gap inflation but NOT the negative Spearman on some tasks, which is a genuine ranking weakness.",
+        "restricted_sub_mdp": "Q* is exact only for the integer-action (fixed discovery-order) sub-MDP; targeted-order states the expert plan can reach are not enumerated. DQN scoring is made history-invariant by zeroing failed-history features before encoding."
+      },
+      "thresholds": {
+        "min_nondegenerate_top3_hit": 0.9,
+        "max_per_decision_gap_fraction": 0.25
+      }
+    }
+  },
+  "task_reports": [
+    {
+      "task_id": "web_101_backup_flag_leak_easy",
+      "task_path": "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\tasks\\backup_flag_leak_easy.json",
+      "vstar_initial": 25.2596,
+      "num_reachable_states": 112,
+      "ranking_agreement": {
+        "states_evaluated": 112,
+        "dqn_qstar_top1_agreement": 0.29464285714285715,
+        "dqn_qstar_top3_hit_rate": 1.0,
+        "nondegenerate_states": 85,
+        "frac_states_degenerate_le3_allowed": 0.24107142857142858,
+        "nondegenerate_top1_agreement": 0.21176470588235294,
+        "nondegenerate_top3_hit_rate": 1.0,
+        "nondegenerate_mean_spearman": 0.05966568578879572,
+        "oracle_greedy_mean_value_gap": 2.029931577285712,
+        "oracle_greedy_max_value_gap": 5.359555183999994,
+        "per_decision_gap_fraction": 0.3788806551440597,
+        "decisive_margin": 0.5,
+        "decisive_states": 57,
+        "decisive_top1_agreement": 0.12280701754385964,
+        "dqn_qstar_mean_spearman": 0.07621147238558386,
+        "num_states_with_spearman": 112
+      },
+      "expert_alignment": {
+        "num_steps": 2,
+        "expert_qstar_top1_rate": 0.5,
+        "expert_qstar_avg_value_gap": 3.96815,
+        "dqn_greedy_matches_expert_rate": 0.5
+      },
+      "expert_steps": [
+        {
+          "step": 0,
+          "expert_action": "web_path_enumeration",
+          "expert_target": "/backup",
+          "qstar_expert": 25.2596,
+          "vstar": 25.2596,
+          "qstar_value_gap": 0.0,
+          "expert_is_qstar_optimal": true,
+          "dqn_greedy_action": "web_path_enumeration",
+          "dqn_greedy_matches_expert": true
+        },
+        {
+          "step": 1,
+          "expert_action": "content_retrieval",
+          "expert_target": "/backup",
+          "qstar_expert": 15.9,
+          "vstar": 23.8363,
+          "qstar_value_gap": 7.9363,
+          "expert_is_qstar_optimal": false,
+          "dqn_greedy_action": "web_path_enumeration",
+          "dqn_greedy_matches_expert": false
+        }
+      ]
+    },
+    {
+      "task_id": "web_001_backup_leak",
+      "task_path": "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\tasks\\backup_leak.json",
+      "vstar_initial": 34.1052,
+      "num_reachable_states": 483,
+      "ranking_agreement": {
+        "states_evaluated": 483,
+        "dqn_qstar_top1_agreement": 0.5942028985507246,
+        "dqn_qstar_top3_hit_rate": 0.9358178053830227,
+        "nondegenerate_states": 96,
+        "frac_states_degenerate_le3_allowed": 0.8012422360248447,
+        "nondegenerate_top1_agreement": 0.2916666666666667,
+        "nondegenerate_top3_hit_rate": 0.6770833333333334,
+        "nondegenerate_mean_spearman": -0.39074720402327756,
+        "oracle_greedy_mean_value_gap": 0.5894183930991301,
+        "oracle_greedy_max_value_gap": 6.440000000000005,
+        "per_decision_gap_fraction": 0.47870888178426124,
+        "decisive_margin": 0.5,
+        "decisive_states": 94,
+        "decisive_top1_agreement": 0.35106382978723405,
+        "dqn_qstar_mean_spearman": 0.07126761383925424,
+        "num_states_with_spearman": 404
+      },
+      "expert_alignment": {
+        "num_steps": 7,
+        "expert_qstar_top1_rate": 0.5714285714285714,
+        "expert_qstar_avg_value_gap": 0.16028571428571428,
+        "dqn_greedy_matches_expert_rate": 0.5714285714285714
+      },
+      "expert_steps": [
+        {
+          "step": 0,
+          "expert_action": "web_path_enumeration",
+          "expert_target": "/login",
+          "qstar_expert": 34.1052,
+          "vstar": 34.1052,
+          "qstar_value_gap": 0.0,
+          "expert_is_qstar_optimal": true,
+          "dqn_greedy_action": "web_path_enumeration",
+          "dqn_greedy_matches_expert": true
+        },
+        {
+          "step": 1,
+          "expert_action": "web_path_enumeration",
+          "expert_target": "/backup",
+          "qstar_expert": 32.8625,
+          "vstar": 32.8625,
+          "qstar_value_gap": 0.0,
+          "expert_is_qstar_optimal": true,
+          "dqn_greedy_action": "http_fingerprint",
+          "dqn_greedy_matches_expert": false
+        },
+        {
+          "step": 2,
+          "expert_action": "content_retrieval",
+          "expert_target": "/backup",
+          "qstar_expert": 31.5944,
+          "vstar": 31.5944,
+          "qstar_value_gap": 0.0,
+          "expert_is_qstar_optimal": true,
+          "dqn_greedy_action": "input_discovery",
+          "dqn_greedy_matches_expert": false
+        },
+        {
+          "step": 3,
+          "expert_action": "web_path_enumeration",
+          "expert_target": "/admin",
+          "qstar_expert": 28.1996,
+          "vstar": 28.2596,
+          "qstar_value_gap": 0.06,
+          "expert_is_qstar_optimal": false,
+          "dqn_greedy_action": "web_path_enumeration",
+          "dqn_greedy_matches_expert": true
+        },
+        {
+          "step": 4,
+          "expert_action": "input_discovery",
+          "expert_target": "/login",
+          "qstar_expert": 26.7763,
+          "vstar": 26.8363,
+          "qstar_value_gap": 0.06,
+          "expert_is_qstar_optimal": false,
+          "dqn_greedy_action": "input_discovery",
+          "dqn_greedy_matches_expert": true
+        },
+        {
+          "step": 5,
+          "expert_action": "credential_use",
+          "expert_target": "/login",
+          "qstar_expert": 25.384,
+          "vstar": 25.384,
+          "qstar_value_gap": 0.0,
+          "expert_is_qstar_optimal": true,
+          "dqn_greedy_action": "credential_use",
+          "dqn_greedy_matches_expert": true
+        },
+        {
+          "step": 6,
+          "expert_action": "sensitive_file_read",
+          "expert_target": "/admin/flag",
+          "qstar_expert": 19.9,
+          "vstar": 20.902,
+          "qstar_value_gap": 1.002,
+          "expert_is_qstar_optimal": false,
+          "dqn_greedy_action": "http_fingerprint",
+          "dqn_greedy_matches_expert": false
+        }
+      ]
+    },
+    {
+      "task_id": "web_107_bak_leak_login_medium",
+      "task_path": "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\tasks\\bak_leak_login_medium.json",
+      "vstar_initial": 36.7437,
+      "num_reachable_states": 861,
+      "ranking_agreement": {
+        "states_evaluated": 861,
+        "dqn_qstar_top1_agreement": 0.4076655052264808,
+        "dqn_qstar_top3_hit_rate": 0.8954703832752613,
+        "nondegenerate_states": 257,
+        "frac_states_degenerate_le3_allowed": 0.7015098722415796,
+        "nondegenerate_top1_agreement": 0.245136186770428,
+        "nondegenerate_top3_hit_rate": 0.6498054474708171,
+        "nondegenerate_mean_spearman": -0.3548242044846979,
+        "oracle_greedy_mean_value_gap": 1.1210853208494167,
+        "oracle_greedy_max_value_gap": 6.754364080319991,
+        "per_decision_gap_fraction": 0.6253246902394752,
+        "decisive_margin": 0.5,
+        "decisive_states": 163,
+        "decisive_top1_agreement": 0.06748466257668712,
+        "dqn_qstar_mean_spearman": -0.15982724140601545,
+        "num_states_with_spearman": 784
+      },
+      "expert_alignment": {
+        "num_steps": 7,
+        "expert_qstar_top1_rate": 0.7142857142857143,
+        "expert_qstar_avg_value_gap": 0.5709000000000001,
+        "dqn_greedy_matches_expert_rate": 0.42857142857142855
+      },
+      "expert_steps": [
+        {
+          "step": 0,
+          "expert_action": "web_path_enumeration",
+          "expert_target": "/db.bak",
+          "qstar_expert": 36.7437,
+          "vstar": 36.7437,
+          "qstar_value_gap": 0.0,
+          "expert_is_qstar_optimal": true,
+          "dqn_greedy_action": "web_path_enumeration",
+          "dqn_greedy_matches_expert": true
+        },
+        {
+          "step": 1,
+          "expert_action": "content_retrieval",
+          "expert_target": "/db.bak",
+          "qstar_expert": 35.5548,
+          "vstar": 35.5548,
+          "qstar_value_gap": 0.0,
+          "expert_is_qstar_optimal": true,
+          "dqn_greedy_action": "web_path_enumeration",
+          "dqn_greedy_matches_expert": false
+        },
+        {
+          "step": 2,
+          "expert_action": "web_path_enumeration",
+          "expert_target": "/login",
+          "qstar_expert": 32.3009,
+          "vstar": 32.3009,
+          "qstar_value_gap": 0.0,
+          "expert_is_qstar_optimal": true,
+          "dqn_greedy_action": "web_path_enumeration",
+          "dqn_greedy_matches_expert": true
+        },
+        {
+          "step": 3,
+          "expert_action": "input_discovery",
+          "expert_target": null,
+          "qstar_expert": 30.9613,
+          "vstar": 31.0213,
+          "qstar_value_gap": 0.06,
+          "expert_is_qstar_optimal": false,
+          "dqn_greedy_action": "http_fingerprint",
+          "dqn_greedy_matches_expert": false
+        },
+        {
+          "step": 4,
+          "expert_action": "credential_use",
+          "expert_target": null,
+          "qstar_expert": 29.6544,
+          "vstar": 29.6544,
+          "qstar_value_gap": 0.0,
+          "expert_is_qstar_optimal": true,
+          "dqn_greedy_action": "web_path_enumeration",
+          "dqn_greedy_matches_expert": false
+        },
+        {
+          "step": 5,
+          "expert_action": "web_path_enumeration",
+          "expert_target": "/admin",
+          "qstar_expert": 25.2596,
+          "vstar": 25.2596,
+          "qstar_value_gap": 0.0,
+          "expert_is_qstar_optimal": true,
+          "dqn_greedy_action": "web_path_enumeration",
+          "dqn_greedy_matches_expert": true
+        },
+        {
+          "step": 6,
+          "expert_action": "sensitive_file_read",
+          "expert_target": null,
+          "qstar_expert": 19.9,
+          "vstar": 23.8363,
+          "qstar_value_gap": 3.9363,
+          "expert_is_qstar_optimal": false,
+          "dqn_greedy_action": "http_fingerprint",
+          "dqn_greedy_matches_expert": false
+        }
+      ]
+    },
+    {
+      "task_id": "web_102_config_flag_leak_easy",
+      "task_path": "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\tasks\\config_flag_leak_easy.json",
+      "vstar_initial": 25.2596,
+      "num_reachable_states": 112,
+      "ranking_agreement": {
+        "states_evaluated": 112,
+        "dqn_qstar_top1_agreement": 0.24107142857142858,
+        "dqn_qstar_top3_hit_rate": 1.0,
+        "nondegenerate_states": 85,
+        "frac_states_degenerate_le3_allowed": 0.24107142857142858,
+        "nondegenerate_top1_agreement": 0.1411764705882353,
+        "nondegenerate_top3_hit_rate": 1.0,
+        "nondegenerate_mean_spearman": 0.12473810326658434,
+        "oracle_greedy_mean_value_gap": 2.123020870142855,
+        "oracle_greedy_max_value_gap": 5.359555183999994,
+        "per_decision_gap_fraction": 0.3923616677469205,
+        "decisive_margin": 0.5,
+        "decisive_states": 57,
+        "decisive_top1_agreement": 0.08771929824561403,
+        "dqn_qstar_mean_spearman": 0.12559678922140557,
+        "num_states_with_spearman": 112
+      },
+      "expert_alignment": {
+        "num_steps": 2,
+        "expert_qstar_top1_rate": 0.5,
+        "expert_qstar_avg_value_gap": 3.96815,
+        "dqn_greedy_matches_expert_rate": 0.5
+      },
+      "expert_steps": [
+        {
+          "step": 0,
+          "expert_action": "web_path_enumeration",
+          "expert_target": "/config",
+          "qstar_expert": 25.2596,
+          "vstar": 25.2596,
+          "qstar_value_gap": 0.0,
+          "expert_is_qstar_optimal": true,
+          "dqn_greedy_action": "web_path_enumeration",
+          "dqn_greedy_matches_expert": true
+        },
+        {
+          "step": 1,
+          "expert_action": "content_retrieval",
+          "expert_target": "/config",
+          "qstar_expert": 15.9,
+          "vstar": 23.8363,
+          "qstar_value_gap": 7.9363,
+          "expert_is_qstar_optimal": false,
+          "dqn_greedy_action": "web_path_enumeration",
+          "dqn_greedy_matches_expert": false
+        }
+      ]
+    },
+    {
+      "task_id": "web_005_config_leak_login",
+      "task_path": "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\tasks\\config_leak_login.json",
+      "vstar_initial": 34.1444,
+      "num_reachable_states": 483,
+      "ranking_agreement": {
+        "states_evaluated": 483,
+        "dqn_qstar_top1_agreement": 0.42857142857142855,
+        "dqn_qstar_top3_hit_rate": 0.937888198757764,
+        "nondegenerate_states": 96,
+        "frac_states_degenerate_le3_allowed": 0.8012422360248447,
+        "nondegenerate_top1_agreement": 0.28125,
+        "nondegenerate_top3_hit_rate": 0.6875,
+        "nondegenerate_mean_spearman": -0.33750973105913423,
+        "oracle_greedy_mean_value_gap": 0.7606106191993373,
+        "oracle_greedy_max_value_gap": 6.440000000000005,
+        "per_decision_gap_fraction": 0.6578255039611929,
+        "decisive_margin": 0.5,
+        "decisive_states": 90,
+        "decisive_top1_agreement": 0.07777777777777778,
+        "dqn_qstar_mean_spearman": -0.23412226782399745,
+        "num_states_with_spearman": 405
+      },
+      "expert_alignment": {
+        "num_steps": 7,
+        "expert_qstar_top1_rate": 0.7142857142857143,
+        "expert_qstar_avg_value_gap": 0.15171428571428572,
+        "dqn_greedy_matches_expert_rate": 0.42857142857142855
+      },
+      "expert_steps": [
+        {
+          "step": 0,
+          "expert_action": "web_path_enumeration",
+          "expert_target": "/config",
+          "qstar_expert": 34.1444,
+          "vstar": 34.1444,
+          "qstar_value_gap": 0.0,
+          "expert_is_qstar_optimal": true,
+          "dqn_greedy_action": "web_path_enumeration",
+          "dqn_greedy_matches_expert": true
+        },
+        {
+          "step": 1,
+          "expert_action": "content_retrieval",
+          "expert_target": "/config",
+          "qstar_expert": 32.9025,
+          "vstar": 32.9025,
+          "qstar_value_gap": 0.0,
+          "expert_is_qstar_optimal": true,
+          "dqn_greedy_action": "web_path_enumeration",
+          "dqn_greedy_matches_expert": false
+        },
+        {
+          "step": 2,
+          "expert_action": "web_path_enumeration",
+          "expert_target": "/login",
+          "qstar_expert": 29.5944,
+          "vstar": 29.5944,
+          "qstar_value_gap": 0.0,
+          "expert_is_qstar_optimal": true,
+          "dqn_greedy_action": "web_path_enumeration",
+          "dqn_greedy_matches_expert": true
+        },
+        {
+          "step": 3,
+          "expert_action": "input_discovery",
+          "expert_target": null,
+          "qstar_expert": 28.1996,
+          "vstar": 28.2596,
+          "qstar_value_gap": 0.06,
+          "expert_is_qstar_optimal": false,
+          "dqn_greedy_action": "http_fingerprint",
+          "dqn_greedy_matches_expert": false
+        },
+        {
+          "step": 4,
+          "expert_action": "credential_use",
+          "expert_target": null,
+          "qstar_expert": 26.8363,
+          "vstar": 26.8363,
+          "qstar_value_gap": 0.0,
+          "expert_is_qstar_optimal": true,
+          "dqn_greedy_action": "web_path_enumeration",
+          "dqn_greedy_matches_expert": false
+        },
+        {
+          "step": 5,
+          "expert_action": "web_path_enumeration",
+          "expert_target": "/admin",
+          "qstar_expert": 22.384,
+          "vstar": 22.384,
+          "qstar_value_gap": 0.0,
+          "expert_is_qstar_optimal": true,
+          "dqn_greedy_action": "web_path_enumeration",
+          "dqn_greedy_matches_expert": true
+        },
+        {
+          "step": 6,
+          "expert_action": "sensitive_file_read",
+          "expert_target": null,
+          "qstar_expert": 19.9,
+          "vstar": 20.902,
+          "qstar_value_gap": 1.002,
+          "expert_is_qstar_optimal": false,
+          "dqn_greedy_action": "http_fingerprint",
+          "dqn_greedy_matches_expert": false
+        }
+      ]
+    },
+    {
+      "task_id": "web_104_default_admin_pw_easy",
+      "task_path": "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\tasks\\default_admin_pw_easy.json",
+      "vstar_initial": 32.3009,
+      "num_reachable_states": 517,
+      "ranking_agreement": {
+        "states_evaluated": 517,
+        "dqn_qstar_top1_agreement": 0.4274661508704062,
+        "dqn_qstar_top3_hit_rate": 0.9013539651837524,
+        "nondegenerate_states": 203,
+        "frac_states_degenerate_le3_allowed": 0.6073500967117988,
+        "nondegenerate_top1_agreement": 0.32019704433497537,
+        "nondegenerate_top3_hit_rate": 0.7487684729064039,
+        "nondegenerate_mean_spearman": -0.2627097473332375,
+        "oracle_greedy_mean_value_gap": 1.307486349295844,
+        "oracle_greedy_max_value_gap": 6.754364080319991,
+        "per_decision_gap_fraction": 0.5902854252284131,
+        "decisive_margin": 0.5,
+        "decisive_states": 107,
+        "decisive_top1_agreement": 0.14953271028037382,
+        "dqn_qstar_mean_spearman": -0.17032068037403772,
+        "num_states_with_spearman": 474
+      },
+      "expert_alignment": {
+        "num_steps": 5,
+        "expert_qstar_top1_rate": 0.6,
+        "expert_qstar_avg_value_gap": 0.7992600000000001,
+        "dqn_greedy_matches_expert_rate": 0.4
+      },
+      "expert_steps": [
+        {
+          "step": 0,
+          "expert_action": "web_path_enumeration",
+          "expert_target": "/login",
+          "qstar_expert": 32.3009,
+          "vstar": 32.3009,
+          "qstar_value_gap": 0.0,
+          "expert_is_qstar_optimal": true,
+          "dqn_greedy_action": "web_path_enumeration",
+          "dqn_greedy_matches_expert": true
+        },
+        {
+          "step": 1,
+          "expert_action": "input_discovery",
+          "expert_target": null,
+          "qstar_expert": 30.9613,
+          "vstar": 31.0213,
+          "qstar_value_gap": 0.06,
+          "expert_is_qstar_optimal": false,
+          "dqn_greedy_action": "http_fingerprint",
+          "dqn_greedy_matches_expert": false
+        },
+        {
+          "step": 2,
+          "expert_action": "auth_attempt",
+          "expert_target": null,
+          "qstar_expert": 29.6544,
+          "vstar": 29.6544,
+          "qstar_value_gap": 0.0,
+          "expert_is_qstar_optimal": true,
+          "dqn_greedy_action": "web_path_enumeration",
+          "dqn_greedy_matches_expert": false
+        },
+        {
+          "step": 3,
+          "expert_action": "web_path_enumeration",
+          "expert_target": "/admin",
+          "qstar_expert": 25.2596,
+          "vstar": 25.2596,
+          "qstar_value_gap": 0.0,
+          "expert_is_qstar_optimal": true,
+          "dqn_greedy_action": "web_path_enumeration",
+          "dqn_greedy_matches_expert": true
+        },
+        {
+          "step": 4,
+          "expert_action": "sensitive_file_read",
+          "expert_target": null,
+          "qstar_expert": 19.9,
+          "vstar": 23.8363,
+          "qstar_value_gap": 3.9363,
+          "expert_is_qstar_optimal": false,
+          "dqn_greedy_action": "web_path_enumeration",
+          "dqn_greedy_matches_expert": false
+        }
+      ]
+    },
+    {
+      "task_id": "web_009_default_password_shell",
+      "task_path": "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\tasks\\default_password_shell.json",
+      "vstar_initial": 40.9557,
+      "num_reachable_states": 615,
+      "ranking_agreement": {
+        "states_evaluated": 615,
+        "dqn_qstar_top1_agreement": 0.5658536585365853,
+        "dqn_qstar_top3_hit_rate": 0.9414634146341463,
+        "nondegenerate_states": 139,
+        "frac_states_degenerate_le3_allowed": 0.7739837398373983,
+        "nondegenerate_top1_agreement": 0.17266187050359713,
+        "nondegenerate_top3_hit_rate": 0.7410071942446043,
+        "nondegenerate_mean_spearman": -0.5528952001664118,
+        "oracle_greedy_mean_value_gap": 1.1735222978167361,
+        "oracle_greedy_max_value_gap": 6.440000000000005,
+        "per_decision_gap_fraction": 0.4834329567538145,
+        "decisive_margin": 0.5,
+        "decisive_states": 138,
+        "decisive_top1_agreement": 0.2753623188405797,
+        "dqn_qstar_mean_spearman": 0.020914803016880743,
+        "num_states_with_spearman": 525
+      },
+      "expert_alignment": {
+        "num_steps": 8,
+        "expert_qstar_top1_rate": 0.625,
+        "expert_qstar_avg_value_gap": 0.15265,
+        "dqn_greedy_matches_expert_rate": 0.375
+      },
+      "expert_steps": [
+        {
+          "step": 0,
+          "expert_action": "web_path_enumeration",
+          "expert_target": "/login",
+          "qstar_expert": 40.9557,
+          "vstar": 40.9557,
+          "qstar_value_gap": 0.0,
+          "expert_is_qstar_optimal": true,
+          "dqn_greedy_action": "web_path_enumeration",
+          "dqn_greedy_matches_expert": true
+        },
+        {
+          "step": 1,
+          "expert_action": "input_discovery",
+          "expert_target": null,
+          "qstar_expert": 39.7927,
+          "vstar": 39.8527,
+          "qstar_value_gap": 0.06,
+          "expert_is_qstar_optimal": false,
+          "dqn_greedy_action": "http_fingerprint",
+          "dqn_greedy_matches_expert": false
+        },
+        {
+          "step": 2,
+          "expert_action": "auth_attempt",
+          "expert_target": null,
+          "qstar_expert": 38.6661,
+          "vstar": 38.6661,
+          "qstar_value_gap": 0.0,
+          "expert_is_qstar_optimal": true,
+          "dqn_greedy_action": "web_path_enumeration",
+          "dqn_greedy_matches_expert": false
+        },
+        {
+          "step": 3,
+          "expert_action": "web_path_enumeration",
+          "expert_target": "/upload",
+          "qstar_expert": 34.4552,
+          "vstar": 34.4552,
+          "qstar_value_gap": 0.0,
+          "expert_is_qstar_optimal": true,
+          "dqn_greedy_action": "web_path_enumeration",
+          "dqn_greedy_matches_expert": true
+        },
+        {
+          "step": 4,
+          "expert_action": "input_discovery",
+          "expert_target": null,
+          "qstar_expert": 33.0604,
+          "vstar": 33.2196,
+          "qstar_value_gap": 0.1592,
+          "expert_is_qstar_optimal": false,
+          "dqn_greedy_action": "file_upload_attempt",
+          "dqn_greedy_matches_expert": false
+        },
+        {
+          "step": 5,
+          "expert_action": "file_upload_attempt",
+          "expert_target": null,
+          "qstar_expert": 31.7963,
+          "vstar": 31.7963,
+          "qstar_value_gap": 0.0,
+          "expert_is_qstar_optimal": true,
+          "dqn_greedy_action": "file_upload_attempt",
+          "dqn_greedy_matches_expert": true
+        },
+        {
+          "step": 6,
+          "expert_action": "command_execution",
+          "expert_target": null,
+          "qstar_expert": 24.384,
+          "vstar": 24.384,
+          "qstar_value_gap": 0.0,
+          "expert_is_qstar_optimal": true,
+          "dqn_greedy_action": "post_exploitation",
+          "dqn_greedy_matches_expert": false
+        },
+        {
+          "step": 7,
+          "expert_action": "sensitive_file_read",
+          "expert_target": null,
+          "qstar_expert": 19.9,
+          "vstar": 20.902,
+          "qstar_value_gap": 1.002,
+          "expert_is_qstar_optimal": false,
+          "dqn_greedy_action": "post_exploitation",
+          "dqn_greedy_matches_expert": false
+        }
+      ]
+    },
+    {
+      "task_id": "web_106_env_leak_login_medium",
+      "task_path": "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\tasks\\env_leak_login_medium.json",
+      "vstar_initial": 36.7437,
+      "num_reachable_states": 861,
+      "ranking_agreement": {
+        "states_evaluated": 861,
+        "dqn_qstar_top1_agreement": 0.4076655052264808,
+        "dqn_qstar_top3_hit_rate": 0.8954703832752613,
+        "nondegenerate_states": 257,
+        "frac_states_degenerate_le3_allowed": 0.7015098722415796,
+        "nondegenerate_top1_agreement": 0.245136186770428,
+        "nondegenerate_top3_hit_rate": 0.6498054474708171,
+        "nondegenerate_mean_spearman": -0.3548242044846979,
+        "oracle_greedy_mean_value_gap": 1.1210853208494167,
+        "oracle_greedy_max_value_gap": 6.754364080319991,
+        "per_decision_gap_fraction": 0.6253246902394752,
+        "decisive_margin": 0.5,
+        "decisive_states": 163,
+        "decisive_top1_agreement": 0.06748466257668712,
+        "dqn_qstar_mean_spearman": -0.15982724140601545,
+        "num_states_with_spearman": 784
+      },
+      "expert_alignment": {
+        "num_steps": 7,
+        "expert_qstar_top1_rate": 0.7142857142857143,
+        "expert_qstar_avg_value_gap": 0.5709000000000001,
+        "dqn_greedy_matches_expert_rate": 0.42857142857142855
+      },
+      "expert_steps": [
+        {
+          "step": 0,
+          "expert_action": "web_path_enumeration",
+          "expert_target": "/.env",
+          "qstar_expert": 36.7437,
+          "vstar": 36.7437,
+          "qstar_value_gap": 0.0,
+          "expert_is_qstar_optimal": true,
+          "dqn_greedy_action": "web_path_enumeration",
+          "dqn_greedy_matches_expert": true
+        },
+        {
+          "step": 1,
+          "expert_action": "content_retrieval",
+          "expert_target": "/.env",
+          "qstar_expert": 35.5548,
+          "vstar": 35.5548,
+          "qstar_value_gap": 0.0,
+          "expert_is_qstar_optimal": true,
+          "dqn_greedy_action": "web_path_enumeration",
+          "dqn_greedy_matches_expert": false
+        },
+        {
+          "step": 2,
+          "expert_action": "web_path_enumeration",
+          "expert_target": "/login",
+          "qstar_expert": 32.3009,
+          "vstar": 32.3009,
+          "qstar_value_gap": 0.0,
+          "expert_is_qstar_optimal": true,
+          "dqn_greedy_action": "web_path_enumeration",
+          "dqn_greedy_matches_expert": true
+        },
+        {
+          "step": 3,
+          "expert_action": "input_discovery",
+          "expert_target": null,
+          "qstar_expert": 30.9613,
+          "vstar": 31.0213,
+          "qstar_value_gap": 0.06,
+          "expert_is_qstar_optimal": false,
+          "dqn_greedy_action": "http_fingerprint",
+          "dqn_greedy_matches_expert": false
+        },
+        {
+          "step": 4,
+          "expert_action": "credential_use",
+          "expert_target": null,
+          "qstar_expert": 29.6544,
+          "vstar": 29.6544,
+          "qstar_value_gap": 0.0,
+          "expert_is_qstar_optimal": true,
+          "dqn_greedy_action": "web_path_enumeration",
+          "dqn_greedy_matches_expert": false
+        },
+        {
+          "step": 5,
+          "expert_action": "web_path_enumeration",
+          "expert_target": "/admin",
+          "qstar_expert": 25.2596,
+          "vstar": 25.2596,
+          "qstar_value_gap": 0.0,
+          "expert_is_qstar_optimal": true,
+          "dqn_greedy_action": "web_path_enumeration",
+          "dqn_greedy_matches_expert": true
+        },
+        {
+          "step": 6,
+          "expert_action": "sensitive_file_read",
+          "expert_target": null,
+          "qstar_expert": 19.9,
+          "vstar": 23.8363,
+          "qstar_value_gap": 3.9363,
+          "expert_is_qstar_optimal": false,
+          "dqn_greedy_action": "http_fingerprint",
+          "dqn_greedy_matches_expert": false
+        }
+      ]
+    },
+    {
+      "task_id": "web_103_export_flag_leak_easy",
+      "task_path": "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\tasks\\export_flag_leak_easy.json",
+      "vstar_initial": 25.2596,
+      "num_reachable_states": 112,
+      "ranking_agreement": {
+        "states_evaluated": 112,
+        "dqn_qstar_top1_agreement": 0.24107142857142858,
+        "dqn_qstar_top3_hit_rate": 1.0,
+        "nondegenerate_states": 85,
+        "frac_states_degenerate_le3_allowed": 0.24107142857142858,
+        "nondegenerate_top1_agreement": 0.1411764705882353,
+        "nondegenerate_top3_hit_rate": 1.0,
+        "nondegenerate_mean_spearman": 0.12473810326658434,
+        "oracle_greedy_mean_value_gap": 2.123020870142855,
+        "oracle_greedy_max_value_gap": 5.359555183999994,
+        "per_decision_gap_fraction": 0.3923616677469205,
+        "decisive_margin": 0.5,
+        "decisive_states": 57,
+        "decisive_top1_agreement": 0.08771929824561403,
+        "dqn_qstar_mean_spearman": 0.12559678922140557,
+        "num_states_with_spearman": 112
+      },
+      "expert_alignment": {
+        "num_steps": 2,
+        "expert_qstar_top1_rate": 0.5,
+        "expert_qstar_avg_value_gap": 3.96815,
+        "dqn_greedy_matches_expert_rate": 0.5
+      },
+      "expert_steps": [
+        {
+          "step": 0,
+          "expert_action": "web_path_enumeration",
+          "expert_target": "/export",
+          "qstar_expert": 25.2596,
+          "vstar": 25.2596,
+          "qstar_value_gap": 0.0,
+          "expert_is_qstar_optimal": true,
+          "dqn_greedy_action": "web_path_enumeration",
+          "dqn_greedy_matches_expert": true
+        },
+        {
+          "step": 1,
+          "expert_action": "content_retrieval",
+          "expert_target": "/export",
+          "qstar_expert": 15.9,
+          "vstar": 23.8363,
+          "qstar_value_gap": 7.9363,
+          "expert_is_qstar_optimal": false,
+          "dqn_greedy_action": "web_path_enumeration",
+          "dqn_greedy_matches_expert": false
+        }
+      ]
+    },
+    {
+      "task_id": "web_008_git_leak_upload",
+      "task_path": "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\tasks\\git_leak_upload.json",
+      "vstar_initial": 45.0558,
+      "num_reachable_states": 910,
+      "ranking_agreement": {
+        "states_evaluated": 910,
+        "dqn_qstar_top1_agreement": 0.5230769230769231,
+        "dqn_qstar_top3_hit_rate": 0.9593406593406594,
+        "nondegenerate_states": 161,
+        "frac_states_degenerate_le3_allowed": 0.823076923076923,
+        "nondegenerate_top1_agreement": 0.20496894409937888,
+        "nondegenerate_top3_hit_rate": 0.7701863354037267,
+        "nondegenerate_mean_spearman": -0.32708438371668297,
+        "oracle_greedy_mean_value_gap": 0.8713661564230248,
+        "oracle_greedy_max_value_gap": 6.379999999999997,
+        "per_decision_gap_fraction": 0.5032481867976667,
+        "decisive_margin": 0.5,
+        "decisive_states": 183,
+        "decisive_top1_agreement": 0.32786885245901637,
+        "dqn_qstar_mean_spearman": 0.024768887969101507,
+        "num_states_with_spearman": 778
+      },
+      "expert_alignment": {
+        "num_steps": 10,
+        "expert_qstar_top1_rate": 0.7,
+        "expert_qstar_avg_value_gap": 0.12212,
+        "dqn_greedy_matches_expert_rate": 0.6
+      },
+      "expert_steps": [
+        {
+          "step": 0,
+          "expert_action": "web_path_enumeration",
+          "expert_target": "/.git",
+          "qstar_expert": 45.0558,
+          "vstar": 45.0558,
+          "qstar_value_gap": 0.0,
+          "expert_is_qstar_optimal": true,
+          "dqn_greedy_action": "web_path_enumeration",
+          "dqn_greedy_matches_expert": true
+        },
+        {
+          "step": 1,
+          "expert_action": "content_retrieval",
+          "expert_target": "/.git",
+          "qstar_expert": 44.0366,
+          "vstar": 44.0366,
+          "qstar_value_gap": 0.0,
+          "expert_is_qstar_optimal": true,
+          "dqn_greedy_action": "web_path_enumeration",
+          "dqn_greedy_matches_expert": false
+        },
+        {
+          "step": 2,
+          "expert_action": "web_path_enumeration",
+          "expert_target": "/login",
+          "qstar_expert": 40.9557,
+          "vstar": 40.9557,
+          "qstar_value_gap": 0.0,
+          "expert_is_qstar_optimal": true,
+          "dqn_greedy_action": "web_path_enumeration",
+          "dqn_greedy_matches_expert": true
+        },
+        {
+          "step": 3,
+          "expert_action": "input_discovery",
+          "expert_target": null,
+          "qstar_expert": 39.7927,
+          "vstar": 39.8527,
+          "qstar_value_gap": 0.06,
+          "expert_is_qstar_optimal": false,
+          "dqn_greedy_action": "http_fingerprint",
+          "dqn_greedy_matches_expert": false
+        },
+        {
+          "step": 4,
+          "expert_action": "credential_use",
+          "expert_target": null,
+          "qstar_expert": 38.6661,
+          "vstar": 38.6661,
+          "qstar_value_gap": 0.0,
+          "expert_is_qstar_optimal": true,
+          "dqn_greedy_action": "web_path_enumeration",
+          "dqn_greedy_matches_expert": false
+        },
+        {
+          "step": 5,
+          "expert_action": "web_path_enumeration",
+          "expert_target": "/upload",
+          "qstar_expert": 34.4552,
+          "vstar": 34.4552,
+          "qstar_value_gap": 0.0,
+          "expert_is_qstar_optimal": true,
+          "dqn_greedy_action": "web_path_enumeration",
+          "dqn_greedy_matches_expert": true
+        },
+        {
+          "step": 6,
+          "expert_action": "input_discovery",
+          "expert_target": null,
+          "qstar_expert": 33.0604,
+          "vstar": 33.2196,
+          "qstar_value_gap": 0.1592,
+          "expert_is_qstar_optimal": false,
+          "dqn_greedy_action": "input_discovery",
+          "dqn_greedy_matches_expert": true
+        },
+        {
+          "step": 7,
+          "expert_action": "file_upload_attempt",
+          "expert_target": null,
+          "qstar_expert": 31.7963,
+          "vstar": 31.7963,
+          "qstar_value_gap": 0.0,
+          "expert_is_qstar_optimal": true,
+          "dqn_greedy_action": "file_upload_attempt",
+          "dqn_greedy_matches_expert": true
+        },
+        {
+          "step": 8,
+          "expert_action": "command_execution",
+          "expert_target": null,
+          "qstar_expert": 24.384,
+          "vstar": 24.384,
+          "qstar_value_gap": 0.0,
+          "expert_is_qstar_optimal": true,
+          "dqn_greedy_action": "command_execution",
+          "dqn_greedy_matches_expert": true
+        },
+        {
+          "step": 9,
+          "expert_action": "sensitive_file_read",
+          "expert_target": null,
+          "qstar_expert": 19.9,
+          "vstar": 20.902,
+          "qstar_value_gap": 1.002,
+          "expert_is_qstar_optimal": false,
+          "dqn_greedy_action": "post_exploitation",
+          "dqn_greedy_matches_expert": false
+        }
+      ]
+    },
+    {
+      "task_id": "web_006_lfi_config_leak",
+      "task_path": "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\tasks\\lfi_config_leak.json",
+      "vstar_initial": 40.3575,
+      "num_reachable_states": 799,
+      "ranking_agreement": {
+        "states_evaluated": 799,
+        "dqn_qstar_top1_agreement": 0.5281602002503129,
+        "dqn_qstar_top3_hit_rate": 0.9524405506883604,
+        "nondegenerate_states": 116,
+        "frac_states_degenerate_le3_allowed": 0.8548185231539425,
+        "nondegenerate_top1_agreement": 0.29310344827586204,
+        "nondegenerate_top3_hit_rate": 0.6724137931034483,
+        "nondegenerate_mean_spearman": -0.2631822772389658,
+        "oracle_greedy_mean_value_gap": 0.5789349954732951,
+        "oracle_greedy_max_value_gap": 6.440000000000005,
+        "per_decision_gap_fraction": 0.5246703245944814,
+        "decisive_margin": 0.5,
+        "decisive_states": 157,
+        "decisive_top1_agreement": 0.3248407643312102,
+        "dqn_qstar_mean_spearman": -0.04634310211079376,
+        "num_states_with_spearman": 679
+      },
+      "expert_alignment": {
+        "num_steps": 9,
+        "expert_qstar_top1_rate": 0.7777777777777778,
+        "expert_qstar_avg_value_gap": 0.11800000000000001,
+        "dqn_greedy_matches_expert_rate": 0.3333333333333333
+      },
+      "expert_steps": [
+        {
+          "step": 0,
+          "expert_action": "web_path_enumeration",
+          "expert_target": "/download",
+          "qstar_expert": 40.3575,
+          "vstar": 40.3575,
+          "qstar_value_gap": 0.0,
+          "expert_is_qstar_optimal": true,
+          "dqn_greedy_action": "web_path_enumeration",
+          "dqn_greedy_matches_expert": true
+        },
+        {
+          "step": 1,
+          "expert_action": "input_discovery",
+          "expert_target": null,
+          "qstar_expert": 39.2423,
+          "vstar": 39.2423,
+          "qstar_value_gap": 0.0,
+          "expert_is_qstar_optimal": true,
+          "dqn_greedy_action": "web_path_enumeration",
+          "dqn_greedy_matches_expert": false
+        },
+        {
+          "step": 2,
+          "expert_action": "vulnerability_check",
+          "expert_target": "/download?file",
+          "qstar_expert": 38.1044,
+          "vstar": 38.1044,
+          "qstar_value_gap": 0.0,
+          "expert_is_qstar_optimal": true,
+          "dqn_greedy_action": "web_path_enumeration",
+          "dqn_greedy_matches_expert": false
+        },
+        {
+          "step": 3,
+          "expert_action": "exploit_attempt",
+          "expert_target": null,
+          "qstar_expert": 34.9025,
+          "vstar": 34.9025,
+          "qstar_value_gap": 0.0,
+          "expert_is_qstar_optimal": true,
+          "dqn_greedy_action": "web_path_enumeration",
+          "dqn_greedy_matches_expert": false
+        },
+        {
+          "step": 4,
+          "expert_action": "web_path_enumeration",
+          "expert_target": "/login",
+          "qstar_expert": 29.5944,
+          "vstar": 29.5944,
+          "qstar_value_gap": 0.0,
+          "expert_is_qstar_optimal": true,
+          "dqn_greedy_action": "web_path_enumeration",
+          "dqn_greedy_matches_expert": true
+        },
+        {
+          "step": 5,
+          "expert_action": "input_discovery",
+          "expert_target": null,
+          "qstar_expert": 28.1996,
+          "vstar": 28.2596,
+          "qstar_value_gap": 0.06,
+          "expert_is_qstar_optimal": false,
+          "dqn_greedy_action": "web_path_enumeration",
+          "dqn_greedy_matches_expert": false
+        },
+        {
+          "step": 6,
+          "expert_action": "credential_use",
+          "expert_target": null,
+          "qstar_expert": 26.8363,
+          "vstar": 26.8363,
+          "qstar_value_gap": 0.0,
+          "expert_is_qstar_optimal": true,
+          "dqn_greedy_action": "web_path_enumeration",
+          "dqn_greedy_matches_expert": false
+        },
+        {
+          "step": 7,
+          "expert_action": "web_path_enumeration",
+          "expert_target": "/admin",
+          "qstar_expert": 22.384,
+          "vstar": 22.384,
+          "qstar_value_gap": 0.0,
+          "expert_is_qstar_optimal": true,
+          "dqn_greedy_action": "web_path_enumeration",
+          "dqn_greedy_matches_expert": true
+        },
+        {
+          "step": 8,
+          "expert_action": "sensitive_file_read",
+          "expert_target": null,
+          "qstar_expert": 19.9,
+          "vstar": 20.902,
+          "qstar_value_gap": 1.002,
+          "expert_is_qstar_optimal": false,
+          "dqn_greedy_action": "http_fingerprint",
+          "dqn_greedy_matches_expert": false
+        }
+      ]
+    },
+    {
+      "task_id": "web_111_lfi_include_login_medium",
+      "task_path": "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\tasks\\lfi_include_login_medium.json",
+      "vstar_initial": 42.8539,
+      "num_reachable_states": 1331,
+      "ranking_agreement": {
+        "states_evaluated": 1331,
+        "dqn_qstar_top1_agreement": 0.5274229902329076,
+        "dqn_qstar_top3_hit_rate": 0.9203606311044328,
+        "nondegenerate_states": 298,
+        "frac_states_degenerate_le3_allowed": 0.7761081893313299,
+        "nondegenerate_top1_agreement": 0.3288590604026846,
+        "nondegenerate_top3_hit_rate": 0.6442953020134228,
+        "nondegenerate_mean_spearman": -0.2149694651584527,
+        "oracle_greedy_mean_value_gap": 0.7699501513357349,
+        "oracle_greedy_max_value_gap": 6.754364080319991,
+        "per_decision_gap_fraction": 0.4916845918846092,
+        "decisive_margin": 0.5,
+        "decisive_states": 273,
+        "decisive_top1_agreement": 0.3553113553113553,
+        "dqn_qstar_mean_spearman": 0.015226314723291055,
+        "num_states_with_spearman": 1219
+      },
+      "expert_alignment": {
+        "num_steps": 8,
+        "expert_qstar_top1_rate": 0.75,
+        "expert_qstar_avg_value_gap": 0.67745,
+        "dqn_greedy_matches_expert_rate": 0.375
+      },
+      "expert_steps": [
+        {
+          "step": 0,
+          "expert_action": "web_path_enumeration",
+          "expert_target": "/include",
+          "qstar_expert": 42.8539,
+          "vstar": 42.8539,
+          "qstar_value_gap": 0.0,
+          "expert_is_qstar_optimal": true,
+          "dqn_greedy_action": "web_path_enumeration",
+          "dqn_greedy_matches_expert": true
+        },
+        {
+          "step": 1,
+          "expert_action": "input_discovery",
+          "expert_target": "/include",
+          "qstar_expert": 41.7897,
+          "vstar": 41.7897,
+          "qstar_value_gap": 0.0,
+          "expert_is_qstar_optimal": true,
+          "dqn_greedy_action": "web_path_enumeration",
+          "dqn_greedy_matches_expert": false
+        },
+        {
+          "step": 2,
+          "expert_action": "vulnerability_check",
+          "expert_target": "/include?tpl",
+          "qstar_expert": 40.7037,
+          "vstar": 40.7037,
+          "qstar_value_gap": 0.0,
+          "expert_is_qstar_optimal": true,
+          "dqn_greedy_action": "web_path_enumeration",
+          "dqn_greedy_matches_expert": false
+        },
+        {
+          "step": 3,
+          "expert_action": "exploit_attempt",
+          "expert_target": "/include?tpl",
+          "qstar_expert": 37.5548,
+          "vstar": 37.5548,
+          "qstar_value_gap": 0.0,
+          "expert_is_qstar_optimal": true,
+          "dqn_greedy_action": "web_path_enumeration",
+          "dqn_greedy_matches_expert": false
+        },
+        {
+          "step": 4,
+          "expert_action": "web_path_enumeration",
+          "expert_target": "/login",
+          "qstar_expert": 32.3009,
+          "vstar": 32.3009,
+          "qstar_value_gap": 0.0,
+          "expert_is_qstar_optimal": true,
+          "dqn_greedy_action": "web_path_enumeration",
+          "dqn_greedy_matches_expert": true
+        },
+        {
+          "step": 5,
+          "expert_action": "web_path_enumeration",
+          "expert_target": "/admin",
+          "qstar_expert": 30.9613,
+          "vstar": 31.0213,
+          "qstar_value_gap": 0.06,
+          "expert_is_qstar_optimal": false,
+          "dqn_greedy_action": "web_path_enumeration",
+          "dqn_greedy_matches_expert": true
+        },
+        {
+          "step": 6,
+          "expert_action": "credential_use",
+          "expert_target": "/login",
+          "qstar_expert": 29.6544,
+          "vstar": 29.6544,
+          "qstar_value_gap": 0.0,
+          "expert_is_qstar_optimal": true,
+          "dqn_greedy_action": "input_discovery",
+          "dqn_greedy_matches_expert": false
+        },
+        {
+          "step": 7,
+          "expert_action": "sensitive_file_read",
+          "expert_target": "/admin/flag",
+          "qstar_expert": 19.9,
+          "vstar": 25.2596,
+          "qstar_value_gap": 5.3596,
+          "expert_is_qstar_optimal": false,
+          "dqn_greedy_action": "input_discovery",
+          "dqn_greedy_matches_expert": false
+        }
+      ]
+    },
+    {
+      "task_id": "web_110_lfi_view_login_medium",
+      "task_path": "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\tasks\\lfi_view_login_medium.json",
+      "vstar_initial": 42.8539,
+      "num_reachable_states": 1331,
+      "ranking_agreement": {
+        "states_evaluated": 1331,
+        "dqn_qstar_top1_agreement": 0.5274229902329076,
+        "dqn_qstar_top3_hit_rate": 0.9203606311044328,
+        "nondegenerate_states": 298,
+        "frac_states_degenerate_le3_allowed": 0.7761081893313299,
+        "nondegenerate_top1_agreement": 0.3288590604026846,
+        "nondegenerate_top3_hit_rate": 0.6442953020134228,
+        "nondegenerate_mean_spearman": -0.2149694651584527,
+        "oracle_greedy_mean_value_gap": 0.7699501513357349,
+        "oracle_greedy_max_value_gap": 6.754364080319991,
+        "per_decision_gap_fraction": 0.4916845918846092,
+        "decisive_margin": 0.5,
+        "decisive_states": 273,
+        "decisive_top1_agreement": 0.3553113553113553,
+        "dqn_qstar_mean_spearman": 0.015226314723291055,
+        "num_states_with_spearman": 1219
+      },
+      "expert_alignment": {
+        "num_steps": 8,
+        "expert_qstar_top1_rate": 0.75,
+        "expert_qstar_avg_value_gap": 0.67745,
+        "dqn_greedy_matches_expert_rate": 0.375
+      },
+      "expert_steps": [
+        {
+          "step": 0,
+          "expert_action": "web_path_enumeration",
+          "expert_target": "/view",
+          "qstar_expert": 42.8539,
+          "vstar": 42.8539,
+          "qstar_value_gap": 0.0,
+          "expert_is_qstar_optimal": true,
+          "dqn_greedy_action": "web_path_enumeration",
+          "dqn_greedy_matches_expert": true
+        },
+        {
+          "step": 1,
+          "expert_action": "input_discovery",
+          "expert_target": "/view",
+          "qstar_expert": 41.7897,
+          "vstar": 41.7897,
+          "qstar_value_gap": 0.0,
+          "expert_is_qstar_optimal": true,
+          "dqn_greedy_action": "web_path_enumeration",
+          "dqn_greedy_matches_expert": false
+        },
+        {
+          "step": 2,
+          "expert_action": "vulnerability_check",
+          "expert_target": "/view?page",
+          "qstar_expert": 40.7037,
+          "vstar": 40.7037,
+          "qstar_value_gap": 0.0,
+          "expert_is_qstar_optimal": true,
+          "dqn_greedy_action": "web_path_enumeration",
+          "dqn_greedy_matches_expert": false
+        },
+        {
+          "step": 3,
+          "expert_action": "exploit_attempt",
+          "expert_target": "/view?page",
+          "qstar_expert": 37.5548,
+          "vstar": 37.5548,
+          "qstar_value_gap": 0.0,
+          "expert_is_qstar_optimal": true,
+          "dqn_greedy_action": "web_path_enumeration",
+          "dqn_greedy_matches_expert": false
+        },
+        {
+          "step": 4,
+          "expert_action": "web_path_enumeration",
+          "expert_target": "/login",
+          "qstar_expert": 32.3009,
+          "vstar": 32.3009,
+          "qstar_value_gap": 0.0,
+          "expert_is_qstar_optimal": true,
+          "dqn_greedy_action": "web_path_enumeration",
+          "dqn_greedy_matches_expert": true
+        },
+        {
+          "step": 5,
+          "expert_action": "web_path_enumeration",
+          "expert_target": "/admin",
+          "qstar_expert": 30.9613,
+          "vstar": 31.0213,
+          "qstar_value_gap": 0.06,
+          "expert_is_qstar_optimal": false,
+          "dqn_greedy_action": "web_path_enumeration",
+          "dqn_greedy_matches_expert": true
+        },
+        {
+          "step": 6,
+          "expert_action": "credential_use",
+          "expert_target": "/login",
+          "qstar_expert": 29.6544,
+          "vstar": 29.6544,
+          "qstar_value_gap": 0.0,
+          "expert_is_qstar_optimal": true,
+          "dqn_greedy_action": "input_discovery",
+          "dqn_greedy_matches_expert": false
+        },
+        {
+          "step": 7,
+          "expert_action": "sensitive_file_read",
+          "expert_target": "/admin/flag",
+          "qstar_expert": 19.9,
+          "vstar": 25.2596,
+          "qstar_value_gap": 5.3596,
+          "expert_is_qstar_optimal": false,
+          "dqn_greedy_action": "input_discovery",
+          "dqn_greedy_matches_expert": false
+        }
+      ]
+    },
+    {
+      "task_id": "web_113_rce_exec_privesc_hard",
+      "task_path": "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\tasks\\rce_exec_privesc_hard.json",
+      "vstar_initial": 53.446,
+      "num_reachable_states": 704,
+      "ranking_agreement": {
+        "states_evaluated": 704,
+        "dqn_qstar_top1_agreement": 0.34801136363636365,
+        "dqn_qstar_top3_hit_rate": 0.9701704545454546,
+        "nondegenerate_states": 136,
+        "frac_states_degenerate_le3_allowed": 0.8068181818181818,
+        "nondegenerate_top1_agreement": 0.11764705882352941,
+        "nondegenerate_top3_hit_rate": 0.8455882352941176,
+        "nondegenerate_mean_spearman": -0.2568619132165461,
+        "oracle_greedy_mean_value_gap": 1.8257137788461255,
+        "oracle_greedy_max_value_gap": 14.634364080319997,
+        "per_decision_gap_fraction": 0.6306861900063462,
+        "decisive_margin": 0.5,
+        "decisive_states": 196,
+        "decisive_top1_agreement": 0.29081632653061223,
+        "dqn_qstar_mean_spearman": -0.3677495888983236,
+        "num_states_with_spearman": 609
+      },
+      "expert_alignment": {
+        "num_steps": 7,
+        "expert_qstar_top1_rate": 0.7142857142857143,
+        "expert_qstar_avg_value_gap": 1.5922285714285713,
+        "dqn_greedy_matches_expert_rate": 0.14285714285714285
+      },
+      "expert_steps": [
+        {
+          "step": 0,
+          "expert_action": "web_path_enumeration",
+          "expert_target": "/exec",
+          "qstar_expert": 53.446,
+          "vstar": 53.446,
+          "qstar_value_gap": 0.0,
+          "expert_is_qstar_optimal": true,
+          "dqn_greedy_action": "web_path_enumeration",
+          "dqn_greedy_matches_expert": true
+        },
+        {
+          "step": 1,
+          "expert_action": "input_discovery",
+          "expert_target": null,
+          "qstar_expert": 52.598,
+          "vstar": 52.598,
+          "qstar_value_gap": 0.0,
+          "expert_is_qstar_optimal": true,
+          "dqn_greedy_action": "web_path_enumeration",
+          "dqn_greedy_matches_expert": false
+        },
+        {
+          "step": 2,
+          "expert_action": "vulnerability_check",
+          "expert_target": "/exec?cmd",
+          "qstar_expert": 51.7326,
+          "vstar": 51.7326,
+          "qstar_value_gap": 0.0,
+          "expert_is_qstar_optimal": true,
+          "dqn_greedy_action": "web_path_enumeration",
+          "dqn_greedy_matches_expert": false
+        },
+        {
+          "step": 3,
+          "expert_action": "exploit_attempt",
+          "expert_target": null,
+          "qstar_expert": 48.8088,
+          "vstar": 48.8088,
+          "qstar_value_gap": 0.0,
+          "expert_is_qstar_optimal": true,
+          "dqn_greedy_action": "web_path_enumeration",
+          "dqn_greedy_matches_expert": false
+        },
+        {
+          "step": 4,
+          "expert_action": "command_execution",
+          "expert_target": null,
+          "qstar_expert": 34.5344,
+          "vstar": 41.7437,
+          "qstar_value_gap": 7.2093,
+          "expert_is_qstar_optimal": false,
+          "dqn_greedy_action": "http_fingerprint",
+          "dqn_greedy_matches_expert": false
+        },
+        {
+          "step": 5,
+          "expert_action": "privilege_escalation",
+          "expert_target": null,
+          "qstar_expert": 31.2596,
+          "vstar": 31.2596,
+          "qstar_value_gap": 0.0,
+          "expert_is_qstar_optimal": true,
+          "dqn_greedy_action": "http_fingerprint",
+          "dqn_greedy_matches_expert": false
+        },
+        {
+          "step": 6,
+          "expert_action": "sensitive_file_read",
+          "expert_target": null,
+          "qstar_expert": 19.9,
+          "vstar": 23.8363,
+          "qstar_value_gap": 3.9363,
+          "expert_is_qstar_optimal": false,
+          "dqn_greedy_action": "web_path_enumeration",
+          "dqn_greedy_matches_expert": false
+        }
+      ]
+    },
+    {
+      "task_id": "web_112_rce_ping_shell_hard",
+      "task_path": "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\tasks\\rce_ping_shell_hard.json",
+      "vstar_initial": 40.0863,
+      "num_reachable_states": 504,
+      "ranking_agreement": {
+        "states_evaluated": 504,
+        "dqn_qstar_top1_agreement": 0.43452380952380953,
+        "dqn_qstar_top3_hit_rate": 0.9781746031746031,
+        "nondegenerate_states": 103,
+        "frac_states_degenerate_le3_allowed": 0.7956349206349206,
+        "nondegenerate_top1_agreement": 0.20388349514563106,
+        "nondegenerate_top3_hit_rate": 0.8932038834951457,
+        "nondegenerate_mean_spearman": -0.09027675563952128,
+        "oracle_greedy_mean_value_gap": 0.975778404833471,
+        "oracle_greedy_max_value_gap": 7.359555183999994,
+        "per_decision_gap_fraction": 0.5960342758410868,
+        "decisive_margin": 0.5,
+        "decisive_states": 121,
+        "decisive_top1_agreement": 0.2809917355371901,
+        "dqn_qstar_mean_spearman": -0.19612022802073936,
+        "num_states_with_spearman": 426
+      },
+      "expert_alignment": {
+        "num_steps": 6,
+        "expert_qstar_top1_rate": 0.8333333333333334,
+        "expert_qstar_avg_value_gap": 0.65605,
+        "dqn_greedy_matches_expert_rate": 0.16666666666666666
+      },
+      "expert_steps": [
+        {
+          "step": 0,
+          "expert_action": "web_path_enumeration",
+          "expert_target": "/ping",
+          "qstar_expert": 40.0863,
+          "vstar": 40.0863,
+          "qstar_value_gap": 0.0,
+          "expert_is_qstar_optimal": true,
+          "dqn_greedy_action": "web_path_enumeration",
+          "dqn_greedy_matches_expert": true
+        },
+        {
+          "step": 1,
+          "expert_action": "input_discovery",
+          "expert_target": null,
+          "qstar_expert": 38.9656,
+          "vstar": 38.9656,
+          "qstar_value_gap": 0.0,
+          "expert_is_qstar_optimal": true,
+          "dqn_greedy_action": "web_path_enumeration",
+          "dqn_greedy_matches_expert": false
+        },
+        {
+          "step": 2,
+          "expert_action": "vulnerability_check",
+          "expert_target": "/ping?host",
+          "qstar_expert": 37.8221,
+          "vstar": 37.8221,
+          "qstar_value_gap": 0.0,
+          "expert_is_qstar_optimal": true,
+          "dqn_greedy_action": "web_path_enumeration",
+          "dqn_greedy_matches_expert": false
+        },
+        {
+          "step": 3,
+          "expert_action": "exploit_attempt",
+          "expert_target": null,
+          "qstar_expert": 34.6144,
+          "vstar": 34.6144,
+          "qstar_value_gap": 0.0,
+          "expert_is_qstar_optimal": true,
+          "dqn_greedy_action": "web_path_enumeration",
+          "dqn_greedy_matches_expert": false
+        },
+        {
+          "step": 4,
+          "expert_action": "command_execution",
+          "expert_target": null,
+          "qstar_expert": 27.2596,
+          "vstar": 27.2596,
+          "qstar_value_gap": 0.0,
+          "expert_is_qstar_optimal": true,
+          "dqn_greedy_action": "http_fingerprint",
+          "dqn_greedy_matches_expert": false
+        },
+        {
+          "step": 5,
+          "expert_action": "sensitive_file_read",
+          "expert_target": null,
+          "qstar_expert": 19.9,
+          "vstar": 23.8363,
+          "qstar_value_gap": 3.9363,
+          "expert_is_qstar_optimal": false,
+          "dqn_greedy_action": "http_fingerprint",
+          "dqn_greedy_matches_expert": false
+        }
+      ]
+    },
+    {
+      "task_id": "web_011_rce_privesc_root",
+      "task_path": "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\tasks\\rce_privesc_root.json",
+      "vstar_initial": 50.8987,
+      "num_reachable_states": 292,
+      "ranking_agreement": {
+        "states_evaluated": 292,
+        "dqn_qstar_top1_agreement": 0.4931506849315068,
+        "dqn_qstar_top3_hit_rate": 1.0,
+        "nondegenerate_states": 17,
+        "frac_states_degenerate_le3_allowed": 0.9417808219178082,
+        "nondegenerate_top1_agreement": 0.058823529411764705,
+        "nondegenerate_top3_hit_rate": 1.0,
+        "nondegenerate_mean_spearman": -0.00620054443170275,
+        "oracle_greedy_mean_value_gap": 1.4925397062702297,
+        "oracle_greedy_max_value_gap": 11.816280799999994,
+        "per_decision_gap_fraction": 0.6869978226375192,
+        "decisive_margin": 0.5,
+        "decisive_states": 79,
+        "decisive_top1_agreement": 0.20253164556962025,
+        "dqn_qstar_mean_spearman": -0.48252219496199766,
+        "num_states_with_spearman": 183
+      },
+      "expert_alignment": {
+        "num_steps": 7,
+        "expert_qstar_top1_rate": 0.7142857142857143,
+        "expert_qstar_avg_value_gap": 1.1811,
+        "dqn_greedy_matches_expert_rate": 0.14285714285714285
+      },
+      "expert_steps": [
+        {
+          "step": 0,
+          "expert_action": "web_path_enumeration",
+          "expert_target": "/debug",
+          "qstar_expert": 50.8987,
+          "vstar": 50.8987,
+          "qstar_value_gap": 0.0,
+          "expert_is_qstar_optimal": true,
+          "dqn_greedy_action": "web_path_enumeration",
+          "dqn_greedy_matches_expert": true
+        },
+        {
+          "step": 1,
+          "expert_action": "input_discovery",
+          "expert_target": null,
+          "qstar_expert": 49.9987,
+          "vstar": 49.9987,
+          "qstar_value_gap": 0.0,
+          "expert_is_qstar_optimal": true,
+          "dqn_greedy_action": "http_fingerprint",
+          "dqn_greedy_matches_expert": false
+        },
+        {
+          "step": 2,
+          "expert_action": "vulnerability_check",
+          "expert_target": "/debug?cmd",
+          "qstar_expert": 49.0803,
+          "vstar": 49.0803,
+          "qstar_value_gap": 0.0,
+          "expert_is_qstar_optimal": true,
+          "dqn_greedy_action": "http_fingerprint",
+          "dqn_greedy_matches_expert": false
+        },
+        {
+          "step": 3,
+          "expert_action": "exploit_attempt",
+          "expert_target": null,
+          "qstar_expert": 46.1023,
+          "vstar": 46.1023,
+          "qstar_value_gap": 0.0,
+          "expert_is_qstar_optimal": true,
+          "dqn_greedy_action": "http_fingerprint",
+          "dqn_greedy_matches_expert": false
+        },
+        {
+          "step": 4,
+          "expert_action": "command_execution",
+          "expert_target": null,
+          "qstar_expert": 31.7163,
+          "vstar": 38.982,
+          "qstar_value_gap": 7.2657,
+          "expert_is_qstar_optimal": false,
+          "dqn_greedy_action": "http_fingerprint",
+          "dqn_greedy_matches_expert": false
+        },
+        {
+          "step": 5,
+          "expert_action": "privilege_escalation",
+          "expert_target": null,
+          "qstar_expert": 28.384,
+          "vstar": 28.384,
+          "qstar_value_gap": 0.0,
+          "expert_is_qstar_optimal": true,
+          "dqn_greedy_action": "http_fingerprint",
+          "dqn_greedy_matches_expert": false
+        },
+        {
+          "step": 6,
+          "expert_action": "sensitive_file_read",
+          "expert_target": null,
+          "qstar_expert": 19.9,
+          "vstar": 20.902,
+          "qstar_value_gap": 1.002,
+          "expert_is_qstar_optimal": false,
+          "dqn_greedy_action": "http_fingerprint",
+          "dqn_greedy_matches_expert": false
+        }
+      ]
+    },
+    {
+      "task_id": "web_007_rce_shell",
+      "task_path": "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\tasks\\rce_shell.json",
+      "vstar_initial": 37.434,
+      "num_reachable_states": 180,
+      "ranking_agreement": {
+        "states_evaluated": 180,
+        "dqn_qstar_top1_agreement": 0.5666666666666667,
+        "dqn_qstar_top3_hit_rate": 1.0,
+        "nondegenerate_states": 14,
+        "frac_states_degenerate_le3_allowed": 0.9222222222222223,
+        "nondegenerate_top1_agreement": 0.07142857142857142,
+        "nondegenerate_top3_hit_rate": 1.0,
+        "nondegenerate_mean_spearman": 0.20328927815368147,
+        "oracle_greedy_mean_value_gap": 0.6241399791111109,
+        "oracle_greedy_max_value_gap": 6.5000000000000036,
+        "per_decision_gap_fraction": 0.6612189326584132,
+        "decisive_margin": 0.5,
+        "decisive_states": 43,
+        "decisive_top1_agreement": 0.27906976744186046,
+        "dqn_qstar_mean_spearman": -0.30771746906590763,
+        "num_states_with_spearman": 106
+      },
+      "expert_alignment": {
+        "num_steps": 6,
+        "expert_qstar_top1_rate": 0.8333333333333334,
+        "expert_qstar_avg_value_gap": 0.167,
+        "dqn_greedy_matches_expert_rate": 0.16666666666666666
+      },
+      "expert_steps": [
+        {
+          "step": 0,
+          "expert_action": "web_path_enumeration",
+          "expert_target": "/tools",
+          "qstar_expert": 37.434,
+          "vstar": 37.434,
+          "qstar_value_gap": 0.0,
+          "expert_is_qstar_optimal": true,
+          "dqn_greedy_action": "web_path_enumeration",
+          "dqn_greedy_matches_expert": true
+        },
+        {
+          "step": 1,
+          "expert_action": "input_discovery",
+          "expert_target": null,
+          "qstar_expert": 36.2591,
+          "vstar": 36.2591,
+          "qstar_value_gap": 0.0,
+          "expert_is_qstar_optimal": true,
+          "dqn_greedy_action": "http_fingerprint",
+          "dqn_greedy_matches_expert": false
+        },
+        {
+          "step": 2,
+          "expert_action": "vulnerability_check",
+          "expert_target": "/tools?cmd",
+          "qstar_expert": 35.0604,
+          "vstar": 35.0604,
+          "qstar_value_gap": 0.0,
+          "expert_is_qstar_optimal": true,
+          "dqn_greedy_action": "http_fingerprint",
+          "dqn_greedy_matches_expert": false
+        },
+        {
+          "step": 3,
+          "expert_action": "exploit_attempt",
+          "expert_target": null,
+          "qstar_expert": 31.7963,
+          "vstar": 31.7963,
+          "qstar_value_gap": 0.0,
+          "expert_is_qstar_optimal": true,
+          "dqn_greedy_action": "http_fingerprint",
+          "dqn_greedy_matches_expert": false
+        },
+        {
+          "step": 4,
+          "expert_action": "command_execution",
+          "expert_target": null,
+          "qstar_expert": 24.384,
+          "vstar": 24.384,
+          "qstar_value_gap": 0.0,
+          "expert_is_qstar_optimal": true,
+          "dqn_greedy_action": "http_fingerprint",
+          "dqn_greedy_matches_expert": false
+        },
+        {
+          "step": 5,
+          "expert_action": "sensitive_file_read",
+          "expert_target": null,
+          "qstar_expert": 19.9,
+          "vstar": 20.902,
+          "qstar_value_gap": 1.002,
+          "expert_is_qstar_optimal": false,
+          "dqn_greedy_action": "http_fingerprint",
+          "dqn_greedy_matches_expert": false
+        }
+      ]
+    },
+    {
+      "task_id": "web_117_sqli_api_login_medium",
+      "task_path": "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\tasks\\sqli_api_login_medium.json",
+      "vstar_initial": 42.8539,
+      "num_reachable_states": 1331,
+      "ranking_agreement": {
+        "states_evaluated": 1331,
+        "dqn_qstar_top1_agreement": 0.5274229902329076,
+        "dqn_qstar_top3_hit_rate": 0.9203606311044328,
+        "nondegenerate_states": 298,
+        "frac_states_degenerate_le3_allowed": 0.7761081893313299,
+        "nondegenerate_top1_agreement": 0.3288590604026846,
+        "nondegenerate_top3_hit_rate": 0.6442953020134228,
+        "nondegenerate_mean_spearman": -0.2149694651584527,
+        "oracle_greedy_mean_value_gap": 0.7699501513357349,
+        "oracle_greedy_max_value_gap": 6.754364080319991,
+        "per_decision_gap_fraction": 0.4916845918846092,
+        "decisive_margin": 0.5,
+        "decisive_states": 273,
+        "decisive_top1_agreement": 0.3553113553113553,
+        "dqn_qstar_mean_spearman": 0.015226314723291055,
+        "num_states_with_spearman": 1219
+      },
+      "expert_alignment": {
+        "num_steps": 8,
+        "expert_qstar_top1_rate": 0.75,
+        "expert_qstar_avg_value_gap": 0.67745,
+        "dqn_greedy_matches_expert_rate": 0.375
+      },
+      "expert_steps": [
+        {
+          "step": 0,
+          "expert_action": "web_path_enumeration",
+          "expert_target": "/api",
+          "qstar_expert": 42.8539,
+          "vstar": 42.8539,
+          "qstar_value_gap": 0.0,
+          "expert_is_qstar_optimal": true,
+          "dqn_greedy_action": "web_path_enumeration",
+          "dqn_greedy_matches_expert": true
+        },
+        {
+          "step": 1,
+          "expert_action": "input_discovery",
+          "expert_target": "/api",
+          "qstar_expert": 41.7897,
+          "vstar": 41.7897,
+          "qstar_value_gap": 0.0,
+          "expert_is_qstar_optimal": true,
+          "dqn_greedy_action": "web_path_enumeration",
+          "dqn_greedy_matches_expert": false
+        },
+        {
+          "step": 2,
+          "expert_action": "vulnerability_check",
+          "expert_target": "/api?uid",
+          "qstar_expert": 40.7037,
+          "vstar": 40.7037,
+          "qstar_value_gap": 0.0,
+          "expert_is_qstar_optimal": true,
+          "dqn_greedy_action": "web_path_enumeration",
+          "dqn_greedy_matches_expert": false
+        },
+        {
+          "step": 3,
+          "expert_action": "exploit_attempt",
+          "expert_target": "/api?uid",
+          "qstar_expert": 37.5548,
+          "vstar": 37.5548,
+          "qstar_value_gap": 0.0,
+          "expert_is_qstar_optimal": true,
+          "dqn_greedy_action": "web_path_enumeration",
+          "dqn_greedy_matches_expert": false
+        },
+        {
+          "step": 4,
+          "expert_action": "web_path_enumeration",
+          "expert_target": "/login",
+          "qstar_expert": 32.3009,
+          "vstar": 32.3009,
+          "qstar_value_gap": 0.0,
+          "expert_is_qstar_optimal": true,
+          "dqn_greedy_action": "web_path_enumeration",
+          "dqn_greedy_matches_expert": true
+        },
+        {
+          "step": 5,
+          "expert_action": "web_path_enumeration",
+          "expert_target": "/admin",
+          "qstar_expert": 30.9613,
+          "vstar": 31.0213,
+          "qstar_value_gap": 0.06,
+          "expert_is_qstar_optimal": false,
+          "dqn_greedy_action": "web_path_enumeration",
+          "dqn_greedy_matches_expert": true
+        },
+        {
+          "step": 6,
+          "expert_action": "credential_use",
+          "expert_target": "/login",
+          "qstar_expert": 29.6544,
+          "vstar": 29.6544,
+          "qstar_value_gap": 0.0,
+          "expert_is_qstar_optimal": true,
+          "dqn_greedy_action": "input_discovery",
+          "dqn_greedy_matches_expert": false
+        },
+        {
+          "step": 7,
+          "expert_action": "sensitive_file_read",
+          "expert_target": "/admin/flag",
+          "qstar_expert": 19.9,
+          "vstar": 25.2596,
+          "qstar_value_gap": 5.3596,
+          "expert_is_qstar_optimal": false,
+          "dqn_greedy_action": "input_discovery",
+          "dqn_greedy_matches_expert": false
+        }
+      ]
+    },
+    {
+      "task_id": "web_002_sqli_login",
+      "task_path": "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\tasks\\sqli_login.json",
+      "vstar_initial": 40.0781,
+      "num_reachable_states": 535,
+      "ranking_agreement": {
+        "states_evaluated": 535,
+        "dqn_qstar_top1_agreement": 0.5196261682242991,
+        "dqn_qstar_top3_hit_rate": 1.0,
+        "nondegenerate_states": 16,
+        "frac_states_degenerate_le3_allowed": 0.9700934579439252,
+        "nondegenerate_top1_agreement": 0.1875,
+        "nondegenerate_top3_hit_rate": 1.0,
+        "nondegenerate_mean_spearman": -0.34916815831025866,
+        "oracle_greedy_mean_value_gap": 0.5488045304166799,
+        "oracle_greedy_max_value_gap": 6.440000000000005,
+        "per_decision_gap_fraction": 0.6218464537501567,
+        "decisive_margin": 0.5,
+        "decisive_states": 119,
+        "decisive_top1_agreement": 0.2689075630252101,
+        "dqn_qstar_mean_spearman": -0.2460484695266882,
+        "num_states_with_spearman": 394
+      },
+      "expert_alignment": {
+        "num_steps": 8,
+        "expert_qstar_top1_rate": 0.625,
+        "expert_qstar_avg_value_gap": 0.27571249999999997,
+        "dqn_greedy_matches_expert_rate": 0.25
+      },
+      "expert_steps": [
+        {
+          "step": 0,
+          "expert_action": "web_path_enumeration",
+          "expert_target": "/login",
+          "qstar_expert": 40.0781,
+          "vstar": 40.0781,
+          "qstar_value_gap": 0.0,
+          "expert_is_qstar_optimal": true,
+          "dqn_greedy_action": "web_path_enumeration",
+          "dqn_greedy_matches_expert": true
+        },
+        {
+          "step": 1,
+          "expert_action": "web_path_enumeration",
+          "expert_target": "/item",
+          "qstar_expert": 37.8135,
+          "vstar": 38.9573,
+          "qstar_value_gap": 1.1437,
+          "expert_is_qstar_optimal": false,
+          "dqn_greedy_action": "http_fingerprint",
+          "dqn_greedy_matches_expert": false
+        },
+        {
+          "step": 2,
+          "expert_action": "input_discovery",
+          "expert_target": "/item",
+          "qstar_expert": 36.6465,
+          "vstar": 36.6465,
+          "qstar_value_gap": 0.0,
+          "expert_is_qstar_optimal": true,
+          "dqn_greedy_action": "http_fingerprint",
+          "dqn_greedy_matches_expert": false
+        },
+        {
+          "step": 3,
+          "expert_action": "vulnerability_check",
+          "expert_target": "/item?id",
+          "qstar_expert": 35.4556,
+          "vstar": 35.4556,
+          "qstar_value_gap": 0.0,
+          "expert_is_qstar_optimal": true,
+          "dqn_greedy_action": "web_path_enumeration",
+          "dqn_greedy_matches_expert": false
+        },
+        {
+          "step": 4,
+          "expert_action": "exploit_attempt",
+          "expert_target": "/item?id",
+          "qstar_expert": 32.1996,
+          "vstar": 32.1996,
+          "qstar_value_gap": 0.0,
+          "expert_is_qstar_optimal": true,
+          "dqn_greedy_action": "web_path_enumeration",
+          "dqn_greedy_matches_expert": false
+        },
+        {
+          "step": 5,
+          "expert_action": "web_path_enumeration",
+          "expert_target": "/admin",
+          "qstar_expert": 26.7763,
+          "vstar": 26.8363,
+          "qstar_value_gap": 0.06,
+          "expert_is_qstar_optimal": false,
+          "dqn_greedy_action": "web_path_enumeration",
+          "dqn_greedy_matches_expert": true
+        },
+        {
+          "step": 6,
+          "expert_action": "credential_use",
+          "expert_target": "/login",
+          "qstar_expert": 25.384,
+          "vstar": 25.384,
+          "qstar_value_gap": 0.0,
+          "expert_is_qstar_optimal": true,
+          "dqn_greedy_action": "http_fingerprint",
+          "dqn_greedy_matches_expert": false
+        },
+        {
+          "step": 7,
+          "expert_action": "sensitive_file_read",
+          "expert_target": "/admin/flag",
+          "qstar_expert": 19.9,
+          "vstar": 20.902,
+          "qstar_value_gap": 1.002,
+          "expert_is_qstar_optimal": false,
+          "dqn_greedy_action": "http_fingerprint",
+          "dqn_greedy_matches_expert": false
+        }
+      ]
+    },
+    {
+      "task_id": "web_109_sqli_product_login_medium",
+      "task_path": "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\tasks\\sqli_product_login_medium.json",
+      "vstar_initial": 42.8539,
+      "num_reachable_states": 1331,
+      "ranking_agreement": {
+        "states_evaluated": 1331,
+        "dqn_qstar_top1_agreement": 0.5274229902329076,
+        "dqn_qstar_top3_hit_rate": 0.9203606311044328,
+        "nondegenerate_states": 298,
+        "frac_states_degenerate_le3_allowed": 0.7761081893313299,
+        "nondegenerate_top1_agreement": 0.3288590604026846,
+        "nondegenerate_top3_hit_rate": 0.6442953020134228,
+        "nondegenerate_mean_spearman": -0.2149694651584527,
+        "oracle_greedy_mean_value_gap": 0.7699501513357349,
+        "oracle_greedy_max_value_gap": 6.754364080319991,
+        "per_decision_gap_fraction": 0.4916845918846092,
+        "decisive_margin": 0.5,
+        "decisive_states": 273,
+        "decisive_top1_agreement": 0.3553113553113553,
+        "dqn_qstar_mean_spearman": 0.015226314723291055,
+        "num_states_with_spearman": 1219
+      },
+      "expert_alignment": {
+        "num_steps": 8,
+        "expert_qstar_top1_rate": 0.75,
+        "expert_qstar_avg_value_gap": 0.67745,
+        "dqn_greedy_matches_expert_rate": 0.375
+      },
+      "expert_steps": [
+        {
+          "step": 0,
+          "expert_action": "web_path_enumeration",
+          "expert_target": "/product",
+          "qstar_expert": 42.8539,
+          "vstar": 42.8539,
+          "qstar_value_gap": 0.0,
+          "expert_is_qstar_optimal": true,
+          "dqn_greedy_action": "web_path_enumeration",
+          "dqn_greedy_matches_expert": true
+        },
+        {
+          "step": 1,
+          "expert_action": "input_discovery",
+          "expert_target": "/product",
+          "qstar_expert": 41.7897,
+          "vstar": 41.7897,
+          "qstar_value_gap": 0.0,
+          "expert_is_qstar_optimal": true,
+          "dqn_greedy_action": "web_path_enumeration",
+          "dqn_greedy_matches_expert": false
+        },
+        {
+          "step": 2,
+          "expert_action": "vulnerability_check",
+          "expert_target": "/product?pid",
+          "qstar_expert": 40.7037,
+          "vstar": 40.7037,
+          "qstar_value_gap": 0.0,
+          "expert_is_qstar_optimal": true,
+          "dqn_greedy_action": "web_path_enumeration",
+          "dqn_greedy_matches_expert": false
+        },
+        {
+          "step": 3,
+          "expert_action": "exploit_attempt",
+          "expert_target": "/product?pid",
+          "qstar_expert": 37.5548,
+          "vstar": 37.5548,
+          "qstar_value_gap": 0.0,
+          "expert_is_qstar_optimal": true,
+          "dqn_greedy_action": "web_path_enumeration",
+          "dqn_greedy_matches_expert": false
+        },
+        {
+          "step": 4,
+          "expert_action": "web_path_enumeration",
+          "expert_target": "/login",
+          "qstar_expert": 32.3009,
+          "vstar": 32.3009,
+          "qstar_value_gap": 0.0,
+          "expert_is_qstar_optimal": true,
+          "dqn_greedy_action": "web_path_enumeration",
+          "dqn_greedy_matches_expert": true
+        },
+        {
+          "step": 5,
+          "expert_action": "web_path_enumeration",
+          "expert_target": "/admin",
+          "qstar_expert": 30.9613,
+          "vstar": 31.0213,
+          "qstar_value_gap": 0.06,
+          "expert_is_qstar_optimal": false,
+          "dqn_greedy_action": "web_path_enumeration",
+          "dqn_greedy_matches_expert": true
+        },
+        {
+          "step": 6,
+          "expert_action": "credential_use",
+          "expert_target": "/login",
+          "qstar_expert": 29.6544,
+          "vstar": 29.6544,
+          "qstar_value_gap": 0.0,
+          "expert_is_qstar_optimal": true,
+          "dqn_greedy_action": "input_discovery",
+          "dqn_greedy_matches_expert": false
+        },
+        {
+          "step": 7,
+          "expert_action": "sensitive_file_read",
+          "expert_target": "/admin/flag",
+          "qstar_expert": 19.9,
+          "vstar": 25.2596,
+          "qstar_value_gap": 5.3596,
+          "expert_is_qstar_optimal": false,
+          "dqn_greedy_action": "input_discovery",
+          "dqn_greedy_matches_expert": false
+        }
+      ]
+    },
+    {
+      "task_id": "web_108_sqli_search_login_medium",
+      "task_path": "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\tasks\\sqli_search_login_medium.json",
+      "vstar_initial": 42.8539,
+      "num_reachable_states": 1331,
+      "ranking_agreement": {
+        "states_evaluated": 1331,
+        "dqn_qstar_top1_agreement": 0.5274229902329076,
+        "dqn_qstar_top3_hit_rate": 0.9203606311044328,
+        "nondegenerate_states": 298,
+        "frac_states_degenerate_le3_allowed": 0.7761081893313299,
+        "nondegenerate_top1_agreement": 0.3288590604026846,
+        "nondegenerate_top3_hit_rate": 0.6442953020134228,
+        "nondegenerate_mean_spearman": -0.2149694651584527,
+        "oracle_greedy_mean_value_gap": 0.7699501513357349,
+        "oracle_greedy_max_value_gap": 6.754364080319991,
+        "per_decision_gap_fraction": 0.4916845918846092,
+        "decisive_margin": 0.5,
+        "decisive_states": 273,
+        "decisive_top1_agreement": 0.3553113553113553,
+        "dqn_qstar_mean_spearman": 0.015226314723291055,
+        "num_states_with_spearman": 1219
+      },
+      "expert_alignment": {
+        "num_steps": 8,
+        "expert_qstar_top1_rate": 0.75,
+        "expert_qstar_avg_value_gap": 0.67745,
+        "dqn_greedy_matches_expert_rate": 0.375
+      },
+      "expert_steps": [
+        {
+          "step": 0,
+          "expert_action": "web_path_enumeration",
+          "expert_target": "/search",
+          "qstar_expert": 42.8539,
+          "vstar": 42.8539,
+          "qstar_value_gap": 0.0,
+          "expert_is_qstar_optimal": true,
+          "dqn_greedy_action": "web_path_enumeration",
+          "dqn_greedy_matches_expert": true
+        },
+        {
+          "step": 1,
+          "expert_action": "input_discovery",
+          "expert_target": "/search",
+          "qstar_expert": 41.7897,
+          "vstar": 41.7897,
+          "qstar_value_gap": 0.0,
+          "expert_is_qstar_optimal": true,
+          "dqn_greedy_action": "web_path_enumeration",
+          "dqn_greedy_matches_expert": false
+        },
+        {
+          "step": 2,
+          "expert_action": "vulnerability_check",
+          "expert_target": "/search?q",
+          "qstar_expert": 40.7037,
+          "vstar": 40.7037,
+          "qstar_value_gap": 0.0,
+          "expert_is_qstar_optimal": true,
+          "dqn_greedy_action": "web_path_enumeration",
+          "dqn_greedy_matches_expert": false
+        },
+        {
+          "step": 3,
+          "expert_action": "exploit_attempt",
+          "expert_target": "/search?q",
+          "qstar_expert": 37.5548,
+          "vstar": 37.5548,
+          "qstar_value_gap": 0.0,
+          "expert_is_qstar_optimal": true,
+          "dqn_greedy_action": "web_path_enumeration",
+          "dqn_greedy_matches_expert": false
+        },
+        {
+          "step": 4,
+          "expert_action": "web_path_enumeration",
+          "expert_target": "/login",
+          "qstar_expert": 32.3009,
+          "vstar": 32.3009,
+          "qstar_value_gap": 0.0,
+          "expert_is_qstar_optimal": true,
+          "dqn_greedy_action": "web_path_enumeration",
+          "dqn_greedy_matches_expert": true
+        },
+        {
+          "step": 5,
+          "expert_action": "web_path_enumeration",
+          "expert_target": "/admin",
+          "qstar_expert": 30.9613,
+          "vstar": 31.0213,
+          "qstar_value_gap": 0.06,
+          "expert_is_qstar_optimal": false,
+          "dqn_greedy_action": "web_path_enumeration",
+          "dqn_greedy_matches_expert": true
+        },
+        {
+          "step": 6,
+          "expert_action": "credential_use",
+          "expert_target": "/login",
+          "qstar_expert": 29.6544,
+          "vstar": 29.6544,
+          "qstar_value_gap": 0.0,
+          "expert_is_qstar_optimal": true,
+          "dqn_greedy_action": "input_discovery",
+          "dqn_greedy_matches_expert": false
+        },
+        {
+          "step": 7,
+          "expert_action": "sensitive_file_read",
+          "expert_target": "/admin/flag",
+          "qstar_expert": 19.9,
+          "vstar": 25.2596,
+          "qstar_value_gap": 5.3596,
+          "expert_is_qstar_optimal": false,
+          "dqn_greedy_action": "input_discovery",
+          "dqn_greedy_matches_expert": false
+        }
+      ]
+    },
+    {
+      "task_id": "web_010_sqli_upload_shell",
+      "task_path": "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\tasks\\sqli_upload_shell.json",
+      "vstar_initial": 50.5574,
+      "num_reachable_states": 951,
+      "ranking_agreement": {
+        "states_evaluated": 951,
+        "dqn_qstar_top1_agreement": 0.4868559411146162,
+        "dqn_qstar_top3_hit_rate": 0.982124079915878,
+        "nondegenerate_states": 70,
+        "frac_states_degenerate_le3_allowed": 0.9263932702418507,
+        "nondegenerate_top1_agreement": 0.1,
+        "nondegenerate_top3_hit_rate": 0.7571428571428571,
+        "nondegenerate_mean_spearman": -0.5587185786718785,
+        "oracle_greedy_mean_value_gap": 0.9556593661379154,
+        "oracle_greedy_max_value_gap": 6.5000000000000036,
+        "per_decision_gap_fraction": 0.6286308621485829,
+        "decisive_margin": 0.5,
+        "decisive_states": 227,
+        "decisive_top1_agreement": 0.19823788546255505,
+        "dqn_qstar_mean_spearman": -0.24026819091633939,
+        "num_states_with_spearman": 743
+      },
+      "expert_alignment": {
+        "num_steps": 11,
+        "expert_qstar_top1_rate": 0.7272727272727273,
+        "expert_qstar_avg_value_gap": 0.1897,
+        "dqn_greedy_matches_expert_rate": 0.2727272727272727
+      },
+      "expert_steps": [
+        {
+          "step": 0,
+          "expert_action": "web_path_enumeration",
+          "expert_target": "/login",
+          "qstar_expert": 50.5574,
+          "vstar": 50.5574,
+          "qstar_value_gap": 0.0,
+          "expert_is_qstar_optimal": true,
+          "dqn_greedy_action": "web_path_enumeration",
+          "dqn_greedy_matches_expert": true
+        },
+        {
+          "step": 1,
+          "expert_action": "web_path_enumeration",
+          "expert_target": "/product",
+          "qstar_expert": 48.7249,
+          "vstar": 49.6504,
+          "qstar_value_gap": 0.9255,
+          "expert_is_qstar_optimal": false,
+          "dqn_greedy_action": "http_fingerprint",
+          "dqn_greedy_matches_expert": false
+        },
+        {
+          "step": 2,
+          "expert_action": "input_discovery",
+          "expert_target": null,
+          "qstar_expert": 47.7805,
+          "vstar": 47.7805,
+          "qstar_value_gap": 0.0,
+          "expert_is_qstar_optimal": true,
+          "dqn_greedy_action": "http_fingerprint",
+          "dqn_greedy_matches_expert": false
+        },
+        {
+          "step": 3,
+          "expert_action": "vulnerability_check",
+          "expert_target": "/product?sku",
+          "qstar_expert": 46.8169,
+          "vstar": 46.8169,
+          "qstar_value_gap": 0.0,
+          "expert_is_qstar_optimal": true,
+          "dqn_greedy_action": "web_path_enumeration",
+          "dqn_greedy_matches_expert": false
+        },
+        {
+          "step": 4,
+          "expert_action": "exploit_attempt",
+          "expert_target": null,
+          "qstar_expert": 43.7927,
+          "vstar": 43.7927,
+          "qstar_value_gap": 0.0,
+          "expert_is_qstar_optimal": true,
+          "dqn_greedy_action": "web_path_enumeration",
+          "dqn_greedy_matches_expert": false
+        },
+        {
+          "step": 5,
+          "expert_action": "credential_use",
+          "expert_target": null,
+          "qstar_expert": 38.6661,
+          "vstar": 38.6661,
+          "qstar_value_gap": 0.0,
+          "expert_is_qstar_optimal": true,
+          "dqn_greedy_action": "web_path_enumeration",
+          "dqn_greedy_matches_expert": false
+        },
+        {
+          "step": 6,
+          "expert_action": "web_path_enumeration",
+          "expert_target": "/upload",
+          "qstar_expert": 34.4552,
+          "vstar": 34.4552,
+          "qstar_value_gap": 0.0,
+          "expert_is_qstar_optimal": true,
+          "dqn_greedy_action": "web_path_enumeration",
+          "dqn_greedy_matches_expert": true
+        },
+        {
+          "step": 7,
+          "expert_action": "input_discovery",
+          "expert_target": null,
+          "qstar_expert": 33.0604,
+          "vstar": 33.2196,
+          "qstar_value_gap": 0.1592,
+          "expert_is_qstar_optimal": false,
+          "dqn_greedy_action": "input_discovery",
+          "dqn_greedy_matches_expert": true
+        },
+        {
+          "step": 8,
+          "expert_action": "file_upload_attempt",
+          "expert_target": null,
+          "qstar_expert": 31.7963,
+          "vstar": 31.7963,
+          "qstar_value_gap": 0.0,
+          "expert_is_qstar_optimal": true,
+          "dqn_greedy_action": "http_fingerprint",
+          "dqn_greedy_matches_expert": false
+        },
+        {
+          "step": 9,
+          "expert_action": "command_execution",
+          "expert_target": null,
+          "qstar_expert": 24.384,
+          "vstar": 24.384,
+          "qstar_value_gap": 0.0,
+          "expert_is_qstar_optimal": true,
+          "dqn_greedy_action": "post_exploitation",
+          "dqn_greedy_matches_expert": false
+        },
+        {
+          "step": 10,
+          "expert_action": "sensitive_file_read",
+          "expert_target": null,
+          "qstar_expert": 19.9,
+          "vstar": 20.902,
+          "qstar_value_gap": 1.002,
+          "expert_is_qstar_optimal": false,
+          "dqn_greedy_action": "post_exploitation",
+          "dqn_greedy_matches_expert": false
+        }
+      ]
+    },
+    {
+      "task_id": "web_118_swp_flag_leak_easy",
+      "task_path": "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\tasks\\swp_flag_leak_easy.json",
+      "vstar_initial": 25.2596,
+      "num_reachable_states": 112,
+      "ranking_agreement": {
+        "states_evaluated": 112,
+        "dqn_qstar_top1_agreement": 0.24107142857142858,
+        "dqn_qstar_top3_hit_rate": 1.0,
+        "nondegenerate_states": 85,
+        "frac_states_degenerate_le3_allowed": 0.24107142857142858,
+        "nondegenerate_top1_agreement": 0.1411764705882353,
+        "nondegenerate_top3_hit_rate": 1.0,
+        "nondegenerate_mean_spearman": 0.12473810326658434,
+        "oracle_greedy_mean_value_gap": 2.123020870142855,
+        "oracle_greedy_max_value_gap": 5.359555183999994,
+        "per_decision_gap_fraction": 0.3923616677469205,
+        "decisive_margin": 0.5,
+        "decisive_states": 57,
+        "decisive_top1_agreement": 0.08771929824561403,
+        "dqn_qstar_mean_spearman": 0.12559678922140557,
+        "num_states_with_spearman": 112
+      },
+      "expert_alignment": {
+        "num_steps": 2,
+        "expert_qstar_top1_rate": 0.5,
+        "expert_qstar_avg_value_gap": 3.96815,
+        "dqn_greedy_matches_expert_rate": 0.5
+      },
+      "expert_steps": [
+        {
+          "step": 0,
+          "expert_action": "web_path_enumeration",
+          "expert_target": "/.backup",
+          "qstar_expert": 25.2596,
+          "vstar": 25.2596,
+          "qstar_value_gap": 0.0,
+          "expert_is_qstar_optimal": true,
+          "dqn_greedy_action": "web_path_enumeration",
+          "dqn_greedy_matches_expert": true
+        },
+        {
+          "step": 1,
+          "expert_action": "content_retrieval",
+          "expert_target": "/.backup",
+          "qstar_expert": 15.9,
+          "vstar": 23.8363,
+          "qstar_value_gap": 7.9363,
+          "expert_is_qstar_optimal": false,
+          "dqn_greedy_action": "web_path_enumeration",
+          "dqn_greedy_matches_expert": false
+        }
+      ]
+    },
+    {
+      "task_id": "web_116_upload_default_privesc_hard",
+      "task_path": "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\tasks\\upload_default_privesc_hard.json",
+      "vstar_initial": 55.3347,
+      "num_reachable_states": 1363,
+      "ranking_agreement": {
+        "states_evaluated": 1363,
+        "dqn_qstar_top1_agreement": 0.4614820249449743,
+        "dqn_qstar_top3_hit_rate": 0.8569332355099046,
+        "nondegenerate_states": 522,
+        "frac_states_degenerate_le3_allowed": 0.6170212765957447,
+        "nondegenerate_top1_agreement": 0.2777777777777778,
+        "nondegenerate_top3_hit_rate": 0.6264367816091954,
+        "nondegenerate_mean_spearman": -0.31954032312963876,
+        "oracle_greedy_mean_value_gap": 2.541707043140126,
+        "oracle_greedy_max_value_gap": 14.634364080319997,
+        "per_decision_gap_fraction": 0.5270056059674629,
+        "decisive_margin": 0.5,
+        "decisive_states": 334,
+        "decisive_top1_agreement": 0.3502994011976048,
+        "dqn_qstar_mean_spearman": -0.0797247454624582,
+        "num_states_with_spearman": 1263
+      },
+      "expert_alignment": {
+        "num_steps": 9,
+        "expert_qstar_top1_rate": 0.5555555555555556,
+        "expert_qstar_avg_value_gap": 1.1300222222222223,
+        "dqn_greedy_matches_expert_rate": 0.4444444444444444
+      },
+      "expert_steps": [
+        {
+          "step": 0,
+          "expert_action": "web_path_enumeration",
+          "expert_target": "/login",
+          "qstar_expert": 55.3347,
+          "vstar": 55.3347,
+          "qstar_value_gap": 0.0,
+          "expert_is_qstar_optimal": true,
+          "dqn_greedy_action": "web_path_enumeration",
+          "dqn_greedy_matches_expert": true
+        },
+        {
+          "step": 1,
+          "expert_action": "input_discovery",
+          "expert_target": null,
+          "qstar_expert": 54.4652,
+          "vstar": 54.5252,
+          "qstar_value_gap": 0.06,
+          "expert_is_qstar_optimal": false,
+          "dqn_greedy_action": "http_fingerprint",
+          "dqn_greedy_matches_expert": false
+        },
+        {
+          "step": 2,
+          "expert_action": "auth_attempt",
+          "expert_target": null,
+          "qstar_expert": 53.638,
+          "vstar": 53.638,
+          "qstar_value_gap": 0.0,
+          "expert_is_qstar_optimal": true,
+          "dqn_greedy_action": "web_path_enumeration",
+          "dqn_greedy_matches_expert": false
+        },
+        {
+          "step": 3,
+          "expert_action": "web_path_enumeration",
+          "expert_target": "/upload",
+          "qstar_expert": 49.7326,
+          "vstar": 49.7326,
+          "qstar_value_gap": 0.0,
+          "expert_is_qstar_optimal": true,
+          "dqn_greedy_action": "web_path_enumeration",
+          "dqn_greedy_matches_expert": true
+        },
+        {
+          "step": 4,
+          "expert_action": "input_discovery",
+          "expert_target": null,
+          "qstar_expert": 48.4198,
+          "vstar": 48.8088,
+          "qstar_value_gap": 0.389,
+          "expert_is_qstar_optimal": false,
+          "dqn_greedy_action": "file_upload_attempt",
+          "dqn_greedy_matches_expert": false
+        },
+        {
+          "step": 5,
+          "expert_action": "file_upload_attempt",
+          "expert_target": null,
+          "qstar_expert": 47.4692,
+          "vstar": 47.4692,
+          "qstar_value_gap": 0.0,
+          "expert_is_qstar_optimal": true,
+          "dqn_greedy_action": "file_upload_attempt",
+          "dqn_greedy_matches_expert": true
+        },
+        {
+          "step": 6,
+          "expert_action": "command_execution",
+          "expert_target": null,
+          "qstar_expert": 33.1396,
+          "vstar": 40.3768,
+          "qstar_value_gap": 7.2372,
+          "expert_is_qstar_optimal": false,
+          "dqn_greedy_action": "privilege_escalation",
+          "dqn_greedy_matches_expert": false
+        },
+        {
+          "step": 7,
+          "expert_action": "privilege_escalation",
+          "expert_target": null,
+          "qstar_expert": 29.8363,
+          "vstar": 29.8363,
+          "qstar_value_gap": 0.0,
+          "expert_is_qstar_optimal": true,
+          "dqn_greedy_action": "privilege_escalation",
+          "dqn_greedy_matches_expert": true
+        },
+        {
+          "step": 8,
+          "expert_action": "sensitive_file_read",
+          "expert_target": null,
+          "qstar_expert": 19.9,
+          "vstar": 22.384,
+          "qstar_value_gap": 2.484,
+          "expert_is_qstar_optimal": false,
+          "dqn_greedy_action": "post_exploitation",
+          "dqn_greedy_matches_expert": false
+        }
+      ]
+    },
+    {
+      "task_id": "web_114_upload_default_shell_hard",
+      "task_path": "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\tasks\\upload_default_shell_hard.json",
+      "vstar_initial": 42.2422,
+      "num_reachable_states": 949,
+      "ranking_agreement": {
+        "states_evaluated": 949,
+        "dqn_qstar_top1_agreement": 0.523709167544784,
+        "dqn_qstar_top3_hit_rate": 0.8472075869336143,
+        "nondegenerate_states": 366,
+        "frac_states_degenerate_le3_allowed": 0.6143308746048473,
+        "nondegenerate_top1_agreement": 0.2650273224043716,
+        "nondegenerate_top3_hit_rate": 0.6038251366120219,
+        "nondegenerate_mean_spearman": -0.3736809874847935,
+        "oracle_greedy_mean_value_gap": 1.5690918274601637,
+        "oracle_greedy_max_value_gap": 7.359555183999994,
+        "per_decision_gap_fraction": 0.507873664022207,
+        "decisive_margin": 0.5,
+        "decisive_states": 192,
+        "decisive_top1_agreement": 0.3541666666666667,
+        "dqn_qstar_mean_spearman": 0.011678273847726482,
+        "num_states_with_spearman": 867
+      },
+      "expert_alignment": {
+        "num_steps": 8,
+        "expert_qstar_top1_rate": 0.625,
+        "expert_qstar_avg_value_gap": 0.3379,
+        "dqn_greedy_matches_expert_rate": 0.375
+      },
+      "expert_steps": [
+        {
+          "step": 0,
+          "expert_action": "web_path_enumeration",
+          "expert_target": "/login",
+          "qstar_expert": 42.2422,
+          "vstar": 42.2422,
+          "qstar_value_gap": 0.0,
+          "expert_is_qstar_optimal": true,
+          "dqn_greedy_action": "web_path_enumeration",
+          "dqn_greedy_matches_expert": true
+        },
+        {
+          "step": 1,
+          "expert_action": "input_discovery",
+          "expert_target": null,
+          "qstar_expert": 41.1055,
+          "vstar": 41.1655,
+          "qstar_value_gap": 0.06,
+          "expert_is_qstar_optimal": false,
+          "dqn_greedy_action": "http_fingerprint",
+          "dqn_greedy_matches_expert": false
+        },
+        {
+          "step": 2,
+          "expert_action": "auth_attempt",
+          "expert_target": null,
+          "qstar_expert": 40.0056,
+          "vstar": 40.0056,
+          "qstar_value_gap": 0.0,
+          "expert_is_qstar_optimal": true,
+          "dqn_greedy_action": "web_path_enumeration",
+          "dqn_greedy_matches_expert": false
+        },
+        {
+          "step": 3,
+          "expert_action": "web_path_enumeration",
+          "expert_target": "/upload",
+          "qstar_expert": 35.8221,
+          "vstar": 35.8221,
+          "qstar_value_gap": 0.0,
+          "expert_is_qstar_optimal": true,
+          "dqn_greedy_action": "web_path_enumeration",
+          "dqn_greedy_matches_expert": true
+        },
+        {
+          "step": 4,
+          "expert_action": "input_discovery",
+          "expert_target": null,
+          "qstar_expert": 34.4552,
+          "vstar": 34.6144,
+          "qstar_value_gap": 0.1592,
+          "expert_is_qstar_optimal": false,
+          "dqn_greedy_action": "file_upload_attempt",
+          "dqn_greedy_matches_expert": false
+        },
+        {
+          "step": 5,
+          "expert_action": "file_upload_attempt",
+          "expert_target": null,
+          "qstar_expert": 33.2196,
+          "vstar": 33.2196,
+          "qstar_value_gap": 0.0,
+          "expert_is_qstar_optimal": true,
+          "dqn_greedy_action": "file_upload_attempt",
+          "dqn_greedy_matches_expert": true
+        },
+        {
+          "step": 6,
+          "expert_action": "command_execution",
+          "expert_target": null,
+          "qstar_expert": 25.8363,
+          "vstar": 25.8363,
+          "qstar_value_gap": 0.0,
+          "expert_is_qstar_optimal": true,
+          "dqn_greedy_action": "post_exploitation",
+          "dqn_greedy_matches_expert": false
+        },
+        {
+          "step": 7,
+          "expert_action": "sensitive_file_read",
+          "expert_target": null,
+          "qstar_expert": 19.9,
+          "vstar": 22.384,
+          "qstar_value_gap": 2.484,
+          "expert_is_qstar_optimal": false,
+          "dqn_greedy_action": "post_exploitation",
+          "dqn_greedy_matches_expert": false
+        }
+      ]
+    },
+    {
+      "task_id": "web_115_upload_leak_shell_hard",
+      "task_path": "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\tasks\\upload_leak_shell_hard.json",
+      "vstar_initial": 46.2914,
+      "num_reachable_states": 1337,
+      "ranking_agreement": {
+        "states_evaluated": 1337,
+        "dqn_qstar_top1_agreement": 0.5841436050860135,
+        "dqn_qstar_top3_hit_rate": 0.8691099476439791,
+        "nondegenerate_states": 426,
+        "frac_states_degenerate_le3_allowed": 0.681376215407629,
+        "nondegenerate_top1_agreement": 0.27230046948356806,
+        "nondegenerate_top3_hit_rate": 0.5892018779342723,
+        "nondegenerate_mean_spearman": -0.363051230945365,
+        "oracle_greedy_mean_value_gap": 1.2459087781636549,
+        "oracle_greedy_max_value_gap": 7.359555183999994,
+        "per_decision_gap_fraction": 0.4392761105987113,
+        "decisive_margin": 0.5,
+        "decisive_states": 268,
+        "decisive_top1_agreement": 0.43283582089552236,
+        "dqn_qstar_mean_spearman": 0.09479886546275659,
+        "num_states_with_spearman": 1216
+      },
+      "expert_alignment": {
+        "num_steps": 10,
+        "expert_qstar_top1_rate": 0.7,
+        "expert_qstar_avg_value_gap": 0.27032,
+        "dqn_greedy_matches_expert_rate": 0.4
+      },
+      "expert_steps": [
+        {
+          "step": 0,
+          "expert_action": "web_path_enumeration",
+          "expert_target": "/backup",
+          "qstar_expert": 46.2914,
+          "vstar": 46.2914,
+          "qstar_value_gap": 0.0,
+          "expert_is_qstar_optimal": true,
+          "dqn_greedy_action": "web_path_enumeration",
+          "dqn_greedy_matches_expert": true
+        },
+        {
+          "step": 1,
+          "expert_action": "content_retrieval",
+          "expert_target": "/backup",
+          "qstar_expert": 45.2974,
+          "vstar": 45.2974,
+          "qstar_value_gap": 0.0,
+          "expert_is_qstar_optimal": true,
+          "dqn_greedy_action": "web_path_enumeration",
+          "dqn_greedy_matches_expert": false
+        },
+        {
+          "step": 2,
+          "expert_action": "web_path_enumeration",
+          "expert_target": "/login",
+          "qstar_expert": 42.2422,
+          "vstar": 42.2422,
+          "qstar_value_gap": 0.0,
+          "expert_is_qstar_optimal": true,
+          "dqn_greedy_action": "web_path_enumeration",
+          "dqn_greedy_matches_expert": true
+        },
+        {
+          "step": 3,
+          "expert_action": "input_discovery",
+          "expert_target": null,
+          "qstar_expert": 41.1055,
+          "vstar": 41.1655,
+          "qstar_value_gap": 0.06,
+          "expert_is_qstar_optimal": false,
+          "dqn_greedy_action": "web_path_enumeration",
+          "dqn_greedy_matches_expert": false
+        },
+        {
+          "step": 4,
+          "expert_action": "credential_use",
+          "expert_target": null,
+          "qstar_expert": 40.0056,
+          "vstar": 40.0056,
+          "qstar_value_gap": 0.0,
+          "expert_is_qstar_optimal": true,
+          "dqn_greedy_action": "web_path_enumeration",
+          "dqn_greedy_matches_expert": false
+        },
+        {
+          "step": 5,
+          "expert_action": "web_path_enumeration",
+          "expert_target": "/upload",
+          "qstar_expert": 35.8221,
+          "vstar": 35.8221,
+          "qstar_value_gap": 0.0,
+          "expert_is_qstar_optimal": true,
+          "dqn_greedy_action": "web_path_enumeration",
+          "dqn_greedy_matches_expert": true
+        },
+        {
+          "step": 6,
+          "expert_action": "input_discovery",
+          "expert_target": null,
+          "qstar_expert": 34.4552,
+          "vstar": 34.6144,
+          "qstar_value_gap": 0.1592,
+          "expert_is_qstar_optimal": false,
+          "dqn_greedy_action": "file_upload_attempt",
+          "dqn_greedy_matches_expert": false
+        },
+        {
+          "step": 7,
+          "expert_action": "file_upload_attempt",
+          "expert_target": null,
+          "qstar_expert": 33.2196,
+          "vstar": 33.2196,
+          "qstar_value_gap": 0.0,
+          "expert_is_qstar_optimal": true,
+          "dqn_greedy_action": "file_upload_attempt",
+          "dqn_greedy_matches_expert": true
+        },
+        {
+          "step": 8,
+          "expert_action": "command_execution",
+          "expert_target": null,
+          "qstar_expert": 25.8363,
+          "vstar": 25.8363,
+          "qstar_value_gap": 0.0,
+          "expert_is_qstar_optimal": true,
+          "dqn_greedy_action": "post_exploitation",
+          "dqn_greedy_matches_expert": false
+        },
+        {
+          "step": 9,
+          "expert_action": "sensitive_file_read",
+          "expert_target": null,
+          "qstar_expert": 19.9,
+          "vstar": 22.384,
+          "qstar_value_gap": 2.484,
+          "expert_is_qstar_optimal": false,
+          "dqn_greedy_action": "post_exploitation",
+          "dqn_greedy_matches_expert": false
+        }
+      ]
+    },
+    {
+      "task_id": "web_012_upload_privesc_root",
+      "task_path": "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\tasks\\upload_privesc_root.json",
+      "vstar_initial": 54.0991,
+      "num_reachable_states": 891,
+      "ranking_agreement": {
+        "states_evaluated": 891,
+        "dqn_qstar_top1_agreement": 0.5162738496071829,
+        "dqn_qstar_top3_hit_rate": 0.9450056116722784,
+        "nondegenerate_states": 187,
+        "frac_states_degenerate_le3_allowed": 0.7901234567901234,
+        "nondegenerate_top1_agreement": 0.20320855614973263,
+        "nondegenerate_top3_hit_rate": 0.7379679144385026,
+        "nondegenerate_mean_spearman": -0.454501362987337,
+        "oracle_greedy_mean_value_gap": 2.091014623632436,
+        "oracle_greedy_max_value_gap": 13.239555183999997,
+        "per_decision_gap_fraction": 0.49662360200260464,
+        "decisive_margin": 0.5,
+        "decisive_states": 231,
+        "decisive_top1_agreement": 0.2987012987012987,
+        "dqn_qstar_mean_spearman": -0.048373132245884645,
+        "num_states_with_spearman": 775
+      },
+      "expert_alignment": {
+        "num_steps": 9,
+        "expert_qstar_top1_rate": 0.5555555555555556,
+        "expert_qstar_avg_value_gap": 0.9685222222222222,
+        "dqn_greedy_matches_expert_rate": 0.4444444444444444
+      },
+      "expert_steps": [
+        {
+          "step": 0,
+          "expert_action": "web_path_enumeration",
+          "expert_target": "/login",
+          "qstar_expert": 54.0991,
+          "vstar": 54.0991,
+          "qstar_value_gap": 0.0,
+          "expert_is_qstar_optimal": true,
+          "dqn_greedy_action": "web_path_enumeration",
+          "dqn_greedy_matches_expert": true
+        },
+        {
+          "step": 1,
+          "expert_action": "input_discovery",
+          "expert_target": null,
+          "qstar_expert": 53.2044,
+          "vstar": 53.2644,
+          "qstar_value_gap": 0.06,
+          "expert_is_qstar_optimal": false,
+          "dqn_greedy_action": "http_fingerprint",
+          "dqn_greedy_matches_expert": false
+        },
+        {
+          "step": 2,
+          "expert_action": "auth_attempt",
+          "expert_target": null,
+          "qstar_expert": 52.3514,
+          "vstar": 52.3514,
+          "qstar_value_gap": 0.0,
+          "expert_is_qstar_optimal": true,
+          "dqn_greedy_action": "web_path_enumeration",
+          "dqn_greedy_matches_expert": false
+        },
+        {
+          "step": 3,
+          "expert_action": "web_path_enumeration",
+          "expert_target": "/upload",
+          "qstar_expert": 48.4198,
+          "vstar": 48.4198,
+          "qstar_value_gap": 0.0,
+          "expert_is_qstar_optimal": true,
+          "dqn_greedy_action": "web_path_enumeration",
+          "dqn_greedy_matches_expert": true
+        },
+        {
+          "step": 4,
+          "expert_action": "input_discovery",
+          "expert_target": null,
+          "qstar_expert": 47.0803,
+          "vstar": 47.4692,
+          "qstar_value_gap": 0.389,
+          "expert_is_qstar_optimal": false,
+          "dqn_greedy_action": "file_upload_attempt",
+          "dqn_greedy_matches_expert": false
+        },
+        {
+          "step": 5,
+          "expert_action": "file_upload_attempt",
+          "expert_target": null,
+          "qstar_expert": 46.1023,
+          "vstar": 46.1023,
+          "qstar_value_gap": 0.0,
+          "expert_is_qstar_optimal": true,
+          "dqn_greedy_action": "file_upload_attempt",
+          "dqn_greedy_matches_expert": true
+        },
+        {
+          "step": 6,
+          "expert_action": "command_execution",
+          "expert_target": null,
+          "qstar_expert": 31.7163,
+          "vstar": 38.982,
+          "qstar_value_gap": 7.2657,
+          "expert_is_qstar_optimal": false,
+          "dqn_greedy_action": "privilege_escalation",
+          "dqn_greedy_matches_expert": false
+        },
+        {
+          "step": 7,
+          "expert_action": "privilege_escalation",
+          "expert_target": null,
+          "qstar_expert": 28.384,
+          "vstar": 28.384,
+          "qstar_value_gap": 0.0,
+          "expert_is_qstar_optimal": true,
+          "dqn_greedy_action": "privilege_escalation",
+          "dqn_greedy_matches_expert": true
+        },
+        {
+          "step": 8,
+          "expert_action": "sensitive_file_read",
+          "expert_target": null,
+          "qstar_expert": 19.9,
+          "vstar": 20.902,
+          "qstar_value_gap": 1.002,
+          "expert_is_qstar_optimal": false,
+          "dqn_greedy_action": "post_exploitation",
+          "dqn_greedy_matches_expert": false
+        }
+      ]
+    },
+    {
+      "task_id": "web_003_upload_shell",
+      "task_path": "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\tasks\\upload_shell.json",
+      "vstar_initial": 45.0924,
+      "num_reachable_states": 1126,
+      "ranking_agreement": {
+        "states_evaluated": 1126,
+        "dqn_qstar_top1_agreement": 0.5941385435168739,
+        "dqn_qstar_top3_hit_rate": 0.9529307282415631,
+        "nondegenerate_states": 364,
+        "frac_states_degenerate_le3_allowed": 0.6767317939609236,
+        "nondegenerate_top1_agreement": 0.42857142857142855,
+        "nondegenerate_top3_hit_rate": 0.8543956043956044,
+        "nondegenerate_mean_spearman": 0.024173958992721657,
+        "oracle_greedy_mean_value_gap": 1.2023586188780568,
+        "oracle_greedy_max_value_gap": 9.319555183999995,
+        "per_decision_gap_fraction": 0.4114183155135556,
+        "decisive_margin": 0.5,
+        "decisive_states": 241,
+        "decisive_top1_agreement": 0.36099585062240663,
+        "dqn_qstar_mean_spearman": 0.07690211866113592,
+        "num_states_with_spearman": 980
+      },
+      "expert_alignment": {
+        "num_steps": 9,
+        "expert_qstar_top1_rate": 0.5555555555555556,
+        "expert_qstar_avg_value_gap": 0.533511111111111,
+        "dqn_greedy_matches_expert_rate": 0.3333333333333333
+      },
+      "expert_steps": [
+        {
+          "step": 0,
+          "expert_action": "web_path_enumeration",
+          "expert_target": "/login",
+          "qstar_expert": 45.0924,
+          "vstar": 45.0924,
+          "qstar_value_gap": 0.0,
+          "expert_is_qstar_optimal": true,
+          "dqn_greedy_action": "web_path_enumeration",
+          "dqn_greedy_matches_expert": true
+        },
+        {
+          "step": 1,
+          "expert_action": "web_path_enumeration",
+          "expert_target": "/admin",
+          "qstar_expert": 44.0139,
+          "vstar": 44.0739,
+          "qstar_value_gap": 0.06,
+          "expert_is_qstar_optimal": false,
+          "dqn_greedy_action": "http_fingerprint",
+          "dqn_greedy_matches_expert": false
+        },
+        {
+          "step": 2,
+          "expert_action": "input_discovery",
+          "expert_target": "/login",
+          "qstar_expert": 42.9134,
+          "vstar": 42.9734,
+          "qstar_value_gap": 0.06,
+          "expert_is_qstar_optimal": false,
+          "dqn_greedy_action": "http_fingerprint",
+          "dqn_greedy_matches_expert": false
+        },
+        {
+          "step": 3,
+          "expert_action": "auth_attempt",
+          "expert_target": "/login",
+          "qstar_expert": 41.8504,
+          "vstar": 41.8504,
+          "qstar_value_gap": 0.0,
+          "expert_is_qstar_optimal": true,
+          "dqn_greedy_action": "web_path_enumeration",
+          "dqn_greedy_matches_expert": false
+        },
+        {
+          "step": 4,
+          "expert_action": "web_path_enumeration",
+          "expert_target": "/upload",
+          "qstar_expert": 37.7045,
+          "vstar": 37.7045,
+          "qstar_value_gap": 0.0,
+          "expert_is_qstar_optimal": true,
+          "dqn_greedy_action": "web_path_enumeration",
+          "dqn_greedy_matches_expert": true
+        },
+        {
+          "step": 5,
+          "expert_action": "input_discovery",
+          "expert_target": "/upload",
+          "qstar_expert": 36.3375,
+          "vstar": 36.5352,
+          "qstar_value_gap": 0.1976,
+          "expert_is_qstar_optimal": false,
+          "dqn_greedy_action": "file_upload_attempt",
+          "dqn_greedy_matches_expert": false
+        },
+        {
+          "step": 6,
+          "expert_action": "file_upload_attempt",
+          "expert_target": "/upload",
+          "qstar_expert": 35.1404,
+          "vstar": 35.1404,
+          "qstar_value_gap": 0.0,
+          "expert_is_qstar_optimal": true,
+          "dqn_greedy_action": "file_upload_attempt",
+          "dqn_greedy_matches_expert": true
+        },
+        {
+          "step": 7,
+          "expert_action": "command_execution",
+          "expert_target": null,
+          "qstar_expert": 27.7963,
+          "vstar": 27.7963,
+          "qstar_value_gap": 0.0,
+          "expert_is_qstar_optimal": true,
+          "dqn_greedy_action": "http_fingerprint",
+          "dqn_greedy_matches_expert": false
+        },
+        {
+          "step": 8,
+          "expert_action": "sensitive_file_read",
+          "expert_target": "/home/web/flag.txt",
+          "qstar_expert": 19.9,
+          "vstar": 24.384,
+          "qstar_value_gap": 4.484,
+          "expert_is_qstar_optimal": false,
+          "dqn_greedy_action": "http_fingerprint",
+          "dqn_greedy_matches_expert": false
+        }
+      ]
+    },
+    {
+      "task_id": "web_004_weak_password",
+      "task_path": "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\tasks\\weak_password.json",
+      "vstar_initial": 29.5944,
+      "num_reachable_states": 275,
+      "ranking_agreement": {
+        "states_evaluated": 275,
+        "dqn_qstar_top1_agreement": 0.5018181818181818,
+        "dqn_qstar_top3_hit_rate": 0.9490909090909091,
+        "nondegenerate_states": 78,
+        "frac_states_degenerate_le3_allowed": 0.7163636363636363,
+        "nondegenerate_top1_agreement": 0.38461538461538464,
+        "nondegenerate_top3_hit_rate": 0.8205128205128205,
+        "nondegenerate_mean_spearman": -0.20189517073723776,
+        "oracle_greedy_mean_value_gap": 0.8192233655272724,
+        "oracle_greedy_max_value_gap": 6.440000000000005,
+        "per_decision_gap_fraction": 0.5710378147885944,
+        "decisive_margin": 0.5,
+        "decisive_states": 60,
+        "decisive_top1_agreement": 0.15,
+        "dqn_qstar_mean_spearman": -0.12831224312951434,
+        "num_states_with_spearman": 231
+      },
+      "expert_alignment": {
+        "num_steps": 5,
+        "expert_qstar_top1_rate": 0.6,
+        "expert_qstar_avg_value_gap": 0.2124,
+        "dqn_greedy_matches_expert_rate": 0.4
+      },
+      "expert_steps": [
+        {
+          "step": 0,
+          "expert_action": "web_path_enumeration",
+          "expert_target": "/login",
+          "qstar_expert": 29.5944,
+          "vstar": 29.5944,
+          "qstar_value_gap": 0.0,
+          "expert_is_qstar_optimal": true,
+          "dqn_greedy_action": "web_path_enumeration",
+          "dqn_greedy_matches_expert": true
+        },
+        {
+          "step": 1,
+          "expert_action": "input_discovery",
+          "expert_target": null,
+          "qstar_expert": 28.1996,
+          "vstar": 28.2596,
+          "qstar_value_gap": 0.06,
+          "expert_is_qstar_optimal": false,
+          "dqn_greedy_action": "http_fingerprint",
+          "dqn_greedy_matches_expert": false
+        },
+        {
+          "step": 2,
+          "expert_action": "auth_attempt",
+          "expert_target": null,
+          "qstar_expert": 26.8363,
+          "vstar": 26.8363,
+          "qstar_value_gap": 0.0,
+          "expert_is_qstar_optimal": true,
+          "dqn_greedy_action": "web_path_enumeration",
+          "dqn_greedy_matches_expert": false
+        },
+        {
+          "step": 3,
+          "expert_action": "web_path_enumeration",
+          "expert_target": "/admin",
+          "qstar_expert": 22.384,
+          "vstar": 22.384,
+          "qstar_value_gap": 0.0,
+          "expert_is_qstar_optimal": true,
+          "dqn_greedy_action": "web_path_enumeration",
+          "dqn_greedy_matches_expert": true
+        },
+        {
+          "step": 4,
+          "expert_action": "sensitive_file_read",
+          "expert_target": null,
+          "qstar_expert": 19.9,
+          "vstar": 20.902,
+          "qstar_value_gap": 1.002,
+          "expert_is_qstar_optimal": false,
+          "dqn_greedy_action": "http_fingerprint",
+          "dqn_greedy_matches_expert": false
+        }
+      ]
+    },
+    {
+      "task_id": "web_105_weak_password123_easy",
+      "task_path": "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\tasks\\weak_password123_easy.json",
+      "vstar_initial": 32.3009,
+      "num_reachable_states": 517,
+      "ranking_agreement": {
+        "states_evaluated": 517,
+        "dqn_qstar_top1_agreement": 0.4274661508704062,
+        "dqn_qstar_top3_hit_rate": 0.9013539651837524,
+        "nondegenerate_states": 203,
+        "frac_states_degenerate_le3_allowed": 0.6073500967117988,
+        "nondegenerate_top1_agreement": 0.32019704433497537,
+        "nondegenerate_top3_hit_rate": 0.7487684729064039,
+        "nondegenerate_mean_spearman": -0.2627097473332375,
+        "oracle_greedy_mean_value_gap": 1.307486349295844,
+        "oracle_greedy_max_value_gap": 6.754364080319991,
+        "per_decision_gap_fraction": 0.5902854252284131,
+        "decisive_margin": 0.5,
+        "decisive_states": 107,
+        "decisive_top1_agreement": 0.14953271028037382,
+        "dqn_qstar_mean_spearman": -0.17032068037403772,
+        "num_states_with_spearman": 474
+      },
+      "expert_alignment": {
+        "num_steps": 5,
+        "expert_qstar_top1_rate": 0.6,
+        "expert_qstar_avg_value_gap": 0.7992600000000001,
+        "dqn_greedy_matches_expert_rate": 0.4
+      },
+      "expert_steps": [
+        {
+          "step": 0,
+          "expert_action": "web_path_enumeration",
+          "expert_target": "/login",
+          "qstar_expert": 32.3009,
+          "vstar": 32.3009,
+          "qstar_value_gap": 0.0,
+          "expert_is_qstar_optimal": true,
+          "dqn_greedy_action": "web_path_enumeration",
+          "dqn_greedy_matches_expert": true
+        },
+        {
+          "step": 1,
+          "expert_action": "input_discovery",
+          "expert_target": null,
+          "qstar_expert": 30.9613,
+          "vstar": 31.0213,
+          "qstar_value_gap": 0.06,
+          "expert_is_qstar_optimal": false,
+          "dqn_greedy_action": "http_fingerprint",
+          "dqn_greedy_matches_expert": false
+        },
+        {
+          "step": 2,
+          "expert_action": "auth_attempt",
+          "expert_target": null,
+          "qstar_expert": 29.6544,
+          "vstar": 29.6544,
+          "qstar_value_gap": 0.0,
+          "expert_is_qstar_optimal": true,
+          "dqn_greedy_action": "web_path_enumeration",
+          "dqn_greedy_matches_expert": false
+        },
+        {
+          "step": 3,
+          "expert_action": "web_path_enumeration",
+          "expert_target": "/admin",
+          "qstar_expert": 25.2596,
+          "vstar": 25.2596,
+          "qstar_value_gap": 0.0,
+          "expert_is_qstar_optimal": true,
+          "dqn_greedy_action": "web_path_enumeration",
+          "dqn_greedy_matches_expert": true
+        },
+        {
+          "step": 4,
+          "expert_action": "sensitive_file_read",
+          "expert_target": null,
+          "qstar_expert": 19.9,
+          "vstar": 23.8363,
+          "qstar_value_gap": 3.9363,
+          "expert_is_qstar_optimal": false,
+          "dqn_greedy_action": "web_path_enumeration",
+          "dqn_greedy_matches_expert": false
+        }
+      ]
+    }
+  ]
+}
