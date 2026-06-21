@@ -40,6 +40,9 @@ outputs/random_transitions*.jsonl
 outputs/demo_prm_samples*.jsonl
 outputs/web_dqn*.pt
 outputs/*.pt
+outputs/**/*.pt
+outputs/reward_sensitivity/
+outputs/oracle_info_value/
 outputs/seed_gate*/
 outputs/_*
 
