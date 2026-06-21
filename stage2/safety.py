@@ -37,6 +37,11 @@ ALLOWED_BINARIES = {
     "feroxbuster", "wfuzz", "curl", "wget", "sqlmap", "hydra", "nc", "ncat",
     # exploitation/PoC launchers and shell helpers — still target-scoped + denylisted below
     "python", "python3", "bash", "sh",
+    # full-VM local-phase transport (Stage-2 full-chain VulnHub boxes): the post-foothold local commands
+    # for SSH-foothold boxes (Toppo/Symfonos) run as one-shot `sshpass -p <pw> ssh user@<vm-ip> '<cmd>'`,
+    # and SMB recon (Symfonos) as `smbclient`. Still host-scoped (the VM IP must appear in the command) +
+    # destructive-denylisted below. Webshell-foothold boxes (DC-1/Raven2) use curl and need nothing new.
+    "ssh", "sshpass", "smbclient",
 }
 
 # Tokens that must never appear in a rendered command, even for an allowed binary on an in-scope

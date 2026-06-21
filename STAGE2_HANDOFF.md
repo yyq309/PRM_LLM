@@ -488,6 +488,141 @@ seed-pinned (not bit-reproducible); (c) n=5 is small for the noisy per-episode-g
 the LLM candidate set across arms wherever states coincide (CRN), so the only per-step difference is the
 ranking, and it ~halves LLM calls. **It has NOT been run formally yet** — running it is item 0 below.
 
+**★ NEW — Full-chain VM experiment + peer-review gap analysis (2026-06-21).** Two planning artifacts now
+drive the next phase:
+- **`STAGE2_FULLCHAIN_PLAN.md`** — design-LOCKED plan to add **4 full-machine VulnHub VMs** (DC-1, Raven2,
+  Toppo:1, Symfonos:1; VMware, host-only) exercising the COMPLETE kill chain Web→foothold→**same-host
+  privesc**→root flag — something the Docker web boxes + XBEN cannot give. Dual-transport STATELESS executor
+  (`webshell` + `ssh`), 16-action schema UNCHANGED, privesc phase is coarse (→ **C1 case study, NOT a C2
+  source**), Symfonos:1 = boundary case (droppable if it never reaches foothold). Operator builds the VMs;
+  the code/framework deltas (eta dual-transport, φ local-credit, milestone ladder, `vm_reset.py`,
+  safety allow-list += ssh/sshpass, `full_vm` in live_ab_trials) are in that doc §5. Implementation NOT started.
+- **Peer-review gap analysis** (5-lens adversarial review): the current C1/C2 framing is **over-claimed** —
+  the "strong proposer" is the authors' own vocab-hint (confounds competence vs candidate-surface coverage);
+  C2's crossover is a re-discovery of the published weak/strong verification-gap + reward-model
+  overoptimization (must cite 2509.17995 / 2210.10760 / 2506.18203); "21 boxes" misleading (XBEN 0/18);
+  per-step significant but per-episode goal TIED (42%=42% at n=10).
+- **★ MAIN-LINE PIVOT (2026-06-21) — see [`CONTRIBUTIONS.md`](CONTRIBUTIONS.md) (canonical framing).**
+  The paper is **re-centered** on *abstract→real value transfer + its structural limits + real end-to-end
+  kill chains*: **C-A** = the φ/ψ/η transfer adapter (old C1, spine), **C-C** = the masked-training
+  recon-over-valuation distribution gap (old C4, spine), **C-B** = real end-to-end Web→foothold→privesc→root
+  on VMs (the full-chain experiment = flagship evidence). The **proposer-conditional crossover (old C2) is
+  DEMOTED to an honest, reported limitation** (cite verification-gap 2509.17995 / reward-model
+  overoptimization 2210.10760), NOT the headline. Consequences: the 2×2 / continuous proposer-quality sweep
+  / interaction-test crossover-DEFENSE experiments are **NO LONGER on the critical path**; the efficiency
+  inversion is still **reported in full, not hidden**; the different-vendor LLM is re-scoped to "transfer
+  is not deepseek-specific" (lower stakes, deferrable); the proposer-confidence gate (old C5) is optional
+  future work. Methodology (CRN + cluster-robust) stays as supporting rigor, not a headline.
+- **★ EXPERIMENT SUFFICIENCY AUDIT (2026-06-21) — see [`EXPERIMENTS.md`](EXPERIMENTS.md) (canonical
+  environment×experiment×contribution map).** 6-lens audit verdict: **limitation = SUFFICIENT** (demoting
+  it removed the 2×2/sweep burden — nothing more needed); **C-A / C-C = PARTIAL**; **C-B = INSUFFICIENT
+  until the full-chain VMs run**. Two GENUINELY NEW experiments to add (both VM-independent, can start
+  anytime): **G2 — mask-causality** (label histogram by action×phase + retrain Stage-1 oracle WITHOUT the
+  action mask → retrain PRM → A/B; turns C-C from *inferred* to *proven*, highest-value new add) and
+  **G4 — transfer baseline** (learned PRM vs a cheap hand-coded domain-prior reranker vs no-reranker;
+  hardens C-A — note the deterministic ablation already shows a goal-ladder heuristic ≈ PRM, so this may
+  honestly tie). Already-on-books additions: G1 full-chain VMs (flagship, waiting on VMs), G3 run
+  `paired_ab.py` (item 0 below), G6 reasoner-vs-chat ceiling probe (item 2 below). Per-episode goal-tie
+  (42%=42% n=10) must be stated in §1, not buried.
+
+- **★ FULL-CHAIN VM IMPLEMENTATION — P1 STARTED (2026-06-21).** VMs built by operator (VMware, custom
+  VMnet2 `192.168.52.0/24`). IPs from the DHCP lease file: **DC-1 192.168.52.130, Raven-2 .129, Toppo-1 .132,
+  Symfonos-1 .131** (Symfonos = boundary, `enabled=false`). **BLOCKER (operator, needs admin): the host VMnet2
+  adapter is APIPA `169.254.x` — set it to `192.168.52.1/24`** (`netsh interface ip set address name="VMware
+  Network Adapter VMnet2" static 192.168.52.1 255.255.255.0`, elevated) before any live run; until then the
+  host cannot route to the VMs. DONE this turn (VM-independent, **393 tests still green**): `safety.py`
+  allow-list += `ssh`/`sshpass`/`smbclient` (host-scoped, still denylisted); `phi._content_credit` credits
+  local-enum (`sudo -l` NOPASSWD / SUID `-rws`) as progress → `local_privesc_surface` (leak-free); new
+  `stage2/vm_reset.py` (vmrun revertToSnapshot→start→healthcheck, `--snapshot` creates 'clean');
+  `vm_target_registry.json` real IPs+vmx+snapshot+vmrun; descriptors `targets/vulnhub-dc-1.json` (webshell,
+  Drupalgeddon2→SUID-find) + `vulnhub-toppo-1.json` (ssh via sshpass, exposed-cred→SUID-python). **Dual-transport
+  works purely via per-box `eta_recipes` (curl-webshell | sshpass-ssh) — no session executor.** TODO: raven-2
+  (MySQL-UDF) + symfonos-1 descriptors; `full_vm` reset hook in `live_ab_trials.py`; offline dry-run; then (after
+  the network fix) operator snapshots 'clean' → live DC-1 (P3) + G1 4-box A/B. G2/G4 are VM-independent, runnable now.
+
+- **★★ DC-1 FULL CHAIN PROVEN LIVE (2026-06-21) — the FIRST C-B end-to-end on a real VM.** Fixed two live
+  blockers: (1) the host runs a Clash **PROXY** (`HTTP_PROXY=127.0.0.1:7897`) that ate the private-VM curl
+  traffic (502 Bad Gateway) → added `_no_proxy_env()` to `LiveExecutor` (sets `NO_PROXY=*`, strips
+  http(s)/all_proxy — correct since the executor only ever hits the in-scope lab target); (2) DC-1 is Drupal
+  **7**.24, so the Drupal-8 Drupalgeddon2 request format silently failed → wrote `stage2/payloads/drupalgeddon2.sh`
+  (canonical Drupal-7 **2-step**: POST `/?q=user/password` with a poisoned `name[#post_render]` render-array →
+  trigger `/?q=file/ajax/name/%23value/<form_build_id>`). Hardened `phi._content_credit` to credit
+  `euid=0(root)` (a SUID binary gives EFFECTIVE root even when real uid≠0) and a lone `root` line. RESULT:
+  deterministic (TargetAware + `oracle`) engagement reaches **goal_reached / ROOT=True in 2 steps**
+  (exploit_attempt→privilege_escalation), euid=0(root) via SUID `find`, `/root/thefinalflag.txt` readable.
+  **393 tests green.** G1 LLM A/B (prm vs llm_only, deepseek-chat, 5 trials, budget16/patience8) running →
+  `outputs/stage2_fullchain_dc1.json`. DC-1 is non-mutating (stateless RCE + read-only SUID) → no per-arm
+  reset needed. NOTE: SSH-transport boxes (Toppo/Symfonos) need `sshpass`/`plink` on the Windows host — check
+  availability before wiring them.
+- **★★ C-B RESULTS so far (2026-06-21) — `outputs/stage2_fullchain_{dc1,toppo}.json`.** **DC-1 G1 LLM A/B
+  (deepseek-chat, 5 trials, live):** prm **root 100% (5/5)**, mean 6.6 steps, 6.6 LLM calls; llm_only **root
+  60% (3/5)**, mean 12.0 steps, 12.4 calls. So on the harder MULTI-STEP full chain the **PRM clearly HELPS**
+  (more reliable + ~2× fewer steps/calls) — the OPPOSITE of the web-only efficiency inversion, and a real
+  positive C-B/PRM datapoint (n=5, CIs overlap, direction strong+consistent). **Toppo:1** chain validated
+  live (web /admin/notes.txt → ssh ted via the new paramiko helper `stage2/payloads/ssh_cmd.py` since the host
+  has no sshpass → SUID python → uid=0(root), flag `0wnedlab{...}`); deterministic engagement reaches ROOT in 1 step.
+  **Toppo LLM-autonomous A/B = 0% BOTH arms** (prm & llm_only never reach foothold; deterministic proposer
+  DOES → adapter is sound, this is the PROPOSER CEILING at the cred-discovery→ssh foothold, same pattern as
+  the web boxes' `exploit_never_proposed`). So C-B autonomy works when the foothold is a recognizable web
+  CVE (DC-1 self-advertising Drupal: prm 100%/llm 60%) but hits the proposer ceiling for non-advertising
+  cred+ssh footholds (Toppo). Both chains are adapter-proven (deterministic reaches root).
+  **2/4 boxes end-to-end proven (DC-1 autonomous + deterministic; Toppo deterministic).** New eta plumbing:
+  `stage2/payloads/drupalgeddon2.sh` (Drupal-7 RCE), `stage2/payloads/ssh_cmd.py` (paramiko one-shot SSH).
+  Honest nuance for the paper: the demoted "PRM obsoleted by good proposer" limitation is WEB-PHASE-specific;
+  on longer real kill chains the reranker recovers value. TODO: Raven-2 (MySQL-UDF, webshell) + Symfonos
+  (boundary) descriptors + A/B; then 4-box aggregate + phase-split.
+
+- **★ G2(a) RECON-BIAS PHASE HISTOGRAM (2026-06-21) — `scripts/analyze_recon_bias.py` →
+  `outputs/recon_bias_histogram.json`. C-C refined HONESTLY.** Mean PRM target label per (action_type ×
+  phase) over `prm_samples_train.jsonl` (4176 candidates; phase from the context's `Shell state:` /
+  `Verified vulnerabilities:`). Headline: `web_path_enumeration` 0.887 ≫ `exploit_attempt` 0.535, with
+  `command_execution` 0.044 / `privilege_escalation` 0.040. **Phase split (the smoking gun):** web_path_enum
+  `early 0.94 → advanced 0.609`; in ADVANCED (post-foothold) states it STILL outranks command_execution
+  (0.21) and privilege_escalation (0.199) — recon over-valued exactly where it should be ≈0. **BUT honest
+  nuance:** there ARE n=64 advanced-recon samples and the oracle partially devalued them (0.94→0.609), so it
+  is **NOT a pure "masked training never produced recon-when-advanced" gap** — the residual traces more to
+  the **abstract sim's information-gain reward** (recon keeps revealing paths post-foothold IN THE SIM, which
+  does not hold on real targets) than to action-masking alone. Implication for G2(b): retraining the oracle
+  WITHOUT the mask may NOT remove it (the audit anticipated this); the more likely root is the info-gain
+  reward term. C-C for the paper: "recon over-valuation is real and persists post-foothold; traced to the
+  simulator's info-gain reward; not removed by surgical label/inference fixes (3 failed) — a sim-to-real
+  reward-design warning." G2(b) oracle-reward intervention + G4 transfer baseline still TODO (VM-independent).
+
+- **★ H — REWARD-FIX RETRAIN (2026-06-21): honest NEGATIVE for the fix hypothesis, refines C-C.** Added
+  `WebAttackSimEnv(decay_recon_reward=True)` (zeroes the recon info-discovery bonus once a foothold exists;
+  `--decay-recon-reward` in `train_dqn.py`; default off → frozen artifacts safe; 9 new tests in
+  `tests/test_fullchain.py`, suite now 402). Trained a CONTROL (seed-0, 25k, no fix) and a REWARD-FIXED
+  oracle, generated both PRM datasets (`outputs/prm_samples_{control,rewardfix}_train.jsonl`), compared the
+  (action×phase) histogram. **RESULT:** the deployed PRM's strong recon bias **does NOT robustly reproduce** —
+  a fresh seed-0 CONTROL already has it WEAK (web_path_enum overall 0.455 vs deployed 0.887; **advanced 0.173,
+  correctly < command_execution 0.309** = recon properly devalued post-foothold). So the reward fix had no
+  strong bias to remove and even slightly RAISED web_path_enum (0.455→0.594). **The deployed PRM's recon
+  over-valuation (0.887/0.609-advanced) is partly a seed-GATE SELECTION artifact, not a deterministic
+  reward-design consequence.** C-C must be SOFTENED for the paper: "the reward design *permits* recon
+  over-valuation and the deployed (seed-gated) oracle landed on a high-recon solution; but it is
+  seed/selection-dependent — a fresh oracle shows it weakly — and 3 surgical fixes don't remove the DEPLOYED
+  model's bias." Honest + pre-empts a reviewer who would retrain and find it doesn't reproduce. (Simpler
+  practical fix than the reward intervention: re-select the oracle seed — control is already less biased.)
+  Artifacts: `outputs/oracle_{control,rewardfix}.pt`, `outputs/recon_bias_{control,rewardfix}.json`.
+
+- **★★ I — DC-1 n=10 + PHASE-SPLIT (2026-06-21): the strongest C-B result + the mechanism.**
+  `outputs/stage2_fullchain_dc1_n10.json`. **prm root 100% (10/10) CI[0.72,1.0] vs llm_only 40% (4/10)
+  CI[0.17,0.69] — CIs NON-overlapping** (essentially significant at n=10; the gap WIDENED from n=5's 100/60);
+  prm ~2× fewer steps (6.3 vs 11.5). **Phase-split (`live_ab_trials` `phase_split`, via `milestone_before`):**
+  prm progresses in BOTH phases (web 36% / local 37%); **llm_only does web (32%) but COLLAPSES in the
+  LOCAL/privesc phase: 9% (4/43)**. ⇒ **the PRM's full-chain value lives in the local/privilege-escalation
+  phase, where the LLM proposer's own ordering is weak** — the regime the web-only A/B never exercised. This
+  crisply explains the inversion reversal: the reranker is obsoleted in the web phase (good LLM order) but
+  essential in the local phase (poor LLM order). **This is the cleanest positive PRM result in the project.**
+
+- **Raven-2 / Symfonos-1 footholds — ATTEMPTED, honestly DEFERRED (2026-06-21).** Raven PHPMailer
+  (CVE-2016-10033) `-X` sendmail arg-injection POST to `/contact.php` **HANGS (HTTP 000 after 20s)** —
+  the box's MTA blocks and the `-X` debug log isn't written before timeout, so no webshell drops (2 genuine
+  attempts). Symfonos (SMB→creds→mail-masta LFI→SMTP log-poison→RCE) is even more fragile and was not pursued
+  (boundary, `enabled=false`). Both are the predicted **fragile multi-step foothold / proposer-ceiling class**;
+  the framework + registry are ready but the foothold exploits don't reliably fire on this host. **C-B evidence
+  stands on DC-1 (autonomous, root 100% vs 40% @ n=10) + Toppo (deterministic)** — 2/4 boxes, honestly scoped.
+
 Ranked next steps (all leak-free):
 
 0. **Run the paired A/B** (`python -m stage2.paired_ab --proposer llm --model deepseek-chat --executor

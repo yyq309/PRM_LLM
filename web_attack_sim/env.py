@@ -36,9 +36,15 @@ class RuntimeState:
 class WebAttackSimEnv:
     """A minimal Gym-style single-host Web penetration-testing simulator."""
 
-    def __init__(self, rewards: dict[str, float] | None = None):
+    # info-discovery (recon) progress events whose bonus is wasted once a foothold already exists —
+    # the root cause of the PRM's recon over-valuation (G2: post-foothold recon still earns +2.0 in-sim
+    # but is useless on real targets). `decay_recon_reward=True` zeroes that bonus post-foothold.
+    _RECON_EVENTS = {"path_found", "input_found", "fingerprint_found", "service_found"}
+
+    def __init__(self, rewards: dict[str, float] | None = None, *, decay_recon_reward: bool = False):
         self.actions = list(ACTIONS)
         self.rewards = rewards or DEFAULT_REWARDS
+        self.decay_recon_reward = decay_recon_reward
         self.state: RuntimeState | None = None
         self.max_steps = 20
         self.trace: list[dict[str, Any]] = []
@@ -174,6 +180,12 @@ class WebAttackSimEnv:
         if feedback.error_type:
             self._record_failure(feedback.error_type)
         reward = reward_for_feedback(feedback, self.rewards)
+        # reward correction (G2/H): once a foothold exists, a recon info-discovery bonus is wasted -> remove
+        # it (keep step_cost). This is the phase-conditioning the default reward lacks; it is what makes the
+        # PRM stop over-valuing recon post-foothold. Default off -> frozen oracle/PRM stay reproducible.
+        if (self.decay_recon_reward and feedback.progress_event in self._RECON_EVENTS
+                and self.state.shell_state in {"webshell", "command_execution"}):
+            reward -= self.rewards.get(feedback.progress_event, 0.0)
         obs = self._observation()
         info = {
             "action": {

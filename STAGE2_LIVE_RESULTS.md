@@ -9,6 +9,67 @@ audited. A/B = `prm` (PRM reranks the proposer's candidates) vs `llm_only` (the 
 
 ---
 
+## ★★ FULL-CHAIN VM RESULTS (C-B flagship, 2026-06-21)
+
+Real **VMware VulnHub VMs** on an isolated host-only segment (VMnet2, 192.168.52.0/24), the COMPLETE kill
+chain **Web entry → foothold → same-host privilege escalation → root** — what the Docker web boxes (foothold
+only) and XBEN (recon only) cannot give. Terminal metric = `reached_root` (non-gameable). Gated + audited;
+flags recorded boolean-only. New η plumbing: `stage2/payloads/drupalgeddon2.sh` (Drupal-7 RCE),
+`stage2/payloads/ssh_cmd.py` (paramiko one-shot SSH, host has no sshpass). Executor now strips the host Clash
+proxy (`eta._no_proxy_env`). φ credits `euid=0(root)`.
+
+| VM | chain | deterministic | **LLM-autonomous A/B (deepseek-chat, 5 trials)** |
+|---|---|---|---|
+| **DC-1** | Drupalgeddon2 (CVE-2018-7600) → SUID `find` → root | ✅ root, 2 steps | **n=10: prm root 100% (10/10) CI[0.72,1.0] vs llm_only 40% (4/10) CI[0.17,0.69] — CIs NON-overlapping**; ~2× fewer steps (6.3 vs 11.5). (n=5: 100% vs 60%.) |
+| **Toppo:1** | `/admin/notes.txt` cred → ssh → SUID `python` → root | ✅ root, 1 step | **0% both arms** — proposer never builds the cred→ssh foothold |
+| Raven-2 / Symfonos-1 | PHPMailer / SMB+LFI → … | deferred | foothold = fragile multi-step (same proposer-ceiling class) |
+
+**Two honest findings:**
+1. **On the harder MULTI-STEP real chain the PRM HELPS** (DC-1 n=10: root **100% vs 40%, non-overlapping CIs**,
+   ~2× fewer steps) — the **OPPOSITE** of the web-only efficiency inversion. **The phase-split shows WHY:**
+   prm makes progress in both phases (web 36% / local 37%), but **llm_only collapses in the LOCAL/privesc phase
+   (9%, 4/43)** while still doing web (32%). ⇒ **the PRM's full-chain value lives in the local/privilege-escalation
+   phase, where the LLM's own ordering is weak** — the regime the web-only A/B could not exercise. So the demoted
+   "good proposer obsoletes the PRM" limitation is **web-phase-specific**; on a real kill chain the reranker is
+   essential exactly where the proposer is weakest.
+2. **Proposer ceiling, not adapter:** autonomy succeeds when the foothold is a recognizable web CVE (DC-1
+   self-advertising Drupal) and fails when it needs cred-discovery→ssh (Toppo 0%) — yet the **deterministic
+   proposer reaches root on both**, so the adapter is sound (same lesson as the Docker boxes' `exploit_never_proposed`).
+
+Reports: `outputs/stage2_fullchain_dc1.json`, `outputs/stage2_fullchain_toppo.json`.
+
+## ★ C-C MECHANISM — recon over-valuation traced to the reward (G2, 2026-06-21)
+
+`scripts/analyze_recon_bias.py` → `outputs/recon_bias_histogram.json`. Mean PRM target label per
+(action_type × phase) over `prm_samples_train.jsonl`:
+- `web_path_enumeration` **early 0.94 → advanced(post-foothold) 0.609**, and post-foothold it STILL outranks
+  `command_execution` (0.21) and `privilege_escalation` (0.199) — recon over-valued exactly where it should be ≈0.
+- **Cause (not action-masking):** `web_attack_sim/reward.py` grants `path_found:+2.0`, `input_found:+2.0`,
+  `fingerprint_found:+1.5` **whenever recon reveals new info, with NO phase conditioning** — so even post-foothold,
+  finding a new path earns +2.0 in the sim. The oracle *correctly* keeps recon valuable; that's **useless on real
+  targets**. A sim-to-real **reward-design** gap; the 3 surgical label/inference fixes failed because the signal
+  is in the reward, not the labels. (n=64 advanced-recon samples exist & were partially devalued 0.94→0.609 →
+  NOT a "masked training never saw them" gap.)
+- **H refinement (reward-fix retrain, honest negative):** retraining the oracle with the recon bonus
+  zeroed post-foothold (`--decay-recon-reward`) did **not** reduce the bias — because a **fresh seed-0 control
+  oracle already devalues recon post-foothold correctly** (web_path_enum advanced **0.173 < command_exec 0.309**;
+  overall 0.455 vs the deployed 0.887). So the deployed PRM's strong recon over-valuation is partly a
+  **seed-gate *selection* artifact**, not a deterministic reward consequence. Honest C-C: the reward *permits*
+  recon over-valuation and the deployed oracle landed on a high-recon solution, but its severity is
+  **seed-dependent**; surgical fixes don't remove the *deployed* model's bias. (`outputs/recon_bias_{control,rewardfix}.json`.)
+
+## ★ C-A TRANSFER BASELINE — learned PRM vs cheap heuristic (G4, 2026-06-21)
+
+From the reranker-isolation ablations (`outputs/stage2_ablation_rerank{,_llm}.json`), pooled per-step progress:
+- **Deterministic proposer** (full surface): prm 0.267 ≈ **heuristic 0.262 (Δ+0.4pp, perm p=0.65, NS)**; prm < random
+  (Δ−2.7pp, p=0.003). ⇒ the learned RL value adds **nothing** over a cheap hand-coded prior here.
+- **LLM proposer** (targeted): prm 0.685 > **heuristic/goal-ladder 0.479 (Δ+20.6pp, perm p=0.001)**; > random (p=0.007).
+  ⇒ the learned value **does** beat the cheap prior — but only in the realistic LLM-proposer regime.
+
+**Honest C-A:** the learned value's advantage over a cheap domain heuristic is itself **proposer-conditional**.
+
+---
+
 ## ★ FINAL RESULT (2026-06-18) — honest, cluster-robust
 
 5 trials/arm × 12 boxes, `deepseek-chat` proposer (both arms share it → fair). Full per-box numbers in

@@ -107,12 +107,13 @@ class WebDQNAgent:
         mask_invalid_actions: bool,
         task_paths: list[Path] | None = None,
         rewards: dict[str, float] | None = None,
+        decay_recon_reward: bool = False,
     ):
         self.rng = random.Random(seed)
         np.random.seed(seed)
         torch.manual_seed(seed)
 
-        self.env = WebAttackSimEnv(rewards=rewards)
+        self.env = WebAttackSimEnv(rewards=rewards, decay_recon_reward=decay_recon_reward)
         self.task_paths = list(task_paths or bundled_task_paths())
         if not self.task_paths:
             raise ValueError("at least one training task is required")
@@ -353,6 +354,7 @@ def train(args: argparse.Namespace) -> None:
         mask_invalid_actions=args.mask_invalid_actions,
         task_paths=train_task_paths,
         rewards=rewards,
+        decay_recon_reward=args.decay_recon_reward,
     )
 
     # Curriculum (method §12.1): easy -> easy+medium -> all, by the task `difficulty` tag.
@@ -445,6 +447,10 @@ def main() -> None:
     parser.add_argument("--curriculum", action="store_true", help="Easy->medium->hard curriculum by task difficulty tag (method §12.1).")
     parser.add_argument("--reward-scale", type=float, default=1.0, help="Multiply all reward magnitudes (reward-sensitivity ablation).")
     parser.add_argument("--reward-jitter", type=float, default=0.0, help="Per-event multiplicative reward noise in [1-j, 1+j].")
+    parser.add_argument("--decay-recon-reward", action="store_true",
+                        help="G2/H reward fix: zero the recon info-discovery bonus (path/input/fingerprint/service "
+                             "found) once a foothold (webshell/command_execution) exists, so the oracle stops "
+                             "over-valuing post-foothold recon.")
     parser.add_argument("--output", type=Path, default=ROOT / "outputs" / "web_dqn.pt")
     args = parser.parse_args()
     train(args)

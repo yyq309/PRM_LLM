@@ -196,10 +196,26 @@ class Phi:
                     self.state.privilege_level = "root"; out["privilege_level"] = "root"
             elif self.state.privilege_level == "none":
                 self.state.privilege_level = "web_user"
+        # SUID/sudo privesc gives EFFECTIVE root even when the real uid differs (id shows euid=0(root)),
+        # or a privesc whoami prints a lone "root" line. Either is a root foothold (full-VM local phase).
+        if self.state.privilege_level != "root" and (
+            "euid=0(root)" in low or re.search(r"(?m)^\s*root\s*$", output)):
+            self.state.privilege_level = "root"; out["privilege_level"] = "root"
+            if self.state.shell_state != "command_execution":
+                self.state.shell_state = "command_execution"; out["shell_state"] = "command_execution"
         if _PASSWD_LINE.search(output) and "etc_passwd" not in self.state.read_files:
             self.state.read_files.add("etc_passwd"); out["read_files"] = sorted(self.state.read_files)
         if re.search(r"(?i)flag\{[^}\n]{1,80}\}", output) and "flag" not in self.state.read_files:
             self.state.read_files.add("flag"); out["read_files"] = sorted(self.state.read_files)
+        # full-VM local post-exploitation: a `sudo -l` NOPASSWD entry or a SUID-binary listing surfaces a
+        # privesc vector -> credit PROGRESS so enumeration is not counted as wasted / does not trip the
+        # circuit-breaker mid-chain. Observable command output only (NOT hidden ground truth); monotone.
+        if "local_privesc_surface" not in self.state.verified_vulnerabilities and (
+            re.search(r"\bnopasswd\b|\(all\b|may run the following", low)   # sudo -l misconfig
+            or re.search(r"-rws[r-]", output)                              # SUID bit in `ls -l` output
+        ):
+            self.state.verified_vulnerabilities.add("local_privesc_surface")
+            out["verified_vulnerabilities"] = sorted(self.state.verified_vulnerabilities)
         return out
 
     def observation(self) -> Observation:

@@ -1,0 +1,218 @@
+{
+  "summary": {
+    "recon_label_advanced": {
+      "mean": 0.249,
+      "n": 194
+    },
+    "exploit_label_advanced": {
+      "mean": 0.275,
+      "n": 176
+    },
+    "recon_label_early": {
+      "mean": 0.403,
+      "n": 795
+    },
+    "web_path_enum_advanced": {
+      "mean": 0.609,
+      "n": 64
+    },
+    "web_path_enum_early": {
+      "mean": 0.94,
+      "n": 292
+    }
+  },
+  "table": {
+    "file_upload_attempt": {
+      "overall_mean": 1.0,
+      "overall_n": 12,
+      "early_recon": {
+        "mean": 1.0,
+        "n": 12
+      },
+      "mid_vuln_found": {
+        "mean": null,
+        "n": 0
+      },
+      "advanced_foothold": {
+        "mean": null,
+        "n": 0
+      }
+    },
+    "web_path_enumeration": {
+      "overall_mean": 0.887,
+      "overall_n": 443,
+      "early_recon": {
+        "mean": 0.94,
+        "n": 292
+      },
+      "mid_vuln_found": {
+        "mean": 0.912,
+        "n": 87
+      },
+      "advanced_foothold": {
+        "mean": 0.609,
+        "n": 64
+      }
+    },
+    "vulnerability_check": {
+      "overall_mean": 0.637,
+      "overall_n": 29,
+      "early_recon": {
+        "mean": 0.734,
+        "n": 25
+      },
+      "mid_vuln_found": {
+        "mean": 0.034,
+        "n": 4
+      },
+      "advanced_foothold": {
+        "mean": null,
+        "n": 0
+      }
+    },
+    "exploit_attempt": {
+      "overall_mean": 0.535,
+      "overall_n": 29,
+      "early_recon": {
+        "mean": null,
+        "n": 0
+      },
+      "mid_vuln_found": {
+        "mean": 0.535,
+        "n": 29
+      },
+      "advanced_foothold": {
+        "mean": null,
+        "n": 0
+      }
+    },
+    "sensitive_file_read": {
+      "overall_mean": 0.486,
+      "overall_n": 41,
+      "early_recon": {
+        "mean": 0.106,
+        "n": 4
+      },
+      "mid_vuln_found": {
+        "mean": 0.152,
+        "n": 9
+      },
+      "advanced_foothold": {
+        "mean": 0.647,
+        "n": 28
+      }
+    },
+    "auth_attempt": {
+      "overall_mean": 0.344,
+      "overall_n": 30,
+      "early_recon": {
+        "mean": 0.646,
+        "n": 16
+      },
+      "mid_vuln_found": {
+        "mean": null,
+        "n": 0
+      },
+      "advanced_foothold": {
+        "mean": 0.0,
+        "n": 14
+      }
+    },
+    "input_discovery": {
+      "overall_mean": 0.165,
+      "overall_n": 63,
+      "early_recon": {
+        "mean": 0.17,
+        "n": 61
+      },
+      "mid_vuln_found": {
+        "mean": null,
+        "n": 0
+      },
+      "advanced_foothold": {
+        "mean": 0.0,
+        "n": 2
+      }
+    },
+    "http_fingerprint": {
+      "overall_mean": 0.126,
+      "overall_n": 348,
+      "early_recon": {
+        "mean": 0.129,
+        "n": 215
+      },
+      "mid_vuln_found": {
+        "mean": 0.097,
+        "n": 69
+      },
+      "advanced_foothold": {
+        "mean": 0.147,
+        "n": 64
+      }
+    },
+    "credential_use": {
+      "overall_mean": 0.086,
+      "overall_n": 365,
+      "early_recon": {
+        "mean": 0.036,
+        "n": 223
+      },
+      "mid_vuln_found": {
+        "mean": 0.298,
+        "n": 78
+      },
+      "advanced_foothold": {
+        "mean": 0.0,
+        "n": 64
+      }
+    },
+    "command_execution": {
+      "overall_mean": 0.044,
+      "overall_n": 360,
+      "early_recon": {
+        "mean": 0.0,
+        "n": 215
+      },
+      "mid_vuln_found": {
+        "mean": 0.0,
+        "n": 69
+      },
+      "advanced_foothold": {
+        "mean": 0.21,
+        "n": 76
+      }
+    },
+    "privilege_escalation": {
+      "overall_mean": 0.04,
+      "overall_n": 356,
+      "early_recon": {
+        "mean": 0.0,
+        "n": 215
+      },
+      "mid_vuln_found": {
+        "mean": 0.0,
+        "n": 69
+      },
+      "advanced_foothold": {
+        "mean": 0.199,
+        "n": 72
+      }
+    },
+    "content_retrieval": {
+      "overall_mean": 0.021,
+      "overall_n": 360,
+      "early_recon": {
+        "mean": 0.033,
+        "n": 227
+      },
+      "mid_vuln_found": {
+        "mean": 0.0,
+        "n": 69
+      },
+      "advanced_foothold": {
+        "mean": 0.0,
+        "n": 64
+      }
+    }
+  }
+}

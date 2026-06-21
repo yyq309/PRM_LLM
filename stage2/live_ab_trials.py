@@ -28,6 +28,19 @@ from stage2.engagement import (run_engagement, LLMProposer, TargetAwareProposer,
                                CachingProposer, _make_executor)
 from stage2.eta import load_target  # noqa: E402
 from stage2.safety import AuditLog  # noqa: E402
+from stage2 import vm_reset  # noqa: E402
+
+
+def _revert_vm(desc: dict) -> dict:
+    """Full-chain VM boxes that MUTATE state (Raven UDF, Symfonos PATH-hijack) must be reverted to the
+    'clean' snapshot before each engagement so one arm cannot pollute the next. DC-1/Toppo are
+    non-mutating so --reset-vm is optional for them."""
+    reg = vm_reset._load()
+    vm = desc.get("vm", {})
+    t = {"label": desc.get("name", "vm"), "vmx": vm.get("vmx"), "snapshot": vm.get("snapshot", "clean"),
+         "ip": vm.get("ip"), "port": desc.get("port", 80), "healthcheck": "/",
+         "expect_status": desc.get("expect_status", [200, 301, 302, 403])}
+    return vm_reset.reset_one(t, vm_reset._vmrun_path(reg))
 
 
 def _wilson(k: int, n: int) -> tuple[float, float]:
@@ -60,6 +73,9 @@ def main() -> None:
     p.add_argument("--unpaired", action="store_true",
                    help="disable the per-trial shared CachingProposer (CRN). Default is PAIRED: arms share "
                         "the candidate set on coincident states -> ~half the LLM calls + lower variance.")
+    p.add_argument("--reset-vm", action="store_true",
+                   help="revert the full_vm 'clean' snapshot before each engagement (needed for state-mutating "
+                        "boxes: Raven UDF / Symfonos PATH-hijack; optional for non-mutating DC-1/Toppo).")
     p.add_argument("--report-output", type=Path, default=ROOT / "outputs" / "stage2_live_ab_trials.json")
     args = p.parse_args()
     started = time.strftime("%Y-%m-%dT%H:%M:%S")
@@ -89,6 +105,9 @@ def main() -> None:
         # set on coincident states (CRN), ~halving LLM calls and cancelling proposer-draw variance.
         trial_prop = None if args.unpaired else CachingProposer(proposer())
         for mode in order:
+            if args.reset_vm and desc.get("kind") == "full_vm":
+                rv = _revert_vm(desc)
+                print(f"  [reset-vm] {rv['label']} ok={rv['ok']} status={rv.get('status')}", flush=True)
             ex = _make_executor(args.executor, desc, audit, None, args.confirmed_isolated)
             # a transient network drop (DeepSeek SSL EOF) must not kill the whole study — record the
             # trial as errored and continue, so a few blips degrade N rather than abort everything.
@@ -121,6 +140,15 @@ def main() -> None:
         prog = sum(x["progress_steps"] for x in rows)
         tot = sum(x["steps_taken"] for x in rows)
         plo, phi = _wilson(prog, tot)
+        # C-B phase-split: per-step progress in the WEB/recon phase (milestone_before<2, no foothold yet)
+        # vs the LOCAL phase (milestone_before>=2, post-foothold). Shows WHERE the reranker's value lives.
+        wp = wt = lp = lt = 0
+        for x in rows:
+            for s in x.get("steps", []):
+                if s.get("milestone_before", 0) >= 2:
+                    lt += 1; lp += int(bool(s.get("made_progress")))
+                else:
+                    wt += 1; wp += int(bool(s.get("made_progress")))
         return {"n": n,
                 # graded milestones (partial credit)
                 "goal_reached": g, "goal_rate": round(g / max(n, 1), 3),
@@ -132,6 +160,8 @@ def main() -> None:
                 # process / value-of-information (high-N per-step metric)
                 "per_step_progress": {"progress_steps": prog, "total_steps": tot,
                                       "rate": round(prog / max(tot, 1), 3), "ci95": [round(plo, 3), round(phi, 3)]},
+                "phase_split": {"web": {"progress": wp, "total": wt, "rate": round(wp / max(wt, 1), 3)},
+                                "local": {"progress": lp, "total": lt, "rate": round(lp / max(lt, 1), 3)}},
                 "mean_fields_gained": _mean(rows, "fields_gained_total"),
                 "mean_distinct_productive_actions": _mean(rows, "distinct_productive_actions"),
                 "mean_wasted_rate": _mean(rows, "wasted_rate"),

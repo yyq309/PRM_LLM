@@ -513,7 +513,10 @@ def run_engagement(target_desc: dict, *, prm, executor, proposer, mode: str = "p
         rows.append({"t": t, "chosen_action": atype, "eta_tool": ETA_TOOL[action.action_type],
                      "executed": bool(res and res.executed), "made_progress": made_progress,
                      "n_candidates": len(raw_cands), "n_available": len(avail), "fields_gained": fg,
-                     "exhausted_after": atype in exhausted})
+                     "exhausted_after": atype in exhausted,
+                     # phase BEFORE the action (for the C-B web-vs-local phase-split): 0/1 = web/recon
+                     # phase (no foothold yet), >=2 = local phase (command_execution/root post-foothold).
+                     "milestone_before": _milestone_level(before)})
         if audit:
             audit.record(mode="engagement_step", t=t, box=box, run_mode=mode,
                          action=action.action_type.value, made_progress=made_progress)

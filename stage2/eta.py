@@ -14,9 +14,21 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from pathlib import Path
+import os
 import shlex
 import subprocess
 import time
+
+
+def _no_proxy_env() -> dict:
+    """Subprocess env that BYPASSES any host HTTP proxy. The host here sits behind a local Clash-style
+    proxy (HTTP_PROXY=127.0.0.1:7897); curl/wget would route the private lab-VM traffic (192.168.52.x)
+    through it and get 502 Bad Gateway. The executor only ever talks to the in-scope lab target, so
+    disabling the proxy for its subprocesses is always correct."""
+    env = {**os.environ, "NO_PROXY": "*", "no_proxy": "*"}
+    for k in ("HTTP_PROXY", "HTTPS_PROXY", "ALL_PROXY", "http_proxy", "https_proxy", "all_proxy"):
+        env.pop(k, None)
+    return env
 
 from web_attack_sim.action_space import ActionType
 from web_attack_sim.schemas import Action
@@ -192,7 +204,8 @@ class LiveExecutor:
         try:
             # capture BYTES (not text=True): real tool output is not guaranteed to be the Windows
             # locale encoding (GBK here), so decode UTF-8 with replacement ourselves.
-            proc = subprocess.run(shlex.split(command), capture_output=True, timeout=self.timeout)
+            proc = subprocess.run(shlex.split(command), capture_output=True, timeout=self.timeout,
+                                  env=_no_proxy_env())
             out = (proc.stdout or b"").decode("utf-8", "replace") + (proc.stderr or b"").decode("utf-8", "replace")
             rc = proc.returncode
         except subprocess.TimeoutExpired:

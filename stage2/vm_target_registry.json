@@ -1,14 +1,17 @@
 {
-  "_doc": "Local VMware VulnHub lab registry. Edit the IPs after first boot. Targets with enabled=true are used by stage2/vm_lab.py for hosts rendering, health checks, and descriptor sync.",
+  "_doc": "Local VMware VulnHub full-chain lab registry (Stage-2 C-B). Real IPs filled from the DHCP lease file 2026-06-21. Targets with enabled=true are used by stage2/vm_lab.py (probe/hosts/sync) and stage2/vm_reset.py (vmrun snapshot revert). Take a 'clean' snapshot of each VM after first good boot.",
+  "vmrun": "D:\\software\\VMware\\VMware Workstation\\vmrun.exe",
   "lab": {
-    "virtualizer": "VMware Workstation / VMware Player",
-    "network_mode": "host-only",
+    "virtualizer": "VMware Workstation",
+    "network_mode": "host-only-custom",
     "vmnet": "VMnet2",
-    "subnet_example": "192.168.56.0/24",
+    "subnet": "192.168.52.0/24",
+    "host_adapter_ip": "192.168.52.1",
+    "host_adapter_note": "Set the VMware VMnet2 host adapter to 192.168.52.1/24 (elevated: netsh interface ip set address name=\"VMware Network Adapter VMnet2\" static 192.168.52.1 255.255.255.0). If it APIPAs to 169.254.x the host cannot route to the VMs.",
     "notes": [
-      "Keep the target VMs off bridged/NAT while doing live testing.",
-      "Attach the attacker VM (for example Kali) to the same host-only segment.",
-      "Take a clean snapshot immediately after first successful boot."
+      "Keep the target VMs on the isolated VMnet2 (no bridged/NAT) during live testing.",
+      "Take a 'clean' snapshot immediately after first successful boot; vm_reset.py reverts to it between trials.",
+      "Flags are recorded as root_flag_captured boolean only; never persist/print plaintext."
     ]
   },
   "targets": [
@@ -16,73 +19,62 @@
       "label": "DC-1",
       "enabled": true,
       "descriptor": "targets/vulnhub-dc-1.json",
-      "target": "http://dc1.lab",
-      "hostname": "dc1.lab",
-      "ip": "192.168.56.110",
+      "target": "http://192.168.52.130",
+      "ip": "192.168.52.130",
+      "vmx": "E:\\VMwareVulnHub\\DC-1\\DC-1.vmx",
+      "snapshot": "clean",
+      "port": 80,
       "healthcheck": "/",
-      "expect_status": [
-        200,
-        301,
-        302,
-        403
-      ],
-      "vm_format": "ova",
-      "source_url": "https://www.vulnhub.com/entry/dc-1,292/",
-      "notes": "Drupal web entry plus SUID find root. Good for restoring the host-level privesc layer missing from the Docker-only Drupal path."
+      "expect_status": [200, 301, 302, 403],
+      "privesc_vector": "suid-find",
+      "foothold": "webshell",
+      "notes": "Drupal 7 Drupalgeddon2 (CVE-2018-7600) web RCE -> SUID find -> root /root/thefinalflag.txt. Cleanest full chain; recommended FIRST live box."
     },
     {
       "label": "Raven-2",
       "enabled": true,
       "descriptor": "targets/vulnhub-raven-2.json",
-      "target": "http://raven2.lab",
-      "hostname": "raven2.lab",
-      "ip": "192.168.56.111",
+      "target": "http://192.168.52.129",
+      "ip": "192.168.52.129",
+      "vmx": "E:\\VMwareVulnHub\\Raven-2\\Raven-2.vmx",
+      "snapshot": "clean",
+      "port": 80,
       "healthcheck": "/",
-      "expect_status": [
-        200,
-        301,
-        302
-      ],
-      "vm_format": "ova",
-      "source_url": "https://www.vulnhub.com/entry/raven-2,269/",
-      "notes": "Web foothold to service/database privilege escalation. Keep it as the MySQL/UDF class VM."
+      "expect_status": [200, 301, 302],
+      "privesc_vector": "mysql-udf",
+      "foothold": "webshell",
+      "notes": "PHPMailer (CVE-2016-10033) web RCE -> MySQL UDF (root daemon) -> root /root/flag4.txt. Different privesc class (service/DB)."
     },
     {
       "label": "Toppo-1",
       "enabled": true,
       "descriptor": "targets/vulnhub-toppo-1.json",
-      "target": "http://toppo1.lab",
-      "hostname": "toppo1.lab",
-      "ip": "192.168.56.112",
+      "target": "http://192.168.52.132",
+      "ip": "192.168.52.132",
+      "vmx": "E:\\VMwareVulnHub\\Toppo-1\\Toppo-1.vmx",
+      "snapshot": "clean",
+      "port": 80,
       "healthcheck": "/",
-      "expect_status": [
-        200,
-        301,
-        302,
-        403
-      ],
-      "vm_format": "vmdk",
-      "source_url": "https://www.vulnhub.com/entry/toppo-1,245/",
-      "notes": "Kept to match the original shortlist. Public write-ups usually classify the root step closer to SUID/GTFOBins than a clean sudo-only misconfiguration."
+      "expect_status": [200, 301, 302, 403],
+      "privesc_vector": "suid-python",
+      "foothold": "ssh",
+      "notes": "Dir-enum exposes a password -> SSH (ted) -> SUID python -> root /root/flag.txt. SSH-foothold modality (sshpass transport)."
     },
     {
       "label": "Symfonos-1",
       "enabled": false,
       "descriptor": "targets/vulnhub-symfonos-1.json",
-      "target": "http://symfonos.local",
-      "hostname": "symfonos.local",
-      "http_host": "symfonos.local",
-      "ip": "192.168.56.113",
+      "target": "http://192.168.52.131",
+      "ip": "192.168.52.131",
+      "vmx": "E:\\VMwareVulnHub\\Symfonos-1\\Symfonos-1.vmx",
+      "snapshot": "clean",
+      "port": 80,
       "healthcheck": "/",
-      "expect_status": [
-        200,
-        301,
-        302,
-        403
-      ],
-      "vm_format": "ova",
-      "source_url": "https://www.vulnhub.com/entry/symfonos-1,322/",
-      "notes": "Optional replacement for Toppo. Common write-ups treat it as a PATH-hijack/SUID style root path rather than a pure sudo GTFOBins box."
+      "expect_status": [200, 301, 302, 403],
+      "privesc_vector": "suid-path-hijack",
+      "foothold": "ssh",
+      "boundary_case": true,
+      "notes": "BOUNDARY CASE (enabled=false until DC-1/Raven/Toppo work): SMB + WP mail-masta LFI + SMTP log-poisoning -> RCE -> SUID PATH-hijack -> /root/proof.txt. Multi-step novel foothold the proposer likely cannot construct (XBEN-like); drop if it never reaches foothold."
     }
   ]
 }
