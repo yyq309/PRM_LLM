@@ -106,6 +106,20 @@ reproducible (`python -m stage2.stats_analysis`):
 | **per-step progress** | +14.8pp | 0.0066 | **0.013** | [+4.9, +26.1]pp | OR 1.81, h 0.30 | **SIGNIFICANT** |
 | **goal-aligned progress** (forward-action only) | +9.3pp | 0.039 | **0.028** | [+2.0, +17.5]pp | OR 1.70, h 0.22 | **SIGNIFICANT** |
 | per-episode goal-reach | +14.0pp | 0.096 | 0.090 | [+2.0, +26.0]pp | OR 2.18, h 0.34 | NS |
+
+**Multiple-comparison correction (Holm-Bonferroni, 2026-06-21 — `stage2/stats_analysis.py` →
+`multiple_comparison`).** Treating the **pre-specified pooled** per-step + per-episode as the PRIMARY
+confirmatory family: the **pooled per-step SURVIVES Holm (raw 0.02 → adj 0.04, SIGNIFICANT)**; per-episode
+does not (0.09). Over the **full exploratory family of 39 clustered tests** (every per-box + stratified +
+variant), **0 survive** and 5 (incl. pooled per-step) are "suggestive" — expected, since per-box tests are
+underpowered by design. ⇒ the confirmatory per-step claim holds under correction; the per-box numbers are
+descriptive only. (The C-B headline — DC-1 full-chain root 100% vs 40%, non-overlapping CIs — and G3 paired
+are SEPARATE pre-specified comparisons, not in this exploratory family.)
+
+**New metrics added (2026-06-21).** Each engagement/arm now also reports: **`top1_oracle_agreement_rate`**
+(#3 — direct PRM ranking accuracy: fraction of decisions whose top-1 == the goal-aware oracle's pick over the
+real candidate set), and cost **`llm_tokens_total` + `duration_s`** (#4 — token + wall-clock, alongside
+call/exec counts). Effect sizes (RD/RR/OR/Cohen's h) are reported with every clustered test.
 | per-step progress (self-adv subset only) | +14.4pp | **0.024** | **0.066** | [+1.9, +28.3]pp | OR 1.79 | **NS** |
 
 **Honest correction to the earlier headline:** the per-step advantage on the *self-advertising subset*

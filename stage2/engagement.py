@@ -367,6 +367,15 @@ def run_engagement(target_desc: dict, *, prm, executor, proposer, mode: str = "p
     phi = Phi(remaining_budget=budget)
     eta_ctx = eta_ctx_from_target(target_desc)
     box = target_desc["name"]
+    # cost metrics (#4): wall-clock + LLM token usage. Deterministic proposers never call the client, so
+    # the usage stays 0 there; the import is guarded so this works with or without the LLM client on path.
+    import time as _time
+    _t0 = _time.monotonic()
+    try:
+        from scripts.deepseek_client import reset_usage as _reset_usage, get_usage as _get_usage
+        _reset_usage()
+    except Exception:  # noqa: BLE001
+        _get_usage = lambda: {"total_tokens": 0, "prompt_tokens": 0, "completion_tokens": 0, "calls": 0}
     trace_hist: list[dict] = []
     rows = []
     wasted = 0
@@ -374,6 +383,9 @@ def run_engagement(target_desc: dict, *, prm, executor, proposer, mode: str = "p
     # richer-than-success-rate telemetry (cost / abstraction / value-of-information / safety)
     proposer_calls = eta_execs = gate_refusals = 0
     n_proposed = n_unmappable = fields_gained_total = progress_steps = 0
+    # #3 direct ranking metric: per decision, is the chosen (top-1) action the goal-aware oracle's pick over
+    # the SAME candidate set? = "PRM top-1 ranking accuracy on real candidate sets" (vs llm_only/random).
+    top1_oracle_agree = 0
     # did the proposer EVER put a foothold-class action on the table? (measures the
     # exploit_never_proposed ceiling — independent of whether it was then chosen/executed)
     EXPLOIT_CLASSES = {"exploit_attempt", "file_upload_attempt", "auth_attempt", "command_execution"}
@@ -465,6 +477,11 @@ def run_engagement(target_desc: dict, *, prm, executor, proposer, mode: str = "p
 
         action = _ENH.normalize(chosen).action  # enhanced ψ drives the executed/mapped action
         atype = action.action_type.value
+        # #3 ranking accuracy: did the chosen top-1 match the goal-aware oracle's pick over `avail`?
+        _av_types = [_ENH.normalize(c).action.action_type.value for c in avail]
+        _best_t = _av_types[max(range(len(avail)), key=lambda j: _oracle_priority(_av_types[j], obs_dict))]
+        if atype == _best_t:
+            top1_oracle_agree += 1
         before = phi.state.snapshot()
         # an action the safety gate refuses (out-of-scope command, unrenderable) must not crash the
         # engagement — treat it as a no-progress step and let the exhaustion guard mask it.
@@ -547,13 +564,19 @@ def run_engagement(target_desc: dict, *, prm, executor, proposer, mode: str = "p
         # process / efficiency
         "progress_steps": progress_steps,
         "per_step_progress_rate": round(progress_steps / max(steps_taken, 1), 4),
+        # #3 direct ranking accuracy: fraction of decisions whose top-1 == the goal-aware oracle's pick
+        "top1_oracle_agreement_rate": round(top1_oracle_agree / max(steps_taken, 1), 4),
         "wasted_actions": wasted,
         "wasted_rate": round(wasted / max(steps_taken, 1), 4),
         "fields_gained_total": fields_gained_total,
         "distinct_productive_actions": distinct_productive,
-        # cost
+        # cost (#4: LLM token usage + wall-clock, alongside call/exec counts)
         "proposer_calls": proposer_calls,
         "eta_executions": eta_execs,
+        "llm_tokens_total": _get_usage().get("total_tokens", 0),
+        "llm_tokens_prompt": _get_usage().get("prompt_tokens", 0),
+        "llm_tokens_completion": _get_usage().get("completion_tokens", 0),
+        "duration_s": round(_time.monotonic() - _t0, 1),
         # abstraction + safety
         "n_proposed": n_proposed,
         "live_out_of_abstraction_rate": round(n_unmappable / max(n_proposed, 1), 4),

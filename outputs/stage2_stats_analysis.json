@@ -1581,5 +1581,309 @@
       "prm": 0.579,
       "llm_only": 0.488
     }
+  },
+  "multiple_comparison": {
+    "method": "holm-bonferroni",
+    "alpha": 0.05,
+    "primary_family": {
+      "size": 2,
+      "tests": [
+        {
+          "test": "pooled[all_full]:per_step",
+          "raw_p": 0.02,
+          "adj_p_holm": 0.04,
+          "significant": true,
+          "suggestive": false
+        },
+        {
+          "test": "pooled[all_full]:per_episode_goal",
+          "raw_p": 0.0913,
+          "adj_p_holm": 0.0913,
+          "significant": false,
+          "suggestive": false
+        }
+      ],
+      "note": "pre-specified confirmatory: pooled per-step + per-episode (all full-goal boxes)"
+    },
+    "exploratory_family": {
+      "size": 39,
+      "n_significant_after": 0,
+      "n_suggestive": 5,
+      "results": [
+        {
+          "test": "Struts2-S2-045:per_step",
+          "raw_p": 0.0167,
+          "adj_p_holm": 0.6513,
+          "significant": false,
+          "suggestive": true
+        },
+        {
+          "test": "pooled[all_full]:per_step",
+          "raw_p": 0.02,
+          "adj_p_holm": 0.76,
+          "significant": false,
+          "suggestive": true
+        },
+        {
+          "test": "ThinkPHP-5.0.23:per_step",
+          "raw_p": 0.0252,
+          "adj_p_holm": 0.9324,
+          "significant": false,
+          "suggestive": true
+        },
+        {
+          "test": "goal_aligned:per_step",
+          "raw_p": 0.0442,
+          "adj_p_holm": 1.0,
+          "significant": false,
+          "suggestive": true
+        },
+        {
+          "test": "Struts2-S2-045:per_episode_goal",
+          "raw_p": 0.0477,
+          "adj_p_holm": 1.0,
+          "significant": false,
+          "suggestive": true
+        },
+        {
+          "test": "pooled[all_full]:per_episode_goal",
+          "raw_p": 0.0913,
+          "adj_p_holm": 1.0,
+          "significant": false,
+          "suggestive": false
+        },
+        {
+          "test": "stratified[RCE]:per_step",
+          "raw_p": 0.1089,
+          "adj_p_holm": 1.0,
+          "significant": false,
+          "suggestive": false
+        },
+        {
+          "test": "php-cgi-2012-1823:per_step",
+          "raw_p": 0.1219,
+          "adj_p_holm": 1.0,
+          "significant": false,
+          "suggestive": false
+        },
+        {
+          "test": "pooled[self_adv_full]:per_step",
+          "raw_p": 0.1235,
+          "adj_p_holm": 1.0,
+          "significant": false,
+          "suggestive": false
+        },
+        {
+          "test": "Tomcat8-weakpw:per_step",
+          "raw_p": 0.1244,
+          "adj_p_holm": 1.0,
+          "significant": false,
+          "suggestive": false
+        },
+        {
+          "test": "Struts2-S2-048:per_step",
+          "raw_p": 0.1311,
+          "adj_p_holm": 1.0,
+          "significant": false,
+          "suggestive": false
+        },
+        {
+          "test": "pooled[self_adv_full]:per_episode_goal",
+          "raw_p": 0.1465,
+          "adj_p_holm": 1.0,
+          "significant": false,
+          "suggestive": false
+        },
+        {
+          "test": "ThinkPHP-5-rce:per_episode_goal",
+          "raw_p": 0.2077,
+          "adj_p_holm": 1.0,
+          "significant": false,
+          "suggestive": false
+        },
+        {
+          "test": "stratified[auth]:per_step",
+          "raw_p": 0.2164,
+          "adj_p_holm": 1.0,
+          "significant": false,
+          "suggestive": false
+        },
+        {
+          "test": "Gitea-1.4:per_step",
+          "raw_p": 0.2466,
+          "adj_p_holm": 1.0,
+          "significant": false,
+          "suggestive": false
+        },
+        {
+          "test": "Joomla-8917-sqli:per_step",
+          "raw_p": 0.272,
+          "adj_p_holm": 1.0,
+          "significant": false,
+          "suggestive": false
+        },
+        {
+          "test": "stratified[SQLi]:per_step",
+          "raw_p": 0.272,
+          "adj_p_holm": 1.0,
+          "significant": false,
+          "suggestive": false
+        },
+        {
+          "test": "php-inclusion-LFI:per_step",
+          "raw_p": 0.2827,
+          "adj_p_holm": 1.0,
+          "significant": false,
+          "suggestive": false
+        },
+        {
+          "test": "WebLogic-weakpw:per_step",
+          "raw_p": 0.3994,
+          "adj_p_holm": 1.0,
+          "significant": false,
+          "suggestive": false
+        },
+        {
+          "test": "stratified[LFI]:per_step",
+          "raw_p": 0.4324,
+          "adj_p_holm": 1.0,
+          "significant": false,
+          "suggestive": false
+        },
+        {
+          "test": "Struts2-S2-048:per_episode_goal",
+          "raw_p": 0.4489,
+          "adj_p_holm": 1.0,
+          "significant": false,
+          "suggestive": false
+        },
+        {
+          "test": "Drupalgeddon2:per_step",
+          "raw_p": 0.4492,
+          "adj_p_holm": 1.0,
+          "significant": false,
+          "suggestive": false
+        },
+        {
+          "test": "ThinkPHP-5.0.23:per_episode_goal",
+          "raw_p": 0.5255,
+          "adj_p_holm": 1.0,
+          "significant": false,
+          "suggestive": false
+        },
+        {
+          "test": "ThinkPHP-5-rce:per_step",
+          "raw_p": 0.5471,
+          "adj_p_holm": 1.0,
+          "significant": false,
+          "suggestive": false
+        },
+        {
+          "test": "Tomcat-12615:per_step",
+          "raw_p": 0.5579,
+          "adj_p_holm": 1.0,
+          "significant": false,
+          "suggestive": false
+        },
+        {
+          "test": "Rails-5418-fileread:per_step",
+          "raw_p": 0.8005,
+          "adj_p_holm": 1.0,
+          "significant": false,
+          "suggestive": false
+        },
+        {
+          "test": "httpd-41773:per_step",
+          "raw_p": 0.9445,
+          "adj_p_holm": 1.0,
+          "significant": false,
+          "suggestive": false
+        },
+        {
+          "test": "Drupalgeddon2:per_episode_goal",
+          "raw_p": 1.0,
+          "adj_p_holm": 1.0,
+          "significant": false,
+          "suggestive": false
+        },
+        {
+          "test": "Tomcat-12615:per_episode_goal",
+          "raw_p": 1.0,
+          "adj_p_holm": 1.0,
+          "significant": false,
+          "suggestive": false
+        },
+        {
+          "test": "Joomla-8917-sqli:per_episode_goal",
+          "raw_p": 1.0,
+          "adj_p_holm": 1.0,
+          "significant": false,
+          "suggestive": false
+        },
+        {
+          "test": "php-cgi-2012-1823:per_episode_goal",
+          "raw_p": 1.0,
+          "adj_p_holm": 1.0,
+          "significant": false,
+          "suggestive": false
+        },
+        {
+          "test": "php-inclusion-LFI:per_episode_goal",
+          "raw_p": 1.0,
+          "adj_p_holm": 1.0,
+          "significant": false,
+          "suggestive": false
+        },
+        {
+          "test": "Rails-5418-fileread:per_episode_goal",
+          "raw_p": 1.0,
+          "adj_p_holm": 1.0,
+          "significant": false,
+          "suggestive": false
+        },
+        {
+          "test": "WebLogic-weakpw:per_episode_goal",
+          "raw_p": 1.0,
+          "adj_p_holm": 1.0,
+          "significant": false,
+          "suggestive": false
+        },
+        {
+          "test": "Gitea-1.4:per_episode_goal",
+          "raw_p": 1.0,
+          "adj_p_holm": 1.0,
+          "significant": false,
+          "suggestive": false
+        },
+        {
+          "test": "Tomcat8-weakpw:per_episode_goal",
+          "raw_p": 1.0,
+          "adj_p_holm": 1.0,
+          "significant": false,
+          "suggestive": false
+        },
+        {
+          "test": "httpd-41773:per_episode_goal",
+          "raw_p": 1.0,
+          "adj_p_holm": 1.0,
+          "significant": false,
+          "suggestive": false
+        },
+        {
+          "test": "nginx-insecure:per_episode_goal",
+          "raw_p": 1.0,
+          "adj_p_holm": 1.0,
+          "significant": false,
+          "suggestive": false
+        },
+        {
+          "test": "nginx-insecure:per_step",
+          "raw_p": 1.0,
+          "adj_p_holm": 1.0,
+          "significant": false,
+          "suggestive": false
+        }
+      ]
+    }
   }
 }

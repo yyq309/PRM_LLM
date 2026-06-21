@@ -35,6 +35,20 @@ def _api_key() -> str:
     return key
 
 
+# module-level token accumulator (cost metric). chat() adds each call's usage; runners reset/read per
+# engagement. Counts retried attempts too -> the HONEST total token cost, not just the successful call.
+_USAGE = {"prompt_tokens": 0, "completion_tokens": 0, "total_tokens": 0, "calls": 0}
+
+
+def reset_usage() -> None:
+    for k in _USAGE:
+        _USAGE[k] = 0
+
+
+def get_usage() -> dict:
+    return dict(_USAGE)
+
+
 def chat(
     messages: list[dict[str, str]],
     *,
@@ -60,6 +74,11 @@ def chat(
                 raise DeepSeekError(f"transient HTTP {resp.status_code}")
             resp.raise_for_status()
             data = resp.json()
+            _u = data.get("usage") or {}
+            _USAGE["prompt_tokens"] += int(_u.get("prompt_tokens", 0) or 0)
+            _USAGE["completion_tokens"] += int(_u.get("completion_tokens", 0) or 0)
+            _USAGE["total_tokens"] += int(_u.get("total_tokens", 0) or 0)
+            _USAGE["calls"] += 1
             content = data["choices"][0]["message"].get("content") or ""
             if not content.strip():
                 # All budget went to reasoning; retry once with a larger budget.

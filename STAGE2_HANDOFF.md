@@ -674,6 +674,18 @@ drive the next phase:
   Raven set `enabled=false` (registry `_omitted`), descriptors/code kept. Docs aligned: EXPERIMENTS.md
   (env ④, C-B row, guardrail #2), CONTRIBUTIONS.md, LIVE_RESULTS. Count = **15 Docker + 2 VM**.
 
+- **★ METRIC HARDENING (2026-06-21): #1–#4 done, suite 402.** **#1 Holm-Bonferroni** in `stats_analysis.py`
+  (`multiple_comparison`): PRIMARY confirmatory family (pre-specified pooled per-step + per-episode) → pooled
+  per-step **survives Holm (raw 0.02 → adj 0.04, SIGNIFICANT)**, per-episode ns; EXPLORATORY family (39 tests) →
+  0 survive, 5 suggestive (per-box underpowered by design). **#2 effect sizes** (RD/RR/OR/Cohen's h) already
+  reported with every block — confirmed. **#3 direct ranking metric** `top1_oracle_agreement_rate` (engagement +
+  `mean_top1_ranking_acc` in live_ab_trials): fraction of decisions whose top-1 == the goal-aware oracle's pick
+  over the real candidate set = PRM ranking accuracy. **#4 cost** `llm_tokens_total`/`llm_tokens_prompt`/
+  `llm_tokens_completion` (via `scripts/deepseek_client` `_USAGE`/`reset_usage`/`get_usage`) + `duration_s`
+  wall-clock in the engagement summary + `mean_llm_tokens`/`total_llm_tokens`/`mean_duration_s` in live_ab_trials.
+  Verified live on DC-1 (top1=1.0, duration 23.3s, tokens 0 for deterministic). Metric suite is now paper-ready;
+  honest takeaway: the confirmatory per-step claim holds under correction, per-box numbers are descriptive.
+
 Ranked next steps (all leak-free):
 
 0. **Run the paired A/B** (`python -m stage2.paired_ab --proposer llm --model deepseek-chat --executor

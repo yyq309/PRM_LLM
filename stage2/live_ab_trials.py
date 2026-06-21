@@ -162,13 +162,17 @@ def main() -> None:
                                       "rate": round(prog / max(tot, 1), 3), "ci95": [round(plo, 3), round(phi, 3)]},
                 "phase_split": {"web": {"progress": wp, "total": wt, "rate": round(wp / max(wt, 1), 3)},
                                 "local": {"progress": lp, "total": lt, "rate": round(lp / max(lt, 1), 3)}},
+                "mean_top1_ranking_acc": _mean(rows, "top1_oracle_agreement_rate"),
                 "mean_fields_gained": _mean(rows, "fields_gained_total"),
                 "mean_distinct_productive_actions": _mean(rows, "distinct_productive_actions"),
                 "mean_wasted_rate": _mean(rows, "wasted_rate"),
                 "mean_steps_when_goal": round(sum(gsteps) / len(gsteps), 2) if gsteps else None,
-                # cost
+                # cost (#4: LLM tokens + wall-clock, alongside call/exec counts)
                 "mean_proposer_calls": _mean(rows, "proposer_calls"),
                 "mean_eta_executions": _mean(rows, "eta_executions"),
+                "mean_llm_tokens": _mean(rows, "llm_tokens_total"),
+                "total_llm_tokens": sum(x.get("llm_tokens_total", 0) for x in rows),
+                "mean_duration_s": _mean(rows, "duration_s"),
                 # abstraction + safety
                 "mean_live_out_of_abstraction_rate": _mean(rows, "live_out_of_abstraction_rate"),
                 "total_gate_refusals": sum(x.get("gate_refusals", 0) for x in rows)}

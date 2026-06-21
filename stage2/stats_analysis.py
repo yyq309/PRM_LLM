@@ -388,6 +388,37 @@ def fmt_block(b):
     )
 
 
+def holm_bonferroni(pairs, alpha=0.05):
+    """Holm-Bonferroni step-down family-wise correction. `pairs` = list of (name, raw_p).
+    Returns list of {name, raw_p, adj_p, significant, suggestive} sorted by raw_p. Controls the
+    family-wise error rate across the ~40 clustered tests so a reviewer can't say we p-hacked."""
+    m = len(pairs)
+    ordered = sorted(pairs, key=lambda x: x[1])
+    results, running = [], 0.0
+    for i, (name, p) in enumerate(ordered):
+        adj = min(1.0, (m - i) * p)          # step-down: i-th smallest scaled by (m-i)
+        running = max(running, adj)          # enforce monotonic non-decreasing adjusted p
+        results.append({"test": name, "raw_p": round(p, 4), "adj_p_holm": round(running, 4),
+                        "significant": running < alpha, "suggestive": (p < alpha) and (running >= alpha)})
+    return results
+
+
+def _collect_pvalues(out):
+    """Gather every clustered permutation p-value in the report into the correction family."""
+    fam = []
+    for b in out["per_box"]:
+        fam.append((f"{b['box']}:per_episode_goal", b["per_episode"]["perm_p_clustered"]))
+        fam.append((f"{b['box']}:per_step", b["per_step"]["perm_p_clustered"]))
+    for key, blk in out["pooled"].items():
+        fam.append((f"pooled[{key}]:per_episode_goal", blk["per_episode"]["perm_p_clustered"]))
+        fam.append((f"pooled[{key}]:per_step", blk["per_step"]["perm_p_clustered"]))
+    for vclass, blk in out["stratified"].items():
+        fam.append((f"stratified[{vclass}]:per_step", blk["perm_p_clustered"]))
+    if "goal_aligned" in out.get("progress_variants", {}):
+        fam.append(("goal_aligned:per_step", out["progress_variants"]["goal_aligned"]["perm_p_clustered"]))
+    return fam
+
+
 def main():
     eps = load_episodes()
     full = [e for e in eps if e["reachable"]]            # exclude auth-milestone from goal denominators
@@ -478,6 +509,35 @@ def main():
     print(f"  {'category':32s} {'PRM':>6s} {'llm_only':>10s}")
     for c in cats:
         print(f"  {c:32s} {tax['prm'][c]:>6d} {tax['llm_only'][c]:>10d}")
+
+    # ---- multiple-comparison correction (Holm-Bonferroni) ----
+    # PRIMARY confirmatory family = the 2 PRE-SPECIFIED pooled tests (per-step + per-episode over all
+    # full-goal boxes). EXPLORATORY family = every clustered test (per-box + stratified + variants), which
+    # is underpowered per-box by design. Report both so the headline is not penalised by exploratory tests.
+    fam = _collect_pvalues(out)                              # full exploratory family
+    holm = holm_bonferroni(fam)
+    primary = [(n, p) for (n, p) in fam if n.startswith("pooled[all_full]")]
+    holm_primary = holm_bonferroni(primary)
+    n_sig = sum(1 for r in holm if r["significant"]); n_sug = sum(1 for r in holm if r["suggestive"])
+    out["multiple_comparison"] = {
+        "method": "holm-bonferroni", "alpha": 0.05,
+        "primary_family": {"size": len(primary), "tests": holm_primary,
+                           "note": "pre-specified confirmatory: pooled per-step + per-episode (all full-goal boxes)"},
+        "exploratory_family": {"size": len(fam), "n_significant_after": n_sig, "n_suggestive": n_sug,
+                               "results": holm}}
+    print("\n" + "=" * 96)
+    print("MULTIPLE-COMPARISON CORRECTION (Holm-Bonferroni)")
+    print("=" * 96)
+    print(f"  PRIMARY confirmatory family (n={len(primary)}, pre-specified pooled tests):")
+    for r in holm_primary:
+        v = "SIGNIFICANT" if r["significant"] else ("suggestive" if r["suggestive"] else "ns")
+        print(f"    {r['test']:46s} raw={r['raw_p']:.4f}  adj={r['adj_p_holm']:.4f}  {v}")
+    print(f"\n  EXPLORATORY family (n={len(fam)} all clustered tests): {n_sig} significant after Holm, "
+          f"{n_sug} suggestive. Top:")
+    for r in sorted(holm, key=lambda x: x["raw_p"])[:6]:
+        v = "SIGNIFICANT" if r["significant"] else ("suggestive" if r["suggestive"] else "ns")
+        print(f"    {r['test']:46s} raw={r['raw_p']:.4f}  adj={r['adj_p_holm']:.4f}  {v}")
+    print("  (per-box tests are exploratory/underpowered by design; the confirmatory claim is the pooled family.)")
 
     (ROOT / "outputs" / "stage2_stats_analysis.json").write_text(
         json.dumps(out, ensure_ascii=False, indent=2), encoding="utf-8")
