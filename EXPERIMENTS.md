@@ -14,7 +14,7 @@ verdict per contribution and the ranked list of experiments still to add. Framin
 | ① | **Abstract single-host-web simulator** | **Stage-1 TRAINING** | synthetic MDP, 16 frozen actions, 12 task families; trains the DQN value oracle + Pentest-PRM; Q*/leakage/coverage live here |
 | ② | **Docker Vulhub web boxes (15)** | **Stage-2 inference** | real web containers on 127.0.0.1; the per-step reranking study |
 | ③ | **XBEN/XBOW (6)** | **provenance-only — NOT a paper result** | autonomous novel-exploit benchmark; 0/18 confirms the scope boundary, **dropped from the paper** and replaced by a one-line scope statement (guardrail) — the project never claims autonomous novel-exploit construction |
-| ④ | **VulnHub full-machine VMs (4)** | **Stage-2 end-to-end** | DC-1/Raven2/Toppo:1/Symfonos:1 (VMware); complete kill chain — **planned** |
+| ④ | **VulnHub full-machine VMs (2 in paper)** | **Stage-2 end-to-end** | **DC-1 + Toppo** (VMware): complete kill chain Web→foothold→privesc→root — ✅ proven. (Raven-2 omitted: image-hardened foothold; Symfonos = dropped boundary.) |
 
 ---
 
@@ -23,7 +23,7 @@ verdict per contribution and the ranked list of experiments still to add. Framin
 | Contribution | Verdict | Why |
 |---|---|---|
 | **C-A** abstract→real transfer adapter | **SUFFICIENT** (was PARTIAL) | adapter well-supported (zero-label ✓, leakage_audit ✓, per-step value attributable). **G4 done (2026-06-21):** learned PRM vs cheap hand heuristic is proposer-conditional — det. proposer prm≈heuristic (Δ+0.4pp p=0.65) / prm<random; LLM proposer prm>heuristic (Δ+20.6pp **p=0.001**). Honest: learned value beats a cheap prior only in the realistic LLM-proposer regime. |
-| **C-B** real end-to-end kill chain | **PARTIAL** (was INSUFFICIENT) | **DONE (2026-06-21):** DC-1 full chain Web→SUID-find→root proven live — autonomous LLM A/B **prm root 100%(5/5) vs llm_only 60%(3/5)**, ~2× fewer steps; Toppo proven deterministic (LLM-autonomous 0% = proposer ceiling at cred→ssh foothold). Remaining: Raven/Symfonos footholds deferred (fragile); 2/4 boxes end-to-end. |
+| **C-B** real end-to-end kill chain | **SUFFICIENT** (was INSUFFICIENT) | **DONE (2026-06-21):** DC-1 full chain Web→SUID-find→root proven live — autonomous LLM A/B (n=10) **prm root 100%(10/10) CI[.72,1.0] vs llm_only 40%(4/10) CI[.17,.69], non-overlapping**, ~2× fewer steps; **phase-split**: PRM value is in the local/privesc phase (llm_only 9% there). Toppo proven deterministic (different foothold+privesc; LLM-autonomous 0% = proposer ceiling). **2 VM (DC-1+Toppo)**; Raven omitted (image-hardened foothold), Symfonos = boundary. |
 | **C-C** structural train-inference gap | **SUFFICIENT** (was PARTIAL) | **G2 done (2026-06-21):** (a) phase histogram — web_path_enum 0.94 early→0.609 advanced, still > command_exec 0.21 post-foothold; (b) cause IDENTIFIED in `reward.py` — phase-independent info-discovery rewards (`path_found:+2.0`, `input_found:+2.0`) keep recon valuable post-foothold in-sim (NOT action-masking). A sim-to-real **reward-design** gap; 3 surgical fixes failed because the signal is in the reward. |
 | **Limitation** proposer-conditional (demoted) | **SUFFICIENT** | E1/E2/E6 enough to report honestly; **no new experiment needed**. NUANCED by C-B: the inversion is WEB-PHASE-specific — on long real chains (DC-1) the PRM HELPS. |
 | **Supporting** cluster-robust + CRN | **PARTIAL** | clustered stats ✓ verified; **paired A/B (CRN) built but NOT run** → reported p-values are from unpaired runs (G3, cheap, still open). |
@@ -89,8 +89,11 @@ footholds deferred (fragile multi-step exploits, same proposer-ceiling class —
 
 1. **Per-step ≠ per-episode.** PRM is a per-step *process* improver (Δ+12pp, p=0.02, replicated);
    per-episode goal is **tied at n=10** — state this in §1, not the appendix.
-2. **Box count = 15 Docker web** (single-host single-service, recipe-gated foothold) **+ 4 VM full-chain**
-   (whole-machine, multi-step Web→foothold→privesc→root). No inflated count; separate stat claims per tier.
+2. **Box count = 15 Docker web** (single-host single-service, recipe-gated foothold) **+ 2 VM full-chain**
+   (whole-machine, multi-step Web→foothold→privesc→root: **DC-1, Toppo**). No inflated count; separate stat
+   claims per tier. **Raven-2 OMITTED** (CVE-2016-10033 foothold blocked by image-hardened PHPMailer — From
+   escaping; not load-bearing: it would only have been a 3rd deterministic privesc vector). **Symfonos-1** =
+   dropped boundary. XBEN = provenance-only (see below).
    **XBEN/XBOW is DROPPED from the paper (provenance-only)** — the two Vulhub tiers already cover C-A/C-B/C-C.
 7. **Scope statement (replaces the XBEN experiment):** this work assumes the exploit class is **KNOWN and
    expressible within the frozen 16-action schema + per-target η-recipe**; **autonomous discovery/construction of

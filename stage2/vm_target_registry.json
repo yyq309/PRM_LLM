@@ -32,7 +32,8 @@
     },
     {
       "label": "Raven-2",
-      "enabled": true,
+      "enabled": false,
+      "_omitted": "CVE-2016-10033 foothold blocked on this image (hardened PHPMailer: From escaped, injection does not fire even with real sendmail + fixed MTA). OMITTED from the paper (not load-bearing). See STAGE2_HANDOFF.md.",
       "descriptor": "targets/vulnhub-raven-2.json",
       "target": "http://192.168.52.129",
       "ip": "192.168.52.129",

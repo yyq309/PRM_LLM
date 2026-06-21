@@ -81,9 +81,10 @@ reported in full in the limitations section; the efficiency inversion is not bur
 
 1. The efficiency inversion (llm_only ≥ PRM under a good proposer) is **reported in full**, as a
    limitation — never hidden to protect the spine.
-2. Box count = **15 Docker web (single-host single-service) + 4 VM full-chain (whole-machine multi-step)**.
-   No inflated count. **XBEN/XBOW dropped from the paper (provenance-only)**; its capability is out of scope,
-   replaced by the scope statement above.
+2. Box count = **15 Docker web (single-host single-service) + 2 VM full-chain (whole-machine multi-step:
+   DC-1, Toppo)**. No inflated count. **Raven-2 omitted** (CVE-2016-10033 foothold blocked by image-hardened
+   PHPMailer; not load-bearing — would only have been a 3rd deterministic privesc vector). **Symfonos-1** =
+   dropped boundary. **XBEN/XBOW dropped (provenance-only)**, replaced by the scope statement above.
 3. Per-step vs per-episode claims are **separated**: per-step process improver ✓; terminal goal
    benefit limited/tied — stated plainly.
 4. Leakage wall: PRM input = observable context only; no oracle q-values, no hidden task ground truth;

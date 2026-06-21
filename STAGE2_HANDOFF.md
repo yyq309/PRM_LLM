@@ -645,6 +645,35 @@ drive the next phase:
   η-recipe; autonomous discovery of novel multi-step exploits is out of scope (the PRM is a value/ranking model,
   not an exploit generator)."* Docs aligned: CONTRIBUTIONS.md, EXPERIMENTS.md (env ③ + E8 + guardrails #2/#7).
 
+- **★ #3 MULTI-SEED RECON-BIAS VARIANCE (2026-06-21) — `scripts/recon_bias_multiseed.py` →
+  `outputs/recon_bias_multiseed.json`. Quantifies H's "seed-dependent".** 5 control oracles (seed 0–4, 25k,
+  no fix) → web_path_enum **advanced** label: 0.173/0.268/0.352/0.230/0.222 (mean 0.249, **std 0.06**, range
+  [0.173,0.352]); overall mean 0.54 std 0.108. command_execution-advanced is STABLE across seeds (std 0.02,
+  ~0.31) → the variance is **recon-specific**. **DEPLOYED (seed-gated) advanced = 0.609 is an OUTLIER above ALL
+  5 fresh seeds (max 0.352)** → the deployed PRM's extreme recon bias is a **seed-GATE SELECTION artifact**, not
+  a typical/inevitable property; a reviewer who retrains gets a much weaker bias. Practical fix for the deployed
+  PRM's bias = re-select an oracle seed (most are far less biased). C-C final wording: recon over-valuation is
+  real, **seed-dependent**, and the deployed model sits at the extreme tail (selection) — NOT a deterministic
+  reward-design consequence; surgical fixes don't move the deployed model. Artifacts: `outputs/oracle_seed{1..4}.pt`,
+  `prm_samples_seed{0..4}_train.jsonl`.
+- **★ COUNT CORRECTION: the whole-machine set is 3 VMs (DC-1, Raven-2, Toppo), NOT 4** — Symfonos was the
+  4th/boundary box (`enabled=false`, droppable, never pursued). Paper count = **15 Docker + 3 VM**. Status: DC-1 ✅
+  (autonomous+deterministic), Toppo ✅ (deterministic; autonomous=proposer ceiling), Raven-2 ⚠️ foothold being
+  re-attempted (PHPMailer sendmail hang). Docs (EXPERIMENTS/CONTRIBUTIONS "4 VM") to be updated to 3.
+
+- **★ FINAL DECISION (2026-06-21): Raven-2 OMITTED; whole-machine set = 2 VMs (DC-1 + Toppo).** After a
+  thorough live attempt (operator confirmed real sendmail + fixed the MTA hang; ~15 diagnostic rounds: version
+  probes, email-validation timing probes, 8+ payload formats, short/long waits), the CVE-2016-10033 foothold
+  **does not fire on this image** — the email validation rejects the canonical injection format, and the
+  validation-passing quoted format reaches sendmail but does NOT arg-split (the From is **escaped**) → no `-X`
+  webshell write (all 12 candidate files 404). This is the **patched/hardened-PHPMailer signature**. Decision
+  (objective, not sunk-cost): Raven is **not load-bearing** — its foothold is autonomous-impossible anyway
+  (proposer ceiling), so it would only ever have been a 3rd DETERMINISTIC privesc vector (MySQL-UDF); the C-B
+  headline (PRM helps on full chains + phase-split) comes entirely from **DC-1** (autonomous), with **Toppo**
+  giving a 2nd foothold modality + privesc vector. **Paper whole-machine evidence = DC-1 + Toppo (2 VMs).**
+  Raven set `enabled=false` (registry `_omitted`), descriptors/code kept. Docs aligned: EXPERIMENTS.md
+  (env ④, C-B row, guardrail #2), CONTRIBUTIONS.md, LIVE_RESULTS. Count = **15 Docker + 2 VM**.
+
 Ranked next steps (all leak-free):
 
 0. **Run the paired A/B** (`python -m stage2.paired_ab --proposer llm --model deepseek-chat --executor

@@ -1,0 +1,2095 @@
+{
+  "training_steps": 25000,
+  "seed": 4,
+  "mask_invalid_actions": true,
+  "reward_scale": 1.0,
+  "reward_jitter": 0.0,
+  "train_tasks": [
+    "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\tasks\\gen_200_leak_file.json",
+    "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\tasks\\gen_201_leak_file.json",
+    "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\tasks\\gen_202_leak_file.json",
+    "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\tasks\\gen_203_leak_file.json",
+    "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\tasks\\gen_204_leak_file.json",
+    "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\tasks\\gen_205_default_pw.json",
+    "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\tasks\\gen_206_default_pw.json",
+    "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\tasks\\gen_207_default_pw.json",
+    "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\tasks\\gen_208_default_pw.json",
+    "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\tasks\\gen_209_default_pw.json",
+    "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\tasks\\gen_210_leak_login.json",
+    "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\tasks\\gen_211_leak_login.json",
+    "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\tasks\\gen_212_leak_login.json",
+    "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\tasks\\gen_213_leak_login.json",
+    "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\tasks\\gen_214_leak_login.json",
+    "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\tasks\\gen_215_sqli_login.json",
+    "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\tasks\\gen_216_sqli_login.json",
+    "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\tasks\\gen_217_sqli_login.json",
+    "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\tasks\\gen_218_sqli_login.json",
+    "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\tasks\\gen_219_sqli_login.json",
+    "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\tasks\\gen_220_lfi_login.json",
+    "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\tasks\\gen_221_lfi_login.json",
+    "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\tasks\\gen_222_lfi_login.json",
+    "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\tasks\\gen_223_lfi_login.json",
+    "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\tasks\\gen_224_lfi_login.json",
+    "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\tasks\\gen_225_rce_shell.json",
+    "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\tasks\\gen_226_rce_shell.json",
+    "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\tasks\\gen_227_rce_shell.json",
+    "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\tasks\\gen_228_rce_shell.json",
+    "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\tasks\\gen_229_rce_shell.json",
+    "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\tasks\\gen_230_rce_privesc.json",
+    "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\tasks\\gen_231_rce_privesc.json",
+    "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\tasks\\gen_232_rce_privesc.json",
+    "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\tasks\\gen_233_rce_privesc.json",
+    "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\tasks\\gen_234_rce_privesc.json",
+    "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\tasks\\gen_235_upload_default_shell.json",
+    "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\tasks\\gen_236_upload_default_shell.json",
+    "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\tasks\\gen_237_upload_default_shell.json",
+    "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\tasks\\gen_238_upload_default_shell.json",
+    "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\tasks\\gen_239_upload_default_shell.json",
+    "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\tasks\\gen_240_upload_leak_shell.json",
+    "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\tasks\\gen_241_upload_leak_shell.json",
+    "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\tasks\\gen_242_upload_leak_shell.json",
+    "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\tasks\\gen_243_upload_leak_shell.json",
+    "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\tasks\\gen_244_upload_leak_shell.json",
+    "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\tasks\\gen_245_upload_default_privesc.json",
+    "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\tasks\\gen_246_upload_default_privesc.json",
+    "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\tasks\\gen_247_upload_default_privesc.json",
+    "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\tasks\\gen_248_upload_default_privesc.json",
+    "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\tasks\\gen_249_upload_default_privesc.json",
+    "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\tasks\\gen_250_authed_injection.json",
+    "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\tasks\\gen_251_authed_injection.json",
+    "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\tasks\\gen_252_authed_injection.json",
+    "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\tasks\\gen_253_authed_injection.json",
+    "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\tasks\\gen_254_authed_injection.json",
+    "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\tasks\\gen_255_chained_exploit.json",
+    "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\tasks\\gen_256_chained_exploit.json",
+    "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\tasks\\gen_257_chained_exploit.json",
+    "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\tasks\\gen_258_chained_exploit.json",
+    "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\tasks\\gen_259_chained_exploit.json",
+    "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\tasks\\gen_260_leak_authed_privesc.json",
+    "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\tasks\\gen_261_leak_authed_privesc.json",
+    "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\tasks\\gen_262_leak_authed_privesc.json",
+    "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\tasks\\gen_263_leak_authed_privesc.json",
+    "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\tasks\\gen_264_leak_authed_privesc.json"
+  ],
+  "eval_tasks": [
+    "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\tasks\\gen_200_leak_file.json",
+    "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\tasks\\gen_201_leak_file.json",
+    "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\tasks\\gen_202_leak_file.json",
+    "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\tasks\\gen_203_leak_file.json",
+    "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\tasks\\gen_204_leak_file.json",
+    "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\tasks\\gen_205_default_pw.json",
+    "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\tasks\\gen_206_default_pw.json",
+    "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\tasks\\gen_207_default_pw.json",
+    "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\tasks\\gen_208_default_pw.json",
+    "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\tasks\\gen_209_default_pw.json",
+    "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\tasks\\gen_210_leak_login.json",
+    "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\tasks\\gen_211_leak_login.json",
+    "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\tasks\\gen_212_leak_login.json",
+    "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\tasks\\gen_213_leak_login.json",
+    "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\tasks\\gen_214_leak_login.json",
+    "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\tasks\\gen_215_sqli_login.json",
+    "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\tasks\\gen_216_sqli_login.json",
+    "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\tasks\\gen_217_sqli_login.json",
+    "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\tasks\\gen_218_sqli_login.json",
+    "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\tasks\\gen_219_sqli_login.json",
+    "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\tasks\\gen_220_lfi_login.json",
+    "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\tasks\\gen_221_lfi_login.json",
+    "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\tasks\\gen_222_lfi_login.json",
+    "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\tasks\\gen_223_lfi_login.json",
+    "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\tasks\\gen_224_lfi_login.json",
+    "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\tasks\\gen_225_rce_shell.json",
+    "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\tasks\\gen_226_rce_shell.json",
+    "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\tasks\\gen_227_rce_shell.json",
+    "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\tasks\\gen_228_rce_shell.json",
+    "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\tasks\\gen_229_rce_shell.json",
+    "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\tasks\\gen_230_rce_privesc.json",
+    "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\tasks\\gen_231_rce_privesc.json",
+    "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\tasks\\gen_232_rce_privesc.json",
+    "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\tasks\\gen_233_rce_privesc.json",
+    "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\tasks\\gen_234_rce_privesc.json",
+    "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\tasks\\gen_235_upload_default_shell.json",
+    "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\tasks\\gen_236_upload_default_shell.json",
+    "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\tasks\\gen_237_upload_default_shell.json",
+    "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\tasks\\gen_238_upload_default_shell.json",
+    "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\tasks\\gen_239_upload_default_shell.json",
+    "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\tasks\\gen_240_upload_leak_shell.json",
+    "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\tasks\\gen_241_upload_leak_shell.json",
+    "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\tasks\\gen_242_upload_leak_shell.json",
+    "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\tasks\\gen_243_upload_leak_shell.json",
+    "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\tasks\\gen_244_upload_leak_shell.json",
+    "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\tasks\\gen_245_upload_default_privesc.json",
+    "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\tasks\\gen_246_upload_default_privesc.json",
+    "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\tasks\\gen_247_upload_default_privesc.json",
+    "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\tasks\\gen_248_upload_default_privesc.json",
+    "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\tasks\\gen_249_upload_default_privesc.json",
+    "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\tasks\\gen_250_authed_injection.json",
+    "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\tasks\\gen_251_authed_injection.json",
+    "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\tasks\\gen_252_authed_injection.json",
+    "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\tasks\\gen_253_authed_injection.json",
+    "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\tasks\\gen_254_authed_injection.json",
+    "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\tasks\\gen_255_chained_exploit.json",
+    "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\tasks\\gen_256_chained_exploit.json",
+    "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\tasks\\gen_257_chained_exploit.json",
+    "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\tasks\\gen_258_chained_exploit.json",
+    "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\tasks\\gen_259_chained_exploit.json",
+    "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\tasks\\gen_260_leak_authed_privesc.json",
+    "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\tasks\\gen_261_leak_authed_privesc.json",
+    "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\tasks\\gen_262_leak_authed_privesc.json",
+    "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\tasks\\gen_263_leak_authed_privesc.json",
+    "E:\\PT\\PT+LLM+检测\\单主机web服务\\WebAttackSim\\tasks\\gen_264_leak_authed_privesc.json"
+  ],
+  "eval_goal_rate": 0.7846153846153846,
+  "eval_avg_reward": 44.230769230769226,
+  "eval_results": [
+    {
+      "task_id": "gen_200_leak_file",
+      "reward": 25.099999999999998,
+      "steps": 4,
+      "goal": true
+    },
+    {
+      "task_id": "gen_200_leak_file",
+      "reward": 25.099999999999998,
+      "steps": 4,
+      "goal": true
+    },
+    {
+      "task_id": "gen_200_leak_file",
+      "reward": 25.099999999999998,
+      "steps": 4,
+      "goal": true
+    },
+    {
+      "task_id": "gen_200_leak_file",
+      "reward": 25.099999999999998,
+      "steps": 4,
+      "goal": true
+    },
+    {
+      "task_id": "gen_200_leak_file",
+      "reward": 25.099999999999998,
+      "steps": 4,
+      "goal": true
+    },
+    {
+      "task_id": "gen_201_leak_file",
+      "reward": 25.099999999999998,
+      "steps": 4,
+      "goal": true
+    },
+    {
+      "task_id": "gen_201_leak_file",
+      "reward": 25.099999999999998,
+      "steps": 4,
+      "goal": true
+    },
+    {
+      "task_id": "gen_201_leak_file",
+      "reward": 25.099999999999998,
+      "steps": 4,
+      "goal": true
+    },
+    {
+      "task_id": "gen_201_leak_file",
+      "reward": 25.099999999999998,
+      "steps": 4,
+      "goal": true
+    },
+    {
+      "task_id": "gen_201_leak_file",
+      "reward": 25.099999999999998,
+      "steps": 4,
+      "goal": true
+    },
+    {
+      "task_id": "gen_202_leak_file",
+      "reward": 25.099999999999998,
+      "steps": 4,
+      "goal": true
+    },
+    {
+      "task_id": "gen_202_leak_file",
+      "reward": 25.099999999999998,
+      "steps": 4,
+      "goal": true
+    },
+    {
+      "task_id": "gen_202_leak_file",
+      "reward": 25.099999999999998,
+      "steps": 4,
+      "goal": true
+    },
+    {
+      "task_id": "gen_202_leak_file",
+      "reward": 25.099999999999998,
+      "steps": 4,
+      "goal": true
+    },
+    {
+      "task_id": "gen_202_leak_file",
+      "reward": 25.099999999999998,
+      "steps": 4,
+      "goal": true
+    },
+    {
+      "task_id": "gen_203_leak_file",
+      "reward": 25.099999999999998,
+      "steps": 4,
+      "goal": true
+    },
+    {
+      "task_id": "gen_203_leak_file",
+      "reward": 25.099999999999998,
+      "steps": 4,
+      "goal": true
+    },
+    {
+      "task_id": "gen_203_leak_file",
+      "reward": 25.099999999999998,
+      "steps": 4,
+      "goal": true
+    },
+    {
+      "task_id": "gen_203_leak_file",
+      "reward": 25.099999999999998,
+      "steps": 4,
+      "goal": true
+    },
+    {
+      "task_id": "gen_203_leak_file",
+      "reward": 25.099999999999998,
+      "steps": 4,
+      "goal": true
+    },
+    {
+      "task_id": "gen_204_leak_file",
+      "reward": 25.099999999999998,
+      "steps": 4,
+      "goal": true
+    },
+    {
+      "task_id": "gen_204_leak_file",
+      "reward": 25.099999999999998,
+      "steps": 4,
+      "goal": true
+    },
+    {
+      "task_id": "gen_204_leak_file",
+      "reward": 25.099999999999998,
+      "steps": 4,
+      "goal": true
+    },
+    {
+      "task_id": "gen_204_leak_file",
+      "reward": 25.099999999999998,
+      "steps": 4,
+      "goal": true
+    },
+    {
+      "task_id": "gen_204_leak_file",
+      "reward": 25.099999999999998,
+      "steps": 4,
+      "goal": true
+    },
+    {
+      "task_id": "gen_205_default_pw",
+      "reward": 33.8,
+      "steps": 7,
+      "goal": true
+    },
+    {
+      "task_id": "gen_205_default_pw",
+      "reward": 33.8,
+      "steps": 7,
+      "goal": true
+    },
+    {
+      "task_id": "gen_205_default_pw",
+      "reward": 33.8,
+      "steps": 7,
+      "goal": true
+    },
+    {
+      "task_id": "gen_205_default_pw",
+      "reward": 33.8,
+      "steps": 7,
+      "goal": true
+    },
+    {
+      "task_id": "gen_205_default_pw",
+      "reward": 33.8,
+      "steps": 7,
+      "goal": true
+    },
+    {
+      "task_id": "gen_206_default_pw",
+      "reward": 33.8,
+      "steps": 7,
+      "goal": true
+    },
+    {
+      "task_id": "gen_206_default_pw",
+      "reward": 33.8,
+      "steps": 7,
+      "goal": true
+    },
+    {
+      "task_id": "gen_206_default_pw",
+      "reward": 33.8,
+      "steps": 7,
+      "goal": true
+    },
+    {
+      "task_id": "gen_206_default_pw",
+      "reward": 33.8,
+      "steps": 7,
+      "goal": true
+    },
+    {
+      "task_id": "gen_206_default_pw",
+      "reward": 33.8,
+      "steps": 7,
+      "goal": true
+    },
+    {
+      "task_id": "gen_207_default_pw",
+      "reward": 33.8,
+      "steps": 7,
+      "goal": true
+    },
+    {
+      "task_id": "gen_207_default_pw",
+      "reward": 33.8,
+      "steps": 7,
+      "goal": true
+    },
+    {
+      "task_id": "gen_207_default_pw",
+      "reward": 33.8,
+      "steps": 7,
+      "goal": true
+    },
+    {
+      "task_id": "gen_207_default_pw",
+      "reward": 33.8,
+      "steps": 7,
+      "goal": true
+    },
+    {
+      "task_id": "gen_207_default_pw",
+      "reward": 33.8,
+      "steps": 7,
+      "goal": true
+    },
+    {
+      "task_id": "gen_208_default_pw",
+      "reward": 33.8,
+      "steps": 7,
+      "goal": true
+    },
+    {
+      "task_id": "gen_208_default_pw",
+      "reward": 33.8,
+      "steps": 7,
+      "goal": true
+    },
+    {
+      "task_id": "gen_208_default_pw",
+      "reward": 33.8,
+      "steps": 7,
+      "goal": true
+    },
+    {
+      "task_id": "gen_208_default_pw",
+      "reward": 33.8,
+      "steps": 7,
+      "goal": true
+    },
+    {
+      "task_id": "gen_208_default_pw",
+      "reward": 33.8,
+      "steps": 7,
+      "goal": true
+    },
+    {
+      "task_id": "gen_209_default_pw",
+      "reward": 33.8,
+      "steps": 7,
+      "goal": true
+    },
+    {
+      "task_id": "gen_209_default_pw",
+      "reward": 33.8,
+      "steps": 7,
+      "goal": true
+    },
+    {
+      "task_id": "gen_209_default_pw",
+      "reward": 33.8,
+      "steps": 7,
+      "goal": true
+    },
+    {
+      "task_id": "gen_209_default_pw",
+      "reward": 33.8,
+      "steps": 7,
+      "goal": true
+    },
+    {
+      "task_id": "gen_209_default_pw",
+      "reward": 33.8,
+      "steps": 7,
+      "goal": true
+    },
+    {
+      "task_id": "gen_210_leak_login",
+      "reward": 39.599999999999994,
+      "steps": 9,
+      "goal": true
+    },
+    {
+      "task_id": "gen_210_leak_login",
+      "reward": 39.599999999999994,
+      "steps": 9,
+      "goal": true
+    },
+    {
+      "task_id": "gen_210_leak_login",
+      "reward": 39.599999999999994,
+      "steps": 9,
+      "goal": true
+    },
+    {
+      "task_id": "gen_210_leak_login",
+      "reward": 39.599999999999994,
+      "steps": 9,
+      "goal": true
+    },
+    {
+      "task_id": "gen_210_leak_login",
+      "reward": 39.599999999999994,
+      "steps": 9,
+      "goal": true
+    },
+    {
+      "task_id": "gen_211_leak_login",
+      "reward": 39.599999999999994,
+      "steps": 9,
+      "goal": true
+    },
+    {
+      "task_id": "gen_211_leak_login",
+      "reward": 39.599999999999994,
+      "steps": 9,
+      "goal": true
+    },
+    {
+      "task_id": "gen_211_leak_login",
+      "reward": 39.599999999999994,
+      "steps": 9,
+      "goal": true
+    },
+    {
+      "task_id": "gen_211_leak_login",
+      "reward": 39.599999999999994,
+      "steps": 9,
+      "goal": true
+    },
+    {
+      "task_id": "gen_211_leak_login",
+      "reward": 39.599999999999994,
+      "steps": 9,
+      "goal": true
+    },
+    {
+      "task_id": "gen_212_leak_login",
+      "reward": 39.599999999999994,
+      "steps": 9,
+      "goal": true
+    },
+    {
+      "task_id": "gen_212_leak_login",
+      "reward": 39.599999999999994,
+      "steps": 9,
+      "goal": true
+    },
+    {
+      "task_id": "gen_212_leak_login",
+      "reward": 39.599999999999994,
+      "steps": 9,
+      "goal": true
+    },
+    {
+      "task_id": "gen_212_leak_login",
+      "reward": 39.599999999999994,
+      "steps": 9,
+      "goal": true
+    },
+    {
+      "task_id": "gen_212_leak_login",
+      "reward": 39.599999999999994,
+      "steps": 9,
+      "goal": true
+    },
+    {
+      "task_id": "gen_213_leak_login",
+      "reward": 39.599999999999994,
+      "steps": 9,
+      "goal": true
+    },
+    {
+      "task_id": "gen_213_leak_login",
+      "reward": 39.599999999999994,
+      "steps": 9,
+      "goal": true
+    },
+    {
+      "task_id": "gen_213_leak_login",
+      "reward": 39.599999999999994,
+      "steps": 9,
+      "goal": true
+    },
+    {
+      "task_id": "gen_213_leak_login",
+      "reward": 39.599999999999994,
+      "steps": 9,
+      "goal": true
+    },
+    {
+      "task_id": "gen_213_leak_login",
+      "reward": 39.599999999999994,
+      "steps": 9,
+      "goal": true
+    },
+    {
+      "task_id": "gen_214_leak_login",
+      "reward": 39.599999999999994,
+      "steps": 9,
+      "goal": true
+    },
+    {
+      "task_id": "gen_214_leak_login",
+      "reward": 39.599999999999994,
+      "steps": 9,
+      "goal": true
+    },
+    {
+      "task_id": "gen_214_leak_login",
+      "reward": 39.599999999999994,
+      "steps": 9,
+      "goal": true
+    },
+    {
+      "task_id": "gen_214_leak_login",
+      "reward": 39.599999999999994,
+      "steps": 9,
+      "goal": true
+    },
+    {
+      "task_id": "gen_214_leak_login",
+      "reward": 39.599999999999994,
+      "steps": 9,
+      "goal": true
+    },
+    {
+      "task_id": "gen_215_sqli_login",
+      "reward": 45.49999999999999,
+      "steps": 10,
+      "goal": true
+    },
+    {
+      "task_id": "gen_215_sqli_login",
+      "reward": 45.49999999999999,
+      "steps": 10,
+      "goal": true
+    },
+    {
+      "task_id": "gen_215_sqli_login",
+      "reward": 45.49999999999999,
+      "steps": 10,
+      "goal": true
+    },
+    {
+      "task_id": "gen_215_sqli_login",
+      "reward": 45.49999999999999,
+      "steps": 10,
+      "goal": true
+    },
+    {
+      "task_id": "gen_215_sqli_login",
+      "reward": 45.49999999999999,
+      "steps": 10,
+      "goal": true
+    },
+    {
+      "task_id": "gen_216_sqli_login",
+      "reward": 45.49999999999999,
+      "steps": 10,
+      "goal": true
+    },
+    {
+      "task_id": "gen_216_sqli_login",
+      "reward": 45.49999999999999,
+      "steps": 10,
+      "goal": true
+    },
+    {
+      "task_id": "gen_216_sqli_login",
+      "reward": 45.49999999999999,
+      "steps": 10,
+      "goal": true
+    },
+    {
+      "task_id": "gen_216_sqli_login",
+      "reward": 45.49999999999999,
+      "steps": 10,
+      "goal": true
+    },
+    {
+      "task_id": "gen_216_sqli_login",
+      "reward": 45.49999999999999,
+      "steps": 10,
+      "goal": true
+    },
+    {
+      "task_id": "gen_217_sqli_login",
+      "reward": 45.49999999999999,
+      "steps": 10,
+      "goal": true
+    },
+    {
+      "task_id": "gen_217_sqli_login",
+      "reward": 45.49999999999999,
+      "steps": 10,
+      "goal": true
+    },
+    {
+      "task_id": "gen_217_sqli_login",
+      "reward": 45.49999999999999,
+      "steps": 10,
+      "goal": true
+    },
+    {
+      "task_id": "gen_217_sqli_login",
+      "reward": 45.49999999999999,
+      "steps": 10,
+      "goal": true
+    },
+    {
+      "task_id": "gen_217_sqli_login",
+      "reward": 45.49999999999999,
+      "steps": 10,
+      "goal": true
+    },
+    {
+      "task_id": "gen_218_sqli_login",
+      "reward": 45.49999999999999,
+      "steps": 10,
+      "goal": true
+    },
+    {
+      "task_id": "gen_218_sqli_login",
+      "reward": 45.49999999999999,
+      "steps": 10,
+      "goal": true
+    },
+    {
+      "task_id": "gen_218_sqli_login",
+      "reward": 45.49999999999999,
+      "steps": 10,
+      "goal": true
+    },
+    {
+      "task_id": "gen_218_sqli_login",
+      "reward": 45.49999999999999,
+      "steps": 10,
+      "goal": true
+    },
+    {
+      "task_id": "gen_218_sqli_login",
+      "reward": 45.49999999999999,
+      "steps": 10,
+      "goal": true
+    },
+    {
+      "task_id": "gen_219_sqli_login",
+      "reward": 45.49999999999999,
+      "steps": 10,
+      "goal": true
+    },
+    {
+      "task_id": "gen_219_sqli_login",
+      "reward": 45.49999999999999,
+      "steps": 10,
+      "goal": true
+    },
+    {
+      "task_id": "gen_219_sqli_login",
+      "reward": 45.49999999999999,
+      "steps": 10,
+      "goal": true
+    },
+    {
+      "task_id": "gen_219_sqli_login",
+      "reward": 45.49999999999999,
+      "steps": 10,
+      "goal": true
+    },
+    {
+      "task_id": "gen_219_sqli_login",
+      "reward": 45.49999999999999,
+      "steps": 10,
+      "goal": true
+    },
+    {
+      "task_id": "gen_220_lfi_login",
+      "reward": 45.49999999999999,
+      "steps": 10,
+      "goal": true
+    },
+    {
+      "task_id": "gen_220_lfi_login",
+      "reward": 45.49999999999999,
+      "steps": 10,
+      "goal": true
+    },
+    {
+      "task_id": "gen_220_lfi_login",
+      "reward": 45.49999999999999,
+      "steps": 10,
+      "goal": true
+    },
+    {
+      "task_id": "gen_220_lfi_login",
+      "reward": 45.49999999999999,
+      "steps": 10,
+      "goal": true
+    },
+    {
+      "task_id": "gen_220_lfi_login",
+      "reward": 45.49999999999999,
+      "steps": 10,
+      "goal": true
+    },
+    {
+      "task_id": "gen_221_lfi_login",
+      "reward": 45.49999999999999,
+      "steps": 10,
+      "goal": true
+    },
+    {
+      "task_id": "gen_221_lfi_login",
+      "reward": 45.49999999999999,
+      "steps": 10,
+      "goal": true
+    },
+    {
+      "task_id": "gen_221_lfi_login",
+      "reward": 45.49999999999999,
+      "steps": 10,
+      "goal": true
+    },
+    {
+      "task_id": "gen_221_lfi_login",
+      "reward": 45.49999999999999,
+      "steps": 10,
+      "goal": true
+    },
+    {
+      "task_id": "gen_221_lfi_login",
+      "reward": 45.49999999999999,
+      "steps": 10,
+      "goal": true
+    },
+    {
+      "task_id": "gen_222_lfi_login",
+      "reward": 45.49999999999999,
+      "steps": 10,
+      "goal": true
+    },
+    {
+      "task_id": "gen_222_lfi_login",
+      "reward": 45.49999999999999,
+      "steps": 10,
+      "goal": true
+    },
+    {
+      "task_id": "gen_222_lfi_login",
+      "reward": 45.49999999999999,
+      "steps": 10,
+      "goal": true
+    },
+    {
+      "task_id": "gen_222_lfi_login",
+      "reward": 45.49999999999999,
+      "steps": 10,
+      "goal": true
+    },
+    {
+      "task_id": "gen_222_lfi_login",
+      "reward": 45.49999999999999,
+      "steps": 10,
+      "goal": true
+    },
+    {
+      "task_id": "gen_223_lfi_login",
+      "reward": 45.49999999999999,
+      "steps": 10,
+      "goal": true
+    },
+    {
+      "task_id": "gen_223_lfi_login",
+      "reward": 45.49999999999999,
+      "steps": 10,
+      "goal": true
+    },
+    {
+      "task_id": "gen_223_lfi_login",
+      "reward": 45.49999999999999,
+      "steps": 10,
+      "goal": true
+    },
+    {
+      "task_id": "gen_223_lfi_login",
+      "reward": 45.49999999999999,
+      "steps": 10,
+      "goal": true
+    },
+    {
+      "task_id": "gen_223_lfi_login",
+      "reward": 45.49999999999999,
+      "steps": 10,
+      "goal": true
+    },
+    {
+      "task_id": "gen_224_lfi_login",
+      "reward": 45.49999999999999,
+      "steps": 10,
+      "goal": true
+    },
+    {
+      "task_id": "gen_224_lfi_login",
+      "reward": 45.49999999999999,
+      "steps": 10,
+      "goal": true
+    },
+    {
+      "task_id": "gen_224_lfi_login",
+      "reward": 45.49999999999999,
+      "steps": 10,
+      "goal": true
+    },
+    {
+      "task_id": "gen_224_lfi_login",
+      "reward": 45.49999999999999,
+      "steps": 10,
+      "goal": true
+    },
+    {
+      "task_id": "gen_224_lfi_login",
+      "reward": 45.49999999999999,
+      "steps": 10,
+      "goal": true
+    },
+    {
+      "task_id": "gen_225_rce_shell",
+      "reward": 42.699999999999996,
+      "steps": 8,
+      "goal": true
+    },
+    {
+      "task_id": "gen_225_rce_shell",
+      "reward": 42.699999999999996,
+      "steps": 8,
+      "goal": true
+    },
+    {
+      "task_id": "gen_225_rce_shell",
+      "reward": 42.699999999999996,
+      "steps": 8,
+      "goal": true
+    },
+    {
+      "task_id": "gen_225_rce_shell",
+      "reward": 42.699999999999996,
+      "steps": 8,
+      "goal": true
+    },
+    {
+      "task_id": "gen_225_rce_shell",
+      "reward": 42.699999999999996,
+      "steps": 8,
+      "goal": true
+    },
+    {
+      "task_id": "gen_226_rce_shell",
+      "reward": 42.699999999999996,
+      "steps": 8,
+      "goal": true
+    },
+    {
+      "task_id": "gen_226_rce_shell",
+      "reward": 42.699999999999996,
+      "steps": 8,
+      "goal": true
+    },
+    {
+      "task_id": "gen_226_rce_shell",
+      "reward": 42.699999999999996,
+      "steps": 8,
+      "goal": true
+    },
+    {
+      "task_id": "gen_226_rce_shell",
+      "reward": 42.699999999999996,
+      "steps": 8,
+      "goal": true
+    },
+    {
+      "task_id": "gen_226_rce_shell",
+      "reward": 42.699999999999996,
+      "steps": 8,
+      "goal": true
+    },
+    {
+      "task_id": "gen_227_rce_shell",
+      "reward": 42.699999999999996,
+      "steps": 8,
+      "goal": true
+    },
+    {
+      "task_id": "gen_227_rce_shell",
+      "reward": 42.699999999999996,
+      "steps": 8,
+      "goal": true
+    },
+    {
+      "task_id": "gen_227_rce_shell",
+      "reward": 42.699999999999996,
+      "steps": 8,
+      "goal": true
+    },
+    {
+      "task_id": "gen_227_rce_shell",
+      "reward": 42.699999999999996,
+      "steps": 8,
+      "goal": true
+    },
+    {
+      "task_id": "gen_227_rce_shell",
+      "reward": 42.699999999999996,
+      "steps": 8,
+      "goal": true
+    },
+    {
+      "task_id": "gen_228_rce_shell",
+      "reward": 42.699999999999996,
+      "steps": 8,
+      "goal": true
+    },
+    {
+      "task_id": "gen_228_rce_shell",
+      "reward": 42.699999999999996,
+      "steps": 8,
+      "goal": true
+    },
+    {
+      "task_id": "gen_228_rce_shell",
+      "reward": 42.699999999999996,
+      "steps": 8,
+      "goal": true
+    },
+    {
+      "task_id": "gen_228_rce_shell",
+      "reward": 42.699999999999996,
+      "steps": 8,
+      "goal": true
+    },
+    {
+      "task_id": "gen_228_rce_shell",
+      "reward": 42.699999999999996,
+      "steps": 8,
+      "goal": true
+    },
+    {
+      "task_id": "gen_229_rce_shell",
+      "reward": 42.699999999999996,
+      "steps": 8,
+      "goal": true
+    },
+    {
+      "task_id": "gen_229_rce_shell",
+      "reward": 42.699999999999996,
+      "steps": 8,
+      "goal": true
+    },
+    {
+      "task_id": "gen_229_rce_shell",
+      "reward": 42.699999999999996,
+      "steps": 8,
+      "goal": true
+    },
+    {
+      "task_id": "gen_229_rce_shell",
+      "reward": 42.699999999999996,
+      "steps": 8,
+      "goal": true
+    },
+    {
+      "task_id": "gen_229_rce_shell",
+      "reward": 42.699999999999996,
+      "steps": 8,
+      "goal": true
+    },
+    {
+      "task_id": "gen_230_rce_privesc",
+      "reward": 50.599999999999994,
+      "steps": 9,
+      "goal": false
+    },
+    {
+      "task_id": "gen_230_rce_privesc",
+      "reward": 50.599999999999994,
+      "steps": 9,
+      "goal": false
+    },
+    {
+      "task_id": "gen_230_rce_privesc",
+      "reward": 50.599999999999994,
+      "steps": 9,
+      "goal": false
+    },
+    {
+      "task_id": "gen_230_rce_privesc",
+      "reward": 50.599999999999994,
+      "steps": 9,
+      "goal": false
+    },
+    {
+      "task_id": "gen_230_rce_privesc",
+      "reward": 50.599999999999994,
+      "steps": 9,
+      "goal": false
+    },
+    {
+      "task_id": "gen_231_rce_privesc",
+      "reward": 50.599999999999994,
+      "steps": 9,
+      "goal": false
+    },
+    {
+      "task_id": "gen_231_rce_privesc",
+      "reward": 50.599999999999994,
+      "steps": 9,
+      "goal": false
+    },
+    {
+      "task_id": "gen_231_rce_privesc",
+      "reward": 50.599999999999994,
+      "steps": 9,
+      "goal": false
+    },
+    {
+      "task_id": "gen_231_rce_privesc",
+      "reward": 50.599999999999994,
+      "steps": 9,
+      "goal": false
+    },
+    {
+      "task_id": "gen_231_rce_privesc",
+      "reward": 50.599999999999994,
+      "steps": 9,
+      "goal": false
+    },
+    {
+      "task_id": "gen_232_rce_privesc",
+      "reward": 50.599999999999994,
+      "steps": 9,
+      "goal": false
+    },
+    {
+      "task_id": "gen_232_rce_privesc",
+      "reward": 50.599999999999994,
+      "steps": 9,
+      "goal": false
+    },
+    {
+      "task_id": "gen_232_rce_privesc",
+      "reward": 50.599999999999994,
+      "steps": 9,
+      "goal": false
+    },
+    {
+      "task_id": "gen_232_rce_privesc",
+      "reward": 50.599999999999994,
+      "steps": 9,
+      "goal": false
+    },
+    {
+      "task_id": "gen_232_rce_privesc",
+      "reward": 50.599999999999994,
+      "steps": 9,
+      "goal": false
+    },
+    {
+      "task_id": "gen_233_rce_privesc",
+      "reward": 50.599999999999994,
+      "steps": 9,
+      "goal": false
+    },
+    {
+      "task_id": "gen_233_rce_privesc",
+      "reward": 50.599999999999994,
+      "steps": 9,
+      "goal": false
+    },
+    {
+      "task_id": "gen_233_rce_privesc",
+      "reward": 50.599999999999994,
+      "steps": 9,
+      "goal": false
+    },
+    {
+      "task_id": "gen_233_rce_privesc",
+      "reward": 50.599999999999994,
+      "steps": 9,
+      "goal": false
+    },
+    {
+      "task_id": "gen_233_rce_privesc",
+      "reward": 50.599999999999994,
+      "steps": 9,
+      "goal": false
+    },
+    {
+      "task_id": "gen_234_rce_privesc",
+      "reward": 50.599999999999994,
+      "steps": 9,
+      "goal": false
+    },
+    {
+      "task_id": "gen_234_rce_privesc",
+      "reward": 50.599999999999994,
+      "steps": 9,
+      "goal": false
+    },
+    {
+      "task_id": "gen_234_rce_privesc",
+      "reward": 50.599999999999994,
+      "steps": 9,
+      "goal": false
+    },
+    {
+      "task_id": "gen_234_rce_privesc",
+      "reward": 50.599999999999994,
+      "steps": 9,
+      "goal": false
+    },
+    {
+      "task_id": "gen_234_rce_privesc",
+      "reward": 50.599999999999994,
+      "steps": 9,
+      "goal": false
+    },
+    {
+      "task_id": "gen_235_upload_default_shell",
+      "reward": 47.5,
+      "steps": 10,
+      "goal": true
+    },
+    {
+      "task_id": "gen_235_upload_default_shell",
+      "reward": 47.5,
+      "steps": 10,
+      "goal": true
+    },
+    {
+      "task_id": "gen_235_upload_default_shell",
+      "reward": 47.5,
+      "steps": 10,
+      "goal": true
+    },
+    {
+      "task_id": "gen_235_upload_default_shell",
+      "reward": 47.5,
+      "steps": 10,
+      "goal": true
+    },
+    {
+      "task_id": "gen_235_upload_default_shell",
+      "reward": 47.5,
+      "steps": 10,
+      "goal": true
+    },
+    {
+      "task_id": "gen_236_upload_default_shell",
+      "reward": 47.5,
+      "steps": 10,
+      "goal": true
+    },
+    {
+      "task_id": "gen_236_upload_default_shell",
+      "reward": 47.5,
+      "steps": 10,
+      "goal": true
+    },
+    {
+      "task_id": "gen_236_upload_default_shell",
+      "reward": 47.5,
+      "steps": 10,
+      "goal": true
+    },
+    {
+      "task_id": "gen_236_upload_default_shell",
+      "reward": 47.5,
+      "steps": 10,
+      "goal": true
+    },
+    {
+      "task_id": "gen_236_upload_default_shell",
+      "reward": 47.5,
+      "steps": 10,
+      "goal": true
+    },
+    {
+      "task_id": "gen_237_upload_default_shell",
+      "reward": 47.5,
+      "steps": 10,
+      "goal": true
+    },
+    {
+      "task_id": "gen_237_upload_default_shell",
+      "reward": 47.5,
+      "steps": 10,
+      "goal": true
+    },
+    {
+      "task_id": "gen_237_upload_default_shell",
+      "reward": 47.5,
+      "steps": 10,
+      "goal": true
+    },
+    {
+      "task_id": "gen_237_upload_default_shell",
+      "reward": 47.5,
+      "steps": 10,
+      "goal": true
+    },
+    {
+      "task_id": "gen_237_upload_default_shell",
+      "reward": 47.5,
+      "steps": 10,
+      "goal": true
+    },
+    {
+      "task_id": "gen_238_upload_default_shell",
+      "reward": 47.5,
+      "steps": 10,
+      "goal": true
+    },
+    {
+      "task_id": "gen_238_upload_default_shell",
+      "reward": 47.5,
+      "steps": 10,
+      "goal": true
+    },
+    {
+      "task_id": "gen_238_upload_default_shell",
+      "reward": 47.5,
+      "steps": 10,
+      "goal": true
+    },
+    {
+      "task_id": "gen_238_upload_default_shell",
+      "reward": 47.5,
+      "steps": 10,
+      "goal": true
+    },
+    {
+      "task_id": "gen_238_upload_default_shell",
+      "reward": 47.5,
+      "steps": 10,
+      "goal": true
+    },
+    {
+      "task_id": "gen_239_upload_default_shell",
+      "reward": 47.5,
+      "steps": 10,
+      "goal": true
+    },
+    {
+      "task_id": "gen_239_upload_default_shell",
+      "reward": 47.5,
+      "steps": 10,
+      "goal": true
+    },
+    {
+      "task_id": "gen_239_upload_default_shell",
+      "reward": 47.5,
+      "steps": 10,
+      "goal": true
+    },
+    {
+      "task_id": "gen_239_upload_default_shell",
+      "reward": 47.5,
+      "steps": 10,
+      "goal": true
+    },
+    {
+      "task_id": "gen_239_upload_default_shell",
+      "reward": 47.5,
+      "steps": 10,
+      "goal": true
+    },
+    {
+      "task_id": "gen_240_upload_leak_shell",
+      "reward": 53.3,
+      "steps": 12,
+      "goal": true
+    },
+    {
+      "task_id": "gen_240_upload_leak_shell",
+      "reward": 53.3,
+      "steps": 12,
+      "goal": true
+    },
+    {
+      "task_id": "gen_240_upload_leak_shell",
+      "reward": 53.3,
+      "steps": 12,
+      "goal": true
+    },
+    {
+      "task_id": "gen_240_upload_leak_shell",
+      "reward": 53.3,
+      "steps": 12,
+      "goal": true
+    },
+    {
+      "task_id": "gen_240_upload_leak_shell",
+      "reward": 53.3,
+      "steps": 12,
+      "goal": true
+    },
+    {
+      "task_id": "gen_241_upload_leak_shell",
+      "reward": 53.3,
+      "steps": 12,
+      "goal": true
+    },
+    {
+      "task_id": "gen_241_upload_leak_shell",
+      "reward": 53.3,
+      "steps": 12,
+      "goal": true
+    },
+    {
+      "task_id": "gen_241_upload_leak_shell",
+      "reward": 53.3,
+      "steps": 12,
+      "goal": true
+    },
+    {
+      "task_id": "gen_241_upload_leak_shell",
+      "reward": 53.3,
+      "steps": 12,
+      "goal": true
+    },
+    {
+      "task_id": "gen_241_upload_leak_shell",
+      "reward": 53.3,
+      "steps": 12,
+      "goal": true
+    },
+    {
+      "task_id": "gen_242_upload_leak_shell",
+      "reward": 53.3,
+      "steps": 12,
+      "goal": true
+    },
+    {
+      "task_id": "gen_242_upload_leak_shell",
+      "reward": 53.3,
+      "steps": 12,
+      "goal": true
+    },
+    {
+      "task_id": "gen_242_upload_leak_shell",
+      "reward": 53.3,
+      "steps": 12,
+      "goal": true
+    },
+    {
+      "task_id": "gen_242_upload_leak_shell",
+      "reward": 53.3,
+      "steps": 12,
+      "goal": true
+    },
+    {
+      "task_id": "gen_242_upload_leak_shell",
+      "reward": 53.3,
+      "steps": 12,
+      "goal": true
+    },
+    {
+      "task_id": "gen_243_upload_leak_shell",
+      "reward": 53.3,
+      "steps": 12,
+      "goal": true
+    },
+    {
+      "task_id": "gen_243_upload_leak_shell",
+      "reward": 53.3,
+      "steps": 12,
+      "goal": true
+    },
+    {
+      "task_id": "gen_243_upload_leak_shell",
+      "reward": 53.3,
+      "steps": 12,
+      "goal": true
+    },
+    {
+      "task_id": "gen_243_upload_leak_shell",
+      "reward": 53.3,
+      "steps": 12,
+      "goal": true
+    },
+    {
+      "task_id": "gen_243_upload_leak_shell",
+      "reward": 53.3,
+      "steps": 12,
+      "goal": true
+    },
+    {
+      "task_id": "gen_244_upload_leak_shell",
+      "reward": 53.3,
+      "steps": 12,
+      "goal": true
+    },
+    {
+      "task_id": "gen_244_upload_leak_shell",
+      "reward": 53.3,
+      "steps": 12,
+      "goal": true
+    },
+    {
+      "task_id": "gen_244_upload_leak_shell",
+      "reward": 53.3,
+      "steps": 12,
+      "goal": true
+    },
+    {
+      "task_id": "gen_244_upload_leak_shell",
+      "reward": 53.3,
+      "steps": 12,
+      "goal": true
+    },
+    {
+      "task_id": "gen_244_upload_leak_shell",
+      "reward": 53.3,
+      "steps": 12,
+      "goal": true
+    },
+    {
+      "task_id": "gen_245_upload_default_privesc",
+      "reward": 61.4,
+      "steps": 11,
+      "goal": true
+    },
+    {
+      "task_id": "gen_245_upload_default_privesc",
+      "reward": 61.4,
+      "steps": 11,
+      "goal": true
+    },
+    {
+      "task_id": "gen_245_upload_default_privesc",
+      "reward": 61.4,
+      "steps": 11,
+      "goal": true
+    },
+    {
+      "task_id": "gen_245_upload_default_privesc",
+      "reward": 61.4,
+      "steps": 11,
+      "goal": true
+    },
+    {
+      "task_id": "gen_245_upload_default_privesc",
+      "reward": 61.4,
+      "steps": 11,
+      "goal": true
+    },
+    {
+      "task_id": "gen_246_upload_default_privesc",
+      "reward": 61.4,
+      "steps": 11,
+      "goal": true
+    },
+    {
+      "task_id": "gen_246_upload_default_privesc",
+      "reward": 61.4,
+      "steps": 11,
+      "goal": true
+    },
+    {
+      "task_id": "gen_246_upload_default_privesc",
+      "reward": 61.4,
+      "steps": 11,
+      "goal": true
+    },
+    {
+      "task_id": "gen_246_upload_default_privesc",
+      "reward": 61.4,
+      "steps": 11,
+      "goal": true
+    },
+    {
+      "task_id": "gen_246_upload_default_privesc",
+      "reward": 61.4,
+      "steps": 11,
+      "goal": true
+    },
+    {
+      "task_id": "gen_247_upload_default_privesc",
+      "reward": 61.4,
+      "steps": 11,
+      "goal": true
+    },
+    {
+      "task_id": "gen_247_upload_default_privesc",
+      "reward": 61.4,
+      "steps": 11,
+      "goal": true
+    },
+    {
+      "task_id": "gen_247_upload_default_privesc",
+      "reward": 61.4,
+      "steps": 11,
+      "goal": true
+    },
+    {
+      "task_id": "gen_247_upload_default_privesc",
+      "reward": 61.4,
+      "steps": 11,
+      "goal": true
+    },
+    {
+      "task_id": "gen_247_upload_default_privesc",
+      "reward": 61.4,
+      "steps": 11,
+      "goal": true
+    },
+    {
+      "task_id": "gen_248_upload_default_privesc",
+      "reward": 61.4,
+      "steps": 11,
+      "goal": true
+    },
+    {
+      "task_id": "gen_248_upload_default_privesc",
+      "reward": 61.4,
+      "steps": 11,
+      "goal": true
+    },
+    {
+      "task_id": "gen_248_upload_default_privesc",
+      "reward": 61.4,
+      "steps": 11,
+      "goal": true
+    },
+    {
+      "task_id": "gen_248_upload_default_privesc",
+      "reward": 61.4,
+      "steps": 11,
+      "goal": true
+    },
+    {
+      "task_id": "gen_248_upload_default_privesc",
+      "reward": 61.4,
+      "steps": 11,
+      "goal": true
+    },
+    {
+      "task_id": "gen_249_upload_default_privesc",
+      "reward": 61.4,
+      "steps": 11,
+      "goal": true
+    },
+    {
+      "task_id": "gen_249_upload_default_privesc",
+      "reward": 61.4,
+      "steps": 11,
+      "goal": true
+    },
+    {
+      "task_id": "gen_249_upload_default_privesc",
+      "reward": 61.4,
+      "steps": 11,
+      "goal": true
+    },
+    {
+      "task_id": "gen_249_upload_default_privesc",
+      "reward": 61.4,
+      "steps": 11,
+      "goal": true
+    },
+    {
+      "task_id": "gen_249_upload_default_privesc",
+      "reward": 61.4,
+      "steps": 11,
+      "goal": true
+    },
+    {
+      "task_id": "gen_250_authed_injection",
+      "reward": 49.4,
+      "steps": 11,
+      "goal": true
+    },
+    {
+      "task_id": "gen_250_authed_injection",
+      "reward": 49.4,
+      "steps": 11,
+      "goal": true
+    },
+    {
+      "task_id": "gen_250_authed_injection",
+      "reward": 49.4,
+      "steps": 11,
+      "goal": true
+    },
+    {
+      "task_id": "gen_250_authed_injection",
+      "reward": 49.4,
+      "steps": 11,
+      "goal": true
+    },
+    {
+      "task_id": "gen_250_authed_injection",
+      "reward": 49.4,
+      "steps": 11,
+      "goal": true
+    },
+    {
+      "task_id": "gen_251_authed_injection",
+      "reward": 49.4,
+      "steps": 11,
+      "goal": true
+    },
+    {
+      "task_id": "gen_251_authed_injection",
+      "reward": 49.4,
+      "steps": 11,
+      "goal": true
+    },
+    {
+      "task_id": "gen_251_authed_injection",
+      "reward": 49.4,
+      "steps": 11,
+      "goal": true
+    },
+    {
+      "task_id": "gen_251_authed_injection",
+      "reward": 49.4,
+      "steps": 11,
+      "goal": true
+    },
+    {
+      "task_id": "gen_251_authed_injection",
+      "reward": 49.4,
+      "steps": 11,
+      "goal": true
+    },
+    {
+      "task_id": "gen_252_authed_injection",
+      "reward": 49.4,
+      "steps": 11,
+      "goal": true
+    },
+    {
+      "task_id": "gen_252_authed_injection",
+      "reward": 49.4,
+      "steps": 11,
+      "goal": true
+    },
+    {
+      "task_id": "gen_252_authed_injection",
+      "reward": 49.4,
+      "steps": 11,
+      "goal": true
+    },
+    {
+      "task_id": "gen_252_authed_injection",
+      "reward": 49.4,
+      "steps": 11,
+      "goal": true
+    },
+    {
+      "task_id": "gen_252_authed_injection",
+      "reward": 49.4,
+      "steps": 11,
+      "goal": true
+    },
+    {
+      "task_id": "gen_253_authed_injection",
+      "reward": 49.4,
+      "steps": 11,
+      "goal": true
+    },
+    {
+      "task_id": "gen_253_authed_injection",
+      "reward": 49.4,
+      "steps": 11,
+      "goal": true
+    },
+    {
+      "task_id": "gen_253_authed_injection",
+      "reward": 49.4,
+      "steps": 11,
+      "goal": true
+    },
+    {
+      "task_id": "gen_253_authed_injection",
+      "reward": 49.4,
+      "steps": 11,
+      "goal": true
+    },
+    {
+      "task_id": "gen_253_authed_injection",
+      "reward": 49.4,
+      "steps": 11,
+      "goal": true
+    },
+    {
+      "task_id": "gen_254_authed_injection",
+      "reward": 49.4,
+      "steps": 11,
+      "goal": true
+    },
+    {
+      "task_id": "gen_254_authed_injection",
+      "reward": 49.4,
+      "steps": 11,
+      "goal": true
+    },
+    {
+      "task_id": "gen_254_authed_injection",
+      "reward": 49.4,
+      "steps": 11,
+      "goal": true
+    },
+    {
+      "task_id": "gen_254_authed_injection",
+      "reward": 49.4,
+      "steps": 11,
+      "goal": true
+    },
+    {
+      "task_id": "gen_254_authed_injection",
+      "reward": 49.4,
+      "steps": 11,
+      "goal": true
+    },
+    {
+      "task_id": "gen_255_chained_exploit",
+      "reward": 15.499999999999995,
+      "steps": 10,
+      "goal": false
+    },
+    {
+      "task_id": "gen_255_chained_exploit",
+      "reward": 15.499999999999995,
+      "steps": 10,
+      "goal": false
+    },
+    {
+      "task_id": "gen_255_chained_exploit",
+      "reward": 15.499999999999995,
+      "steps": 10,
+      "goal": false
+    },
+    {
+      "task_id": "gen_255_chained_exploit",
+      "reward": 15.499999999999995,
+      "steps": 10,
+      "goal": false
+    },
+    {
+      "task_id": "gen_255_chained_exploit",
+      "reward": 15.499999999999995,
+      "steps": 10,
+      "goal": false
+    },
+    {
+      "task_id": "gen_256_chained_exploit",
+      "reward": 15.499999999999995,
+      "steps": 10,
+      "goal": false
+    },
+    {
+      "task_id": "gen_256_chained_exploit",
+      "reward": 15.499999999999995,
+      "steps": 10,
+      "goal": false
+    },
+    {
+      "task_id": "gen_256_chained_exploit",
+      "reward": 15.499999999999995,
+      "steps": 10,
+      "goal": false
+    },
+    {
+      "task_id": "gen_256_chained_exploit",
+      "reward": 15.499999999999995,
+      "steps": 10,
+      "goal": false
+    },
+    {
+      "task_id": "gen_256_chained_exploit",
+      "reward": 15.499999999999995,
+      "steps": 10,
+      "goal": false
+    },
+    {
+      "task_id": "gen_257_chained_exploit",
+      "reward": 15.499999999999995,
+      "steps": 10,
+      "goal": false
+    },
+    {
+      "task_id": "gen_257_chained_exploit",
+      "reward": 15.499999999999995,
+      "steps": 10,
+      "goal": false
+    },
+    {
+      "task_id": "gen_257_chained_exploit",
+      "reward": 15.499999999999995,
+      "steps": 10,
+      "goal": false
+    },
+    {
+      "task_id": "gen_257_chained_exploit",
+      "reward": 15.499999999999995,
+      "steps": 10,
+      "goal": false
+    },
+    {
+      "task_id": "gen_257_chained_exploit",
+      "reward": 15.499999999999995,
+      "steps": 10,
+      "goal": false
+    },
+    {
+      "task_id": "gen_258_chained_exploit",
+      "reward": 15.499999999999995,
+      "steps": 10,
+      "goal": false
+    },
+    {
+      "task_id": "gen_258_chained_exploit",
+      "reward": 15.499999999999995,
+      "steps": 10,
+      "goal": false
+    },
+    {
+      "task_id": "gen_258_chained_exploit",
+      "reward": 15.499999999999995,
+      "steps": 10,
+      "goal": false
+    },
+    {
+      "task_id": "gen_258_chained_exploit",
+      "reward": 15.499999999999995,
+      "steps": 10,
+      "goal": false
+    },
+    {
+      "task_id": "gen_258_chained_exploit",
+      "reward": 15.499999999999995,
+      "steps": 10,
+      "goal": false
+    },
+    {
+      "task_id": "gen_259_chained_exploit",
+      "reward": 15.499999999999995,
+      "steps": 10,
+      "goal": false
+    },
+    {
+      "task_id": "gen_259_chained_exploit",
+      "reward": 15.499999999999995,
+      "steps": 10,
+      "goal": false
+    },
+    {
+      "task_id": "gen_259_chained_exploit",
+      "reward": 15.499999999999995,
+      "steps": 10,
+      "goal": false
+    },
+    {
+      "task_id": "gen_259_chained_exploit",
+      "reward": 15.499999999999995,
+      "steps": 10,
+      "goal": false
+    },
+    {
+      "task_id": "gen_259_chained_exploit",
+      "reward": 15.499999999999995,
+      "steps": 10,
+      "goal": false
+    },
+    {
+      "task_id": "gen_260_leak_authed_privesc",
+      "reward": 65.1,
+      "steps": 14,
+      "goal": false
+    },
+    {
+      "task_id": "gen_260_leak_authed_privesc",
+      "reward": 65.1,
+      "steps": 14,
+      "goal": false
+    },
+    {
+      "task_id": "gen_260_leak_authed_privesc",
+      "reward": 65.1,
+      "steps": 14,
+      "goal": false
+    },
+    {
+      "task_id": "gen_260_leak_authed_privesc",
+      "reward": 65.1,
+      "steps": 14,
+      "goal": false
+    },
+    {
+      "task_id": "gen_260_leak_authed_privesc",
+      "reward": 65.1,
+      "steps": 14,
+      "goal": false
+    },
+    {
+      "task_id": "gen_261_leak_authed_privesc",
+      "reward": 65.1,
+      "steps": 14,
+      "goal": true
+    },
+    {
+      "task_id": "gen_261_leak_authed_privesc",
+      "reward": 65.1,
+      "steps": 14,
+      "goal": true
+    },
+    {
+      "task_id": "gen_261_leak_authed_privesc",
+      "reward": 65.1,
+      "steps": 14,
+      "goal": true
+    },
+    {
+      "task_id": "gen_261_leak_authed_privesc",
+      "reward": 65.1,
+      "steps": 14,
+      "goal": true
+    },
+    {
+      "task_id": "gen_261_leak_authed_privesc",
+      "reward": 65.1,
+      "steps": 14,
+      "goal": true
+    },
+    {
+      "task_id": "gen_262_leak_authed_privesc",
+      "reward": 65.1,
+      "steps": 14,
+      "goal": false
+    },
+    {
+      "task_id": "gen_262_leak_authed_privesc",
+      "reward": 65.1,
+      "steps": 14,
+      "goal": false
+    },
+    {
+      "task_id": "gen_262_leak_authed_privesc",
+      "reward": 65.1,
+      "steps": 14,
+      "goal": false
+    },
+    {
+      "task_id": "gen_262_leak_authed_privesc",
+      "reward": 65.1,
+      "steps": 14,
+      "goal": false
+    },
+    {
+      "task_id": "gen_262_leak_authed_privesc",
+      "reward": 65.1,
+      "steps": 14,
+      "goal": false
+    },
+    {
+      "task_id": "gen_263_leak_authed_privesc",
+      "reward": 65.1,
+      "steps": 14,
+      "goal": false
+    },
+    {
+      "task_id": "gen_263_leak_authed_privesc",
+      "reward": 65.1,
+      "steps": 14,
+      "goal": false
+    },
+    {
+      "task_id": "gen_263_leak_authed_privesc",
+      "reward": 65.1,
+      "steps": 14,
+      "goal": false
+    },
+    {
+      "task_id": "gen_263_leak_authed_privesc",
+      "reward": 65.1,
+      "steps": 14,
+      "goal": false
+    },
+    {
+      "task_id": "gen_263_leak_authed_privesc",
+      "reward": 65.1,
+      "steps": 14,
+      "goal": false
+    },
+    {
+      "task_id": "gen_264_leak_authed_privesc",
+      "reward": 65.1,
+      "steps": 14,
+      "goal": false
+    },
+    {
+      "task_id": "gen_264_leak_authed_privesc",
+      "reward": 65.1,
+      "steps": 14,
+      "goal": false
+    },
+    {
+      "task_id": "gen_264_leak_authed_privesc",
+      "reward": 65.1,
+      "steps": 14,
+      "goal": false
+    },
+    {
+      "task_id": "gen_264_leak_authed_privesc",
+      "reward": 65.1,
+      "steps": 14,
+      "goal": false
+    },
+    {
+      "task_id": "gen_264_leak_authed_privesc",
+      "reward": 65.1,
+      "steps": 14,
+      "goal": false
+    }
+  ]
+}

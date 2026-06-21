@@ -1,0 +1,85 @@
+{
+  "per_seed": {
+    "seed0": {
+      "web_path_enum_overall": 0.455,
+      "web_path_enum_advanced": 0.173,
+      "command_exec_advanced": 0.309,
+      "recon_advanced": 0.162,
+      "exploit_advanced": 0.337,
+      "n_wpe_adv": 64
+    },
+    "seed1": {
+      "web_path_enum_overall": 0.637,
+      "web_path_enum_advanced": 0.268,
+      "command_exec_advanced": 0.322,
+      "recon_advanced": 0.194,
+      "exploit_advanced": 0.348,
+      "n_wpe_adv": 64
+    },
+    "seed2": {
+      "web_path_enum_overall": 0.657,
+      "web_path_enum_advanced": 0.352,
+      "command_exec_advanced": 0.278,
+      "recon_advanced": 0.229,
+      "exploit_advanced": 0.326,
+      "n_wpe_adv": 64
+    },
+    "seed3": {
+      "web_path_enum_overall": 0.577,
+      "web_path_enum_advanced": 0.23,
+      "command_exec_advanced": 0.302,
+      "recon_advanced": 0.197,
+      "exploit_advanced": 0.352,
+      "n_wpe_adv": 64
+    },
+    "seed4": {
+      "web_path_enum_overall": 0.376,
+      "web_path_enum_advanced": 0.222,
+      "command_exec_advanced": 0.336,
+      "recon_advanced": 0.189,
+      "exploit_advanced": 0.363,
+      "n_wpe_adv": 64
+    }
+  },
+  "across_seeds": {
+    "web_path_enum_overall": {
+      "mean": 0.54,
+      "std": 0.108,
+      "min": 0.376,
+      "max": 0.657,
+      "n_seeds": 5
+    },
+    "web_path_enum_advanced": {
+      "mean": 0.249,
+      "std": 0.06,
+      "min": 0.173,
+      "max": 0.352,
+      "n_seeds": 5
+    },
+    "command_exec_advanced": {
+      "mean": 0.309,
+      "std": 0.02,
+      "min": 0.278,
+      "max": 0.336,
+      "n_seeds": 5
+    }
+  },
+  "reference": {
+    "DEPLOYED (seed-gated)": {
+      "web_path_enum_overall": 0.887,
+      "web_path_enum_advanced": 0.609,
+      "command_exec_advanced": 0.21,
+      "recon_advanced": 0.249,
+      "exploit_advanced": 0.275,
+      "n_wpe_adv": 64
+    },
+    "reward-fixed seed0": {
+      "web_path_enum_overall": 0.594,
+      "web_path_enum_advanced": 0.249,
+      "command_exec_advanced": 0.273,
+      "recon_advanced": 0.204,
+      "exploit_advanced": 0.348,
+      "n_wpe_adv": 64
+    }
+  }
+}
