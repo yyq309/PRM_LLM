@@ -686,18 +686,25 @@ drive the next phase:
   Verified live on DC-1 (top1=1.0, duration 23.3s, tokens 0 for deterministic). Metric suite is now paper-ready;
   honest takeaway: the confirmatory per-step claim holds under correction, per-box numbers are descriptive.
 
-- **★★ MULTI-LLM #1 — Qwen (qwen3.7-max via tsbys) on DC-1 full chain (2026-06-21): cross-vendor confirms
-  the proposer-conditional finding.** `outputs/stage2_fullchain_dc1_qwen.json` (5 trials, 3 errored — see
-  caveat). **prm root 100% (4/4), llm_only root 100% (3/3)** — i.e. **Qwen is a STRONGER proposer than
-  deepseek-chat on DC-1** (its llm_only completes the chain autonomously 100% vs deepseek's 40%), so the PRM's
-  OUTCOME advantage vanishes (both 100%) — but the **PRM's per-decision ranking is still better: top1_oracle
-  ranking acc 0.725 (prm) vs 0.435 (llm_only)**. ⇒ the "PRM helps a weak proposer, obsoleted by a strong one"
-  result is the **proposer-COMPETENCE axis, NOT a deepseek quirk** — confirmed on a 2nd vendor. Closes the
-  single-model gap on C-A/C-B. **Cost (precise, via #4):** ~3.9–4.9k tokens/episode, ~50–90s/episode.
-  **CAVEAT: qwen3.7-max is a REASONING model** — slow + ~30% "empty content (reasoning consumed budget)" errors
-  even at max_tokens=8000 (budget raised 4000→16000 cap + proposer 8000; helped 7/10→3/10 errors). For the
-  remaining web-box multi-LLM runs a NON-reasoning Qwen (qwen-plus / qwen2.5-instruct) would be ~10× faster +
-  error-free; decision pending. `--provider qwen` (BYAPI_KEY env-only).
+- **★★ MULTI-LLM cross-vendor A/B — DONE & VERIFIED (2026-06-22): the single-model gap is CLOSED.** Three
+  vendors (DeepSeek baseline / Qwen-3.7-max / GPT-5.4), full set = DC-1 full chain + 6 web boxes per new
+  vendor, `outputs/{qwen,gpt}_*.json` (14 files, 0 errored). Both new vendors via tsbys OpenAI-compatible
+  gateway, `--provider qwen|gpt` (BYAPI_KEY env-only); `PROVIDERS` in `scripts/deepseek_client.py`. **All 4
+  headline claims adversarially verified against raw JSON by a workflow (4/4 confirmed); see
+  STAGE2_LIVE_RESULTS.md "MULTI-LLM cross-vendor A/B" for the verified tables.** One mechanism
+  (proposer-conditional):
+  - **Joomla 3-vendor goal rescue** (prm>llm_only all 3): deepseek 0.4>0.2, qwen 1.0>0.4, gpt 0.6>0.0.
+    **HEDGE: deepseek leg n=5, CIs overlap → directional, NOT independently significant; qwen/gpt are clean.**
+  - **DC-1 axis:** deepseek llm_only 40%→prm 100% (n=10, non-overlapping = rescue); qwen & gpt llm_only already
+    100% (no rescue, saturated). PRM moves outcome only where the proposer fails.
+  - **Top-1 ranking acc: prm>llm_only on 14/14 boxes — but Qwen+GPT ONLY** (deepseek files predate the metric;
+    do NOT write "all three vendors" for top-1).
+  - **Per-step is box-dependent, NOT uniform:** prm>llm on multi-step chains (dc1, php-cgi); llm>prm on
+    single-shot Struts2 (raw proposer fires the one right action; PRM exploration dilutes the rate).
+  - **Excluded as confounded:** deepseek ThinkPHP (`stage2_thinkphp_live_ab.json` proposer='target';
+    `..._llm_ab.json` is a 2-run wiring stub). qwen3.7-max is a reasoning model (slow, needed max_tokens=16000
+    to avoid empty-content errors); gpt-5.4 fast + 0 errors. tsbys non-reasoning Qwen (qwen3.6-plus/qwen-plus)
+    are 500/503 unavailable.
 
 Ranked next steps (all leak-free):
 

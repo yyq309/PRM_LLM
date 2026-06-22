@@ -39,6 +39,83 @@ proxy (`eta._no_proxy_env`). φ credits `euid=0(root)`.
 
 Reports: `outputs/stage2_fullchain_dc1.json`, `outputs/stage2_fullchain_toppo.json`.
 
+## ★★ MULTI-LLM cross-vendor A/B (DeepSeek / Qwen-3.7-max / GPT-5.4, 2026-06-22)
+
+Closes the single-model gap: the result is **not deepseek-specific**. Two new vendors via the tsbys
+OpenAI-compatible gateway (`--provider qwen|gpt`, key env-only), full set = DC-1 full chain + 6 web boxes,
+zero errored trials. **Claims below were adversarially verified against the raw `outputs/*.json` (4/4
+confirmed) by a workflow that also flagged the deepseek-baseline caveats; numbers are paste-checked.**
+
+**Unified finding (one proposer-conditional mechanism).** Across three vendors the PRM does exactly one
+thing, and what you see depends on the proposer it wraps: it **rescues the OUTCOME of a struggling
+proposer** (DeepSeek on DC-1: goal/root 0.4→1.0), is **obsoleted on OUTCOME by a strong proposer** that
+already roots the box unaided (Qwen and GPT on DC-1: 1.0→1.0, no headroom), yet its **per-decision top-1
+ranking is robustly better than the raw proposer on every box it was measured on** (14/14 files, prm >
+llm_only). Outcome rescue is conditional; ranking lift is not — same re-ranking mechanism, different ceilings.
+
+### Joomla CVE-2017-8917 — 3-vendor goal-rate rescue
+| Vendor | model | n/arm | llm_only goal | prm goal | prm > llm_only |
+|---|---|---|---|---|---|
+| DeepSeek | deepseek-chat | 5 | 0.2 (1/5) | 0.4 (2/5) | yes — **CIs overlap, directional only** |
+| Qwen | qwen3.7-max | 5 | 0.4 (2/5) | 1.0 (5/5) | yes |
+| GPT-5.4 | gpt-5.4 | 5 | 0.0 (0/5) | 0.6 (3/5) | yes |
+
+Direction consistent across all three. **Honest read:** the DeepSeek leg is n=5 with overlapping 95% CIs
+(prm 0.4 [0.118,0.769] vs llm 0.2 [0.036,0.624]) — *directionally* consistent but **not** an independently
+significant DeepSeek result; Qwen and GPT are the clean legs. Files: `stage2_ab_trials_joomla.json`,
+`qwen_joomla-cve-2017-8917.json`, `gpt_joomla-cve-2017-8917.json`.
+
+### DC-1 axis — rescue is proposer-conditional
+| Vendor | model | n/arm | llm_only goal/root | prm goal/root | effect |
+|---|---|---|---|---|---|
+| DeepSeek | deepseek-chat | 10 | 0.4 / 0.4 | 1.0 / 1.0 | **rescue** (non-overlapping CIs) |
+| Qwen | qwen3.7-max | 8 | 1.0 / 1.0 | 1.0 / 1.0 | no rescue (saturated) |
+| GPT-5.4 | gpt-5.4 | 8 | 1.0 / 1.0 | 1.0 / 1.0 | no rescue (saturated) |
+
+The PRM only moves the outcome needle where the proposer is failing. DeepSeek DC-1 is the strongest deepseek
+result (n=10, full metadata, non-overlapping CIs). Files: `stage2_fullchain_dc1_n10.json`, `qwen_dc1.json`,
+`gpt_dc1.json`.
+
+### Top-1 ranking accuracy — prm > llm_only on 14/14 files (**Qwen + GPT only**)
+`mean_top1_ranking_acc`, prm vs llm_only:
+
+| Box | Qwen prm / llm | GPT prm / llm |
+|---|---|---|
+| dc1 | 0.474 / 0.409 | 0.604 / 0.317 |
+| joomla-cve-2017-8917 | 0.321 / 0.249 | 0.286 / 0.260 (narrowest, +0.026) |
+| php-cgi-cve-2012-1823 | 0.783 / 0.142 | 0.600 / 0.189 |
+| struts2-s2-045 | 0.450 / 0.000 | 0.767 / 0.000 |
+| struts2-s2-048 | 0.767 / 0.000 | 0.517 / 0.000 |
+| thinkphp-5-rce | 0.767 / 0.317 | 0.700 / 0.173 |
+| thinkphp-5023-rce | 0.633 / 0.317 | 0.600 / 0.220 |
+
+prm > llm_only in **all 14/14**. **This is a 2-vendor result** — DeepSeek files predate the metric and
+cannot contribute; do **not** write "all three vendors" for top-1.
+
+### Per-step progress is box-dependent, not uniform (GPT-5.4)
+| Box | llm_only per_step | prm per_step | winner |
+|---|---|---|---|
+| struts2-s2-045 | 1.0 (10/10) | 0.417 (5/12) | **llm > prm** |
+| struts2-s2-048 | 1.0 (10/10) | 0.333 (5/15) | **llm > prm** |
+| dc1 | 0.279 (31/111) | 0.423 (22/52) | prm > llm |
+| php-cgi-cve-2012-1823 | 0.395 (15/38) | 0.588 (10/17) | prm > llm |
+
+PRM helps per-step on the longer multi-step chains (dc1, php-cgi) but **hurts** per-step on the short
+single-shot Struts2 boxes, where the raw proposer already fires the one correct action every time and the
+PRM's exploration only dilutes the rate. Not a uniform per-step win.
+
+### Honest caveats — DeepSeek baseline
+- **DeepSeek carries goal-rate ONLY, never top-1** (metric postdates those runs).
+- **Config provenance weaker for DeepSeek:** `run_metadata` empty `{}` except `stage2_fullchain_dc1_n10.json`;
+  Joomla/Struts2 record proposer/model only top-level, temp/seed/CRN unrecorded → pairing parity unverifiable.
+- **DeepSeek ThinkPHP excluded — config-confounded:** `stage2_thinkphp_live_ab.json` uses `proposer='target'`
+  (state proposer, not LLM — apples-to-oranges); `stage2_thinkphp_live_llm_ab.json` is an offline
+  wiring-validation stub (2 runs, no CIs). ThinkPHP is covered only by Qwen/GPT.
+- **Small n:** Joomla/Struts2-045/Struts2-048 are n=5; only Struts2-045 and DC-1 (n=10) give non-overlapping CIs.
+
+Files: `outputs/{qwen,gpt}_*.json` (14), deepseek baselines as cited. Code: `--provider {qwen,gpt}` in
+`stage2/live_ab_trials.py`; `PROVIDERS` in `scripts/deepseek_client.py` (reasoning models get max_tokens=16000).
+
 ## ★ C-C MECHANISM — recon over-valuation traced to the reward (G2, 2026-06-21)
 
 `scripts/analyze_recon_bias.py` → `outputs/recon_bias_histogram.json`. Mean PRM target label per
