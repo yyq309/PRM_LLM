@@ -61,8 +61,8 @@ def main() -> None:
     p.add_argument("--executor", choices=["dryrun", "live"], default="live")
     p.add_argument("--proposer", choices=["state", "target", "llm"], default="llm")
     p.add_argument("--model", default="deepseek-v4-pro")
-    p.add_argument("--provider", default="deepseek", choices=["deepseek", "qwen", "openai"],
-                   help="LLM backend (OpenAI-compatible). qwen=tsbys (BYAPI_KEY), openai=OPENAI_API_KEY. "
+    p.add_argument("--provider", default="deepseek", choices=["deepseek", "qwen", "gpt", "openai"],
+                   help="LLM backend (OpenAI-compatible). qwen+gpt=tsbys (BYAPI_KEY), openai=OPENAI_API_KEY. "
                         "Multi-LLM A/B uses this to show the result is not deepseek-specific.")
     p.add_argument("--trials", type=int, default=6)
     p.add_argument("--budget", type=int, default=14)

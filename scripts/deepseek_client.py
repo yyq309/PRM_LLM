@@ -28,6 +28,7 @@ DEFAULT_MODEL = "deepseek-v4-flash"
 PROVIDERS = {
     "deepseek": {"base_url": "https://api.deepseek.com", "key_env": "DEEPSEEK_API_KEY", "default_model": "deepseek-chat"},
     "qwen":     {"base_url": "https://api.tsbys.com/v1",  "key_env": "BYAPI_KEY",        "default_model": "qwen3.7-max"},
+    "gpt":      {"base_url": "https://api.tsbys.com/v1",  "key_env": "BYAPI_KEY",        "default_model": "gpt-5.4"},
     "openai":   {"base_url": "https://api.openai.com/v1", "key_env": "OPENAI_API_KEY",   "default_model": "gpt-4o-mini"},
 }
 

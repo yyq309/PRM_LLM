@@ -198,7 +198,7 @@ class LLMProposer:
         reply = chat([{"role": "system", "content": self.sys},
                       {"role": "user", "content": self._enrich(context, obs_dict)}],
                      model=self.model, temperature=self.temperature, provider=self.provider,
-                     max_tokens=8000)  # generous: reasoning models (qwen3.7-max, deepseek-v4) burn budget on hidden reasoning
+                     max_tokens=16000)  # very generous: qwen3.7-max reasoning sometimes needs >8k before the answer
         cands = [c for c in extract_json_array(reply) if isinstance(c, str) and c.strip()]
         return cands or ["Stop and report the current findings."]
 

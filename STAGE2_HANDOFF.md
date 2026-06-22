@@ -686,6 +686,19 @@ drive the next phase:
   Verified live on DC-1 (top1=1.0, duration 23.3s, tokens 0 for deterministic). Metric suite is now paper-ready;
   honest takeaway: the confirmatory per-step claim holds under correction, per-box numbers are descriptive.
 
+- **★★ MULTI-LLM #1 — Qwen (qwen3.7-max via tsbys) on DC-1 full chain (2026-06-21): cross-vendor confirms
+  the proposer-conditional finding.** `outputs/stage2_fullchain_dc1_qwen.json` (5 trials, 3 errored — see
+  caveat). **prm root 100% (4/4), llm_only root 100% (3/3)** — i.e. **Qwen is a STRONGER proposer than
+  deepseek-chat on DC-1** (its llm_only completes the chain autonomously 100% vs deepseek's 40%), so the PRM's
+  OUTCOME advantage vanishes (both 100%) — but the **PRM's per-decision ranking is still better: top1_oracle
+  ranking acc 0.725 (prm) vs 0.435 (llm_only)**. ⇒ the "PRM helps a weak proposer, obsoleted by a strong one"
+  result is the **proposer-COMPETENCE axis, NOT a deepseek quirk** — confirmed on a 2nd vendor. Closes the
+  single-model gap on C-A/C-B. **Cost (precise, via #4):** ~3.9–4.9k tokens/episode, ~50–90s/episode.
+  **CAVEAT: qwen3.7-max is a REASONING model** — slow + ~30% "empty content (reasoning consumed budget)" errors
+  even at max_tokens=8000 (budget raised 4000→16000 cap + proposer 8000; helped 7/10→3/10 errors). For the
+  remaining web-box multi-LLM runs a NON-reasoning Qwen (qwen-plus / qwen2.5-instruct) would be ~10× faster +
+  error-free; decision pending. `--provider qwen` (BYAPI_KEY env-only).
+
 Ranked next steps (all leak-free):
 
 0. **Run the paired A/B** (`python -m stage2.paired_ab --proposer llm --model deepseek-chat --executor
