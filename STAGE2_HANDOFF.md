@@ -686,25 +686,28 @@ drive the next phase:
   Verified live on DC-1 (top1=1.0, duration 23.3s, tokens 0 for deterministic). Metric suite is now paper-ready;
   honest takeaway: the confirmatory per-step claim holds under correction, per-box numbers are descriptive.
 
-- **★★ MULTI-LLM cross-vendor A/B — DONE & VERIFIED (2026-06-22): the single-model gap is CLOSED.** Three
-  vendors (DeepSeek baseline / Qwen-3.7-max / GPT-5.4), full set = DC-1 full chain + 6 web boxes per new
-  vendor, `outputs/{qwen,gpt}_*.json` (14 files, 0 errored). Both new vendors via tsbys OpenAI-compatible
-  gateway, `--provider qwen|gpt` (BYAPI_KEY env-only); `PROVIDERS` in `scripts/deepseek_client.py`. **All 4
-  headline claims adversarially verified against raw JSON by a workflow (4/4 confirmed); see
-  STAGE2_LIVE_RESULTS.md "MULTI-LLM cross-vendor A/B" for the verified tables.** One mechanism
-  (proposer-conditional):
-  - **Joomla 3-vendor goal rescue** (prm>llm_only all 3): deepseek 0.4>0.2, qwen 1.0>0.4, gpt 0.6>0.0.
-    **HEDGE: deepseek leg n=5, CIs overlap → directional, NOT independently significant; qwen/gpt are clean.**
-  - **DC-1 axis:** deepseek llm_only 40%→prm 100% (n=10, non-overlapping = rescue); qwen & gpt llm_only already
-    100% (no rescue, saturated). PRM moves outcome only where the proposer fails.
-  - **Top-1 ranking acc: prm>llm_only on 14/14 boxes — but Qwen+GPT ONLY** (deepseek files predate the metric;
-    do NOT write "all three vendors" for top-1).
-  - **Per-step is box-dependent, NOT uniform:** prm>llm on multi-step chains (dc1, php-cgi); llm>prm on
-    single-shot Struts2 (raw proposer fires the one right action; PRM exploration dilutes the rate).
-  - **Excluded as confounded:** deepseek ThinkPHP (`stage2_thinkphp_live_ab.json` proposer='target';
-    `..._llm_ab.json` is a 2-run wiring stub). qwen3.7-max is a reasoning model (slow, needed max_tokens=16000
-    to avoid empty-content errors); gpt-5.4 fast + 0 errors. tsbys non-reasoning Qwen (qwen3.6-plus/qwen-plus)
-    are 500/503 unavailable.
+- **★★ MULTI-LLM cross-vendor A/B — DONE, VERIFIED & SYMMETRIC (2026-06-22): single-model gap CLOSED.**
+  **SYMMETRIC 3-vendor design** — all three vendors run the SAME current code on the SAME 7 boxes (DC-1 full
+  chain + 6 web), llm proposer, 0 errored: DeepSeek-chat (official `api.deepseek.com`), Qwen-3.7-max + GPT-5.4
+  (tsbys gateway, `--provider deepseek|qwen|gpt`, keys env-only). **DeepSeek was RE-RUN** (`outputs/ds_*.json`)
+  on a `deepseek-rerun-symmetric` branch so it carries top-1 + clean metadata + a proper llm-proposer ThinkPHP;
+  merged after verification. Headline claims adversarially verified vs raw JSON (workflow 4/4). Files:
+  `outputs/{ds,qwen,gpt}_*.json` (21) + the n=10 DC-1 flagship. One mechanism (proposer-conditional):
+  - **Joomla 3-vendor goal rescue** prm>llm_only ALL 3: deepseek 1.0>0.4, qwen 1.0>0.4, gpt 0.6>0.0 (each n=5,
+    CIs wide → cross-vendor *direction consistency* is the evidence, not a single significant leg).
+  - **DC-1 axis:** deepseek **pooled n=18** (n=10 flagship + n=8 rerun, same config) prm root 100% (18/18) vs
+    llm_only 56% (10/18) = rescue Δ+44pp. **Honest: deepseek DC-1 llm_only has high single-run variance (40%
+    @n=10, 75% @n=8); prm=100% in BOTH** → PRM's DC-1 value is *reliability*; we report pooled 56% not the
+    favorable draw. Qwen & gpt llm_only already 100% (saturated, no rescue headroom).
+  - **Top-1 ranking acc: prm>llm_only on 20/21 vendor-boxes — now genuinely 3-vendor.** Lone exception
+    deepseek-Joomla (prm 0.264<llm 0.403) is a **metric artifact** (prm still wins GOAL there 100% vs 40%;
+    top-1 scored vs oracle heuristic ≠ goal-truth).
+  - **Per-step box-dependent, NOT uniform:** prm>llm on multi-step chains (dc1, php-cgi); llm>prm on single-shot
+    Struts2 (all 3 vendors).
+  - **Notes:** qwen3.7-max is a reasoning model (slow, needs max_tokens=16000 vs empty-content errors); gpt-5.4
+    + deepseek-chat fast + 0 errors. tsbys non-reasoning Qwen (qwen3.6-plus/qwen-plus) are 500/503 unavailable.
+    Old asymmetric deepseek baselines (`stage2_ab_trials_*.json`, `proposer='target'` ThinkPHP) superseded by
+    `ds_*.json`, kept for provenance.
 
 Ranked next steps (all leak-free):
 
