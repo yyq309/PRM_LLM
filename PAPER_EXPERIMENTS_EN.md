@@ -85,11 +85,14 @@ is random and 1 is perfect). In short, the simulator-trained value is a genuine 
 
 **(b) The advisor itself is a good ranker.** A standard way to score a ranker is **pairwise accuracy**: given
 two actions where we know which is better, how often does the advisor rank them correctly? (0.5 is a coin
-flip; 1.0 is perfect.) The advisor reaches **0.94** on seen-type tasks, **0.98** on new instances of seen
-chains, and — the demanding test — **0.92 on entirely new attack-chain shapes it never trained on**. It also
-reliably flags actions that should *not* be taken (detecting bad actions at **AUC 0.93**, where 0.5 is
-chance). The advisor keys on the *situation*, not on having memorized a specific attack, which is why it
-generalizes to unseen chain shapes.
+flip; 1.0 is perfect.) The advisor we actually deploy reaches **0.89 across all held-out tasks** (95 % CI
+[0.84, 0.94], stable across 5 training seeds), **0.98 on new instances of attack chains it trained on**, and
+— the demanding test — **0.80 on entirely *new* attack-chain shapes it never saw**: still well above the 0.5
+coin-flip, though this hardest split is clearly its weakest point. (A preference-loss training variant raises
+that unseen-chain number to 0.93, so there is headroom we have not yet deployed.) The advisor keys on the
+*situation*, not on memorizing a specific attack, which is why it still ranks unseen chain shapes above chance
+at all. We report the deployed model's numbers throughout, since it is the one that drives every real-target
+result below.
 
 **(c) No cheating.** An audit confirms the advisor's input contains **no hidden answer** — no secret path,
 credential, or flag — and that hiding any single observable field degrades it only gracefully. Its skill
@@ -147,9 +150,10 @@ The important part is that this resists repair. We tried **three independent fix
 inference time, re-labelling the training data, and forbidding recon when better actions exist — and **all
 three failed** to remove the bias without damaging the advisor elsewhere. A multi-seed check further shows the
 bias size is itself unstable across training seeds. We therefore present this not as a defect to fix but as a
-**characterized, structural limitation of simulator-to-real value transfer** — a transferable warning for
-anyone training advisors in a simplified world: whatever situations the simulator under-represents, the
-advisor will mis-value in reality.
+**characterized, structural limitation of simulator-to-real value transfer** — an instance of *reward-model
+overoptimization* under distribution shift [gao2023scaling] — a transferable warning for anyone training
+advisors in a simplified world: whatever situations the simulator under-represents, the advisor will
+mis-value in reality.
 
 ## E.7 Does the result depend on which LLM?
 
@@ -180,8 +184,9 @@ un-coached LLM (per-step **+12 points**, p = 0.02), but if we *coach* the LLM wi
 action vocabulary, that coached LLM can do better *without* the advisor than with it (66.7 % vs 39.6 % in that
 configuration). We report this efficiency reversal in full rather than hiding it. We do not center the paper on
 it because (a) the "coached" LLM there used an author-supplied hint, which confounds the comparison, and
-(b) it is a specific case of a phenomenon already known in the literature (a model that *checks* work being
-obviated by a generator that no longer makes the mistakes).
+(b) it is a specific case of a phenomenon already known in the verifier / process-reward-model literature
+[lightman2023verify; cobbe2021gsm8k] — a model that *checks* work being obviated by a generator that no
+longer makes the mistakes.
 
 ## E.9 Summary
 
@@ -192,3 +197,15 @@ real attacks to root**, earning its keep precisely in the hardest privilege-esca
 fixes (E.6); and the entire picture **reproduces across three different LLMs** under one simple rule (E.7).
 The advisor's effect on final success is *conditional* on the LLM being weak, which we report honestly as a
 limitation (E.8).
+
+## References
+
+- **[gao2023scaling]** Gao, L., Schulman, J., Hilton, J. *Scaling Laws for Reward Model Overoptimization.*
+  ICML 2023. — anchors E.6 (the recon over-valuation as reward-model overoptimization under distribution shift).
+- **[lightman2023verify]** Lightman, H., Kosaraju, V., Burda, Y., et al. *Let's Verify Step by Step.* 2023. —
+  anchors E.8 (process/step-level verifiers; the verifier–generator relationship).
+- **[cobbe2021gsm8k]** Cobbe, K., Kosaraju, V., Bavarian, M., et al. *Training Verifiers to Solve Math Word
+  Problems.* 2021. — anchors E.8 (a verifier's value relative to generator strength).
+
+*(Bibkeys are placeholders matching common conventions — verify the exact key/year against your reference
+manager before submission.)*
