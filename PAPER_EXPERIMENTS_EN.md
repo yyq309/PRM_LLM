@@ -137,12 +137,12 @@ own it does not succeed as a standalone policy — its value is in *advising*, w
 
 **In one sentence: yes — on real machines, letting the advisor re-rank the LLM's actions produces a
 statistically significant improvement in per-step decision quality.** First, the adapter works: the
-interpreter maps real LLM text to the right action type **92 %** of the time (and an improved version raises
-the hardest cases from 49 % to **78.5 %**). Then, across the 15 real web boxes, the `prm` agent makes
-forward progress on more of its steps than `llm_only`, and the gap is significant under the conservative,
-clustered statistics: **p = 0.02** (still significant after multiple-comparison correction). Plainly: a
-ranking sense learned in a cheap simulator, with zero real labels, measurably improves real per-step action
-choices. (We are careful to distinguish *per-step* quality, which clearly improves, from *whole-episode*
+interpreter maps the LLM's free text to the correct action type **95.5 %** of the time on a labeled benchmark,
+and **78.5 %** on harder held-out fixtures — up from a **49 %** un-enhanced baseline. Then, across the 15 real
+web boxes, the `prm` agent makes forward progress on **54.1 % of its steps versus 42.1 % for `llm_only` — a
++12-point gain** that holds under the conservative, clustered statistics: **p = 0.02** (still significant
+after multiple-comparison correction). Plainly: a ranking sense learned in a cheap simulator, with zero real
+labels, measurably improves real per-step action choices. (We are careful to distinguish *per-step* quality, which clearly improves, from *whole-episode*
 success on these single-service boxes, which is often tied — we return to why in E.5 and E.9.)
 
 ## E.5 Question 3 — Can it complete a *full* real attack to root?
@@ -284,9 +284,11 @@ to any single model.**
 
 We state plainly — and choose *not* to build the paper around — the following: the advisor's benefit on the
 *final outcome* depends on how good the LLM's own ordering already is. It clearly helps a weak or
-un-coached LLM (per-step **+12 points**, p = 0.02), but if we *coach* the LLM with an explicit hint about the
-action vocabulary, that coached LLM can do better *without* the advisor than with it (66.7 % vs 39.6 % in that
-configuration). We report this efficiency reversal in full rather than hiding it. We do not center the paper on
+un-coached LLM (per-step **+12 points**, p = 0.02). But once we *coach* the LLM with an explicit hint about
+the action vocabulary, the proposer improves on its own — its goal-rate rises from **0.16 to 0.53** and its
+wasted-step rate falls from **0.52 to 0.32** — and in an isolated test of *ranking alone* the advisor's
+per-step progress (**0.27**) is no better than a random re-ordering of the same candidates (**0.29**). A
+competent proposer leaves little for the re-ranker to add. We report this reversal in full rather than hiding it. We do not center the paper on
 it because (a) the "coached" LLM there used an author-supplied hint, which confounds the comparison, and
 (b) it is a specific case of a phenomenon already known in the verifier / process-reward-model literature
 [lightman2023verify; cobbe2021gsm8k] — a model that *checks* work being obviated by a generator that no
