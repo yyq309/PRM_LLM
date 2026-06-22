@@ -54,7 +54,17 @@ between the simulator and a real machine, plus a safety check:
 **The targets.** **15 real "Docker" web boxes** (each a single web service with a real, known
 vulnerability — ThinkPHP, Struts2, Joomla, etc.) give breadth, and **2 full virtual machines** (DC-1 and
 Toppo) give depth: the *complete* chain *web entry → foothold → same-machine privilege escalation → root*,
-which the single-service boxes cannot.
+which the single-service boxes cannot (Table 1).
+
+**Table 1 — Real targets.**
+
+| Kind | Example targets | Vulnerability class | Phase exercised | Terminal metric |
+|---|---|---|---|---|
+| Docker web box (×15) | ThinkPHP-5 / 5.0.23, Struts2 S2-045 / S2-048, Joomla CVE-2017-8917, php-cgi CVE-2012-1823, Drupalgeddon2 | RCE / SQLi / deserialization | web entry → foothold | goal reached (shell + sensitive read) |
+| Full VM | **DC-1** | Drupalgeddon2 (CVE-2018-7600) → SUID `find` | **web → foothold → privesc → root** | `reached_root` |
+| Full VM | **Toppo** | creds in `/admin/notes.txt` → SSH → SUID `python` | **web → foothold → privesc → root** | `reached_root` |
+
+All targets are owned and run on an isolated host-only network; every command is allow-listed and logged.
 
 **How we measure, and the fair comparison.** Every real-target result is a head-to-head between two agents
 that use the **same LLM** and differ in only one thing:
@@ -78,10 +88,11 @@ We report these conservative numbers throughout.
 does so without any leakage.** Three pieces of evidence:
 
 **(a) It ranks progress correctly.** We compare the value oracle against a mathematically *optimal* solver of
-the simulator (computed by value iteration). When the optimal solver is told to value only *true progress
-toward the goal*, the oracle agrees with it on the **best action 74 % of the time**, puts the best action in
-its **top 3 every time (100 %)**, and its rankings correlate with the optimum at **Spearman +0.45** (where 0
-is random and 1 is perfect). In short, the simulator-trained value is a genuine progress signal, not noise.
+the simulator (computed by value iteration). Its single best guess matches the optimum only **32 % of the
+time** — modest — but the optimum sits in its **top 3 94 % of the time**, and its overall ordering correlates
+with the optimum at **rank-correlation +0.46** (0 is random, 1 is perfect). So the value is a real, if
+coarse, progress signal: not pinpoint, but it reliably keeps the good actions near the top — which is exactly
+what a *re-ranker* needs (it shortens the candidate list, it does not have to be an oracle itself).
 
 **(b) The advisor itself is a good ranker.** A standard way to score a ranker is **pairwise accuracy**: given
 two actions where we know which is better, how often does the advisor rank them correctly? (0.5 is a coin
@@ -97,6 +108,24 @@ result below.
 **(c) No cheating.** An audit confirms the advisor's input contains **no hidden answer** — no secret path,
 credential, or flag — and that hiding any single observable field degrades it only gracefully. Its skill
 comes from observable context, not leaked secrets.
+
+**Table 2 — Stage-1 advisor quality (deployed model).** Held-out evaluation; PRM pairwise over 5 seeds.
+
+| Check | Value | What it means |
+|---|---|---|
+| Oracle top-1 vs optimal | 0.32 | exact-best match is modest |
+| Oracle top-3 vs optimal | 0.94 | the optimum is almost always near the top |
+| Oracle rank-correlation | +0.46 | overall ordering tracks the optimum |
+| PRM pairwise — all held-out | **0.89** (95 % CI [0.84, 0.94]) | ranks the better of two actions correctly |
+| PRM pairwise — new instances | 0.98 | generalizes to new instances of trained chains |
+| PRM pairwise — **new chain shapes** | **0.80** | generalizes to unseen structures (its weakest point) |
+| PRM calibration (ECE, after sigmoid) | ≈ 0.08 | predicted scores are well-calibrated |
+
+![Figure 5](figures/fig5_stage1_pairwise.png)
+
+*Figure 5. Deployed advisor's pairwise ranking accuracy by split (dashed line = 0.5 chance; CI shown on the
+"all held-out" bar; the dashed outline marks the 0.93 a non-deployed preference-loss variant reaches on the
+hardest split).*
 
 One honest boundary: the advisor is a **ranker, not a player**. If we let it drive an agent entirely on its
 own it does not succeed as a standalone policy — its value is in *advising*, which is exactly how we use it.
@@ -130,12 +159,27 @@ the raw LLM is a coin flip.
 phase answers it: the advised agent makes steady progress in **both** the web phase and the
 privilege-escalation phase, but the un-advised LLM **collapses specifically in the privilege-escalation phase
 (9 % progress)** while still doing fine on web reconnaissance. **The advisor earns its keep precisely where
-the LLM's own instincts are weakest — local privilege escalation — which only a full-machine target exercises.**
+the LLM's own instincts are weakest — local privilege escalation — which only a full-machine target exercises.** (Figure 3)
+
+![Figure 3](figures/fig3_dc1_phase_split.png)
+
+*Figure 3. DC-1 per-step progress split by phase. Both agents make similar progress on the web phase; the raw
+LLM collapses to 9 % in the privilege-escalation phase, where the advisor sustains 37 %. (The advisor's DC-1
+outcome also appears in Figure 1, left panel.)*
 
 The second VM, **Toppo**, draws a clean boundary: *both* agents fail autonomously because the LLM never even
 proposes the needed "find credentials → SSH in" step — yet a scripted (non-LLM) agent reaches root on both
 machines. So the adapter and the advisor are sound; the failure is a *limit of the LLM's imagination*
 (it cannot rank an action it never proposes), not a broken transfer.
+
+**Table 3 — Full-machine results (autonomous, reach-root).**
+
+| VM | agent | root rate | steps (median) | note |
+|---|---|---|---|---|
+| DC-1 | **prm** | **100 % (18/18)** | ~6 | advisor every run |
+| DC-1 | llm_only | 56 % (10/18) | ~12 | varies 40–75 % across batches |
+| Toppo | both arms | 0 % | — | LLM never proposes the cred→SSH step |
+| Toppo | scripted (non-LLM) | 100 % | 1 | confirms the adapter/advisor are sound |
 
 ## E.6 Question 4 — Where does the advisor break, and why?
 
@@ -143,8 +187,14 @@ machines. So the adapter and the advisor are sound; the failure is a *limit of t
 consequence of how it was trained — not a bug we could patch.** In the simulator, training rarely creates
 situations where the agent already knows everything but keeps scouting; as a result the advisor learns that
 "reconnaissance" is almost always valuable. Concretely, its average score for the action "enumerate web
-paths" is **0.89**, far above "run the exploit" at **0.54**. On real targets this shows up as the advisor
-adding scouting steps a capable LLM does not need.
+paths" is **0.89**, far above "run the exploit" at **0.54** (Figure 4). On real targets this shows up as the
+advisor adding scouting steps a capable LLM does not need.
+
+![Figure 4](figures/fig4_recon_overvaluation.png)
+
+*Figure 4. The advisor's average score per action type. Reconnaissance/scouting actions (red) are rated far
+higher than the decisive late-chain actions that actually advance the attack — run a command (0.04), escalate
+privileges (0.04) — which is the over-valuation we trace to the simulator's training distribution.*
 
 The important part is that this resists repair. We tried **three independent fixes** — down-weighting recon at
 inference time, re-labelling the training data, and forbidding recon when better actions exist — and **all
@@ -171,6 +221,36 @@ A single rule explains all three:
 - **The per-step effect depends on the target's length.** The advisor helps on longer multi-step chains but
   slightly *hurts* on trivial one-shot exploits, where the LLM already fires the single correct action every
   time and extra scouting only dilutes the rate.
+
+Figure 1 shows the first point; Figure 2 the second. The supporting numbers:
+
+![Figure 1](figures/fig1_multillm_proposer_conditional.png)
+
+*Figure 1. The advisor rescues a struggling proposer (DeepSeek on DC-1; all three on Joomla) and is redundant
+for one that already succeeds (Qwen/GPT on DC-1).*
+
+**Table 4 — Joomla goal-rate (3-vendor rescue), n = 5 per arm.** Direction is consistent across all three
+vendors; each leg is small-n, so we read the cross-vendor consistency, not a single significant leg.
+
+| Vendor | llm_only goal | prm goal |
+|---|---|---|
+| DeepSeek | 0.40 | **1.00** |
+| Qwen-3.7-max | 0.40 | **1.00** |
+| GPT-5.4 | 0.00 | **0.60** |
+
+**Table 5 — DC-1 axis (rescue is proposer-conditional).**
+
+| Vendor | n/arm | llm_only root | prm root | effect |
+|---|---|---|---|---|
+| DeepSeek | 18 (pooled) | 0.56 | **1.00** | rescue (Δ +44 pts) |
+| Qwen-3.7-max | 8 | 1.00 | 1.00 | saturated (no headroom) |
+| GPT-5.4 | 8 | 1.00 | 1.00 | saturated (no headroom) |
+
+![Figure 2](figures/fig2_top1_ranking.png)
+
+*Figure 2. Top-1 ranking accuracy, prm vs llm_only, across 7 targets × 3 vendors. The advisor's top pick beats
+the raw LLM's on 20 of 21 combinations (dashed line = 0.5 chance); the single exception, DeepSeek-Joomla, is a
+measurement artifact (the advisor still wins the actual goal there, 100 % vs 40 %).*
 
 So outcome-help is *conditional* (it appears when the LLM is weak), ranking-help is *near-universal*, and the
 per-step effect tracks how long the attack is — one consistent mechanism, across three vendors, **not specific
