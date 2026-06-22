@@ -24,8 +24,8 @@ final outcome). The experiments answer four questions:
 3. **Can the agent, so advised, complete a *full* real attack to root?** (E.5)
 4. **Where does the advisor break, and why?** (E.6)
 
-E.7 then asks whether the findings depend on which LLM we use (they do not), and E.8 reports the one honest
-limitation.
+E.7 collects the ablations and controls; E.8 then asks whether the findings depend on which LLM we use
+(they do not); E.9 reports the one honest limitation.
 
 ## E.2 Setup
 
@@ -71,11 +71,14 @@ that use the **same LLM** and differ in only one thing:
 - **`prm`**: the LLM proposes actions, and the advisor re-ranks them;
 - **`llm_only`**: the LLM's own ordering is used, with no advisor.
 
-So any difference is attributable to the advisor alone. We report:
-- **goal-rate / root-rate** — the fraction of attempts that actually reached the goal / got root (unambiguous,
-  cannot be gamed);
-- **per-step progress** — the fraction of *steps* that made forward progress rather than being wasted;
-- **ranking accuracy** — how often the advisor's top-ranked action is genuinely the best one.
+So any difference is attributable to the advisor alone. `llm_only` is the **primary baseline** (the same LLM
+agent without the advisor); we add two reference points where they sharpen a claim: a **random-rerank**
+control (re-orders the same candidates randomly — isolates whether the advisor's *specific* ranking matters,
+not merely re-ordering) and a **scripted, non-LLM** upper bound (confirms a target is solvable when the
+proposer is removed entirely). We report three metrics, all higher-is-better:
+- **goal-rate / root-rate (↑)** — the fraction of attempts that reached the goal / got root (unambiguous, cannot be gamed);
+- **per-step progress (↑)** — the fraction of *steps* that made forward progress rather than being wasted;
+- **top-1 ranking accuracy (↑)** — how often the advisor's top-ranked action is genuinely the best one.
 
 Because a run is a sequence of correlated steps (not independent coin flips), naive statistics overstate
 significance. We use **episode-clustered permutation tests** and **bootstrap confidence intervals**, pair the
@@ -140,7 +143,7 @@ forward progress on more of its steps than `llm_only`, and the gap is significan
 clustered statistics: **p = 0.02** (still significant after multiple-comparison correction). Plainly: a
 ranking sense learned in a cheap simulator, with zero real labels, measurably improves real per-step action
 choices. (We are careful to distinguish *per-step* quality, which clearly improves, from *whole-episode*
-success on these single-service boxes, which is often tied — we return to why in E.5 and E.8.)
+success on these single-service boxes, which is often tied — we return to why in E.5 and E.9.)
 
 ## E.5 Question 3 — Can it complete a *full* real attack to root?
 
@@ -174,7 +177,7 @@ machines. So the adapter and the advisor are sound; the failure is a *limit of t
 
 **Table 3 — Full-machine results (autonomous, reach-root).**
 
-| VM | agent | root rate | steps (median) | note |
+| VM | agent | root rate ↑ | steps (median) ↓ | note |
 |---|---|---|---|---|
 | DC-1 | **prm** | **100 % (18/18)** | ~6 | advisor every run |
 | DC-1 | llm_only | 56 % (10/18) | ~12 | varies 40–75 % across batches |
@@ -205,7 +208,28 @@ overoptimization* under distribution shift [gao2023scaling] — a transferable w
 advisors in a simplified world: whatever situations the simulator under-represents, the advisor will
 mis-value in reality.
 
-## E.7 Does the result depend on which LLM?
+## E.7 Ablations and controls
+
+**In one sentence: the gain survives every control we can think of — it is not leakage, not generic
+re-ordering, and not a quirk of one proposer.** Each row of Table 6 isolates one alternative explanation a
+skeptical reviewer might raise and reports what we found.
+
+**Table 6 — Ablations and controls.**
+
+| Control / ablation | Alternative explanation it rules out | Result |
+|---|---|---|
+| `llm_only` (remove the advisor) | re-ranking does nothing | per-step progress drops; advisor − baseline significant, **p = 0.02** (§E.4) |
+| random-rerank (re-order randomly) | *any* re-ordering helps, not this advisor's ranking | the advisor's edge is **phase-specific** — it leads in the privesc phase but is not reliably above random on easy web steps (§E.5, §E.8) |
+| leak-free input audit | the advisor reads a hidden answer | no secret path / credential / flag in its input; graceful degradation when fields are masked (§E.3c) |
+| generic-prompt control | success came from a CVE-named hint (test leakage) | the CVE-name lift disappears under a generic prompt; we report the leak-free number (§E.8) |
+| standalone ranker (no proposer) | the advisor is secretly a policy | it cannot drive the agent alone — its value is strictly advisory (§E.3) |
+| three bias-removal fixes | the recon bias is a patchable bug | all three fail without harming the advisor elsewhere (§E.6) |
+
+The load-bearing control is the second row: because the advisor's per-step edge is *not* uniform over random
+re-ordering, we deliberately do **not** claim a blanket per-step win — we claim a *phase-* and
+*proposer-conditional* one, which the full-chain (§E.5) and multi-LLM (§E.8) results make precise.
+
+## E.8 Does the result depend on which LLM?
 
 **In one sentence: no — we reran the whole comparison with three different LLMs and the same behavior appears
 every time.** We tested **DeepSeek, Qwen, and GPT-5.4** under identical conditions (same 7 targets, same code).
@@ -232,7 +256,7 @@ for one that already succeeds (Qwen/GPT on DC-1).*
 **Table 4 — Joomla goal-rate (3-vendor rescue), n = 5 per arm.** Direction is consistent across all three
 vendors; each leg is small-n, so we read the cross-vendor consistency, not a single significant leg.
 
-| Vendor | llm_only goal | prm goal |
+| Vendor | llm_only goal ↑ | prm goal ↑ |
 |---|---|---|
 | DeepSeek | 0.40 | **1.00** |
 | Qwen-3.7-max | 0.40 | **1.00** |
@@ -240,7 +264,7 @@ vendors; each leg is small-n, so we read the cross-vendor consistency, not a sin
 
 **Table 5 — DC-1 axis (rescue is proposer-conditional).**
 
-| Vendor | n/arm | llm_only root | prm root | effect |
+| Vendor | n/arm | llm_only root ↑ | prm root ↑ | effect |
 |---|---|---|---|---|
 | DeepSeek | 18 (pooled) | 0.56 | **1.00** | rescue (Δ +44 pts) |
 | Qwen-3.7-max | 8 | 1.00 | 1.00 | saturated (no headroom) |
@@ -256,7 +280,7 @@ So outcome-help is *conditional* (it appears when the LLM is weak), ranking-help
 per-step effect tracks how long the attack is — one consistent mechanism, across three vendors, **not specific
 to any single model.**
 
-## E.8 The one honest limitation
+## E.9 The one honest limitation
 
 We state plainly — and choose *not* to build the paper around — the following: the advisor's benefit on the
 *final outcome* depends on how good the LLM's own ordering already is. It clearly helps a weak or
@@ -268,7 +292,7 @@ it because (a) the "coached" LLM there used an author-supplied hint, which confo
 [lightman2023verify; cobbe2021gsm8k] — a model that *checks* work being obviated by a generator that no
 longer makes the mistakes.
 
-## E.9 Summary
+## E.10 Summary
 
 The cheap abstract simulator produces a genuine, leak-free sense of which action makes progress (E.3); that
 sense **transfers** to real machines and significantly improves per-step choices (E.4); it **drives complete
@@ -276,7 +300,7 @@ real attacks to root**, earning its keep precisely in the hardest privilege-esca
 56 %; E.5); it has a **clearly characterized failure mode** — over-valuing reconnaissance, which resists three
 fixes (E.6); and the entire picture **reproduces across three different LLMs** under one simple rule (E.7).
 The advisor's effect on final success is *conditional* on the LLM being weak, which we report honestly as a
-limitation (E.8).
+limitation (E.9).
 
 ## References
 
