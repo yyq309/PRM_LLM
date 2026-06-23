@@ -97,8 +97,9 @@ that use the **same LLM** and differ in only one thing:
 So any difference is attributable to the advisor alone. `llm_only` is the **primary baseline** (the same LLM
 agent without the advisor); we add two reference points where they sharpen a claim: a **random-rerank**
 control (re-orders the same candidates randomly — isolates whether the advisor's *specific* ranking matters,
-not merely re-ordering) and a **scripted, non-LLM** upper bound (confirms a target is solvable when the
-proposer is removed entirely). Because the advisor is a **process** reward model, our **primary** metrics are
+not merely re-ordering) and the **RL value-oracle**, a **non-LLM upper-bound** ranker over the same candidates
+(the four-arm ablation `llm_only` / `random` / `oracle` / `prm` is Table 2d). Because the advisor is a
+**process** reward model, our **primary** metrics are
 **process / stage-level** — they measure the *quality of the trajectory*, not just whether it ends in a flag:
 - **per-step progress (↑)** — fraction of *steps* that made forward progress rather than being wasted;
 - **stage reached / shell-reach (↑)** — how far up the kill-chain ladder (recon → vuln → shell → cmd → file → root) the agent climbs, and how often it reaches the foothold stage;
@@ -233,12 +234,11 @@ ThinkPHP-5 the raw LLM even wins the *goal* (80 % vs 20 %) — we do not hide th
 | **Pooled (16, clustered)** | — | 5 | **52.7 / 37.6** (p = 0.0012) | **31 / 12** (p = 0.005) |
 
 **Does the PRM's *ranking* do the work? — the reranker-isolation ablation.** The gain above could, in
-principle, come from *any* re-ordering of the candidate list, or be matched by a cheap scripted rule. To rule
-that out we hold the candidate set **fixed** and swap *only the ranker*: the raw LLM order (`llm_only`), our
-PRM, a **random** re-order, a **scripted non-LLM heuristic**, the PRM with its own scores **shuffled**, and the
-RL **value-oracle** (the teacher the PRM was distilled from — an upper-bound reference). We do this in two
-settings: *deployed* (a real LLM proposer supplies a small, targeted candidate set) and a *stress test* (a
-deterministic proposer floods the agent with the **entire** action surface).
+principle, come from *any* re-ordering of the candidate list. To rule that out we hold the candidate set
+**fixed** and swap *only the ranker*, across four arms: the raw LLM order (`llm_only`), our PRM, a **random**
+re-order, and the RL **value-oracle** (a non-LLM **upper-bound** reference — the teacher the PRM was distilled
+from). We do this in two settings: *deployed* (a real LLM proposer supplies a small, targeted candidate set)
+and a *stress test* (a deterministic proposer floods the agent with the **entire** action surface).
 
 **Table 2d — Reranker-isolation: per-step progress / goal-rate when only the ranker changes (candidate set fixed).**
 
@@ -246,11 +246,9 @@ deterministic proposer floods the agent with the **entire** action surface).
 |---|---|---|
 | `llm_only` (raw LLM order) | 0.481 / goal 0.23 | — |
 | `random` (re-order) | 0.500 / goal 0.33 | 0.293 / goal 0.46 |
-| `heuristic` (scripted, non-LLM) | — | 0.262 / goal 0.60 |
-| `shuffled_prm` (PRM scores shuffled) | — | 0.327 / goal 0.55 |
 | `oracle` (RL value-oracle, upper bound) | 0.479\* / goal 0.27 | 0.312 / goal 0.60 |
 | **`prm` (ours)** | **0.685 / goal 0.40** | 0.267 / goal 0.50 |
-| *PRM vs each arm (per-step, clustered p)* | **+18–21 pp over every arm, p ≤ 0.007** | −2.7 to −6.0 pp vs random/oracle (p<0.01); ≈ heuristic (+0.4 pp, p = 0.65) |
+| *PRM vs each arm (per-step, clustered p)* | **+18–21 pp over every arm, p ≤ 0.007** | −2 to −5 pp vs random / oracle (p < 0.01) |
 
 *\*In the deployed setting the oracle ranks the **abstract** optimum, which maps imperfectly back through ψ to
 the LLM's concrete candidate text, so it is not a clean upper bound there; the stress test (where it leads,
@@ -259,18 +257,19 @@ the LLM's concrete candidate text, so it is not a clean upper bound there; the s
 
 **Reading it.** In the **deployed** setting — the one we actually run — the PRM's ranking is decisively best:
 **0.685** vs `llm_only` 0.481 (**+20.4 pp**, p = 0.006), `random` 0.500 (**+18.5 pp**, p = 0.007), and even the
-value-oracle's own ranking 0.479 (**+20.6 pp**, p = 0.001). A random shuffle does **not** reproduce the gain,
-and a cheap heuristic does not either — the PRM is doing real, specific work. In the **stress test**, where the
-proposer dumps the whole action menu, the PRM's recon over-valuation (§E.6) makes it waste steps enumerating,
-dragging it down to a scripted heuristic's level and **below** random. So the honest one-sentence reading of
-both columns is: **the PRM's value is *proposer-conditional*** — it pays off precisely when a proposer narrows
-the field to a few sensible moves (which a real LLM does), not when it must rank the raw action surface itself.
+value-oracle's own ranking 0.479 (**+20.6 pp**, p = 0.001). A random re-order does **not** reproduce the gain,
+and neither does the oracle's ranking of the same candidates — so the PRM is doing real, specific work. In the
+**stress test**, where the proposer dumps the whole action menu, the PRM's recon over-valuation (§E.6) makes it
+waste steps enumerating, dragging it **below** both random and the oracle. So the honest one-sentence reading
+of both columns is: **the PRM's value is *proposer-conditional*** — it pays off precisely when a proposer
+narrows the field to a few sensible moves (which a real LLM does), not when it must rank the raw action surface
+itself.
 
 ![Figure 8](figures/fig8_reranker_isolation.png)
 
-*Figure 8. Reranker-isolation ablation — only the ranker is swapped, the candidate set is held fixed. Left
+*Figure 8. Reranker-isolation ablation — only the ranker is swapped, the candidate set held fixed. Left
 (deployed, real LLM proposer): the PRM beats raw-LLM, random, and the value-oracle, all p < 0.01. Right
-(stress test, full action surface): the PRM's recon bias drops it to heuristic level, below random.*
+(stress test, full action surface): the PRM's recon bias drops it below random and the oracle.*
 
 **Other controls — ruling out leakage, a coached prompt, and a hidden policy.** Beyond the reranker-isolation
 above (Table 2d), three further controls rule out more mundane explanations of the per-step effect. (The

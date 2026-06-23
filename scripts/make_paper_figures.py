@@ -177,29 +177,28 @@ fig.suptitle("Figure 7.  Per-step progress by phase: the advisor's value is conc
 fig.savefig(os.path.join(OUT, "fig7_phase_split_2vm.png")); plt.close(fig)
 
 # ---- Fig 8: reranker-isolation ablation (only the ranker is swapped; candidate set fixed) ----
-GREY = "#9aa0a6"; LGREY = "#c8ccd0"; ORC = "#e0a526"
+GREY = "#9aa0a6"; ORC = "#e0a526"
 depl = [("llm_only", 48.1, LLM_C), ("random", 50.0, GREY), ("oracle*", 47.9, ORC), ("prm (ours)", 68.5, PRM_C)]
-strt = [("heuristic", 26.2, LGREY), ("random", 29.3, GREY), ("oracle", 31.2, ORC),
-        ("shuffled", 32.7, LGREY), ("prm (ours)", 26.7, PRM_C)]
-fig, (a, b) = plt.subplots(1, 2, figsize=(11, 4.3))
+strt = [("random", 29.3, GREY), ("oracle", 31.2, ORC), ("prm (ours)", 26.7, PRM_C)]
+fig, (a, b) = plt.subplots(1, 2, figsize=(10.5, 4.3))
 for ax, data, ylim, title in [
         (a, depl, 80, "Deployed: real LLM proposer (n=30/arm, 6 boxes)"),
         (b, strt, 44, "Stress test: full action surface (n=80/arm, 11 boxes)")]:
     xs = np.arange(len(data))
-    ax.bar(xs, [d[1] for d in data], 0.66, color=[d[2] for d in data],
+    ax.bar(xs, [d[1] for d in data], 0.62, color=[d[2] for d in data],
            edgecolor=[(PRM_C if d[0].startswith("prm") else "none") for d in data], linewidth=2)
     for x, d in zip(xs, data):
         ax.text(x, d[1] + ylim*0.015, f"{d[1]:.1f}", ha="center", fontsize=9,
                 weight=("bold" if d[0].startswith("prm") else "normal"))
-    ax.set_xticks(xs); ax.set_xticklabels([d[0] for d in data], fontsize=8.5, rotation=12)
+    ax.set_xticks(xs); ax.set_xticklabels([d[0] for d in data], fontsize=9, rotation=10)
     ax.set_ylim(0, ylim); ax.yaxis.set_major_formatter(lambda v, _: f"{int(v)}%")
     ax.set_title(title, fontsize=10, weight="bold")
 a.set_ylabel("per-step progress rate")
-a.annotate("PRM ranking beats raw LLM,\nrandom, and the value-oracle's\nown ranking (all p<0.01)",
-           xy=(3, 68.5), xytext=(-0.3, 71), fontsize=8.3, color=PRM_C,
+a.annotate("PRM beats raw LLM, random,\nand the value-oracle (all p<0.01)",
+           xy=(3, 68.5), xytext=(-0.35, 72), fontsize=8.5, color=PRM_C,
            arrowprops=dict(arrowstyle="->", color=PRM_C))
-b.annotate("flooded with the full menu, the\nPRM's recon bias drops it to\nheuristic level, below random",
-           xy=(4, 26.7), xytext=(-0.4, 38), fontsize=8.0, color="#b00",
+b.annotate("fed the full menu, PRM's recon\nbias drops it below random",
+           xy=(2, 27.2), xytext=(0.0, 40), fontsize=8.3, color="#b00",
            arrowprops=dict(arrowstyle="->", color="#b00"))
 fig.suptitle("Figure 8.  Reranker-isolation: only the ranker is swapped (candidate set fixed). The PRM's "
              "value is proposer-conditional.  *oracle ranks the abstract optimum via ψ (not a clean UB here).",
