@@ -162,13 +162,39 @@ own it does not succeed as a standalone policy — its value is in *advising*, w
 statistically significant improvement in per-step decision quality.** First, the adapter works: the
 interpreter maps the LLM's free text to the correct action type **95.5 %** of the time on a labeled benchmark,
 and **78.5 %** on harder held-out fixtures — up from a **49 %** un-enhanced baseline. Then, across the 16 real
-web boxes, the `prm` agent makes forward progress on **51.7 % of its steps versus 34.3 % for `llm_only` — a
-+17-point gain** that holds under the conservative, clustered statistics: **p = 0.0001** (still significant
+web boxes, the `prm` agent makes forward progress on **52.7 % of its steps versus 37.6 % for `llm_only` — a
++15-point gain** that holds under the conservative, clustered statistics: **p = 0.0012** (still significant
 after multiple-comparison correction). Plainly: a ranking sense learned in a cheap simulator, with zero real
-labels, measurably improves real per-step action choices. (Whole-episode goal-reach is higher too — prm 33 %
-vs `llm_only` 7 % — but that gain is **concentrated in the boxes where the proposer fails outright** (e.g.
+labels, measurably improves real per-step action choices. (Whole-episode goal-reach is higher too — prm 31 %
+vs `llm_only` 12 % — but that gain is **concentrated in the boxes where the proposer fails outright** (e.g.
 SSTI, Joomla); on boxes both arms can already solve, it is tied. We return to this *proposer-conditional*
 pattern in E.5 and E.9.)
+
+**Table 2b — Per-box A/B on all 16 web targets (DeepSeek, 5 trials/arm; cells are prm / llm_only).** The
+pooled row is the confirmatory claim; the per-box rows are exploratory and underpowered (n = 5) — read the
+*direction*, not single-box point estimates. prm leads on per-step on most boxes, but the effect is honestly
+**box-dependent** (e.g. Drupalgeddon2 and the Tomcat/Gitea/WebLogic boxes favor `llm_only`), and on
+ThinkPHP-5 the raw LLM even wins the *goal* (80 % vs 20 %) — we do not hide these.
+
+| Box | class | n | per-step % (prm / llm) | goal % (prm / llm) |
+|---|---|---|---|---|
+| Drupalgeddon2 | RCE | 5 | 41 / 100 | 0 / 0 |
+| Struts2-S2-045 | RCE | 5 | 75 / 52 | 100 / 20 |
+| Struts2-S2-048 | RCE | 5 | 90 / 56 | 40 / 0 |
+| ThinkPHP-5-rce | RCE | 5 | 83 / 64 | 20 / 80 |
+| ThinkPHP-5.0.23 | RCE | 5 | 77 / 38 | 80 / 40 |
+| Tomcat-12615 | RCE | 5 | 19 / 29 | 0 / 0 |
+| Tomcat8-weakpw | RCE | 5 | 44 / 67 | 0 / 0 |
+| httpd-41773 | RCE | 5 | 46 / 44 | 0 / 0 |
+| php-cgi-2012-1823 | RCE | 5 | 83 / 33 | 20 / 0 |
+| Joomla-8917 | SQLi | 5 | 62 / 38 | 40 / 20 |
+| Flask-SSTI | SSTI | 5 | 42 / 0 | 100 / 0 |
+| Rails-5418 | LFI | 5 | 25 / 22 | 0 / 0 |
+| nginx-insecure | LFI | 5 | 46 / 43 | 0 / 0 |
+| php-inclusion | LFI | 5 | 38 / 30 | 0 / 0 |
+| Gitea-1.4 | auth | 5 | 24 / 36 | 0 / 0 |
+| WebLogic-weakpw | auth | 5 | 18 / 21 | 0 / 0 |
+| **Pooled (16, clustered)** | — | 5 | **52.7 / 37.6** (p = 0.0012) | **31 / 12** (p = 0.005) |
 
 ## E.5 Question 3 — Can it complete a *full* real attack to root?
 
@@ -257,7 +283,7 @@ skeptical reviewer might raise and reports what we found.
 
 | Control / ablation | Alternative explanation it rules out | Result |
 |---|---|---|
-| `llm_only` (remove the advisor) | re-ranking does nothing | per-step progress drops; advisor − baseline significant, **p = 0.0001** (§E.4) |
+| `llm_only` (remove the advisor) | re-ranking does nothing | per-step progress drops; advisor − baseline significant, **p = 0.0012** (§E.4) |
 | random-rerank (re-order randomly) | *any* re-ordering helps, not this advisor's ranking | the advisor's edge is **phase-specific** — it leads in the privesc phase but is not reliably above random on easy web steps (§E.5, §E.8) |
 | leak-free input audit | the advisor reads a hidden answer | no secret path / credential / flag in its input; graceful degradation when fields are masked (§E.3c) |
 | generic-prompt control | success came from a CVE-named hint (test leakage) | the CVE-name lift disappears under a generic prompt; we report the leak-free number (§E.8) |
@@ -323,7 +349,7 @@ to any single model.**
 
 We state plainly — and choose *not* to build the paper around — the following: the advisor's benefit on the
 *final outcome* depends on how good the LLM's own ordering already is. It clearly helps a weak or
-un-coached LLM (per-step **+17 points**, p = 0.0001). But once we *coach* the LLM with an explicit hint about
+un-coached LLM (per-step **+15 points**, p = 0.0012). But once we *coach* the LLM with an explicit hint about
 the action vocabulary, the proposer improves on its own — its goal-rate rises from **0.16 to 0.53** and its
 wasted-step rate falls from **0.52 to 0.32** — and in an isolated test of *ranking alone* the advisor's
 per-step progress (**0.27**) is no better than a random re-ordering of the same candidates (**0.29**). A

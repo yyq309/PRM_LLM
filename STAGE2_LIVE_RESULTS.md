@@ -187,8 +187,8 @@ ablation in `outputs/stage2_ablation_rerank.json`.
 
 > **★ UPDATE (2026-06-23):** a 16th box — **Flask-SSTI** (Jinja2 SSTI → RCE → shell, new vuln class) — was
 > added (`outputs/stage2_ab_trials_flask-ssti.json`; deepseek **prm goal 100% (5/5) vs llm_only 0%** — a clean
-> proposer-conditional rescue). With it the **pooled per-step is now prm 51.7% vs llm_only 34.3%, +17.5pp,
-> clustered p=0.0001** (was +12pp/p=0.02 at 15 boxes). Per-episode pooled also rises (prm 33% vs 7%) but is
+> proposer-conditional rescue). With it the **pooled per-step is now prm 52.7% vs llm_only 37.6%, +15.1pp,
+> clustered p=0.0012** (was +12pp/p=0.02 at 15 boxes). Per-episode pooled also rises (prm 31% vs 12%) but is
 > **concentrated in the proposer-failure boxes** (SSTI, Joomla) — reported as the proposer-conditional pattern,
 > not a uniform win. The dated sub-experiment numbers below are preserved as snapshots.
 

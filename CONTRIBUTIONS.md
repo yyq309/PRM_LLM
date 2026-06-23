@@ -51,8 +51,8 @@ We lift autonomous pentest from a **sparse, terminal** success signal to a **den
 a model (the **Pentest-PRM**) that scores how much each candidate action advances the kill chain, and uses
 that score to re-rank the agent's next move. To our knowledge this is the **first process-reward model for
 penetration testing** (competitors use RL on outcome signals, no PRM).
-- *Evidence:* the per-step process gain is real and clustered-significant — **prm 51.7 % vs llm_only 34.3 %
-  per-step progress, +17 pp, episode-clustered p = 0.0001** (16 web boxes); the PRM is a calibrated ranker (deployed pairwise
+- *Evidence:* the per-step process gain is real and clustered-significant — **prm 52.7 % vs llm_only 37.6 %
+  per-step progress, +15 pp, episode-clustered p = 0.0012** (16 web boxes); the PRM is a calibrated ranker (deployed pairwise
   0.89 all / 0.98 new-instance / 0.80 new-chain; oracle top-3 0.94, rank-corr +0.46).
 - *Scope:* a process *improver/steerer*, not an exploit generator — the exploit class is assumed known and
   expressible in the frozen 16-action schema + per-target η-recipe.
@@ -110,7 +110,7 @@ caution, **not** advanced as a general "boundary" contribution.
 
 ### L2 — Proposer-conditional reranker value
 The reranker's *outcome* benefit depends on the proposer's own ordering. It helps a weak/un-prompt-engineered
-proposer (per-step +17 pp, p = 0.0001), but once the proposer is coached with an explicit action-vocabulary
+proposer (per-step +15 pp, p = 0.0012), but once the proposer is coached with an explicit action-vocabulary
 hint it improves on its own (its goal-rate rises 0.16 → 0.53, wasted-step rate 0.52 → 0.32) and, on an
 isolated ranking-only test, the PRM's per-step progress (0.27) is **no better than a random re-ordering of the
 same candidates (0.29)**. We report this efficiency inversion in full and **decline to center the paper on
@@ -154,7 +154,7 @@ plainly; the per-step vs per-episode distinction is kept explicit throughout.)
 
 | Contribution | Status |
 |---|---|
-| C1 process-reward evaluator | ✅ verified (per-step +17 pp p=0.0001, 16 boxes; pairwise 0.89/0.98/0.80) |
+| C1 process-reward evaluator | ✅ verified (per-step +15 pp p=0.0012, 16 boxes; pairwise 0.89/0.98/0.80) |
 | C2 label-free acquisition + transfer | ✅ verified (coverage 92 %, ψ 95.5 %/78.5 %, leak audit) |
 | C3 real whole-machine end-to-end | ✅ verified — **2 autonomous boxes, distinct modality**: DC-1 100 % vs 56 % (n=18) + Symfonos 100 % vs 20 % (n=10, non-overlapping); phase-split; Toppo deterministic; 3-vendor robustness |
 | Supporting methodology | ✅ verified |

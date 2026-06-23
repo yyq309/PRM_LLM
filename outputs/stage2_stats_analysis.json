@@ -3,8 +3,8 @@
     "seed": 12345,
     "n_perm": 20000,
     "n_boot": 10000,
-    "n_episodes": 152,
-    "n_full_goal_episodes": 122,
+    "n_episodes": 160,
+    "n_full_goal_episodes": 130,
     "n_auth_milestone_episodes": 30
   },
   "per_box": [
@@ -18,35 +18,35 @@
         "metric": "per_episode_goal",
         "prm": [
           1,
-          1
+          5
         ],
         "llm_only": [
-          0,
-          1
+          4,
+          5
         ],
-        "prm_rate": 1.0,
+        "prm_rate": 0.2,
         "prm_ci95": [
-          0.207,
-          1.0
+          0.036,
+          0.624
         ],
-        "llm_only_rate": 0.0,
+        "llm_only_rate": 0.8,
         "llm_only_ci95": [
-          0.0,
-          0.793
+          0.376,
+          0.964
         ],
-        "naive_z": 1.414,
-        "naive_p": 0.1573,
-        "perm_p_clustered": 1.0,
+        "naive_z": -1.897,
+        "naive_p": 0.0578,
+        "perm_p_clustered": 0.2077,
         "cluster_boot_ci95_diff_pp": [
-          100.0,
-          100.0
+          -100.0,
+          0.0
         ],
         "gee_p_clustered_by_box": null,
         "effect_size": {
-          "risk_diff_pp": 100.0,
-          "risk_ratio": null,
-          "odds_ratio": 9.0,
-          "cohen_h": 3.142
+          "risk_diff_pp": -60.0,
+          "risk_ratio": 0.25,
+          "odds_ratio": 0.11,
+          "cohen_h": -1.287
         },
         "significant_clustered": false
       },
@@ -54,36 +54,36 @@
         "title": "ThinkPHP-5-rce",
         "metric": "per_step_progress",
         "prm": [
-          2,
-          4
+          5,
+          6
         ],
         "llm_only": [
-          0,
-          4
+          14,
+          22
         ],
-        "prm_rate": 0.5,
+        "prm_rate": 0.833,
         "prm_ci95": [
-          0.15,
-          0.85
+          0.436,
+          0.97
         ],
-        "llm_only_rate": 0.0,
+        "llm_only_rate": 0.636,
         "llm_only_ci95": [
-          0.0,
-          0.49
+          0.43,
+          0.803
         ],
-        "naive_z": 1.633,
-        "naive_p": 0.1025,
-        "perm_p_clustered": 1.0,
+        "naive_z": 0.916,
+        "naive_p": 0.3598,
+        "perm_p_clustered": 0.5471,
         "cluster_boot_ci95_diff_pp": [
-          50.0,
-          50.0
+          -43.6,
+          48.6
         ],
-        "gee_p_clustered_by_episode": null,
+        "gee_p_clustered_by_episode": 0.4778,
         "effect_size": {
-          "risk_diff_pp": 50.0,
-          "risk_ratio": null,
-          "odds_ratio": 9.0,
-          "cohen_h": 1.571
+          "risk_diff_pp": 19.7,
+          "risk_ratio": 1.31,
+          "odds_ratio": 2.15,
+          "cohen_h": 0.454
         },
         "significant_clustered": false
       }
@@ -1296,35 +1296,35 @@
         "metric": "per_episode_goal",
         "prm": [
           19,
-          46
+          50
         ],
         "llm_only": [
-          4,
-          46
+          8,
+          50
         ],
-        "prm_rate": 0.413,
+        "prm_rate": 0.38,
         "prm_ci95": [
-          0.283,
-          0.557
+          0.259,
+          0.518
         ],
-        "llm_only_rate": 0.087,
+        "llm_only_rate": 0.16,
         "llm_only_ci95": [
-          0.034,
-          0.203
+          0.083,
+          0.285
         ],
-        "naive_z": 3.612,
-        "naive_p": 0.0003,
-        "perm_p_clustered": 0.0001,
+        "naive_z": 2.478,
+        "naive_p": 0.0132,
+        "perm_p_clustered": 0.008,
         "cluster_boot_ci95_diff_pp": [
-          21.7,
-          43.5
+          10.0,
+          32.0
         ],
-        "gee_p_clustered_by_box": 0.0001,
+        "gee_p_clustered_by_box": 0.1083,
         "effect_size": {
-          "risk_diff_pp": 32.6,
-          "risk_ratio": 4.75,
-          "odds_ratio": 6.7,
-          "cohen_h": 0.797
+          "risk_diff_pp": 22.0,
+          "risk_ratio": 2.38,
+          "odds_ratio": 3.1,
+          "cohen_h": 0.505
         },
         "significant_clustered": true
       },
@@ -1332,36 +1332,36 @@
         "title": "self-advertising full-goal boxes",
         "metric": "per_step_progress",
         "prm": [
-          90,
-          164
+          93,
+          166
         ],
         "llm_only": [
-          57,
-          154
+          71,
+          172
         ],
-        "prm_rate": 0.549,
+        "prm_rate": 0.56,
         "prm_ci95": [
-          0.472,
-          0.623
+          0.484,
+          0.634
         ],
-        "llm_only_rate": 0.37,
+        "llm_only_rate": 0.413,
         "llm_only_ci95": [
-          0.298,
-          0.449
+          0.342,
+          0.487
         ],
-        "naive_z": 3.193,
-        "naive_p": 0.0014,
-        "perm_p_clustered": 0.0013,
+        "naive_z": 2.712,
+        "naive_p": 0.0067,
+        "perm_p_clustered": 0.0071,
         "cluster_boot_ci95_diff_pp": [
-          10.2,
-          26.3
+          6.5,
+          23.6
         ],
-        "gee_p_clustered_by_episode": 0.0035,
+        "gee_p_clustered_by_episode": 0.0178,
         "effect_size": {
-          "risk_diff_pp": 17.9,
-          "risk_ratio": 1.48,
-          "odds_ratio": 2.06,
-          "cohen_h": 0.36
+          "risk_diff_pp": 14.7,
+          "risk_ratio": 1.36,
+          "odds_ratio": 1.81,
+          "cohen_h": 0.296
         },
         "significant_clustered": true
       }
@@ -1372,35 +1372,35 @@
         "metric": "per_episode_goal",
         "prm": [
           20,
-          61
+          65
         ],
         "llm_only": [
-          4,
-          61
+          8,
+          65
         ],
-        "prm_rate": 0.328,
+        "prm_rate": 0.308,
         "prm_ci95": [
-          0.223,
-          0.453
+          0.209,
+          0.428
         ],
-        "llm_only_rate": 0.066,
+        "llm_only_rate": 0.123,
         "llm_only_ci95": [
-          0.026,
-          0.157
+          0.064,
+          0.225
         ],
-        "naive_z": 3.644,
-        "naive_p": 0.0003,
-        "perm_p_clustered": 0.0001,
+        "naive_z": 2.56,
+        "naive_p": 0.0105,
+        "perm_p_clustered": 0.0052,
         "cluster_boot_ci95_diff_pp": [
-          18.0,
-          34.4
+          9.2,
+          27.7
         ],
-        "gee_p_clustered_by_box": 0.0,
+        "gee_p_clustered_by_box": 0.084,
         "effect_size": {
-          "risk_diff_pp": 26.2,
-          "risk_ratio": 5.0,
-          "odds_ratio": 6.31,
-          "cohen_h": 0.701
+          "risk_diff_pp": 18.5,
+          "risk_ratio": 2.5,
+          "odds_ratio": 3.05,
+          "cohen_h": 0.459
         },
         "significant_clustered": true
       },
@@ -1408,36 +1408,36 @@
         "title": "ALL full-goal boxes (auth-milestone excluded)",
         "metric": "per_step_progress",
         "prm": [
-          105,
-          203
+          108,
+          205
         ],
         "llm_only": [
-          74,
-          216
+          88,
+          234
         ],
-        "prm_rate": 0.517,
+        "prm_rate": 0.527,
         "prm_ci95": [
-          0.449,
-          0.585
+          0.459,
+          0.594
         ],
-        "llm_only_rate": 0.343,
+        "llm_only_rate": 0.376,
         "llm_only_ci95": [
-          0.283,
-          0.408
+          0.316,
+          0.44
         ],
-        "naive_z": 3.612,
-        "naive_p": 0.0003,
-        "perm_p_clustered": 0.0001,
+        "naive_z": 3.17,
+        "naive_p": 0.0015,
+        "perm_p_clustered": 0.0012,
         "cluster_boot_ci95_diff_pp": [
-          10.6,
-          25.2
+          7.8,
+          23.0
         ],
-        "gee_p_clustered_by_episode": 0.0005,
+        "gee_p_clustered_by_episode": 0.0031,
         "effect_size": {
-          "risk_diff_pp": 17.5,
-          "risk_ratio": 1.51,
-          "odds_ratio": 2.05,
-          "cohen_h": 0.355
+          "risk_diff_pp": 15.1,
+          "risk_ratio": 1.4,
+          "odds_ratio": 1.84,
+          "cohen_h": 0.304
         },
         "significant_clustered": true
       }
@@ -1448,36 +1448,36 @@
       "title": "class=RCE",
       "metric": "per_step_progress",
       "prm": [
-        75,
-        130
+        78,
+        132
       ],
       "llm_only": [
-        55,
-        125
+        69,
+        143
       ],
-      "prm_rate": 0.577,
+      "prm_rate": 0.591,
       "prm_ci95": [
-        0.491,
-        0.658
+        0.506,
+        0.671
       ],
-      "llm_only_rate": 0.44,
+      "llm_only_rate": 0.483,
       "llm_only_ci95": [
-        0.356,
-        0.528
+        0.402,
+        0.564
       ],
-      "naive_z": 2.186,
-      "naive_p": 0.0288,
-      "perm_p_clustered": 0.0524,
+      "naive_z": 1.8,
+      "naive_p": 0.0718,
+      "perm_p_clustered": 0.1089,
       "cluster_boot_ci95_diff_pp": [
-        3.4,
-        24.6
+        -0.1,
+        22.3
       ],
-      "gee_p_clustered_by_episode": 0.0414,
+      "gee_p_clustered_by_episode": 0.1134,
       "effect_size": {
-        "risk_diff_pp": 13.7,
-        "risk_ratio": 1.31,
-        "odds_ratio": 1.73,
-        "cohen_h": 0.275
+        "risk_diff_pp": 10.8,
+        "risk_ratio": 1.22,
+        "odds_ratio": 1.54,
+        "cohen_h": 0.218
       },
       "significant_clustered": false
     },
@@ -1598,14 +1598,14 @@
       "success": 20,
       "foothold_no_file": 2,
       "exploit_executed_no_foothold": 7,
-      "exploit_never_proposed": 31,
+      "exploit_never_proposed": 35,
       "no_progress_exhausted": 0,
       "budget_exhausted": 1,
       "goal_unreachable_by_design": 15,
       "safety_refusal": 0
     },
     "llm_only": {
-      "success": 4,
+      "success": 8,
       "foothold_no_file": 6,
       "exploit_executed_no_foothold": 8,
       "exploit_never_proposed": 43,
@@ -1621,45 +1621,45 @@
       "metric": "goal_aligned_progress",
       "prm": [
         54,
-        203
+        205
       ],
       "llm_only": [
-        25,
-        216
+        35,
+        234
       ],
-      "prm_rate": 0.266,
+      "prm_rate": 0.263,
       "prm_ci95": [
-        0.21,
-        0.331
+        0.208,
+        0.328
       ],
-      "llm_only_rate": 0.116,
+      "llm_only_rate": 0.15,
       "llm_only_ci95": [
-        0.08,
-        0.165
+        0.11,
+        0.201
       ],
-      "naive_z": 3.93,
-      "naive_p": 0.0001,
-      "perm_p_clustered": 0.0,
+      "naive_z": 2.96,
+      "naive_p": 0.0031,
+      "perm_p_clustered": 0.0018,
       "cluster_boot_ci95_diff_pp": [
-        9.4,
-        21.4
+        5.6,
+        17.8
       ],
       "gee_p_clustered_by_episode": null,
       "effect_size": {
-        "risk_diff_pp": 15.0,
-        "risk_ratio": 2.3,
-        "odds_ratio": 2.74,
-        "cohen_h": 0.39
+        "risk_diff_pp": 11.4,
+        "risk_ratio": 1.76,
+        "odds_ratio": 2.02,
+        "cohen_h": 0.284
       },
       "significant_clustered": true
     },
     "milestone_mean": {
-      "prm": 1.754,
-      "llm_only": 0.869
+      "prm": 1.646,
+      "llm_only": 1.062
     },
     "weighted_progress_mean": {
-      "prm": 0.595,
-      "llm_only": 0.43
+      "prm": 0.592,
+      "llm_only": 0.45
     }
   },
   "multiple_comparison": {
@@ -1669,16 +1669,16 @@
       "size": 2,
       "tests": [
         {
-          "test": "pooled[all_full]:per_episode_goal",
-          "raw_p": 0.0001,
-          "adj_p_holm": 0.0002,
+          "test": "pooled[all_full]:per_step",
+          "raw_p": 0.0012,
+          "adj_p_holm": 0.0024,
           "significant": true,
           "suggestive": false
         },
         {
-          "test": "pooled[all_full]:per_step",
-          "raw_p": 0.0001,
-          "adj_p_holm": 0.0002,
+          "test": "pooled[all_full]:per_episode_goal",
+          "raw_p": 0.0052,
+          "adj_p_holm": 0.0052,
           "significant": true,
           "suggestive": false
         }
@@ -1687,43 +1687,43 @@
     },
     "exploratory_family": {
       "size": 41,
-      "n_significant_after": 5,
-      "n_suggestive": 5,
+      "n_significant_after": 1,
+      "n_suggestive": 9,
       "results": [
         {
-          "test": "goal_aligned:per_step",
-          "raw_p": 0.0,
-          "adj_p_holm": 0.0,
+          "test": "pooled[all_full]:per_step",
+          "raw_p": 0.0012,
+          "adj_p_holm": 0.0492,
           "significant": true,
           "suggestive": false
         },
         {
-          "test": "pooled[self_adv_full]:per_episode_goal",
-          "raw_p": 0.0001,
-          "adj_p_holm": 0.004,
-          "significant": true,
-          "suggestive": false
+          "test": "goal_aligned:per_step",
+          "raw_p": 0.0018,
+          "adj_p_holm": 0.072,
+          "significant": false,
+          "suggestive": true
         },
         {
           "test": "pooled[all_full]:per_episode_goal",
-          "raw_p": 0.0001,
-          "adj_p_holm": 0.004,
-          "significant": true,
-          "suggestive": false
-        },
-        {
-          "test": "pooled[all_full]:per_step",
-          "raw_p": 0.0001,
-          "adj_p_holm": 0.004,
-          "significant": true,
-          "suggestive": false
+          "raw_p": 0.0052,
+          "adj_p_holm": 0.2028,
+          "significant": false,
+          "suggestive": true
         },
         {
           "test": "pooled[self_adv_full]:per_step",
-          "raw_p": 0.0013,
-          "adj_p_holm": 0.0481,
-          "significant": true,
-          "suggestive": false
+          "raw_p": 0.0071,
+          "adj_p_holm": 0.2698,
+          "significant": false,
+          "suggestive": true
+        },
+        {
+          "test": "pooled[self_adv_full]:per_episode_goal",
+          "raw_p": 0.008,
+          "adj_p_holm": 0.296,
+          "significant": false,
+          "suggestive": true
         },
         {
           "test": "Flask-SSTI:per_episode_goal",
@@ -1762,7 +1762,7 @@
         },
         {
           "test": "stratified[RCE]:per_step",
-          "raw_p": 0.0524,
+          "raw_p": 0.1089,
           "adj_p_holm": 1.0,
           "significant": false,
           "suggestive": false
@@ -1784,6 +1784,13 @@
         {
           "test": "Struts2-S2-048:per_step",
           "raw_p": 0.1311,
+          "adj_p_holm": 1.0,
+          "significant": false,
+          "suggestive": false
+        },
+        {
+          "test": "ThinkPHP-5-rce:per_episode_goal",
+          "raw_p": 0.2077,
           "adj_p_holm": 1.0,
           "significant": false,
           "suggestive": false
@@ -1859,6 +1866,13 @@
           "suggestive": false
         },
         {
+          "test": "ThinkPHP-5-rce:per_step",
+          "raw_p": 0.5471,
+          "adj_p_holm": 1.0,
+          "significant": false,
+          "suggestive": false
+        },
+        {
           "test": "Tomcat-12615:per_step",
           "raw_p": 0.5579,
           "adj_p_holm": 1.0,
@@ -1875,20 +1889,6 @@
         {
           "test": "httpd-41773:per_step",
           "raw_p": 0.9445,
-          "adj_p_holm": 1.0,
-          "significant": false,
-          "suggestive": false
-        },
-        {
-          "test": "ThinkPHP-5-rce:per_episode_goal",
-          "raw_p": 1.0,
-          "adj_p_holm": 1.0,
-          "significant": false,
-          "suggestive": false
-        },
-        {
-          "test": "ThinkPHP-5-rce:per_step",
-          "raw_p": 1.0,
           "adj_p_holm": 1.0,
           "significant": false,
           "suggestive": false
