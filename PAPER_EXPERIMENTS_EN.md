@@ -188,16 +188,17 @@ direction; *p* is the episode-clustered permutation test where computed (others 
 |---|---|---|---|
 | Per-step progress rate ↑ | **52.7 %** | 37.6 % | **0.0012** |
 | Goal-aligned (forward-only) progress ↑ | **26.3 %** | 15.0 % | **0.0018** |
-| Mean kill-chain stage reached ↑ (0 = recon … 5 = root) | **1.65** | 1.06 | — |
-| Foothold / shell-reach rate ↑ | **29 %** | 15 % | — |
-| Weighted progress ↑ | **0.59** | 0.45 | — |
+| Mean kill-chain stage reached ↑ (0 = recon … 5 = root) | **1.65** | 1.06 | **0.035** |
+| Weighted progress ↑ | **0.59** | 0.45 | **0.026** |
+| Foothold / shell-reach rate ↑ | 31 % | 20 % | 0.11 (ns) |
 | Wasted-step rate ↓ | **0.35** | 0.49 | — |
 | Per-decision top-1 ranking acc ↑ (vs oracle; Qwen+GPT, 14 boxes) | **0.47–0.78** | 0.0–0.41 | — |
 | Stage-1 pairwise ranking acc ↑ (held-out) | **0.89 / 0.98 / 0.80** | (0.5 chance) | — |
 
 The outcome metric (whole-episode goal/root) follows in Table 2b and E.5 — but the *process* improvement above
-is what a per-step reward model is built to deliver, and it is broad (8 metrics, two clustered-significant)
-rather than tied to whether one obscure final exploit happens to assemble within budget.
+is what a per-step reward model is built to deliver, and it is broad (8 metrics, **four clustered-significant**:
+per-step, goal-aligned, milestone-stage, weighted progress) rather than tied to whether one obscure final
+exploit happens to assemble within budget.
 
 **Table 2b — Per-box A/B on all 16 web targets (DeepSeek, 5 trials/arm; cells are prm / llm_only).** The
 pooled row is the confirmatory claim; the per-box rows are exploratory and underpowered (n = 5) — read the
@@ -257,6 +258,21 @@ same shape: with the advisor, **root in 10/10 attempts (100 %, CI [0.72, 1.0])**
 CI [0.06, 0.51])** — non-overlapping. Here too the raw LLM reaches the foothold (it gets code execution, reads
 `/etc/passwd`) but stalls at the obscure privilege-escalation step, and the advisor completes it. Because DC-1
 and Symfonos are *different modalities*, the effect is not a quirk of one box.
+
+**The advisor's value is in the privilege-escalation phase — on both machines.** Splitting per-step progress
+by phase makes the mechanism explicit and quantitative (Table 3a):
+
+**Table 3a — Per-step progress by phase (prm / llm_only).**
+
+| VM | web phase (prm / llm) | privesc phase (prm / llm) |
+|---|---|---|
+| DC-1 | 36 % / 32 % | **37 % / 9 %** |
+| Symfonos:1 | 51 % / 48 % | **100 % / 24 %** |
+
+On the web phase both arms progress similarly; in the privilege-escalation phase the raw LLM **collapses**
+(9 %, 24 %) while the advised agent sustains (37 %, 100 %). It is the same *process*-level signature on two
+unrelated chains — the process reward's value is concentrated exactly where the LLM's own ordering is weakest
+(Toppo, where the LLM never even reaches privesc, is the boundary of the same effect).
 
 A third machine, **Toppo**, draws a clean boundary: *both* agents fail autonomously because the LLM never even
 proposes the needed "find credentials → SSH in" step — yet a scripted (non-LLM) agent reaches root on all three

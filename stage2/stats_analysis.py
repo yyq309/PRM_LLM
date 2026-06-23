@@ -248,6 +248,34 @@ def stratified_permutation(rows, num_key, den_key, n_perm=N_PERM, seed=SEED):
     return obs, (ge + 1) / (n_perm + 1)  # add-one (never reports p=0)
 
 
+def stratified_permutation_mean(rows, val_key, n_perm=N_PERM, seed=SEED):
+    """Like stratified_permutation but for a continuous per-episode scalar (e.g. milestone level): permute
+    the ARM label of whole episodes within each box; two-sided p for the prm-minus-llm MEAN difference."""
+    rng = np.random.default_rng(seed)
+
+    def meandiff(arms):
+        pv = [rows[i][val_key] for i, a in enumerate(arms) if a == "prm"]
+        lv = [rows[i][val_key] for i, a in enumerate(arms) if a == "llm_only"]
+        return (float(np.mean(pv)) if pv else 0.0) - (float(np.mean(lv)) if lv else 0.0)
+
+    arms0 = [r["arm"] for r in rows]
+    obs = meandiff(arms0)
+    by_box = {}
+    for i, r in enumerate(rows):
+        by_box.setdefault(r["box"], []).append(i)
+    cnt = 0
+    for _ in range(n_perm):
+        perm = list(arms0)
+        for idxs in by_box.values():
+            sub = [arms0[i] for i in idxs]
+            rng.shuffle(sub)
+            for j, i in enumerate(idxs):
+                perm[i] = sub[j]
+        if abs(meandiff(perm)) >= abs(obs) - 1e-12:
+            cnt += 1
+    return round((cnt + 1) / (n_perm + 1), 4)
+
+
 def cluster_bootstrap_ci(rows, num_key, den_key, n_boot=N_BOOT, seed=SEED):
     """Resample whole episodes (clusters) WITH replacement within each box; percentile CI of diff."""
     rng = np.random.default_rng(seed + 1)
@@ -495,8 +523,19 @@ def main():
         out["progress_variants"].setdefault("weighted_progress_mean", {})[arm] = round(float(np.mean(wp)), 3)
     mm = out["progress_variants"]["milestone_mean"]
     wm = out["progress_variants"]["weighted_progress_mean"]
-    print(f"  milestone_progress (mean max-level /5):  PRM {mm['prm']}  vs  llm_only {mm['llm_only']}")
-    print(f"  weighted_progress_score (mean):          PRM {wm['prm']}  vs  llm_only {wm['llm_only']}")
+    # clustered permutation p for the stage metrics (cluster = box) so they are not bare point estimates
+    for r in full:
+        r.setdefault("_one", 1)
+    mm["perm_p_clustered"] = stratified_permutation_mean(full, "milestone")
+    wm["perm_p_clustered"] = stratified_permutation_mean(full, "weighted_progress")
+    sh = out["progress_variants"].setdefault("shell_reach", {})
+    for arm in ("prm", "llm_only"):
+        sh[arm + "_rate"] = round(float(np.mean([e["shell"] for e in full if e["arm"] == arm])), 3)
+    _shp = stratified_permutation(full, "shell", "_one")
+    sh["perm_p_clustered"] = round(_shp[0] if isinstance(_shp, (tuple, list)) else _shp, 4)
+    print(f"  milestone_progress (mean max-level /5):  PRM {mm['prm']}  vs  llm_only {mm['llm_only']}  (clustered p={mm['perm_p_clustered']})")
+    print(f"  weighted_progress_score (mean):          PRM {wm['prm']}  vs  llm_only {wm['llm_only']}  (clustered p={wm['perm_p_clustered']})")
+    print(f"  foothold/shell-reach rate:               PRM {sh['prm_rate']}  vs  llm_only {sh['llm_only_rate']}  (clustered p={sh['perm_p_clustered']})")
 
     # ---- failure taxonomy ----
     print("\n" + "=" * 96)

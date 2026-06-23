@@ -76,10 +76,11 @@ same-host privilege escalation → root** — on real VulnHub VMs, and we **loca
   **DC-1** (self-advertising Drupal RCE → SUID find), pooled n=18: **prm root 100 % (18/18) vs llm_only 56 %
   (10/18)**; and **Symfonos:1** (web LFI + SMTP log-poisoning → RCE → SUID `/opt/statuscheck` PATH-hijack),
   n=10: **prm root 100 % (10/10) CI[0.72,1.0] vs llm_only 20 % (2/10) CI[0.06,0.51]**. On both, the raw LLM
-  reaches the foothold but stalls at privilege escalation; the advised agent completes it — a **phase-split**
-  on DC-1 shows llm_only **collapses to 9 % per-step progress in the privesc phase** while the advised agent
-  sustains 37 %, so **the process reward's value is concentrated in the hardest, local-privesc phase**, which
-  only a whole-machine target exercises. 16 Docker web boxes add breadth; **Toppo** is a deterministic
+  reaches the foothold but stalls at privilege escalation; the advised agent completes it — a **phase-split on
+  BOTH VMs** shows llm_only **collapses in the privesc phase (DC-1 9 %, Symfonos 24 % per-step progress)** while
+  the advised agent sustains it (DC-1 37 %, Symfonos 100 %), so **the process reward's value is concentrated in
+  the hardest, local-privesc phase** — a cross-modality *process*-level signature, which only a whole-machine
+  target exercises. 16 Docker web boxes add breadth; **Toppo** is a deterministic
   full-chain confirmation (a 3rd modality: cred→SSH→SUID). The cross-modality replication (DC-1 ≠ Symfonos)
   rules out a box-specific artifact.
 - *Robustness (not model-specific):* a symmetric **3-vendor** study (DeepSeek / Qwen-3.7-max / GPT-5.4)

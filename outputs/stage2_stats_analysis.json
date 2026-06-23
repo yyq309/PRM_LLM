@@ -1655,11 +1655,18 @@
     },
     "milestone_mean": {
       "prm": 1.646,
-      "llm_only": 1.062
+      "llm_only": 1.062,
+      "perm_p_clustered": 0.0348
     },
     "weighted_progress_mean": {
       "prm": 0.592,
-      "llm_only": 0.45
+      "llm_only": 0.45,
+      "perm_p_clustered": 0.0261
+    },
+    "shell_reach": {
+      "prm_rate": 0.308,
+      "llm_only_rate": 0.2,
+      "perm_p_clustered": 0.1077
     }
   },
   "multiple_comparison": {
