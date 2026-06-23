@@ -72,15 +72,21 @@ real-target labels** and **no leakage of hidden task ground truth**.
 ### ★ C3 — Real whole-machine end-to-end validation + a value-localization finding
 The transferred process reward **autonomously drives the complete real kill chain — Web entry → foothold →
 same-host privilege escalation → root** — on real VulnHub VMs, and we **localize where its value comes from.**
-- *Evidence:* **DC-1 pooled n = 18: prm reaches root 100 % (18/18) vs llm_only 56 % (10/18)**;
-  a **phase-split** shows the raw LLM **collapses to 9 % per-step progress in the privilege-escalation phase**
-  while the advised agent sustains 37 % — i.e. **the process reward's value is concentrated in the hardest,
-  local-privesc phase**, which only a whole-machine target exercises. 16 Docker web boxes add breadth; Toppo
-  is a deterministic full-chain confirmation.
+- *Evidence — TWO autonomous whole-machine boxes of DISTINCT modality, both with non-overlapping CIs:*
+  **DC-1** (self-advertising Drupal RCE → SUID find), pooled n=18: **prm root 100 % (18/18) vs llm_only 56 %
+  (10/18)**; and **Symfonos:1** (web LFI + SMTP log-poisoning → RCE → SUID `/opt/statuscheck` PATH-hijack),
+  n=10: **prm root 100 % (10/10) CI[0.72,1.0] vs llm_only 20 % (2/10) CI[0.06,0.51]**. On both, the raw LLM
+  reaches the foothold but stalls at privilege escalation; the advised agent completes it — a **phase-split**
+  on DC-1 shows llm_only **collapses to 9 % per-step progress in the privesc phase** while the advised agent
+  sustains 37 %, so **the process reward's value is concentrated in the hardest, local-privesc phase**, which
+  only a whole-machine target exercises. 16 Docker web boxes add breadth; **Toppo** is a deterministic
+  full-chain confirmation (a 3rd modality: cred→SSH→SUID). The cross-modality replication (DC-1 ≠ Symfonos)
+  rules out a box-specific artifact.
 - *Robustness (not model-specific):* a symmetric **3-vendor** study (DeepSeek / Qwen-3.7-max / GPT-5.4)
   reproduces the behavior — Joomla rescue on all three, top-1 ranking prm > llm_only on 20/21 vendor-boxes.
 - *Novel delta:* the **first demonstration that a simulator-transferred process-reward signal steers an agent
-  through a full real kill chain to root**, with the value empirically attributed to the privesc phase.
+  through full real kill chains to root** — on **two machines of different attack modality** — with the value
+  empirically attributed to the privesc phase.
 
 ### Supporting — Leak-free, cluster-robust evaluation
 Episode-clustered permutation tests + cluster bootstrap + CRN-paired reranker-isolation ablation + Holm
@@ -118,7 +124,7 @@ plainly; the per-step vs per-episode distinction is kept explicit throughout.)
 
 1. Per-step (process) claims and per-episode (outcome) claims are **separated**; the efficiency inversion
    (llm_only ≥ PRM under a coached proposer) is **reported in full** as L2, never hidden.
-2. Box count = **16 Docker web (single-host single-service) + 2 VM full-chain (whole-machine: DC-1, Toppo)**.
+2. Box count = **16 Docker web (single-host single-service) + 3 VM full-chain (whole-machine: DC-1, Symfonos, Toppo)**.
    No inflated count. **Raven-2 omitted** (CVE-2016-10033 foothold blocked by image-hardened PHPMailer).
    **Symfonos-1** = dropped boundary. **XBEN/XBOW dropped (provenance-only)**, replaced by the scope statement.
 3. Leakage wall: PRM input = observable context only; no oracle q-values, no hidden task ground truth;
@@ -150,7 +156,7 @@ plainly; the per-step vs per-episode distinction is kept explicit throughout.)
 |---|---|
 | C1 process-reward evaluator | ✅ verified (per-step +17 pp p=0.0001, 16 boxes; pairwise 0.89/0.98/0.80) |
 | C2 label-free acquisition + transfer | ✅ verified (coverage 92 %, ψ 95.5 %/78.5 %, leak audit) |
-| C3 real whole-machine end-to-end | ✅ verified (DC-1 100 % vs 56 %, phase-split, Toppo; 3-vendor robustness) |
+| C3 real whole-machine end-to-end | ✅ verified — **2 autonomous boxes, distinct modality**: DC-1 100 % vs 56 % (n=18) + Symfonos 100 % vs 20 % (n=10, non-overlapping); phase-split; Toppo deterministic; 3-vendor robustness |
 | Supporting methodology | ✅ verified |
 | L1 recon over-valuation | ✅ verified (label evidence + 3 failed post-hoc fixes) — reported as limitation |
 | L2 proposer-conditional | ✅ verified — reported as limitation |

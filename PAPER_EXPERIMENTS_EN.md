@@ -62,7 +62,7 @@ vulnerability — ThinkPHP, Struts2, Joomla, etc.) give breadth, and **2 full vi
 Toppo) give depth: the *complete* chain *web entry → foothold → same-machine privilege escalation → root*,
 which the single-service boxes cannot (Table 1).
 
-**Table 1 — Real targets: all 16 Docker web boxes (foothold only), grouped by foothold mechanism, + 2 full VMs.**
+**Table 1 — Real targets: all 16 Docker web boxes (foothold only), grouped by foothold mechanism, + 3 full VMs.**
 
 | Foothold mechanism | n | Docker boxes (product / CVE) |
 |---|---|---|
@@ -73,11 +73,12 @@ which the single-service boxes cannot (Table 1).
 | File disclosure / LFI | 2 | Rails (CVE-2019-5418), php-inclusion |
 | Misconfiguration / traversal | 1 | nginx (insecure config) |
 
-All 16 Docker boxes share the same phase (web entry → foothold) and terminal metric (goal reached = shell + sensitive read). The 2 full VMs add depth:
+All 16 Docker boxes share the same phase (web entry → foothold) and terminal metric (goal reached = shell + sensitive read). The 3 full VMs add depth:
 
 | Full VM (whole-machine, → root) | chain | terminal metric |
 |---|---|---|
 | **DC-1** | Drupalgeddon2 (CVE-2018-7600) → SUID `find` | `reached_root` |
+| **Symfonos:1** | mail-masta LFI (CVE-2016-10956) + SMTP poisoning → SUID `/opt/statuscheck` PATH-hijack | `reached_root` |
 | **Toppo** | creds in `/admin/notes.txt` → SSH → SUID `python` | `reached_root` |
 
 *Scope of vulnerability coverage (stated honestly).* The 16 boxes span ~12 products and 6 foothold-mechanism
@@ -194,18 +195,28 @@ the LLM's own instincts are weakest — local privilege escalation — which onl
 LLM collapses to 9 % in the privilege-escalation phase, where the advisor sustains 37 %. (The advisor's DC-1
 outcome also appears in Figure 1, left panel.)*
 
-The second VM, **Toppo**, draws a clean boundary: *both* agents fail autonomously because the LLM never even
-proposes the needed "find credentials → SSH in" step — yet a scripted (non-LLM) agent reaches root on both
+**A second machine confirms it — with a completely different attack.** We repeated the experiment on
+**Symfonos:1**, whose chain shares nothing with DC-1's self-advertising web CVE: it runs web LFI → SMTP
+log-poisoning → code execution → a SUID-root binary hijacked through a relative `PATH`. The result has the
+same shape: with the advisor, **root in 10/10 attempts (100 %, CI [0.72, 1.0])**; without it, **2/10 (20 %,
+CI [0.06, 0.51])** — non-overlapping. Here too the raw LLM reaches the foothold (it gets code execution, reads
+`/etc/passwd`) but stalls at the obscure privilege-escalation step, and the advisor completes it. Because DC-1
+and Symfonos are *different modalities*, the effect is not a quirk of one box.
+
+A third machine, **Toppo**, draws a clean boundary: *both* agents fail autonomously because the LLM never even
+proposes the needed "find credentials → SSH in" step — yet a scripted (non-LLM) agent reaches root on all three
 machines. So the adapter and the advisor are sound; the failure is a *limit of the LLM's imagination*
 (it cannot rank an action it never proposes), not a broken transfer.
 
-**Table 3 — Full-machine results (autonomous, reach-root).**
+**Table 3 — Full-machine results (autonomous, reach-root). Three VMs, three distinct modalities.**
 
-| VM | agent | root rate ↑ | steps (median) ↓ | note |
+| VM (modality) | agent | root rate ↑ | steps (median) ↓ | note |
 |---|---|---|---|---|
-| DC-1 | **prm** | **100 % (18/18)** | ~6 | advisor every run |
+| DC-1 (Drupal RCE → SUID find) | **prm** | **100 % (18/18)** | ~6 | advisor every run |
 | DC-1 | llm_only | 56 % (10/18) | ~12 | varies 40–75 % across batches |
-| Toppo | both arms | 0 % | — | LLM never proposes the cred→SSH step |
+| Symfonos:1 (LFI+SMTP → PATH-hijack) | **prm** | **100 % (10/10)** | ~5 | non-overlapping vs llm_only |
+| Symfonos:1 | llm_only | 20 % (2/10) | ~11 | reaches foothold, stalls at privesc |
+| Toppo (cred→SSH→SUID) | both LLM arms | 0 % | — | LLM never proposes the cred→SSH step |
 | Toppo | scripted (non-LLM) | 100 % | 1 | confirms the adapter/advisor are sound |
 
 ## E.6 Question 4 — Where does the advisor break, and why?

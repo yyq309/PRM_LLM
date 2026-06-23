@@ -554,6 +554,18 @@ drive the next phase:
   `outputs/stage2_fullchain_dc1.json`. DC-1 is non-mutating (stateless RCE + read-only SUID) → no per-arm
   reset needed. NOTE: SSH-transport boxes (Toppo/Symfonos) need `sshpass`/`plink` on the Windows host — check
   availability before wiring them.
+- **★★ SYMFONOS:1 = 2nd AUTONOMOUS FULL-CHAIN BOX, ROOTED LIVE (2026-06-23) — supersedes the old "boundary,
+  enabled=false" notes.** `192.168.52.131`, distinct modality from DC-1/Toppo: web **mail-masta LFI
+  (CVE-2016-10956) + SMTP log-poisoning of /var/mail/helios → RCE-as-helios** (transport helper
+  `stage2/payloads/symfonos_rce.py`: poison+LFI-include, marker-extracted) → **SUID-root /opt/statuscheck runs
+  a relative `curl` → `#!/bin/bash -p` fake curl → root → /root/proof.txt**. Descriptor
+  `stage2/targets/vulnhub-symfonos-1.json` (kind full_vm). **AUTONOMOUS deepseek A/B pooled n=10
+  (`outputs/stage2_fullchain_symfonos{,_b}.json`): prm root 100% (10/10) CI[0.72,1.0] vs llm_only 20% (2/10)
+  CI[0.06,0.51] — NON-overlapping**; llm reaches RCE+/etc/passwd but stalls at the PATH-hijack privesc. Privesc
+  is **self-cleaning** (reads flag via -p, then un-SUIDs /bin/bash) → NO cross-trial contamination (verified a
+  non-privesc arm gets Permission denied on /root/proof.txt). ⇒ **C3/C-B now n=2 autonomous boxes of distinct
+  modality** (DC-1 + Symfonos), both prm 100% vs llm_only 56%/20%, both non-overlapping. Box count = **16
+  Docker web + 3 VM** (DC-1, Symfonos, Toppo). The old §10 "2nd autonomous VM" open item is DONE.
 - **★★ C-B RESULTS so far (2026-06-21) — `outputs/stage2_fullchain_{dc1,toppo}.json`.** **DC-1 G1 LLM A/B
   (deepseek-chat, 5 trials, live):** prm **root 100% (5/5)**, mean 6.6 steps, 6.6 LLM calls; llm_only **root
   60% (3/5)**, mean 12.0 steps, 12.4 calls. So on the harder MULTI-STEP full chain the **PRM clearly HELPS**
