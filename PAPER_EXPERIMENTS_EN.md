@@ -17,20 +17,19 @@ peeking at the answer**. We then ask whether that simulator-trained advisor stil
 > simplified trainer, never from the real tournament — so the question is whether its judgment transfers.
 
 We call the advisor the **PRM** (a *process reward model* — it scores the quality of each *step*, not the
-final outcome). We organize the experiments around five **research questions (RQ)**; each is answered in one
-section and tied to a contribution (C1–C3) or reported as an honest limitation:
+final outcome). We organize the experiments around three **research questions (RQ)** — one per contribution:
 
-| RQ | Question | §  | Maps to |
+| RQ | Question | §  | Contribution |
 |---|---|---|---|
 | **RQ1** | Does a process evaluator trained *only* in the abstract simulator capture genuine step quality — leak-free? | E.3 | C1 |
-| **RQ2** | Does that process evaluation *transfer* to real targets and measurably improve the per-step / stage-level process? | E.4 | C1, C2 |
+| **RQ2** | Does that *label-free* evaluator transfer to real targets and measurably improve the per-step / stage-level process? | E.4 | C1, C2 |
 | **RQ3** | Can the transferred process reward steer an agent through *complete* real kill chains to root, and where does its value concentrate? | E.5 | C3 |
-| **RQ4** | Where does the transferred evaluator *systematically mis-evaluate*, and is the failure fixable? | E.6 | limitation L1 |
-| **RQ5** | Is the effect *model-agnostic* — does it hold across different LLM vendors? | E.8 | robustness |
 
-§E.7 collects the ablations and controls that defend RQ1–RQ3 against alternative explanations (leakage, generic
-re-ordering, prompt confound); §E.9 reports the proposer-conditional limitation (L2); §E.10 summarizes. RQ4 and
-§E.9 are reported as honest limitations, **not** contributions.
+Two further sections **defend and stress-test** these RQs rather than asking new ones: §E.7 (ablations &
+controls — rules out leakage, generic re-ordering, prompt confound) and §E.8 (robustness — does the result
+hold across LLM vendors?). Finally, §E.6 and §E.9 report the two honest **limitations** (the transferred
+evaluator over-values reconnaissance; the reranker's *outcome* benefit is proposer-conditional) — these are
+diagnostic analyses, **not** contributions or research questions. §E.10 summarizes.
 
 ## E.2 Setup
 
@@ -301,7 +300,7 @@ machines. So the adapter and the advisor are sound; the failure is a *limit of t
 | Toppo (cred→SSH→SUID) | both LLM arms | 0 % | — | LLM never proposes the cred→SSH step |
 | Toppo | scripted (non-LLM) | 100 % | 1 | confirms the adapter/advisor are sound |
 
-## E.6 RQ4 — Where does the transferred evaluator break, and is it fixable?
+## E.6 Limitation (1) — the transferred evaluator over-values reconnaissance
 
 **In one sentence: the advisor systematically over-values reconnaissance — a bias we trace to the training
 distribution and show the obvious post-hoc fixes do not remove. We report it as an honest limitation of *this*
@@ -350,7 +349,7 @@ The load-bearing control is the second row: because the advisor's per-step edge 
 re-ordering, we deliberately do **not** claim a blanket per-step win — we claim a *phase-* and
 *proposer-conditional* one, which the full-chain (§E.5) and multi-LLM (§E.8) results make precise.
 
-## E.8 RQ5 — Is the result model-agnostic (does it hold across LLM vendors)?
+## E.8 Robustness — does the result hold across LLM vendors?
 
 **In one sentence: no — we reran the whole comparison with three different LLMs and the same behavior appears
 every time.** We tested **DeepSeek, Qwen, and GPT-5.4** under identical conditions (same 7 targets, same code).
@@ -401,7 +400,7 @@ So outcome-help is *conditional* (it appears when the LLM is weak), ranking-help
 per-step effect tracks how long the attack is — one consistent mechanism, across three vendors, **not specific
 to any single model.**
 
-## E.9 The one honest limitation
+## E.9 Limitation (2) — the reranker's outcome benefit is proposer-conditional
 
 We state plainly — and choose *not* to build the paper around — the following: the advisor's benefit on the
 *final outcome* depends on how good the LLM's own ordering already is. It clearly helps a weak or
