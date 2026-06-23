@@ -27,6 +27,12 @@ final outcome). The experiments answer four questions:
 E.7 collects the ablations and controls; E.8 then asks whether the findings depend on which LLM we use
 (they do not); E.9 reports the one honest limitation.
 
+**Mapping to the contributions.** Q1–Q2 (E.3–E.4) supply the evidence for **C1** (a useful per-step
+process-reward evaluator) and **C2** (it was obtained label-free and the transfer works); Q3 (E.5), together
+with the multi-LLM study (E.8), is the evidence for **C3** (the transferred signal drives complete real kill
+chains to root, with the value localized to privilege escalation). Q4 (E.6) and E.9 are **not** contributions
+— they are the two honest limitations (recon over-valuation; proposer-conditional benefit), reported in full.
+
 ## E.2 Setup
 
 **The simulator (where the advisor is trained).** Instead of training on real, expensive, label-scarce
@@ -186,10 +192,11 @@ machines. So the adapter and the advisor are sound; the failure is a *limit of t
 
 ## E.6 Question 4 — Where does the advisor break, and why?
 
-**In one sentence: the advisor systematically over-values reconnaissance, and we show this is a built-in
-consequence of how it was trained — not a bug we could patch.** In the simulator, training rarely creates
-situations where the agent already knows everything but keeps scouting; as a result the advisor learns that
-"reconnaissance" is almost always valuable. Concretely, its average score for the action "enumerate web
+**In one sentence: the advisor systematically over-values reconnaissance — a bias we trace to the training
+distribution and show the obvious post-hoc fixes do not remove. We report it as an honest limitation of *this*
+transfer recipe, and are deliberately careful about what we do and do not claim.** In the simulator, training
+rarely creates situations where the agent already knows everything but keeps scouting; as a result the advisor
+learns that "reconnaissance" is almost always valuable. Concretely, its average score for the action "enumerate web
 paths" is **0.89**, far above "run the exploit" at **0.54** (Figure 4). On real targets this shows up as the
 advisor adding scouting steps a capable LLM does not need.
 
@@ -202,11 +209,14 @@ privileges (0.04) — which is the over-valuation we trace to the simulator's tr
 The important part is that this resists repair. We tried **three independent fixes** — down-weighting recon at
 inference time, re-labelling the training data, and forbidding recon when better actions exist — and **all
 three failed** to remove the bias without damaging the advisor elsewhere. A multi-seed check further shows the
-bias size is itself unstable across training seeds. We therefore present this not as a defect to fix but as a
-**characterized, structural limitation of simulator-to-real value transfer** — an instance of *reward-model
-overoptimization* under distribution shift [gao2023scaling] — a transferable warning for anyone training
-advisors in a simplified world: whatever situations the simulator under-represents, the advisor will
-mis-value in reality.
+bias size is itself unstable across training seeds. We are deliberately careful about scope: we show that
+three obvious *post-hoc* fixes fail, but we do **not** claim the bias is unavoidable by a different training
+or simulator design, nor that other LLM-pentest systems provably hit it. We therefore report it as a
+**characterized limitation of this transfer recipe** — most naturally read as *reward-model overoptimization*
+under the covariate shift that training-time action masking induces [gao2023scaling] — and leave it as an
+explicit open question whether the bias is inherent to label-free abstract transfer or designable-away (a
+controlled alternative-design study would settle it). We present this as honest analysis, not as a headline
+result.
 
 ## E.7 Ablations and controls
 
