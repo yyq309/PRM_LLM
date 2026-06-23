@@ -17,21 +17,20 @@ peeking at the answer**. We then ask whether that simulator-trained advisor stil
 > simplified trainer, never from the real tournament — so the question is whether its judgment transfers.
 
 We call the advisor the **PRM** (a *process reward model* — it scores the quality of each *step*, not the
-final outcome). The experiments answer four questions:
+final outcome). We organize the experiments around five **research questions (RQ)**; each is answered in one
+section and tied to a contribution (C1–C3) or reported as an honest limitation:
 
-1. **Does the simulator actually teach good judgment?** (E.3)
-2. **Does that judgment transfer to real targets and help per step?** (E.4)
-3. **Can the agent, so advised, complete a *full* real attack to root?** (E.5)
-4. **Where does the advisor break, and why?** (E.6)
+| RQ | Question | §  | Maps to |
+|---|---|---|---|
+| **RQ1** | Does a process evaluator trained *only* in the abstract simulator capture genuine step quality — leak-free? | E.3 | C1 |
+| **RQ2** | Does that process evaluation *transfer* to real targets and measurably improve the per-step / stage-level process? | E.4 | C1, C2 |
+| **RQ3** | Can the transferred process reward steer an agent through *complete* real kill chains to root, and where does its value concentrate? | E.5 | C3 |
+| **RQ4** | Where does the transferred evaluator *systematically mis-evaluate*, and is the failure fixable? | E.6 | limitation L1 |
+| **RQ5** | Is the effect *model-agnostic* — does it hold across different LLM vendors? | E.8 | robustness |
 
-E.7 collects the ablations and controls; E.8 then asks whether the findings depend on which LLM we use
-(they do not); E.9 reports the one honest limitation.
-
-**Mapping to the contributions.** Q1–Q2 (E.3–E.4) supply the evidence for **C1** (a useful per-step
-process-reward evaluator) and **C2** (it was obtained label-free and the transfer works); Q3 (E.5), together
-with the multi-LLM study (E.8), is the evidence for **C3** (the transferred signal drives complete real kill
-chains to root, with the value localized to privilege escalation). Q4 (E.6) and E.9 are **not** contributions
-— they are the two honest limitations (recon over-valuation; proposer-conditional benefit), reported in full.
+§E.7 collects the ablations and controls that defend RQ1–RQ3 against alternative explanations (leakage, generic
+re-ordering, prompt confound); §E.9 reports the proposer-conditional limitation (L2); §E.10 summarizes. RQ4 and
+§E.9 are reported as honest limitations, **not** contributions.
 
 ## E.2 Setup
 
@@ -114,7 +113,7 @@ significance. We use **episode-clustered permutation tests** and **bootstrap con
 two agents on identical situations (**common random numbers**), and apply a **multiple-comparison correction**.
 We report these conservative numbers throughout.
 
-## E.3 Question 1 — Does the simulator teach good judgment?
+## E.3 RQ1 — Does the simulator teach a faithful, leak-free process evaluator?
 
 **In one sentence: yes — the advisor learns a real (if modest) sense of which action makes progress, and it
 does so without any leakage.** Three pieces of evidence:
@@ -162,7 +161,7 @@ hardest split).*
 One honest boundary: the advisor is a **ranker, not a player**. If we let it drive an agent entirely on its
 own it does not succeed as a standalone policy — its value is in *advising*, which is exactly how we use it.
 
-## E.4 Question 2 — Does the advice transfer to real targets?
+## E.4 RQ2 — Does the process evaluation transfer to real targets and improve the process?
 
 **In one sentence: yes — on real machines, letting the advisor re-rank the LLM's actions produces a
 statistically significant improvement in per-step decision quality.** First, the adapter works: the
@@ -232,7 +231,7 @@ ThinkPHP-5 the raw LLM even wins the *goal* (80 % vs 20 %) — we do not hide th
 | WebLogic-weakpw | auth | 5 | 18 / 21 | 0 / 0 |
 | **Pooled (16, clustered)** | — | 5 | **52.7 / 37.6** (p = 0.0012) | **31 / 12** (p = 0.005) |
 
-## E.5 Question 3 — Can it complete a *full* real attack to root?
+## E.5 RQ3 — Can it complete a *full* real attack to root, and where is its value?
 
 **In one sentence: yes — and the advisor's help is concentrated exactly in the hardest phase, privilege
 escalation.** On the **DC-1** virtual machine the agent must do the whole chain: break in through the web app,
@@ -302,7 +301,7 @@ machines. So the adapter and the advisor are sound; the failure is a *limit of t
 | Toppo (cred→SSH→SUID) | both LLM arms | 0 % | — | LLM never proposes the cred→SSH step |
 | Toppo | scripted (non-LLM) | 100 % | 1 | confirms the adapter/advisor are sound |
 
-## E.6 Question 4 — Where does the advisor break, and why?
+## E.6 RQ4 — Where does the transferred evaluator break, and is it fixable?
 
 **In one sentence: the advisor systematically over-values reconnaissance — a bias we trace to the training
 distribution and show the obvious post-hoc fixes do not remove. We report it as an honest limitation of *this*
@@ -351,7 +350,7 @@ The load-bearing control is the second row: because the advisor's per-step edge 
 re-ordering, we deliberately do **not** claim a blanket per-step win — we claim a *phase-* and
 *proposer-conditional* one, which the full-chain (§E.5) and multi-LLM (§E.8) results make precise.
 
-## E.8 Does the result depend on which LLM?
+## E.8 RQ5 — Is the result model-agnostic (does it hold across LLM vendors)?
 
 **In one sentence: no — we reran the whole comparison with three different LLMs and the same behavior appears
 every time.** We tested **DeepSeek, Qwen, and GPT-5.4** under identical conditions (same 7 targets, same code).
