@@ -330,24 +330,24 @@ result.
 
 ## E.7 Ablations and controls
 
-**In one sentence: the gain survives every control we can think of — it is not leakage, not generic
-re-ordering, and not a quirk of one proposer.** Each row of Table 6 isolates one alternative explanation a
-skeptical reviewer might raise and reports what we found.
+**In one sentence: beyond the main prm-vs-llm_only comparison (RQ2, §E.4), the result survives every *other*
+control we can think of — it is not generic re-ordering, not leakage, and not a quirk of one proposer.** The
+`llm_only` "remove-the-advisor" baseline *is* the §E.4 headline and is not repeated here; each row of Table 6
+isolates a different alternative explanation a skeptical reviewer might raise.
 
-**Table 6 — Ablations and controls.**
+**Table 6 — Controls (alternatives to the §E.4 effect).**
 
 | Control / ablation | Alternative explanation it rules out | Result |
 |---|---|---|
-| `llm_only` (remove the advisor) | re-ranking does nothing | per-step progress drops; advisor − baseline significant, **p = 0.0012** (§E.4) |
 | random-rerank (re-order randomly) | *any* re-ordering helps, not this advisor's ranking | the advisor's edge is **phase-specific** — it leads in the privesc phase but is not reliably above random on easy web steps (§E.5, §E.8) |
 | leak-free input audit | the advisor reads a hidden answer | no secret path / credential / flag in its input; graceful degradation when fields are masked (§E.3c) |
 | generic-prompt control | success came from a CVE-named hint (test leakage) | the CVE-name lift disappears under a generic prompt; we report the leak-free number (§E.8) |
 | standalone ranker (no proposer) | the advisor is secretly a policy | it cannot drive the agent alone — its value is strictly advisory (§E.3) |
 | three bias-removal fixes | the recon bias is a patchable bug | all three fail without harming the advisor elsewhere (§E.6) |
 
-The load-bearing control is the second row: because the advisor's per-step edge is *not* uniform over random
-re-ordering, we deliberately do **not** claim a blanket per-step win — we claim a *phase-* and
-*proposer-conditional* one, which the full-chain (§E.5) and multi-LLM (§E.8) results make precise.
+The load-bearing control is the **first row** (random-rerank): because the advisor's per-step edge is *not*
+uniform over random re-ordering, we deliberately do **not** claim a blanket per-step win — we claim a *phase-*
+and *proposer-conditional* one, which the full-chain (§E.5) and multi-LLM (§E.8) results make precise.
 
 ## E.8 Robustness — does the result hold across LLM vendors?
 
