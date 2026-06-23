@@ -62,25 +62,26 @@ vulnerability — ThinkPHP, Struts2, Joomla, etc.) give breadth, and **2 full vi
 Toppo) give depth: the *complete* chain *web entry → foothold → same-machine privilege escalation → root*,
 which the single-service boxes cannot (Table 1).
 
-**Table 1 — Real targets: all 15 Docker web boxes (foothold only), grouped by foothold mechanism, + 2 full VMs.**
+**Table 1 — Real targets: all 16 Docker web boxes (foothold only), grouped by foothold mechanism, + 2 full VMs.**
 
 | Foothold mechanism | n | Docker boxes (product / CVE) |
 |---|---|---|
 | Direct RCE | 9 | ThinkPHP-5, ThinkPHP-5.0.23, Struts2 S2-045, Struts2 S2-048, php-cgi (CVE-2012-1823), Drupal/Drupalgeddon2 (CVE-2018-7600), Apache httpd (CVE-2021-41773), Tomcat (CVE-2017-12615), Gitea 1.4 |
 | Weak-credential → deploy/RCE | 2 | Tomcat8 (manager), WebLogic |
 | SQL injection | 1 | Joomla (CVE-2017-8917) |
+| Template injection (SSTI) | 1 | Flask / Jinja2 |
 | File disclosure / LFI | 2 | Rails (CVE-2019-5418), php-inclusion |
 | Misconfiguration / traversal | 1 | nginx (insecure config) |
 
-All 15 Docker boxes share the same phase (web entry → foothold) and terminal metric (goal reached = shell + sensitive read). The 2 full VMs add depth:
+All 16 Docker boxes share the same phase (web entry → foothold) and terminal metric (goal reached = shell + sensitive read). The 2 full VMs add depth:
 
 | Full VM (whole-machine, → root) | chain | terminal metric |
 |---|---|---|
 | **DC-1** | Drupalgeddon2 (CVE-2018-7600) → SUID `find` | `reached_root` |
 | **Toppo** | creds in `/admin/notes.txt` → SSH → SUID `python` | `reached_root` |
 
-*Scope of vulnerability coverage (stated honestly).* The 15 boxes span ~11 products and 5 foothold-mechanism
-classes, but **direct RCE dominates (9/15)** — reflecting the Vulhub corpus. This is a breadth-of-*product*,
+*Scope of vulnerability coverage (stated honestly).* The 16 boxes span ~12 products and 6 foothold-mechanism
+classes, but **direct RCE dominates (9/16)** — reflecting the Vulhub corpus. This is a breadth-of-*product*,
 not breadth-of-vuln-*class*, evaluation. It is methodologically acceptable here because the frozen 16-action
 schema abstracts the *kill-chain steps* (recon → locate → exploit → shell → read/escalate), **not** the
 vulnerability class; so the per-box diversity the PRM actually sees comes from **chain length and topology**
@@ -159,12 +160,14 @@ own it does not succeed as a standalone policy — its value is in *advising*, w
 **In one sentence: yes — on real machines, letting the advisor re-rank the LLM's actions produces a
 statistically significant improvement in per-step decision quality.** First, the adapter works: the
 interpreter maps the LLM's free text to the correct action type **95.5 %** of the time on a labeled benchmark,
-and **78.5 %** on harder held-out fixtures — up from a **49 %** un-enhanced baseline. Then, across the 15 real
-web boxes, the `prm` agent makes forward progress on **54.1 % of its steps versus 42.1 % for `llm_only` — a
-+12-point gain** that holds under the conservative, clustered statistics: **p = 0.02** (still significant
+and **78.5 %** on harder held-out fixtures — up from a **49 %** un-enhanced baseline. Then, across the 16 real
+web boxes, the `prm` agent makes forward progress on **51.7 % of its steps versus 34.3 % for `llm_only` — a
++17-point gain** that holds under the conservative, clustered statistics: **p = 0.0001** (still significant
 after multiple-comparison correction). Plainly: a ranking sense learned in a cheap simulator, with zero real
-labels, measurably improves real per-step action choices. (We are careful to distinguish *per-step* quality, which clearly improves, from *whole-episode*
-success on these single-service boxes, which is often tied — we return to why in E.5 and E.9.)
+labels, measurably improves real per-step action choices. (Whole-episode goal-reach is higher too — prm 33 %
+vs `llm_only` 7 % — but that gain is **concentrated in the boxes where the proposer fails outright** (e.g.
+SSTI, Joomla); on boxes both arms can already solve, it is tied. We return to this *proposer-conditional*
+pattern in E.5 and E.9.)
 
 ## E.5 Question 3 — Can it complete a *full* real attack to root?
 
@@ -243,7 +246,7 @@ skeptical reviewer might raise and reports what we found.
 
 | Control / ablation | Alternative explanation it rules out | Result |
 |---|---|---|
-| `llm_only` (remove the advisor) | re-ranking does nothing | per-step progress drops; advisor − baseline significant, **p = 0.02** (§E.4) |
+| `llm_only` (remove the advisor) | re-ranking does nothing | per-step progress drops; advisor − baseline significant, **p = 0.0001** (§E.4) |
 | random-rerank (re-order randomly) | *any* re-ordering helps, not this advisor's ranking | the advisor's edge is **phase-specific** — it leads in the privesc phase but is not reliably above random on easy web steps (§E.5, §E.8) |
 | leak-free input audit | the advisor reads a hidden answer | no secret path / credential / flag in its input; graceful degradation when fields are masked (§E.3c) |
 | generic-prompt control | success came from a CVE-named hint (test leakage) | the CVE-name lift disappears under a generic prompt; we report the leak-free number (§E.8) |
@@ -309,7 +312,7 @@ to any single model.**
 
 We state plainly — and choose *not* to build the paper around — the following: the advisor's benefit on the
 *final outcome* depends on how good the LLM's own ordering already is. It clearly helps a weak or
-un-coached LLM (per-step **+12 points**, p = 0.02). But once we *coach* the LLM with an explicit hint about
+un-coached LLM (per-step **+17 points**, p = 0.0001). But once we *coach* the LLM with an explicit hint about
 the action vocabulary, the proposer improves on its own — its goal-rate rises from **0.16 to 0.53** and its
 wasted-step rate falls from **0.52 to 0.32** — and in an isolated test of *ranking alone* the advisor's
 per-step progress (**0.27**) is no better than a random re-ordering of the same candidates (**0.29**). A

@@ -51,8 +51,8 @@ We lift autonomous pentest from a **sparse, terminal** success signal to a **den
 a model (the **Pentest-PRM**) that scores how much each candidate action advances the kill chain, and uses
 that score to re-rank the agent's next move. To our knowledge this is the **first process-reward model for
 penetration testing** (competitors use RL on outcome signals, no PRM).
-- *Evidence:* the per-step process gain is real and clustered-significant — **prm 54.1 % vs llm_only 42.1 %
-  per-step progress, +12 pp, episode-clustered p = 0.02**; the PRM is a calibrated ranker (deployed pairwise
+- *Evidence:* the per-step process gain is real and clustered-significant — **prm 51.7 % vs llm_only 34.3 %
+  per-step progress, +17 pp, episode-clustered p = 0.0001** (16 web boxes); the PRM is a calibrated ranker (deployed pairwise
   0.89 all / 0.98 new-instance / 0.80 new-chain; oracle top-3 0.94, rank-corr +0.46).
 - *Scope:* a process *improver/steerer*, not an exploit generator — the exploit class is assumed known and
   expressible in the frozen 16-action schema + per-target η-recipe.
@@ -75,7 +75,7 @@ same-host privilege escalation → root** — on real VulnHub VMs, and we **loca
 - *Evidence:* **DC-1 pooled n = 18: prm reaches root 100 % (18/18) vs llm_only 56 % (10/18)**;
   a **phase-split** shows the raw LLM **collapses to 9 % per-step progress in the privilege-escalation phase**
   while the advised agent sustains 37 % — i.e. **the process reward's value is concentrated in the hardest,
-  local-privesc phase**, which only a whole-machine target exercises. 15 Docker web boxes add breadth; Toppo
+  local-privesc phase**, which only a whole-machine target exercises. 16 Docker web boxes add breadth; Toppo
   is a deterministic full-chain confirmation.
 - *Robustness (not model-specific):* a symmetric **3-vendor** study (DeepSeek / Qwen-3.7-max / GPT-5.4)
   reproduces the behavior — Joomla rescue on all three, top-1 ranking prm > llm_only on 20/21 vendor-boxes.
@@ -104,7 +104,7 @@ caution, **not** advanced as a general "boundary" contribution.
 
 ### L2 — Proposer-conditional reranker value
 The reranker's *outcome* benefit depends on the proposer's own ordering. It helps a weak/un-prompt-engineered
-proposer (per-step +12 pp, p = 0.02), but once the proposer is coached with an explicit action-vocabulary
+proposer (per-step +17 pp, p = 0.0001), but once the proposer is coached with an explicit action-vocabulary
 hint it improves on its own (its goal-rate rises 0.16 → 0.53, wasted-step rate 0.52 → 0.32) and, on an
 isolated ranking-only test, the PRM's per-step progress (0.27) is **no better than a random re-ordering of the
 same candidates (0.29)**. We report this efficiency inversion in full and **decline to center the paper on
@@ -118,7 +118,7 @@ plainly; the per-step vs per-episode distinction is kept explicit throughout.)
 
 1. Per-step (process) claims and per-episode (outcome) claims are **separated**; the efficiency inversion
    (llm_only ≥ PRM under a coached proposer) is **reported in full** as L2, never hidden.
-2. Box count = **15 Docker web (single-host single-service) + 2 VM full-chain (whole-machine: DC-1, Toppo)**.
+2. Box count = **16 Docker web (single-host single-service) + 2 VM full-chain (whole-machine: DC-1, Toppo)**.
    No inflated count. **Raven-2 omitted** (CVE-2016-10033 foothold blocked by image-hardened PHPMailer).
    **Symfonos-1** = dropped boundary. **XBEN/XBOW dropped (provenance-only)**, replaced by the scope statement.
 3. Leakage wall: PRM input = observable context only; no oracle q-values, no hidden task ground truth;
@@ -148,7 +148,7 @@ plainly; the per-step vs per-episode distinction is kept explicit throughout.)
 
 | Contribution | Status |
 |---|---|
-| C1 process-reward evaluator | ✅ verified (per-step +12 pp p=0.02; pairwise 0.89/0.98/0.80) |
+| C1 process-reward evaluator | ✅ verified (per-step +17 pp p=0.0001, 16 boxes; pairwise 0.89/0.98/0.80) |
 | C2 label-free acquisition + transfer | ✅ verified (coverage 92 %, ψ 95.5 %/78.5 %, leak audit) |
 | C3 real whole-machine end-to-end | ✅ verified (DC-1 100 % vs 56 %, phase-split, Toppo; 3-vendor robustness) |
 | Supporting methodology | ✅ verified |

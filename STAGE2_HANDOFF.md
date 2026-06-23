@@ -15,7 +15,7 @@ experiments immediately. Last updated 2026-06-18. Working dir for everything bel
 
 A two-stage system. **Stage 1** (frozen) trained, in an abstract single-host-web simulator, a DQN value
 oracle → a **Pentest-PRM** (a per-step *reranker*, NOT a policy). **Stage 2** (current work) runs an
-autonomous pentest loop against **15 real Vulhub Docker boxes** on `127.0.0.1` via a φ/ψ/η adapter, and
+autonomous pentest loop against **16 real Vulhub Docker boxes** on `127.0.0.1` via a φ/ψ/η adapter, and
 A/B-tests whether the PRM reranking the proposer's candidates beats the proposer's own order. **Honest
 bottom line so far:** with a real LLM proposer the PRM gives a *real, attributable, clustered-significant*
 **per-step process** improvement (beats random reranking, p≈0.007), but it does **not** improve
@@ -67,7 +67,7 @@ ceiling that memory/reranking cannot touch.
 - **Live-execution authorization (safety gate):** every live run requires BOTH
   `STAGE2_LIVE_AUTHORIZED=i-own-this-isolated-authorized-lab` in env AND the `--confirmed-isolated` CLI
   flag. Without them the executor refuses. Kill switch: set `STAGE2_KILL_SWITCH` to abort mid-run.
-- **Containers:** 15 Vulhub web boxes on `127.0.0.1:8080-8091,8094,8095,8097` (+ a few helper containers). They are
+- **Containers:** 16 Vulhub web boxes on `127.0.0.1:8080-8091,8094,8095,8097,8110` (Flask-SSTI on 8110; + a few helper containers). They are
   long-running. Check health (non-destructive): `python -m stage2.reset_target --all --check`. Restart
   one clean: `python -m stage2.reset_target --label <Label>`. Registry of all 12 (container, port,
   image, compose dir, healthcheck): `stage2/target_registry.json`. Compose dirs live under
@@ -392,7 +392,7 @@ Artifacts: `outputs/prm_strong.joblib` (the frozen PRM). Reports (top level): `S
 All from `$ROOT`. Prefix live LLM commands with the two env vars from §2.
 
 ```powershell
-# health of all 15 boxes (non-destructive)
+# health of all 16 boxes (non-destructive)
 python -m stage2.reset_target --all --check
 
 # 12-box A/B already in outputs/ ; re-aggregate (naive) and the cluster-robust re-analysis:
@@ -758,5 +758,5 @@ memory/reranking to solve it.
 ---
 
 **Start here:** run `python -m stage2.preflight` and `python -m stage2.reset_target --all --check` to
-confirm the 15 boxes are up, `python -m pytest tests\ -m "not slow" -q` to confirm green, then pick item
+confirm the 16 boxes are up, `python -m pytest tests\ -m "not slow" -q` to confirm green, then pick item
 #1 from §10.
