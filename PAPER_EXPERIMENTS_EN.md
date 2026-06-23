@@ -28,9 +28,10 @@ final outcome). We organize the experiments around three **research questions (R
 The controls that defend RQ2 — random-rerank, leak-free audit, generic-prompt, standalone-ranker — are folded
 into §E.4 itself (Table 2c), since they qualify the same `prm`-vs-`llm_only` effect rather than asking a new
 question. One further section **stress-tests** the result: §E.7 (robustness — does it hold across LLM
-vendors?). Finally, §E.6 and §E.8 report the two honest **limitations** (the transferred evaluator over-values
-reconnaissance; the reranker's *outcome* benefit is proposer-conditional) — these are diagnostic analyses,
-**not** contributions or research questions. §E.9 summarizes.
+vendors?). The two honest **limitations** are reported where their evidence lives: the transferred evaluator's
+recon over-valuation has its own section (§E.6), while the proposer-conditional *outcome* benefit is reported
+with data inside §E.4's controls (Table 2c, rows 1 and 3). Both are diagnostic analyses, **not** contributions
+or research questions. §E.8 summarizes.
 
 ## E.2 Setup
 
@@ -173,7 +174,7 @@ after multiple-comparison correction). Plainly: a ranking sense learned in a che
 labels, measurably improves real per-step action choices. (Whole-episode goal-reach is higher too — prm 31 %
 vs `llm_only` 12 % — but that gain is **concentrated in the boxes where the proposer fails outright** (e.g.
 SSTI, Joomla); on boxes both arms can already solve, it is tied. We return to this *proposer-conditional*
-pattern in E.5 and E.8.)
+pattern in E.5 and in the controls below (Table 2c, rows 1 and 3).)
 
 **Because the advisor is a *process* evaluator, the per-step metrics above are not a side-show — they are the
 primary evidence.** Table 2a collects the process / stage-level metrics; the final-outcome rate (goal/root)
@@ -232,24 +233,34 @@ ThinkPHP-5 the raw LLM even wins the *goal* (80 % vs 20 %) — we do not hide th
 | **Pooled (16, clustered)** | — | 5 | **52.7 / 37.6** (p = 0.0012) | **31 / 12** (p = 0.005) |
 
 **Controls — ruling out alternative explanations of the per-step effect.** The `prm`-vs-`llm_only` comparison
-above is the effect we want to defend; the controls below test whether it could be something more mundane. It
-survives every one — it is not generic re-ordering, not leakage, and not a quirk of one proposer. (The
-`llm_only` "remove-the-advisor" arm *is* the comparison above and is not repeated as a separate ablation.)
-Each row of Table 2c isolates a different alternative explanation a skeptical reviewer might raise.
+above is the effect we want to defend; the controls below probe whether it could be something more mundane —
+and they draw a sharp, honest boundary. Two (leak-free input, generic-prompt) the effect clears outright: it
+is **not** reading a hidden answer and **not** a CVE-name leak. Two others (random-rerank, standalone) show the
+per-step value is **bounded** — it is *proposer-conditional*: real when a proposer pre-filters the candidate
+set, but *below* random when the PRM is fed the raw action surface. (The `llm_only` "remove-the-advisor" arm
+*is* the comparison above and is not repeated as a separate ablation.) Every number below traces to a report
+under `outputs/`.
 
 **Table 2c — Controls (alternatives to the per-step effect).**
 
-| Control / ablation | Alternative explanation it rules out | Result |
-|---|---|---|
-| random-rerank (re-order randomly) | *any* re-ordering helps, not this advisor's ranking | the advisor's edge is **phase-specific** — it leads in the privesc phase but is not reliably above random on easy web steps (§E.5, §E.7) |
-| leak-free input audit | the advisor reads a hidden answer | no secret path / credential / flag in its input; graceful degradation when fields are masked (§E.3) |
-| generic-prompt control | success came from a CVE-named hint (test leakage) | the CVE-name lift disappears under a generic prompt; we report the leak-free number (§E.7) |
-| standalone ranker (no proposer) | the advisor is secretly a policy | it cannot drive the agent alone — its value is strictly advisory (§E.3) |
-| three bias-removal fixes | the recon bias is a patchable bug | all three fail without harming the advisor elsewhere (§E.6) |
+| # | Control / ablation | Alternative explanation it rules out | Result — every number traced to `outputs/` |
+|---|---|---|---|
+| 1 | random-rerank (re-order randomly) | *any* re-ordering helps, not this advisor's ranking | **Proposer-conditional.** Fed the *full* action surface (deterministic proposer) the PRM's recon bias makes it **worse** than random — per-step **0.267 vs 0.293** (−2.7 pp, clustered *p* = 0.0034). But once a real LLM proposer pre-filters the candidates, the PRM **beats** random — **0.685 vs 0.500** (+18.5 pp, *p* = 0.0068). |
+| 2 | leak-free input audit | the advisor reads a hidden answer | **0** secret / path / flag leaks across **4 176** train + **1 764** held-out PRM inputs; masking *all* context barely moves it (ranking **0.910 → 0.916**, no drop; diagnosis **0.907 → 0.886**; **0** cliff fields). |
+| 3 | generic-prompt control | success came from a CVE-named hint (test leakage) | The CVE-coached prompt lifts the proposer's goal-rate **+0.375** (*p* = 0.002); under a content-free generic prompt the lift **vanishes and reverses** (**−0.094**, *p* = 0.54, n.s.) — the gain was the hint, not leakage in our pipeline. |
+| 4 | standalone ranker (no proposer) | the advisor is secretly a policy | Strictly advisory — it only re-ranks a proposer's list. With the environment scaffolding removed it cannot drive the agent at all (goal-rate **0.000**, n = 3); the benefit needs a proposer that pre-filters (row 1). |
+| 5 | three bias-removal fixes | the recon over-valuation is a patchable bug | The bias is real (`web_path_enum` **0.89** ≫ `exploit` **0.54** ≫ `command_exec` / `privesc` **0.04**), but the label-correction retrain does not remove it (**0.59** vs deployed **0.89**) and it is seed-dependent (mean **0.54**, sd **0.11**) — see §E.6. |
 
-The load-bearing control is the first row (random-rerank): because the advisor's per-step edge is *not*
-uniform over random re-ordering, we deliberately do **not** claim a blanket per-step win — we claim a *phase-*
-and *proposer-conditional* one, which the full-chain (§E.5) and multi-LLM (§E.7) results make precise.
+*Sources: row 1 `stage2_ablation_rerank{,_llm}.json`; row 2 `leakage_audit.json`; row 3
+`stage2_improvement_proposer{,_generic}.json`; row 4 `prm_policy_eval_unmasked_no_guard.json`; row 5
+`recon_bias_histogram.json` + `recon_bias_multiseed.json`. Ranking p-values are episode-clustered permutation
+tests; the row-1 isolated test uses n = 80 (deterministic) / n = 30 (LLM-proposer) episodes per mode.*
+
+The load-bearing control is **row 1** (random-rerank): the advisor's per-step value is **proposer-conditional**
+— fed the raw action surface its recon bias drags it *below* random, but given a proposer that pre-filters to a
+small sensible set it adds real lift (+18.5 pp). This is exactly why we claim a *phase-* and
+*proposer-conditional* win, **not** a blanket per-step one — made precise by the full-chain phase-split (§E.5)
+and the multi-LLM study (§E.7).
 
 ## E.5 RQ3 — Can it complete a *full* real attack to root, and where is its value?
 
@@ -321,7 +332,7 @@ machines. So the adapter and the advisor are sound; the failure is a *limit of t
 | Toppo (cred→SSH→SUID) | both LLM arms | 0 % | — | LLM never proposes the cred→SSH step |
 | Toppo | scripted (non-LLM) | 100 % | 1 | confirms the adapter/advisor are sound |
 
-## E.6 Limitation (1) — the transferred evaluator over-values reconnaissance
+## E.6 Limitation — the transferred evaluator over-values reconnaissance
 
 **In one sentence: the advisor systematically over-values reconnaissance — a bias we trace to the training
 distribution and show the obvious post-hoc fixes do not remove. We report it as an honest limitation of *this*
@@ -400,38 +411,24 @@ So outcome-help is *conditional* (it appears when the LLM is weak), ranking-help
 per-step effect tracks how long the attack is — one consistent mechanism, across three vendors, **not specific
 to any single model.**
 
-## E.8 Limitation (2) — the reranker's outcome benefit is proposer-conditional
-
-We state plainly — and choose *not* to build the paper around — the following: the advisor's benefit on the
-*final outcome* depends on how good the LLM's own ordering already is. It clearly helps a weak or
-un-coached LLM (per-step **+15 points**, p = 0.0012). But once we *coach* the LLM with an explicit hint about
-the action vocabulary, the proposer improves on its own — its goal-rate rises from **0.16 to 0.53** and its
-wasted-step rate falls from **0.52 to 0.32** — and in an isolated test of *ranking alone* the advisor's
-per-step progress (**0.27**) is no better than a random re-ordering of the same candidates (**0.29**). A
-competent proposer leaves little for the re-ranker to add. We report this reversal in full rather than hiding it. We do not center the paper on
-it because (a) the "coached" LLM there used an author-supplied hint, which confounds the comparison, and
-(b) it is a specific case of a phenomenon already known in the verifier / process-reward-model literature
-[lightman2023verify; cobbe2021gsm8k] — a model that *checks* work being obviated by a generator that no
-longer makes the mistakes.
-
-## E.9 Summary
+## E.8 Summary
 
 The cheap abstract simulator produces a genuine, leak-free sense of which action makes progress (E.3); that
 sense **transfers** to real machines and significantly improves per-step choices (E.4); it **drives complete
 real attacks to root**, earning its keep precisely in the hardest privilege-escalation phase (DC-1: 100 % vs
 56 %; E.5); it has a **clearly characterized failure mode** — over-valuing reconnaissance, which resists three
 fixes (E.6); and the entire picture **reproduces across three different LLMs** under one simple rule (E.7).
-The advisor's effect on final success is *conditional* on the LLM being weak, which we report honestly as a
-limitation (E.8).
+The advisor's effect on final success is *conditional* on the LLM being weak — an honest limitation we report
+with its controls in E.4 (Table 2c, rows 1 and 3).
 
 ## References
 
 - **[gao2023scaling]** Gao, L., Schulman, J., Hilton, J. *Scaling Laws for Reward Model Overoptimization.*
   ICML 2023. — anchors E.6 (the recon over-valuation as reward-model overoptimization under distribution shift).
 - **[lightman2023verify]** Lightman, H., Kosaraju, V., Burda, Y., et al. *Let's Verify Step by Step.* 2023. —
-  anchors E.7 (process/step-level verifiers; the verifier–generator relationship).
+  anchors E.4 (process/step-level verifiers; the verifier–generator relationship in Table 2c).
 - **[cobbe2021gsm8k]** Cobbe, K., Kosaraju, V., Bavarian, M., et al. *Training Verifiers to Solve Math Word
-  Problems.* 2021. — anchors E.7 (a verifier's value relative to generator strength).
+  Problems.* 2021. — anchors E.4 (a verifier's value relative to generator strength).
 
 *(Bibkeys are placeholders matching common conventions — verify the exact key/year against your reference
 manager before submission.)*
