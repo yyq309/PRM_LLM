@@ -195,6 +195,12 @@ direction; *p* is the episode-clustered permutation test where computed (others 
 | Per-decision top-1 ranking acc ↑ (vs oracle; Qwen+GPT, 14 boxes) | **0.47–0.78** | 0.0–0.41 | — |
 | Stage-1 pairwise ranking acc ↑ (held-out) | **0.89 / 0.98 / 0.80** | (0.5 chance) | — |
 
+![Figure 6](figures/fig6_process_metrics.png)
+
+*Figure 6. Process / stage-level metrics, prm vs llm_only (16 web boxes pooled). The advisor wins on every
+metric; ★ marks the four that are clustered-significant (per-step, goal-aligned, milestone-stage, weighted
+progress). Milestone-stage and weighted progress are rescaled to a common axis (×20 and ×100).*
+
 The outcome metric (whole-episode goal/root) follows in Table 2b and E.5 — but the *process* improvement above
 is what a per-step reward model is built to deliver, and it is broad (8 metrics, **four clustered-significant**:
 per-step, goal-aligned, milestone-stage, weighted progress) rather than tied to whether one obscure final
@@ -273,6 +279,12 @@ On the web phase both arms progress similarly; in the privilege-escalation phase
 (9 %, 24 %) while the advised agent sustains (37 %, 100 %). It is the same *process*-level signature on two
 unrelated chains — the process reward's value is concentrated exactly where the LLM's own ordering is weakest
 (Toppo, where the LLM never even reaches privesc, is the boundary of the same effect).
+
+![Figure 7](figures/fig7_phase_split_2vm.png)
+
+*Figure 7. Per-step progress by phase on the two autonomous VMs. Both arms progress similarly on the web
+phase; the raw LLM collapses in the privilege-escalation phase (DC-1 9 %, Symfonos 24 %) while the advised
+agent sustains it (37 %, 100 %) — the same process-level signature on two unrelated attack chains.*
 
 A third machine, **Toppo**, draws a clean boundary: *both* agents fail autonomously because the LLM never even
 proposes the needed "find credentials → SSH in" step — yet a scripted (non-LLM) agent reaches root on all three

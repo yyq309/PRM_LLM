@@ -129,6 +129,53 @@ ax.set_title("Figure 5.  Stage-1 advisor quality (deployed PRM, 5 seeds; CI on '
              fontsize=10.5, weight="bold")
 fig.savefig(os.path.join(OUT, "fig5_stage1_pairwise.png")); plt.close(fig)
 
-print("wrote 5 figures to", os.path.abspath(OUT))
+# ---- Fig 6: process / stage-level metrics (16 boxes pooled; all rendered higher-is-better) ----
+# labels, prm, llm, significant? (clustered p<0.05)
+metrics = [
+    ("per-step\nprogress", 52.7, 37.6, True),
+    ("goal-aligned\nprogress", 26.3, 15.0, True),
+    ("milestone stage\n(/5 ×20)", 32.9, 21.2, True),
+    ("weighted\nprogress (×100)", 59.2, 45.0, True),
+    ("foothold/shell\nreach", 30.8, 20.0, False),
+    ("step efficiency\n(1−wasted)", 65.0, 51.0, False),
+]
+fig, ax = plt.subplots(figsize=(10, 4.6))
+x = np.arange(len(metrics)); w = 0.38
+prm_v = [m[1] for m in metrics]; llm_v = [m[2] for m in metrics]
+b1 = ax.bar(x - w/2, prm_v, w, color=PRM_C, label="prm (advisor)")
+b2 = ax.bar(x + w/2, llm_v, w, color=LLM_C, label="llm_only")
+for i, m in enumerate(metrics):
+    ax.text(i - w/2, m[1] + 1.5, f"{m[1]:.0f}", ha="center", fontsize=8.5)
+    ax.text(i + w/2, m[2] + 1.5, f"{m[2]:.0f}", ha="center", fontsize=8.5)
+    if m[3]:
+        ax.text(i, max(m[1], m[2]) + 6, "★", ha="center", color="#b00", fontsize=12)
+ax.set_xticks(x); ax.set_xticklabels([m[0] for m in metrics], fontsize=8.5)
+ax.set_ylim(0, 80); ax.set_ylabel("score (higher = better)")
+ax.set_title("Figure 6.  Process / stage-level metrics, prm vs llm_only (16 web boxes pooled). "
+             "★ = clustered-significant (p<0.05)", fontsize=10, weight="bold")
+ax.legend(loc="upper right", fontsize=9)
+fig.savefig(os.path.join(OUT, "fig6_process_metrics.png")); plt.close(fig)
+
+# ---- Fig 7: cross-VM phase split (the advisor's value lives in the privesc phase) ----
+fig, (a, b) = plt.subplots(1, 2, figsize=(10, 4.2), sharey=True)
+for ax, (vm, web, loc) in zip((a, b), [
+        ("DC-1", (36, 32), (37, 9)), ("Symfonos:1", (51, 48), (100, 24))]):
+    xx = np.arange(2); ww = 0.38
+    ax.bar(xx - ww/2, [web[0], loc[0]], ww, color=PRM_C, label="prm")
+    ax.bar(xx + ww/2, [web[1], loc[1]], ww, color=LLM_C, label="llm_only")
+    for j, (p, l) in enumerate([web, loc]):
+        ax.text(j - ww/2, p + 1.5, f"{p}", ha="center", fontsize=9)
+        ax.text(j + ww/2, l + 1.5, f"{l}", ha="center", fontsize=9)
+    ax.set_xticks(xx); ax.set_xticklabels(["web phase", "privesc phase"])
+    ax.set_ylim(0, 109); ax.yaxis.set_major_formatter(lambda v, _: f"{int(v)}%")
+    ax.set_title(vm, fontsize=11, weight="bold")
+    ax.annotate("raw LLM\ncollapses", xy=(1 + ww/2, loc[1]), xytext=(0.55, 60),
+                fontsize=8.5, color="#b00", arrowprops=dict(arrowstyle="->", color="#b00"))
+a.set_ylabel("per-step progress rate"); b.legend(loc="upper left", fontsize=9)
+fig.suptitle("Figure 7.  Per-step progress by phase: the advisor's value is concentrated in the "
+             "privilege-escalation phase, on both VMs", fontsize=10, y=1.03)
+fig.savefig(os.path.join(OUT, "fig7_phase_split_2vm.png")); plt.close(fig)
+
+print("wrote 7 figures to", os.path.abspath(OUT))
 for f in sorted(os.listdir(OUT)):
     print("  ", f)
