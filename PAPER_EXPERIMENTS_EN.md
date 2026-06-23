@@ -98,10 +98,16 @@ So any difference is attributable to the advisor alone. `llm_only` is the **prim
 agent without the advisor); we add two reference points where they sharpen a claim: a **random-rerank**
 control (re-orders the same candidates randomly — isolates whether the advisor's *specific* ranking matters,
 not merely re-ordering) and a **scripted, non-LLM** upper bound (confirms a target is solvable when the
-proposer is removed entirely). We report three metrics, all higher-is-better:
-- **goal-rate / root-rate (↑)** — the fraction of attempts that reached the goal / got root (unambiguous, cannot be gamed);
-- **per-step progress (↑)** — the fraction of *steps* that made forward progress rather than being wasted;
-- **top-1 ranking accuracy (↑)** — how often the advisor's top-ranked action is genuinely the best one.
+proposer is removed entirely). Because the advisor is a **process** reward model, our **primary** metrics are
+**process / stage-level** — they measure the *quality of the trajectory*, not just whether it ends in a flag:
+- **per-step progress (↑)** — fraction of *steps* that made forward progress rather than being wasted;
+- **stage reached / shell-reach (↑)** — how far up the kill-chain ladder (recon → vuln → shell → cmd → file → root) the agent climbs, and how often it reaches the foothold stage;
+- **ranking accuracy (↑)** — per-decision, how often the advisor's top-ranked action is the genuinely best one (vs the oracle);
+- **wasted-step rate (↓)** — process efficiency.
+
+The **outcome** metric — **goal-rate / root-rate (↑)**, the fraction of attempts that reached the goal / got
+root — is reported too (unambiguous, ungameable), but as the **downstream check**, not the headline: a
+process improver should first be shown to improve the process.
 
 Because a run is a sequence of correlated steps (not independent coin flips), naive statistics overstate
 significance. We use **episode-clustered permutation tests** and **bootstrap confidence intervals**, pair the
@@ -169,6 +175,29 @@ labels, measurably improves real per-step action choices. (Whole-episode goal-re
 vs `llm_only` 12 % — but that gain is **concentrated in the boxes where the proposer fails outright** (e.g.
 SSTI, Joomla); on boxes both arms can already solve, it is tied. We return to this *proposer-conditional*
 pattern in E.5 and E.9.)
+
+**Because the advisor is a *process* evaluator, the per-step metrics above are not a side-show — they are the
+primary evidence.** Table 2a collects the process / stage-level metrics; the final-outcome rate (goal/root)
+is the downstream check, not the headline. The advisor improves the *trajectory*, stage by stage: it climbs
+higher up the kill-chain ladder, reaches the foothold stage more often, and wastes fewer steps.
+
+**Table 2a — Process / stage-level metrics (16 web targets, pooled, prm vs llm_only).** Arrows give the good
+direction; *p* is the episode-clustered permutation test where computed (others are directional point estimates).
+
+| Process / stage metric | prm | llm_only | p |
+|---|---|---|---|
+| Per-step progress rate ↑ | **52.7 %** | 37.6 % | **0.0012** |
+| Goal-aligned (forward-only) progress ↑ | **26.3 %** | 15.0 % | **0.0018** |
+| Mean kill-chain stage reached ↑ (0 = recon … 5 = root) | **1.65** | 1.06 | — |
+| Foothold / shell-reach rate ↑ | **29 %** | 15 % | — |
+| Weighted progress ↑ | **0.59** | 0.45 | — |
+| Wasted-step rate ↓ | **0.35** | 0.49 | — |
+| Per-decision top-1 ranking acc ↑ (vs oracle; Qwen+GPT, 14 boxes) | **0.47–0.78** | 0.0–0.41 | — |
+| Stage-1 pairwise ranking acc ↑ (held-out) | **0.89 / 0.98 / 0.80** | (0.5 chance) | — |
+
+The outcome metric (whole-episode goal/root) follows in Table 2b and E.5 — but the *process* improvement above
+is what a per-step reward model is built to deliver, and it is broad (8 metrics, two clustered-significant)
+rather than tied to whether one obscure final exploit happens to assemble within budget.
 
 **Table 2b — Per-box A/B on all 16 web targets (DeepSeek, 5 trials/arm; cells are prm / llm_only).** The
 pooled row is the confirmatory claim; the per-box rows are exploratory and underpowered (n = 5) — read the
