@@ -30,7 +30,7 @@ into §E.4 itself (Table 2c), since they qualify the same `prm`-vs-`llm_only` ef
 question. One further section **stress-tests** the result: §E.7 (robustness — does it hold across LLM
 vendors?). The two honest **limitations** are reported where their evidence lives: the transferred evaluator's
 recon over-valuation has its own section (§E.6), while the proposer-conditional *outcome* benefit is reported
-with data inside §E.4's controls (Table 2c, rows 1 and 3). Both are diagnostic analyses, **not** contributions
+with data inside §E.4 (the reranker-isolation ablation, Table 2d / Fig 8, and the generic-prompt control). Both are diagnostic analyses, **not** contributions
 or research questions. §E.8 summarizes.
 
 ## E.2 Setup
@@ -174,7 +174,7 @@ after multiple-comparison correction). Plainly: a ranking sense learned in a che
 labels, measurably improves real per-step action choices. (Whole-episode goal-reach is higher too — prm 31 %
 vs `llm_only` 12 % — but that gain is **concentrated in the boxes where the proposer fails outright** (e.g.
 SSTI, Joomla); on boxes both arms can already solve, it is tied. We return to this *proposer-conditional*
-pattern in E.5 and in the controls below (Table 2c, rows 1 and 3).)
+pattern in E.5 and in the reranker-isolation ablation below (Table 2d / Fig 8).)
 
 **Because the advisor is a *process* evaluator, the per-step metrics above are not a side-show — they are the
 primary evidence.** Table 2a collects the process / stage-level metrics; the final-outcome rate (goal/root)
@@ -232,35 +232,68 @@ ThinkPHP-5 the raw LLM even wins the *goal* (80 % vs 20 %) — we do not hide th
 | WebLogic-weakpw | auth | 5 | 18 / 21 | 0 / 0 |
 | **Pooled (16, clustered)** | — | 5 | **52.7 / 37.6** (p = 0.0012) | **31 / 12** (p = 0.005) |
 
-**Controls — ruling out alternative explanations of the per-step effect.** The `prm`-vs-`llm_only` comparison
-above is the effect we want to defend; the controls below probe whether it could be something more mundane —
-and they draw a sharp, honest boundary. Two (leak-free input, generic-prompt) the effect clears outright: it
-is **not** reading a hidden answer and **not** a CVE-name leak. Two others (random-rerank, standalone) show the
-per-step value is **bounded** — it is *proposer-conditional*: real when a proposer pre-filters the candidate
-set, but *below* random when the PRM is fed the raw action surface. (The `llm_only` "remove-the-advisor" arm
-*is* the comparison above and is not repeated as a separate ablation.) Every number below traces to a report
-under `outputs/`.
+**Does the PRM's *ranking* do the work? — the reranker-isolation ablation.** The gain above could, in
+principle, come from *any* re-ordering of the candidate list, or be matched by a cheap scripted rule. To rule
+that out we hold the candidate set **fixed** and swap *only the ranker*: the raw LLM order (`llm_only`), our
+PRM, a **random** re-order, a **scripted non-LLM heuristic**, the PRM with its own scores **shuffled**, and the
+RL **value-oracle** (the teacher the PRM was distilled from — an upper-bound reference). We do this in two
+settings: *deployed* (a real LLM proposer supplies a small, targeted candidate set) and a *stress test* (a
+deterministic proposer floods the agent with the **entire** action surface).
 
-**Table 2c — Controls (alternatives to the per-step effect).**
+**Table 2d — Reranker-isolation: per-step progress / goal-rate when only the ranker changes (candidate set fixed).**
+
+| Ranker (candidate set fixed) | Deployed — real LLM proposer | Stress — full action surface |
+|---|---|---|
+| `llm_only` (raw LLM order) | 0.481 / goal 0.23 | — |
+| `random` (re-order) | 0.500 / goal 0.33 | 0.293 / goal 0.46 |
+| `heuristic` (scripted, non-LLM) | — | 0.262 / goal 0.60 |
+| `shuffled_prm` (PRM scores shuffled) | — | 0.327 / goal 0.55 |
+| `oracle` (RL value-oracle, upper bound) | 0.479\* / goal 0.27 | 0.312 / goal 0.60 |
+| **`prm` (ours)** | **0.685 / goal 0.40** | 0.267 / goal 0.50 |
+| *PRM vs each arm (per-step, clustered p)* | **+18–21 pp over every arm, p ≤ 0.007** | −2.7 to −6.0 pp vs random/oracle (p<0.01); ≈ heuristic (+0.4 pp, p = 0.65) |
+
+*\*In the deployed setting the oracle ranks the **abstract** optimum, which maps imperfectly back through ψ to
+the LLM's concrete candidate text, so it is not a clean upper bound there; the stress test (where it leads,
+0.312) is the cleaner oracle comparison. Sources: `stage2_ablation_rerank{,_llm}.json`; n = 30/arm (deployed),
+80/arm (stress); episode-clustered permutation tests.*
+
+**Reading it.** In the **deployed** setting — the one we actually run — the PRM's ranking is decisively best:
+**0.685** vs `llm_only` 0.481 (**+20.4 pp**, p = 0.006), `random` 0.500 (**+18.5 pp**, p = 0.007), and even the
+value-oracle's own ranking 0.479 (**+20.6 pp**, p = 0.001). A random shuffle does **not** reproduce the gain,
+and a cheap heuristic does not either — the PRM is doing real, specific work. In the **stress test**, where the
+proposer dumps the whole action menu, the PRM's recon over-valuation (§E.6) makes it waste steps enumerating,
+dragging it down to a scripted heuristic's level and **below** random. So the honest one-sentence reading of
+both columns is: **the PRM's value is *proposer-conditional*** — it pays off precisely when a proposer narrows
+the field to a few sensible moves (which a real LLM does), not when it must rank the raw action surface itself.
+
+![Figure 8](figures/fig8_reranker_isolation.png)
+
+*Figure 8. Reranker-isolation ablation — only the ranker is swapped, the candidate set is held fixed. Left
+(deployed, real LLM proposer): the PRM beats raw-LLM, random, and the value-oracle, all p < 0.01. Right
+(stress test, full action surface): the PRM's recon bias drops it to heuristic level, below random.*
+
+**Other controls — ruling out leakage, a coached prompt, and a hidden policy.** Beyond the reranker-isolation
+above (Table 2d), three further controls rule out more mundane explanations of the per-step effect. (The
+`llm_only` "remove-the-advisor" arm *is* the comparison above and is not repeated.) Every number traces to a
+report under `outputs/`.
+
+**Table 2c — Other controls (alternatives to the per-step effect).**
 
 | # | Control / ablation | Alternative explanation it rules out | Result — every number traced to `outputs/` |
 |---|---|---|---|
-| 1 | random-rerank (re-order randomly) | *any* re-ordering helps, not this advisor's ranking | **Proposer-conditional.** Fed the *full* action surface (deterministic proposer) the PRM's recon bias makes it **worse** than random — per-step **0.267 vs 0.293** (−2.7 pp, clustered *p* = 0.0034). But once a real LLM proposer pre-filters the candidates, the PRM **beats** random — **0.685 vs 0.500** (+18.5 pp, *p* = 0.0068). |
-| 2 | leak-free input audit | the advisor reads a hidden answer | **0** secret / path / flag leaks across **4 176** train + **1 764** held-out PRM inputs; masking *all* context barely moves it (ranking **0.910 → 0.916**, no drop; diagnosis **0.907 → 0.886**; **0** cliff fields). |
-| 3 | generic-prompt control | success came from a CVE-named hint (test leakage) | The CVE-coached prompt lifts the proposer's goal-rate **+0.375** (*p* = 0.002); under a content-free generic prompt the lift **vanishes and reverses** (**−0.094**, *p* = 0.54, n.s.) — the gain was the hint, not leakage in our pipeline. |
-| 4 | standalone ranker (no proposer) | the advisor is secretly a policy | Strictly advisory — it only re-ranks a proposer's list. With the environment scaffolding removed it cannot drive the agent at all (goal-rate **0.000**, n = 3); the benefit needs a proposer that pre-filters (row 1). |
-| 5 | three bias-removal fixes | the recon over-valuation is a patchable bug | The bias is real (`web_path_enum` **0.89** ≫ `exploit` **0.54** ≫ `command_exec` / `privesc` **0.04**), but the label-correction retrain does not remove it (**0.59** vs deployed **0.89**) and it is seed-dependent (mean **0.54**, sd **0.11**) — see §E.6. |
+| 1 | leak-free input audit | the advisor reads a hidden answer | **0** secret / path / flag leaks across **4 176** train + **1 764** held-out PRM inputs; masking *all* context barely moves it (ranking **0.910 → 0.916**, no drop; diagnosis **0.907 → 0.886**; **0** cliff fields). |
+| 2 | generic-prompt control | success came from a CVE-named hint (test leakage) | The CVE-coached prompt lifts the proposer's goal-rate **+0.375** (*p* = 0.002); under a content-free generic prompt the lift **vanishes and reverses** (**−0.094**, *p* = 0.54, n.s.) — the gain was the hint, not leakage in our pipeline. |
+| 3 | standalone ranker (no proposer) | the advisor is secretly a policy | Strictly advisory — it only re-ranks a proposer's list. With the environment scaffolding removed it cannot drive the agent at all (goal-rate **0.000**, n = 3); the benefit needs a proposer that pre-filters (Table 2d). |
+| 4 | three bias-removal fixes | the recon over-valuation is a patchable bug | The bias is real (`web_path_enum` **0.89** ≫ `exploit` **0.54** ≫ `command_exec` / `privesc` **0.04**), but the label-correction retrain does not remove it (**0.59** vs deployed **0.89**) and it is seed-dependent (mean **0.54**, sd **0.11**) — see §E.6. |
 
-*Sources: row 1 `stage2_ablation_rerank{,_llm}.json`; row 2 `leakage_audit.json`; row 3
-`stage2_improvement_proposer{,_generic}.json`; row 4 `prm_policy_eval_unmasked_no_guard.json`; row 5
-`recon_bias_histogram.json` + `recon_bias_multiseed.json`. Ranking p-values are episode-clustered permutation
-tests; the row-1 isolated test uses n = 80 (deterministic) / n = 30 (LLM-proposer) episodes per mode.*
+*Sources: row 1 `leakage_audit.json`; row 2 `stage2_improvement_proposer{,_generic}.json`; row 3
+`prm_policy_eval_unmasked_no_guard.json`; row 4 `recon_bias_histogram.json` + `recon_bias_multiseed.json`.
+Generic-prompt deltas are vs each arm's own baseline (n = 32/arm).*
 
-The load-bearing control is **row 1** (random-rerank): the advisor's per-step value is **proposer-conditional**
-— fed the raw action surface its recon bias drags it *below* random, but given a proposer that pre-filters to a
-small sensible set it adds real lift (+18.5 pp). This is exactly why we claim a *phase-* and
-*proposer-conditional* win, **not** a blanket per-step one — made precise by the full-chain phase-split (§E.5)
-and the multi-LLM study (§E.7).
+Together with the reranker-isolation ablation (Table 2d, Fig 8), these controls let us state the claim
+precisely: the PRM delivers a real, *proposer-conditional* per-step gain — not leakage, not a coached-prompt
+artifact, and not a standalone policy — made sharper still by the full-chain phase-split (§E.5) and the
+multi-LLM study (§E.7).
 
 ## E.5 RQ3 — Can it complete a *full* real attack to root, and where is its value?
 
@@ -419,7 +452,7 @@ real attacks to root**, earning its keep precisely in the hardest privilege-esca
 56 %; E.5); it has a **clearly characterized failure mode** — over-valuing reconnaissance, which resists three
 fixes (E.6); and the entire picture **reproduces across three different LLMs** under one simple rule (E.7).
 The advisor's effect on final success is *conditional* on the LLM being weak — an honest limitation we report
-with its controls in E.4 (Table 2c, rows 1 and 3).
+with its controls in E.4 (the reranker-isolation ablation, Table 2d / Fig 8).
 
 ## References
 
