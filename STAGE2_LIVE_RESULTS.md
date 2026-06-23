@@ -1,8 +1,8 @@
-# Stage 2 — LIVE inference results (12 Vulhub boxes, cluster-robust)
+# Stage 2 — LIVE inference results (15 Docker web boxes + 2 full VMs, cluster-robust)
 
 **What this is:** the abstract-trained adapter (φ real-output→state, ψ text→16-action, η action→command,
 all gated by `stage2/safety.py`) driving the autonomous loop `propose → ψ → PRM rerank → η → LiveExecutor
-→ φ` against **12 real Vulhub containers**, bound to `127.0.0.1` only, owned/isolated, every command
+→ φ` against **15 real Vulhub containers**, bound to `127.0.0.1` only, owned/isolated, every command
 audited. A/B = `prm` (PRM reranks the proposer's candidates) vs `llm_only` (the proposer's own order).
 
 **Read this section first; everything below "Appendix" is superseded interim work kept for provenance.**
@@ -181,7 +181,7 @@ PRM loses. Everything (web-only inversion, the unpaired/paired flip, the full-ch
 
 ## ★ FINAL RESULT (2026-06-18) — honest, cluster-robust
 
-5 trials/arm × 12 boxes, `deepseek-chat` proposer (both arms share it → fair). Full per-box numbers in
+5 trials/arm × 15 boxes, `deepseek-chat` proposer (both arms share it → fair). Full per-box numbers in
 [STAGE2_SEVEN_DIM_TABLE.md](STAGE2_SEVEN_DIM_TABLE.md); stats in `outputs/stage2_stats_analysis.json`;
 ablation in `outputs/stage2_ablation_rerank.json`.
 
@@ -252,12 +252,12 @@ is concentrated in converting partial progress (`foothold_no_file` 6→2, `explo
 The live A/B varies the LLM proposer, so the gain could be proposer luck / guards / recipe / candidate
 order, not the PRM. The ablation removes every confound: the proposer is held **fixed and deterministic**,
 the same per-trial candidate-shuffle seed is replayed for all arms (paired design), and **only the rerank
-function varies** (`python -m stage2.ablation_rerank`, 8 seeds × 12 boxes, key-free):
+function varies** (`python -m stage2.ablation_rerank`, 8 seeds × 12 boxes (12-box subset — the 3 later-added boxes httpd/nginx/Tomcat8 are not in this ablation), key-free):
 
 Run **two** ablations — they disagree, and the disagreement is the finding.
 
 **(a) Deterministic proposer** (`TargetAwareProposer` — dumps the box's *full* candidate surface every
-step; paired shuffle seed; `python -m stage2.ablation_rerank`, 8 seeds × 12 boxes, **key-free**):
+step; paired shuffle seed; `python -m stage2.ablation_rerank`, 8 seeds × 12 boxes (12-box subset — the 3 later-added boxes httpd/nginx/Tomcat8 are not in this ablation), **key-free**):
 
 | rerank mode | per-step progress | goal-reach | steps used (80 eps) |
 |---|--:|--:|--:|
@@ -386,7 +386,7 @@ high-N], (2) graded milestones shell/cmd/file/root, (3) efficiency (steps, waste
 - **Fairness:** both arms share the same proposer + temperature; arm order is randomized per trial
   (`live_ab_trials.py --seed`, default randomized; `--fixed-arm-order` to disable); the ablation holds
   the proposer fixed and pairs the shuffle seed across arms.
-- **Reproducibility:** `stage2/target_registry.json` (12 boxes: container, port, image, compose dir,
+- **Reproducibility:** `stage2/target_registry.json` (15 boxes: container, port, image, compose dir,
   healthcheck); `python -m stage2.reset_target --all --check` (healthcheck) / `--label X` (down -v && up
   -d + healthcheck) for clean state between runs; full run metadata (model/temp/seed/budget/ports/timing)
   recorded in each report's `run_metadata`; `python -m stage2.preflight` now also probes docker / the 12

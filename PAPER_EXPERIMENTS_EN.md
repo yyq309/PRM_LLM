@@ -62,15 +62,30 @@ vulnerability — ThinkPHP, Struts2, Joomla, etc.) give breadth, and **2 full vi
 Toppo) give depth: the *complete* chain *web entry → foothold → same-machine privilege escalation → root*,
 which the single-service boxes cannot (Table 1).
 
-**Table 1 — Real targets.**
+**Table 1 — Real targets: all 15 Docker web boxes (foothold only), grouped by foothold mechanism, + 2 full VMs.**
 
-| Kind | Example targets | Vulnerability class | Phase exercised | Terminal metric |
-|---|---|---|---|---|
-| Docker web box (×15) | ThinkPHP-5 / 5.0.23, Struts2 S2-045 / S2-048, Joomla CVE-2017-8917, php-cgi CVE-2012-1823, Drupalgeddon2 | RCE / SQLi / deserialization | web entry → foothold | goal reached (shell + sensitive read) |
-| Full VM | **DC-1** | Drupalgeddon2 (CVE-2018-7600) → SUID `find` | **web → foothold → privesc → root** | `reached_root` |
-| Full VM | **Toppo** | creds in `/admin/notes.txt` → SSH → SUID `python` | **web → foothold → privesc → root** | `reached_root` |
+| Foothold mechanism | n | Docker boxes (product / CVE) |
+|---|---|---|
+| Direct RCE | 9 | ThinkPHP-5, ThinkPHP-5.0.23, Struts2 S2-045, Struts2 S2-048, php-cgi (CVE-2012-1823), Drupal/Drupalgeddon2 (CVE-2018-7600), Apache httpd (CVE-2021-41773), Tomcat (CVE-2017-12615), Gitea 1.4 |
+| Weak-credential → deploy/RCE | 2 | Tomcat8 (manager), WebLogic |
+| SQL injection | 1 | Joomla (CVE-2017-8917) |
+| File disclosure / LFI | 2 | Rails (CVE-2019-5418), php-inclusion |
+| Misconfiguration / traversal | 1 | nginx (insecure config) |
 
-All targets are owned and run on an isolated host-only network; every command is allow-listed and logged.
+All 15 Docker boxes share the same phase (web entry → foothold) and terminal metric (goal reached = shell + sensitive read). The 2 full VMs add depth:
+
+| Full VM (whole-machine, → root) | chain | terminal metric |
+|---|---|---|
+| **DC-1** | Drupalgeddon2 (CVE-2018-7600) → SUID `find` | `reached_root` |
+| **Toppo** | creds in `/admin/notes.txt` → SSH → SUID `python` | `reached_root` |
+
+*Scope of vulnerability coverage (stated honestly).* The 15 boxes span ~11 products and 5 foothold-mechanism
+classes, but **direct RCE dominates (9/15)** — reflecting the Vulhub corpus. This is a breadth-of-*product*,
+not breadth-of-vuln-*class*, evaluation. It is methodologically acceptable here because the frozen 16-action
+schema abstracts the *kill-chain steps* (recon → locate → exploit → shell → read/escalate), **not** the
+vulnerability class; so the per-box diversity the PRM actually sees comes from **chain length and topology**
+(1-step self-advertising vs multi-step) rather than CVE family. All targets are owned, run on an isolated
+host-only network, allow-listed, and logged. (The multi-LLM study in E.8 uses a 6-box subset of these.)
 
 **How we measure, and the fair comparison.** Every real-target result is a head-to-head between two agents
 that use the **same LLM** and differ in only one thing:

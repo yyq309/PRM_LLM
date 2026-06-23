@@ -33,15 +33,24 @@ E.7 汇总消融与对照;E.8 再问结论是否依赖于用哪个 LLM(答案是
 
 **目标靶。** **15 个真实的"Docker"Web 靶**(每个是一项带真实已知漏洞的 Web 服务——ThinkPHP、Struts2、Joomla 等)提供广度;**2 台完整虚拟机**(DC-1 与 Toppo)提供深度:即*完整*的链 *Web 入口 → 立足点 → 同机提权 → root*,这是单服务靶给不了的(表 1)。
 
-**表 1 —— 真实目标靶。**
+**表 1 —— 真实目标靶:全部 15 个 Docker Web 靶(仅立足点),按立足点机制分组,+ 2 台整机 VM。**
 
-| 类型 | 示例靶 | 漏洞类别 | 考查阶段 | 终止指标 |
-|---|---|---|---|---|
-| Docker Web 靶(×15) | ThinkPHP-5 / 5.0.23、Struts2 S2-045 / S2-048、Joomla CVE-2017-8917、php-cgi CVE-2012-1823、Drupalgeddon2 | RCE / SQLi / 反序列化 | Web 入口 → 立足点 | 达到目标(shell + 敏感读取) |
-| 整机 VM | **DC-1** | Drupalgeddon2 (CVE-2018-7600) → SUID `find` | **Web → 立足点 → 提权 → root** | `reached_root` |
-| 整机 VM | **Toppo** | `/admin/notes.txt` 中的凭据 → SSH → SUID `python` | **Web → 立足点 → 提权 → root** | `reached_root` |
+| 立足点机制 | 数量 | Docker 靶(产品 / CVE) |
+|---|---|---|
+| 直接 RCE | 9 | ThinkPHP-5、ThinkPHP-5.0.23、Struts2 S2-045、Struts2 S2-048、php-cgi (CVE-2012-1823)、Drupal/Drupalgeddon2 (CVE-2018-7600)、Apache httpd (CVE-2021-41773)、Tomcat (CVE-2017-12615)、Gitea 1.4 |
+| 弱口令 → 部署/RCE | 2 | Tomcat8(manager)、WebLogic |
+| SQL 注入 | 1 | Joomla (CVE-2017-8917) |
+| 文件泄露 / LFI | 2 | Rails (CVE-2019-5418)、php-inclusion |
+| 配置缺陷 / 路径穿越 | 1 | nginx(错误配置) |
 
-所有靶机均为自有、运行在隔离的 host-only 网络上;每条命令都经白名单校验并留痕。
+全部 15 个 Docker 靶共享同一阶段(Web 入口 → 立足点)与终止指标(达到目标 = shell + 敏感读取)。2 台整机 VM 提供深度:
+
+| 整机 VM(全机、→ root) | 链 | 终止指标 |
+|---|---|---|
+| **DC-1** | Drupalgeddon2 (CVE-2018-7600) → SUID `find` | `reached_root` |
+| **Toppo** | `/admin/notes.txt` 中的凭据 → SSH → SUID `python` | `reached_root` |
+
+*漏洞覆盖范围(诚实声明)。* 这 15 个靶横跨 ~11 个产品、5 类立足点机制,但**直接 RCE 居多(9/15)**——反映 Vulhub 语料分布。这是一次**产品广度**而非**漏洞类别广度**的评估。在本工作里这是方法上可接受的,因为冻结的 16 动作 schema 抽象的是 **kill-chain 的步骤**(侦察 → 定位 → 利用 → shell → 读取/提权),**而非漏洞类别**;所以 PRM 真正看到的逐靶多样性来自**链的长短与拓扑**(1 步自宣传 vs 多步),而非 CVE 家族。所有靶机均为自有、运行在隔离 host-only 网络、经白名单校验并留痕。(E.8 的多 LLM 研究使用其中 6 个靶的子集。)
 
 **怎么衡量,以及公平对比。** 每个真实目标结果都是两个智能体的正面对决,二者用**同一个 LLM**,只差一点:
 - **`prm`**:LLM 提议动作,顾问对其重排;
