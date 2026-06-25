@@ -6,15 +6,6 @@ requests are executed during RL training. Real Web labs such as DVWA, WebGoat,
 Juice Shop, VulnHub, HTB-style targets, or AutoPenBench-style containers should
 be connected later through an adapter.
 
-> **Resuming Stage 2 (real-VulnHub inference)? Start with [`STAGE2_HANDOFF.md`](STAGE2_HANDOFF.md)** —
-> a complete onboarding doc: architecture, the 12 live targets, every experiment + honest finding,
-> exact reproduce commands, conventions, gotchas, and the ranked next steps. Canonical results live in
-> [`STAGE2_LIVE_RESULTS.md`](STAGE2_LIVE_RESULTS.md).
->
-> For a local VMware full-VM lab that adds host-level privilege-escalation coverage, see
-> [`stage2/VMWARE_VULNHUB_LAB.md`](stage2/VMWARE_VULNHUB_LAB.md) and
-> [`stage2/vm_target_registry.json`](stage2/vm_target_registry.json).
-
 ## Design
 
 ```text
@@ -152,9 +143,7 @@ python .\scripts\coverage_audit.py
 
 This writes `outputs/coverage_audit.json` with per-cell counts and the empty cells
 that remain structurally implausible under the frozen 16-action schema (candidates
-for a §6.1 versioned schema extension). `tasks/VULNHUB_CORRESPONDENCE.md` grounds
-each abstract family in representative real boxes / walkthroughs and OWASP/CWE
-labels for the §14 adapter to later validate.
+for a §6.1 versioned schema extension).
 
 The normalizer distinguishes unsupported outputs by method-level categories:
 `schema_gap` for in-scope Web actions not covered by the current 16-action
